@@ -601,7 +601,7 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
  */
 
 //FG increase all...
-#define HOMING_FEEDRATE {60*60, 60*60, 10*60, 0}  // set the homing speeds (mm/min)
+#define HOMING_FEEDRATE {60*60, 60*60, 8*60, 0}  // set the homing speeds (mm/min)
 
 // default settings
 
