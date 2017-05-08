@@ -1830,7 +1830,17 @@ void MarlinSettings::reset() {
 
       CONFIG_ECHO_START;
       #if ENABLED(TEMPERATURE_UNITS_SUPPORT)
+<<<<<<< HEAD
         #define TEMP_UNIT(N) parser.to_temp_units(N)
+||||||| merged common ancestors
+        extern TempUnit input_temp_units;
+        extern float temp_abs(float &f);
+        #define TEMP_UNIT(N) temp_abs(N)
+=======
+        extern TempUnit input_temp_units;
+        extern float temp_abs(const float &f);
+        #define TEMP_UNIT(N) temp_abs(N)
+>>>>>>> Patch missing const in temp_abs
         SERIAL_ECHOPGM("  M149 ");
         SERIAL_CHAR(parser.temp_units_code());
         SERIAL_ECHOPGM(" ; Units in ");
