@@ -69,7 +69,18 @@
 #endif
 #ifndef MSG_SETTINGS
   #define MSG_SETTINGS                        _UxGT("Settings")
-#endif               
+#endif              
+// Create Adjustment Menu Messages ------------------------------------------------------------
+#ifndef MSG_FEEDRATE
+  #define MSG_FEEDRATE                        _UxGT("Feedrate (speed)")
+#endif
+#ifndef MSG_FLOWRATE
+  #define MSG_FLOWRATE                        _UxGT("Flowrate")
+#endif
+#ifndef MSG_FAN_SPEED_NEW
+  #define MSG_FAN_SPEED_NEW                   _UxGT("Fan speed %")
+#endif
+
 // END - Ian Adams ---------------------------------------------------------------
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")

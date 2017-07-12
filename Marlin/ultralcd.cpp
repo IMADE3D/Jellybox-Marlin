@@ -125,6 +125,12 @@ uint16_t max_display_update_time = 0;
   void lcd_bed_temp_menu();
   void lcd_set_menu(); //This is Adjustments menu
   void lcd_settings_menu();
+  // Declare Variables for Adjustments Menu 
+  void lcd_move_select_axis_bt();
+  void lcd_home_axes();
+  void lcd_move_select_axis_e_bt();
+  int fanSpeed100;
+  int fanSpeed;
 //END   - Ian Adams -------------------------------------------------------
 
   #if ENABLED(LCD_INFO_MENU)
@@ -1083,76 +1089,7 @@ void kill_screen(const char* lcd_msg) {
     }
   #endif
 
-//START - Ian Adams - Menu Items -----------------------------------------------------------
-/**
-   *
-   * "Nozzle Temp" submenu
-   * Adapted From Bruce Troutman
-   */
 
-   static void execute_nozzle_temp_gcode_0() {
-    enqueue_and_echo_commands_P(PSTR("M104 S0"));
-    lcd_return_to_status();
-}
-static void execute_nozzle_temp_gcode_200() {
-    enqueue_and_echo_commands_P(PSTR("M104 S200"));
-    lcd_return_to_status();
-}
-static void execute_nozzle_temp_gcode_210() {
-    enqueue_and_echo_commands_P(PSTR("M104 S210"));
-    lcd_return_to_status();
-}
-static void execute_nozzle_temp_gcode_220() {
-    enqueue_and_echo_commands_P(PSTR("M104 S220"));
-    lcd_return_to_status();
-}
-static void execute_nozzle_temp_other() {
-    //enqueue_and_echo_commands_P(PSTR("M104 S240"));
-    lcd_return_to_status();
-}
-  void lcd_nozzle_temp_menu() {
-    START_MENU();
-     //
-  // ^ Set
-  //
-  MENU_ITEM(back, MSG_BACK, lcd_main_menu);
-  //
-  // Nozzle Temp
-  //
-  //#if TEMP_SENSOR_0 != 0
-      MENU_ITEM(function, "Heating off", execute_nozzle_temp_gcode_0);
-      MENU_ITEM(function, "200C", execute_nozzle_temp_gcode_200);
-      MENU_ITEM(function, "210C", execute_nozzle_temp_gcode_210);
-      MENU_ITEM(function, "220C", execute_nozzle_temp_gcode_220);
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
-      //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N1, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
-  //#endif
-
-    END_MENU();
-  }
-
-  /**
-   *
-   * "Adjustments" submenu
-   *
-   */
-  void lcd_set_menu() {
-    START_MENU();
-    END_MENU();
-  }
-
-  /**
-   *
-   * "Settings" submenu
-   *
-   */
-  void lcd_settings_menu() {
-    START_MENU();
-    END_MENU();
-  }
-
-
-//END - Ian Adams -----------------------------------------------------------------------------
   /**
    *
    * "Tune" submenu
@@ -3241,6 +3178,149 @@ static void execute_nozzle_temp_other() {
     }
 
   #endif // FILAMENT_CHANGE_FEATURE
+
+//START - Ian Adams - Menu Items -----------------------------------------------------------
+/**
+   *
+   * "Nozzle Temp" submenu
+   * Adapted From Bruce Troutman
+   */
+
+   static void execute_nozzle_temp_gcode_0() {
+    enqueue_and_echo_commands_P(PSTR("M104 S0"));
+    lcd_return_to_status();
+}
+static void execute_nozzle_temp_gcode_200() {
+    enqueue_and_echo_commands_P(PSTR("M104 S200"));
+    lcd_return_to_status();
+}
+static void execute_nozzle_temp_gcode_210() {
+    enqueue_and_echo_commands_P(PSTR("M104 S210"));
+    lcd_return_to_status();
+}
+static void execute_nozzle_temp_gcode_220() {
+    enqueue_and_echo_commands_P(PSTR("M104 S220"));
+    lcd_return_to_status();
+}
+static void execute_nozzle_temp_other() {
+    //enqueue_and_echo_commands_P(PSTR("M104 S240"));
+    lcd_return_to_status();
+}
+  void lcd_nozzle_temp_menu() {
+    START_MENU();
+     //
+  // ^ Set
+  //
+  MENU_ITEM(back, MSG_BACK, lcd_main_menu);
+  //
+  // Nozzle Temp
+  //
+  //#if TEMP_SENSOR_0 != 0
+      MENU_ITEM(function, "Heating off", execute_nozzle_temp_gcode_0);
+      MENU_ITEM(function, "200C", execute_nozzle_temp_gcode_200);
+      MENU_ITEM(function, "210C", execute_nozzle_temp_gcode_210);
+      MENU_ITEM(function, "220C", execute_nozzle_temp_gcode_220);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+      //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N1, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+  //#endif
+
+    END_MENU();
+  }
+
+/**
+ * 
+ * Update Fan Speed Function
+ * 
+ */
+ static void update_fan_speed() {
+  fanSpeed = int(((255 * fanSpeed100) /100)+0.5);
+  lcd_store_settings();
+}
+  /**
+   *
+   * "Adjustments" submenu
+   *
+   */
+  void lcd_set_menu() {
+    START_MENU();
+  //
+  // ^ Main
+  //
+  MENU_ITEM(back, MSG_BACK, lcd_main_menu);
+  //
+  // Feedrate (speed)
+  //
+  MENU_ITEM_EDIT(int3, MSG_FEEDRATE, &feedrate_percentage, 10, 999);
+  //
+  // Flowrate
+  //
+  MENU_ITEM_EDIT(int3, MSG_FLOWRATE, &flow_percentage[0], 10, 999);
+
+  //
+  // Fan Speed
+  //
+ 
+  fanSpeed100 = int((fanSpeed * 100)/255);
+
+  MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_FAN_SPEED_NEW, &fanSpeed100, 0, 100,update_fan_speed);
+  //
+  // Extrude/Retract
+  //
+  MENU_ITEM(submenu, "Extrude/Retract", lcd_move_select_axis_e_bt);
+  //
+  // Test Auto Bed Level
+  //
+  MENU_ITEM(gcode, "Test Auto Bed Level", PSTR("G28\nG29"));
+  //
+  // Home Axes
+  //
+  MENU_ITEM(submenu, "Home Axes", lcd_home_axes);
+  //
+  // Move Axis
+  //
+  MENU_ITEM(submenu, MSG_MOVE_AXIS, lcd_move_select_axis_bt);
+    END_MENU();
+  }
+
+  /**
+   *
+   * "Extrude/Retract" submenu
+   *
+   */
+  void lcd_move_select_axis_e_bt() {
+    START_MENU();
+    END_MENU();
+  }
+   /**
+   *
+   * "Home" submenu
+   *
+   */
+  void lcd_home_axes() {
+    START_MENU();
+    END_MENU();
+  }
+  /**
+   *
+   * "Move axis" submenu
+   *
+   */
+  void lcd_move_select_axis_bt() {
+    START_MENU();
+    END_MENU();
+  }
+  /**
+   *
+   * "Settings" submenu
+   *
+   */
+  void lcd_settings_menu() {
+    START_MENU();
+    END_MENU();
+  }
+
+
+//END - Ian Adams -----------------------------------------------------------------------------
 
   /**
    *
