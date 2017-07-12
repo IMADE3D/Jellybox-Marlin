@@ -51,9 +51,26 @@
 #ifndef MSG_AUTOSTART
   #define MSG_AUTOSTART                       _UxGT("Autostart")
 #endif
+// START - Ian Adams - Create Main menu messages ----------------------------------------
+//#ifndef MSG_DISABLE_STEPPERS
+  //#define MSG_DISABLE_STEPPERS                _UxGT("Disable steppers")
+//#endif
 #ifndef MSG_DISABLE_STEPPERS
-  #define MSG_DISABLE_STEPPERS                _UxGT("Disable steppers")
+  #define MSG_DISABLE_STEPPERS                _UxGT("Unlock Motors")
 #endif
+#ifndef MSG_HOME_X_Y_Z
+  #define MSG_HOME_X_Y_Z                      _UxGT("Home X Y Z")
+#endif
+#ifndef MSG_HOTEND_TEMP
+  #define MSG_HOTEND_TEMP                     _UxGT("Nozzle temp")
+#endif
+#ifndef MSG_SET                               
+  #define MSG_SET                             _UxGT("Adjustments")
+#endif
+#ifndef MSG_SETTINGS
+  #define MSG_SETTINGS                        _UxGT("Settings")
+#endif               
+// END - Ian Adams ---------------------------------------------------------------
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")
 #endif

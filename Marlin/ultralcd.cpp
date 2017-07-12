@@ -120,6 +120,13 @@ uint16_t max_display_update_time = 0;
   void lcd_control_motion_menu();
   void lcd_control_filament_menu();
 
+//START - Ian Adams - Declare Variables for main menu tree-----------------
+  void lcd_nozzle_temp_menu();
+  void lcd_bed_temp_menu();
+  void lcd_set_menu(); //This is Adjustments menu
+  void lcd_settings_menu();
+//END   - Ian Adams -------------------------------------------------------
+
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
       void lcd_info_stats_menu();
@@ -798,6 +805,42 @@ void kill_screen(const char* lcd_msg) {
     START_MENU();
     MENU_BACK(MSG_WATCH);
 
+    //START - Ian Adams - Create main menu items -------------------------
+    
+    //
+    // Disable Steppers  Now "Unlock Motors"  bt 4-27-16
+    //
+    MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
+
+    //
+    // Home X and Y and Z
+    //
+    MENU_ITEM(gcode, MSG_HOME_X_Y_Z, PSTR("G28"));
+
+    //
+    // Nozzle Temp
+    //
+    MENU_ITEM(submenu, MSG_HOTEND_TEMP, lcd_nozzle_temp_menu);
+
+    //
+    // Bed Temp
+    //
+    #if HAS_TEMP_BED //TEMP_SENSOR_BED != 0
+      MENU_ITEM(submenu, "Bed Temp", lcd_bed_temp_menu);
+    #endif
+
+    //
+    // Set menu
+    //
+    MENU_ITEM(submenu, MSG_SET, lcd_set_menu);
+
+    //
+    // Settings menu
+    //
+    MENU_ITEM(submenu, MSG_SETTINGS, lcd_settings_menu);
+    
+    //END - Ian Adams -----------------------------------------
+
     //
     // Debug Menu when certain options are enabled
     //
@@ -823,12 +866,16 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
     }
     else {
+      /** START - Ian Adams - Remove Prepare menu -------------
       MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+      /** END  - Ian Adams -----------------------------------*/
       #if ENABLED(DELTA_CALIBRATION_MENU)
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
       #endif
     }
+    /** START - Ian Adams - Remove control menu -------------
     MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
+    /** END  - Ian Adams -----------------------------------*/
 
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
@@ -860,7 +907,39 @@ void kill_screen(const char* lcd_msg) {
 
     END_MENU();
   }
+//START - Ian Adams - Menu Items -----------------------------------------------------------
+/**
+   *
+   * "Nozzle Temp" submenu
+   *
+   */
+  void lcd_nozzle_temp_menu() {
+    START_MENU();
+    END_MENU();
+  }
 
+  /**
+   *
+   * "Adjustments" submenu
+   *
+   */
+  void lcd_set_menu() {
+    START_MENU();
+    END_MENU();
+  }
+
+  /**
+   *
+   * "Settings" submenu
+   *
+   */
+  void lcd_settings_menu() {
+    START_MENU();
+    END_MENU();
+  }
+
+
+//END - Ian Adams -----------------------------------------------------------------------------
   /**
    *
    * "Tune" submenu items
