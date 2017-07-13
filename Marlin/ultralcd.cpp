@@ -819,7 +819,20 @@ void kill_screen(const char* lcd_msg) {
     }
 
   #endif // HAS_DEBUG_MENU
-
+  
+  #if ENABLED(EEPROM_SETTINGS)
+    static void lcd_store_settings()   { lcd_completion_feedback(settings.save()); }
+    static void lcd_load_settings()    { lcd_completion_feedback(settings.load()); }
+  #endif
+/**
+ * 
+ * Update Fan Speed Function
+ * 
+ */
+ static void update_fan_speed() {
+  fanSpeed = int(((255 * fanSpeed100) /100)+0.5);
+  lcd_store_settings();
+}
   /**
    *
    * "Main" menu
@@ -828,6 +841,51 @@ void kill_screen(const char* lcd_msg) {
 
   void lcd_main_menu() {
     START_MENU();
+    if (IS_SD_PRINTING){
+    MENU_ITEM(back, MSG_BACK, lcd_status_screen);
+      
+      //
+    // Feedrate (speed)
+    //
+    MENU_ITEM_EDIT(int3, MSG_FEEDRATE, &feedrate_percentage, 10, 999);
+    //
+    // Flowrate
+    //
+    MENU_ITEM_EDIT(int3, MSG_FLOWRATE, &flow_percentage[0], 10, 999);
+    //
+    // Fan Speed
+    //
+    fanSpeed100 = int((fanSpeed * 100)/255);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_FAN_SPEED_NEW, &fanSpeed100, 0, 100,update_fan_speed);
+    //
+    // Nozzle Temp
+    //
+    MENU_ITEM(submenu, MSG_HOTEND_TEMP, lcd_nozzle_temp_menu);
+    //
+    // Bed Temp
+    //
+    #if HAS_TEMP_BED   //TEMP_SENSOR_BED != 0
+      MENU_ITEM(submenu, "Bed Temp", lcd_bed_temp_menu);
+    #endif
+    //
+    // Change Filament
+    //
+    #if ENABLED(FILAMENTCHANGEENABLE)
+    if (degHotend(active_extruder) < extrude_min_temp) {
+       MENU_ITEM(gcode, "Change filament *cold", PSTR(""));
+    }
+    else
+    {
+       MENU_ITEM(gcode, MSG_FILAMENTCHANGE_NEW, PSTR("M600"));
+    }
+    #endif
+    //
+    // More Menu  - Not used in latest menu bt 4-27-16
+    //
+    //MENU_ITEM(submenu, MSG_MORE, lcd_more_menu);
+    //
+    }
+    else{
     //MENU_BACK(MSG_WATCH);
     MENU_ITEM(back, MSG_BACK, lcd_status_screen);
     //START - Ian Adams - Create main menu items -------------------------
@@ -929,7 +987,7 @@ void kill_screen(const char* lcd_msg) {
     #if ENABLED(LCD_INFO_MENU)
       MENU_ITEM(submenu, MSG_INFO_MENU, lcd_info_menu);
     #endif
-
+    }
     END_MENU();
   }
 
@@ -2197,10 +2255,7 @@ void kill_screen(const char* lcd_msg) {
    *
    */
 
-  #if ENABLED(EEPROM_SETTINGS)
-    static void lcd_store_settings()   { lcd_completion_feedback(settings.save()); }
-    static void lcd_load_settings()    { lcd_completion_feedback(settings.load()); }
-  #endif
+  
 
   static void lcd_factory_settings() {
     settings.reset();
@@ -3004,15 +3059,7 @@ static  void lcd_nozzle_temp_menu() {
     END_MENU();
   }
 
-/**
- * 
- * Update Fan Speed Function
- * 
- */
- static void update_fan_speed() {
-  fanSpeed = int(((255 * fanSpeed100) /100)+0.5);
-  lcd_store_settings();
-}
+
   /**
    *
    * "Adjustments" submenu
