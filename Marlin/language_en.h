@@ -80,7 +80,10 @@
 #ifndef MSG_FAN_SPEED_NEW
   #define MSG_FAN_SPEED_NEW                   _UxGT("Fan speed %")
 #endif
-
+// Create Settings Menu Messages 
+#ifndef MSG_SET_Z_OFFSET
+  #define MSG_SET_Z_OFFSET                    _UxGT("Z probe offset")
+#endif
 // END - Ian Adams ---------------------------------------------------------------
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")
