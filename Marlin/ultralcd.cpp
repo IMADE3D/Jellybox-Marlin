@@ -131,6 +131,20 @@ uint16_t max_display_update_time = 0;
   void lcd_move_select_axis_e_bt();
   int fanSpeed100;
   int fanSpeed;
+  static void lcd_move_e_100mm_bt();
+  static void lcd_move_e_50mm_bt();
+  static void lcd_move_e_10mm_bt();
+  static void lcd_move_e_5mm_bt();
+  static void lcd_move_e_05mm_bt();
+  static void lcd_move_z_01mm_bt();
+  static void lcd_move_z_1mm_bt();
+  static void lcd_move_y_01mm_bt();
+  static void lcd_move_y_1mm_bt();
+  static void lcd_move_y_10mm_bt();
+  static void lcd_move_x_01mm_bt();
+  static void lcd_move_x_1mm_bt();
+  static void lcd_move_x_10mm_bt();
+  float move_menu_scale_bt;
 //END   - Ian Adams -------------------------------------------------------
 
   #if ENABLED(LCD_INFO_MENU)
@@ -3206,7 +3220,8 @@ static void execute_nozzle_temp_other() {
     //enqueue_and_echo_commands_P(PSTR("M104 S240"));
     lcd_return_to_status();
 }
-  void lcd_nozzle_temp_menu() {
+
+static  void lcd_nozzle_temp_menu() {
     START_MENU();
      //
   // ^ Set
@@ -3241,7 +3256,7 @@ static void execute_nozzle_temp_other() {
    * "Adjustments" submenu
    *
    */
-  void lcd_set_menu() {
+static  void lcd_set_menu() {
     START_MENU();
   //
   // ^ Main
@@ -3287,35 +3302,179 @@ static void execute_nozzle_temp_other() {
    * "Extrude/Retract" submenu
    *
    */
-  void lcd_move_select_axis_e_bt() {
+ static void lcd_move_select_axis_e_bt() {
+  // bt ======= the following 'if' tests to see if hotend is hot enough to extrude
+  if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
+
     START_MENU();
+    //
+    // ^ Set
+    //
+    MENU_ITEM(back, MSG_BACK, lcd_set_menu);
+    MENU_ITEM(gcode, "-----------------" , PSTR(""));
+    MENU_ITEM(gcode, "Please set and wait ", PSTR(""));
+    MENU_ITEM(gcode, "for Nozzle to reach", PSTR(""));
+    MENU_ITEM(gcode, "extruding temperature", PSTR(""));
+
     END_MENU();
   }
+ }
    /**
    *
    * "Home" submenu
    *
    */
-  void lcd_home_axes() {
-    START_MENU();
-    END_MENU();
-  }
+ static void lcd_home_axes() {
+  START_MENU();
+  //
+  // ^ Set
+  //
+  MENU_ITEM(back, MSG_BACK, lcd_set_menu);
+  //
+  // Home X
+  //
+  MENU_ITEM(gcode, "Home X", PSTR("G28 X"));
+  //
+  // Home Y
+  //
+  MENU_ITEM(gcode, "Home Y", PSTR("G28 Y"));
+    //
+    // Home X and Y and Z
+    //
+    MENU_ITEM(gcode, MSG_HOME_X_Y_Z, PSTR("G28"));
+
+  END_MENU();
+}
   /**
    *
    * "Move axis" submenu
    *
    */
-  void lcd_move_select_axis_bt() {
-    START_MENU();
-    END_MENU();
+static void lcd_move_select_axis_bt() {
+  START_MENU();
+  //
+  // ^ Set
+  //
+  MENU_ITEM(back, MSG_BACK, lcd_set_menu);
+
+//  MENU_ITEM(submenu,"Move X - 10mm", lcd_move_x_10mm_bt);
+  MENU_ITEM(submenu,"Move X", lcd_move_x_1mm_bt);
+//  MENU_ITEM(submenu,"Move X -  0.1mm", lcd_move_x_01mm_bt);
+//  MENU_ITEM(submenu,"Move Y - 10mm", lcd_move_y_10mm_bt);
+  MENU_ITEM(submenu,"Move Y", lcd_move_y_1mm_bt);
+//  MENU_ITEM(submenu,"Move Y -  0.1mm", lcd_move_y_01mm_bt);
+  MENU_ITEM(submenu,"Move Z", lcd_move_z_1mm_bt);
+//  MENU_ITEM(submenu,"Move Z -  0.1mm", lcd_move_z_01mm_bt);
+
+  END_MENU();
+}
+/**
+ *
+ * "Move Z Axis"
+ *
+ */
+inline void line_to_current_bt(AxisEnum axis) {
+    planner.buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate_mm_m[axis]/60, active_extruder);
+}
+/**
+ *
+ * "Move _lcd_move_bt
+ *
+ */
+static void _lcd_move_bt(const char* name, AxisEnum axis, int min, int max) {
+  if (encoderPosition != 0) {
+    refresh_cmd_timeout();
+    (current_position[axis] += float((int)encoderPosition)) * move_menu_scale_bt;
+    if ((ENABLED(MIN_SOFTWARE_ENDSTOPS)) && (current_position[axis] < min)) current_position[axis] = min;
+    if ((ENABLED(MAX_SOFTWARE_ENDSTOPS)) && (current_position[axis] > max)) current_position[axis] = max;
+    encoderPosition = 0;
+    line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+    lcdDrawUpdate = 1;
   }
+  if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
+  if (LCD_CLICKED) lcd_goto_screen(lcd_move_select_axis_bt,true);
+}
+/**
+ *
+ * "Move _lcd_move_e_bt
+ *
+ */
+static void _lcd_move_e_bt(const char* name, AxisEnum axis, int elength) {
+//  if (encoderPosition != 0) {
+//    current_position[E_AXIS] += float((int)encoderPosition) * move_menu_scale_bt;
+//    encoderPosition = 0;
+
+    current_position[E_AXIS] += float(elength);
+    line_to_current_bt(E_AXIS);   //used by _lcd_move_e_bt
+    lcdDrawUpdate = 1;
+//  }
+
+  if (lcdDrawUpdate) lcd_implementation_drawedit(PSTR(MSG_MOVE_E), ftostr52sign(current_position[E_AXIS]));
+  if (LCD_CLICKED) lcd_goto_screen(lcd_move_select_axis_e_bt,true);
+
+}
+/**
+ *
+ * "Move Select Axis" submenu
+ *
+ */
+static void lcd_move_x_10mm_bt() {
+  move_menu_scale_bt = 10.0;
+  _lcd_move_bt(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
+}
+static void lcd_move_x_1mm_bt() {
+  move_menu_scale_bt = 1.0;
+  _lcd_move_bt(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
+}
+static void lcd_move_x_01mm_bt() {
+  move_menu_scale_bt = 0.1;
+  _lcd_move_bt(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
+}
+static void lcd_move_y_10mm_bt() {
+  move_menu_scale_bt = 10.0;
+  _lcd_move_bt(PSTR(MSG_MOVE_Y), Y_AXIS, Y_MIN_POS, Y_MAX_POS);
+}
+static void lcd_move_y_1mm_bt() {
+  move_menu_scale_bt = 1.0;
+  _lcd_move_bt(PSTR(MSG_MOVE_Y), Y_AXIS, Y_MIN_POS, Y_MAX_POS);
+}
+static void lcd_move_y_01mm_bt() {
+  move_menu_scale_bt = 0.1;
+  _lcd_move_bt(PSTR(MSG_MOVE_Y), Y_AXIS, Y_MIN_POS, Y_MAX_POS);
+}
+static void lcd_move_z_1mm_bt() {
+  move_menu_scale_bt = 1.0;
+  _lcd_move_bt(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
+}
+static void lcd_move_z_01mm_bt() {
+  move_menu_scale_bt = 0.1;
+  _lcd_move_bt(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
+}
+static void lcd_move_e_05mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 0.5);
+}
+static void lcd_move_e_5mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 5);
+}
+static void lcd_move_e_10mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 10);
+}
+static void lcd_move_e_50mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 50);
+}
+static void lcd_move_e_100mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 100);
+}
+
+
   /**
    *
    * "Settings" submenu
    *
    */
-  void lcd_settings_menu() {
+ static void lcd_settings_menu() {
     START_MENU();
+    
     END_MENU();
   }
 

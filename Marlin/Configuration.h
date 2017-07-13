@@ -722,7 +722,7 @@
 #define Z_MAX_POS 146
 
 // If enabled, axes won't move below MIN_POS in response to movement commands.
-// #define MIN_SOFTWARE_ENDSTOPS // IM3D FG opposite from old marlin - testing this.
+#define MIN_SOFTWARE_ENDSTOPS // IM3D FG opposite from old marlin - testing this.
 // If enabled, axes won't move above MAX_POS in response to movement commands.
 #define MAX_SOFTWARE_ENDSTOPS
 
