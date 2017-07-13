@@ -546,7 +546,10 @@ uint16_t max_display_update_time = 0;
       --screen_history_depth;
       lcd_goto_screen(
         screen_history[screen_history_depth].menu_function,
-        screen_history[screen_history_depth].encoder_position
+        //START - Ian Adams - Make back take cursor to top ------------
+        encoderTopLine
+        //screen_history[screen_history_depth].encoder_position
+        //END - Ian Adams --------------------------------------------
       );
     }
     else
@@ -825,8 +828,8 @@ void kill_screen(const char* lcd_msg) {
 
   void lcd_main_menu() {
     START_MENU();
-    MENU_BACK(MSG_WATCH);
-
+    //MENU_BACK(MSG_WATCH);
+    MENU_ITEM(back, MSG_BACK, lcd_status_screen);
     //START - Ian Adams - Create main menu items -------------------------
     
     //
@@ -2513,7 +2516,8 @@ void kill_screen(const char* lcd_msg) {
       if (!lcdDrawUpdate && !lcd_clicked) return; // nothing to do (so don't thrash the SD card)
       const uint16_t fileCnt = card.getnrfilenames();
       START_MENU();
-      MENU_BACK(MSG_MAIN);
+      //MENU_BACK(MSG_MAIN);
+      MENU_ITEM(back, MSG_BACK, lcd_main_menu);
       card.getWorkDirName();
       if (card.filename[0] == '/') {
         #if !PIN_EXISTS(SD_DETECT)
@@ -3446,8 +3450,8 @@ static void lcd_control_motion_menu() {
     // bt =======
   #endif
   MENU_ITEM_EDIT(float5, MSG_ACC, &planner.acceleration, 10, 99000);
-  MENU_ITEM_EDIT(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990);
-  MENU_ITEM_EDIT(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990);
+  MENU_ITEM_EDIT(float3, MSG_VXY_JERK, &planner.max_jerk[X_AXIS, Y_AXIS], 1, 990);
+  //MENU_ITEM_EDIT(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990);
   MENU_ITEM_EDIT(float52, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 0.1, 990);
   MENU_ITEM_EDIT(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990);
   MENU_ITEM_EDIT(float3, MSG_VMAX MSG_X, &planner.max_feedrate_mm_s[X_AXIS], 1, 999);

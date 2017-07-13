@@ -34,7 +34,7 @@
   #define WELCOME_MSG                         MACHINE_NAME _UxGT(" ready.")
 #endif
 #ifndef MSG_BACK
-  #define MSG_BACK                            _UxGT("Back")
+  #define MSG_BACK                            _UxGT("Go Back")
 #endif
 #ifndef MSG_SD_INSERTED
   #define MSG_SD_INSERTED                     _UxGT("Card inserted")
@@ -270,6 +270,9 @@
 #endif
 #ifndef MSG_VX_JERK
   #define MSG_VX_JERK                         _UxGT("Vx-jerk")
+#endif
+#ifndef MSG_VXY_JERK
+  #define MSG_VXY_JERK                         _UxGT("Vxy-jerk")
 #endif
 #ifndef MSG_VY_JERK
   #define MSG_VY_JERK                         _UxGT("Vy-jerk")
