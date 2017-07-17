@@ -1178,7 +1178,7 @@
  *
  * :['JAPANESE', 'WESTERN', 'CYRILLIC']
  */
-#define DISPLAY_CHARSET_HD44780 JAPANESE // IM3D irrelevant; different display
+#define DISPLAY_CHARSET_HD44780 JAPANESE // IM3D irrelevant; we use graphical display
 
 /**
  * LCD TYPE
