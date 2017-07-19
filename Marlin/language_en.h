@@ -52,7 +52,7 @@
   #define MSG_AUTOSTART                       _UxGT("Autostart")
 #endif
 #ifndef MSG_DISABLE_STEPPERS
-  #define MSG_DISABLE_STEPPERS                _UxGT("Disable steppers")
+  #define MSG_DISABLE_STEPPERS                _UxGT("Unlock Motors")
 #endif
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")

@@ -910,6 +910,10 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
     }
     else {
+      //
+      // Disable Steppers
+      //
+      MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
       MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
       #if ENABLED(DELTA_CALIBRATION_MENU)
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
