@@ -97,7 +97,7 @@
   #define MSG_SET_ORIGIN                      _UxGT("Set origin")
 #endif
 #ifndef MSG_PREHEAT_1
-  #define MSG_PREHEAT_1                       _UxGT("Preheat PLA")
+  #define MSG_PREHEAT_1                       _UxGT("PLA - 210°C")
 #endif
 #ifndef MSG_PREHEAT_1_N
   #define MSG_PREHEAT_1_N                     MSG_PREHEAT_1 _UxGT(" ")
@@ -115,7 +115,7 @@
   #define MSG_PREHEAT_1_SETTINGS              MSG_PREHEAT_1 _UxGT(" conf")
 #endif
 #ifndef MSG_PREHEAT_2
-  #define MSG_PREHEAT_2                       _UxGT("Preheat ABS")
+  #define MSG_PREHEAT_2                       _UxGT("ABS - 220°C")
 #endif
 #ifndef MSG_PREHEAT_2_N
   #define MSG_PREHEAT_2_N                     MSG_PREHEAT_2 _UxGT(" ")
@@ -131,6 +131,45 @@
 #endif
 #ifndef MSG_PREHEAT_2_SETTINGS
   #define MSG_PREHEAT_2_SETTINGS              MSG_PREHEAT_2 _UxGT(" conf")
+#endif
+#ifndef MSG_PREHEAT_3
+  #define MSG_PREHEAT_3                       _UxGT("PET - 235°C")
+#endif
+#ifndef MSG_PREHEAT_3_N
+  #define MSG_PREHEAT_3_N                     MSG_PREHEAT_3 _UxGT(" ")
+#endif
+#ifndef MSG_PREHEAT_3_ALL
+  #define MSG_PREHEAT_3_ALL                   MSG_PREHEAT_3 _UxGT(" All")
+#endif
+#ifndef MSG_PREHEAT_3_END
+  #define MSG_PREHEAT_3_END                   MSG_PREHEAT_3 _UxGT(" End")
+#endif
+#ifndef MSG_PREHEAT_3_BEDONLY
+  #define MSG_PREHEAT_3_BEDONLY               MSG_PREHEAT_3 _UxGT(" Bed")
+#endif
+#ifndef MSG_PREHEAT_3_SETTINGS
+  #define MSG_PREHEAT_3_SETTINGS              MSG_PREHEAT_3 _UxGT(" conf")
+#endif
+#ifndef MSG_PREHEAT_4
+  #define MSG_PREHEAT_4                       _UxGT("FLEX - 230°C")
+#endif
+#ifndef MSG_PREHEAT_4_N
+  #define MSG_PREHEAT_4_N                     MSG_PREHEAT_4 _UxGT(" ")
+#endif
+#ifndef MSG_PREHEAT_4_ALL
+  #define MSG_PREHEAT_4_ALL                   MSG_PREHEAT_4 _UxGT(" All")
+#endif
+#ifndef MSG_PREHEAT_4_END
+  #define MSG_PREHEAT_4_END                   MSG_PREHEAT_4 _UxGT(" End")
+#endif
+#ifndef MSG_PREHEAT_4_BEDONLY
+  #define MSG_PREHEAT_4_BEDONLY               MSG_PREHEAT_4 _UxGT(" Bed")
+#endif
+#ifndef MSG_PREHEAT_4_SETTINGS
+  #define MSG_PREHEAT_4_SETTINGS              MSG_PREHEAT_4 _UxGT(" conf")
+#endif
+#ifndef MSG_PREHEAT_NOZZLE
+  #define MSG_PREHEAT_NOZZLE                  _UxGT("Preheat Nozzle")
 #endif
 #ifndef MSG_COOLDOWN
   #define MSG_COOLDOWN                        _UxGT("Cooldown")

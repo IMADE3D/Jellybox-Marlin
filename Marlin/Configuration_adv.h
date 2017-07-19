@@ -789,7 +789,7 @@
    #define PAUSE_PARK_X_POS 0                  // X position of hotend
    #define PAUSE_PARK_Y_POS 0                  // Y position of hotend
    #define PAUSE_PARK_Z_ADD 10                 // Z addition of hotend (lift)
-   #define PAUSE_PARK_XY_FEEDRATE 100          // X and Y axes feedrate in mm/s (also used for delta printers Z axis) 
+   #define PAUSE_PARK_XY_FEEDRATE 100          // X and Y axes feedrate in mm/s (also used for delta printers Z axis)
    #define PAUSE_PARK_Z_FEEDRATE 5             // Z axis feedrate in mm/s (not used for delta printers)
    #define PAUSE_PARK_RETRACT_FEEDRATE 60      // Initial retract feedrate in mm/s
    #define PAUSE_PARK_RETRACT_LENGTH 2         // Initial retract in mm
@@ -1266,6 +1266,12 @@
 
   #define USER_DESC_5 "Home & Info"
   #define USER_GCODE_5 "G28\nM503"
+
+  #define USER_DESC_6 "Preheat for PET"
+  #define USER_GCODE_6 "M140 S" STRINGIFY(PREHEAT_3_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_3_TEMP_HOTEND)
+
+  #define USER_DESC_7 "Preheat for FLEX"
+  #define USER_GCODE_7 "M140 S" STRINGIFY(PREHEAT_4_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_4_TEMP_HOTEND)
 #endif
 
 /**
