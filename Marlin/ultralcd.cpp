@@ -3794,6 +3794,17 @@ void kill_screen(const char* lcd_msg) {
 
     /**
      * 
+     * Test Auto Bed Level Function
+     * 
+     */
+
+     void lcd_test_auto_bed_level(){
+       enqueue_and_echo_commands_P(PSTR("G28")); 
+       enqueue_and_echo_commands_P(PSTR("G29")); 
+     }
+
+    /**
+     * 
      * "Maintenence Menu
      * 
      */
@@ -3824,6 +3835,11 @@ void kill_screen(const char* lcd_msg) {
       // Move Axis
       //
       MENU_ITEM(submenu, MSG_MOVE_AXIS, lcd_move_select_axis);
+
+      //
+      // Test Auto Bed Level
+      //
+      MENU_ITEM(function, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level);
       
       END_MENU();
     }

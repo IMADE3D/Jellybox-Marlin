@@ -482,6 +482,9 @@
 #ifndef MSG_CONTROL
   #define MSG_CONTROL                         _UxGT("Control")
 #endif
+#ifndef MSG_TEST_AUTO_BED_LEVEL
+  #define MSG_TEST_AUTO_BED_LEVEL             _UxGT("Test auto bed level")
+#endif
 #ifndef MSG_MIN
   #define MSG_MIN                             _UxGT(" ") LCD_STR_THERMOMETER _UxGT(" Min")
 #endif
