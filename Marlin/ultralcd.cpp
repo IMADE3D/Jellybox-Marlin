@@ -30,7 +30,7 @@
 #include "stepper.h"
 #include "configuration_store.h"
 #include "utility.h"
-
+#define HAS_TEMP_BED true
 #if HAS_BUZZER && DISABLED(LCD_USE_I2C_BUZZER)
   #include "buzzer.h"
 #endif
@@ -115,6 +115,7 @@ uint16_t max_display_update_time = 0;
   void lcd_main_menu();
   void lcd_tune_menu();
   void lcd_preheat_nozzle_menu();
+  void lcd_preheat_nozzle_and_bed_menu();
   void lcd_prepare_menu();
   void lcd_move_menu();
   void lcd_control_menu();
@@ -929,10 +930,19 @@ void kill_screen(const char* lcd_msg) {
       // Disable Steppers
       //
       MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
+      
       //
       //Preheat Nozzle Menu
       //
       MENU_ITEM(submenu, MSG_PREHEAT_NOZZLE, lcd_preheat_nozzle_menu);
+      
+      #if HAS_TEMP_BED
+        //
+        //Preheat Nozzle and Bed
+        //
+        MENU_ITEM(submenu, MSG_PREHEAT_NOZZLE_AND_BED, lcd_preheat_nozzle_and_bed_menu);
+      #endif 
+      
       MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
       #if ENABLED(DELTA_CALIBRATION_MENU)
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
@@ -2570,6 +2580,9 @@ void kill_screen(const char* lcd_msg) {
    */
   void cooldown(){
     enqueue_and_echo_commands_P(PSTR("M104 S0"));
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M140 S0"));
+    #endif
     lcd_return_to_status();
    }
 /**
@@ -2579,6 +2592,9 @@ void kill_screen(const char* lcd_msg) {
    */
   void preheat_pla(){
     enqueue_and_echo_commands_P(PSTR("M104 S210"));
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M140 S55"));
+    #endif
     lcd_return_to_status();
    }
    
@@ -2589,6 +2605,9 @@ void kill_screen(const char* lcd_msg) {
    */
    void preheat_pet(){
     enqueue_and_echo_commands_P(PSTR("M104 S235"));
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M140 S55"));
+    #endif
     lcd_return_to_status();
    }
    
@@ -2599,6 +2618,9 @@ void kill_screen(const char* lcd_msg) {
    */
    void preheat_flex(){
     enqueue_and_echo_commands_P(PSTR("M104 S230"));
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M140 S50"));
+    #endif
     lcd_return_to_status();
    }
    
@@ -2614,6 +2636,9 @@ void kill_screen(const char* lcd_msg) {
     //
     MENU_BACK(MSG_MAIN);
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    #if HAS_TEMP_BED
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
+    #endif
     END_MENU();
    }
    
@@ -2629,7 +2654,7 @@ void kill_screen(const char* lcd_msg) {
     // ^ Main
     //
     MENU_BACK(MSG_MAIN);
-
+    
     //
     //Cooldown
     //
@@ -2656,10 +2681,52 @@ void kill_screen(const char* lcd_msg) {
     //Preheat Custom
     //
     MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM, lcd_preheat_custom);
+    
     END_MENU();
   }
   
-  
+   /**
+   *
+   *"Preheat Nozzle and Bed" submenu
+   *
+   */
+  void lcd_preheat_nozzle_and_bed_menu() {
+    START_MENU();
+
+    //
+    // ^ Main
+    //
+    MENU_BACK(MSG_MAIN);
+    
+    //
+    //Cooldown
+    //
+
+    MENU_ITEM(function, MSG_COOLDOWN_AND_BED, cooldown); 
+
+    //
+    //Preheat PLA
+    //
+
+    MENU_ITEM(function, MSG_PREHEAT_PLA_AND_BED, preheat_pla);
+
+    //
+    //Preheat PET
+    //
+    MENU_ITEM(function, MSG_PREHEAT_PET_AND_BED, preheat_pet);
+
+    //
+    //Preheat FLEX
+    //
+    MENU_ITEM(function, MSG_PREHEAT_FLEX_AND_BED, preheat_flex);
+
+    //
+    //Preheat Custom
+    //
+    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM_AND_BED, lcd_preheat_custom);
+        
+    END_MENU();
+  }
   /**
    *
    * "Prepare" submenu
