@@ -119,6 +119,7 @@ uint16_t max_display_update_time = 0;
   void lcd_prepare_menu();
   void lcd_move_menu();
   void lcd_control_menu();
+  void lcd_maintenence_menu();
   void lcd_control_temperature_menu();
   void lcd_control_temperature_preheat_material1_settings_menu();
   void lcd_control_temperature_preheat_material2_settings_menu();
@@ -949,6 +950,11 @@ void kill_screen(const char* lcd_msg) {
       #endif
     }
     MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
+    
+    //
+    //Maintenence Menu
+    //
+    MENU_ITEM(submenu, MSG_MAINTENENCE, lcd_maintenence_menu);
 
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
@@ -3785,6 +3791,66 @@ void kill_screen(const char* lcd_msg) {
       lcdDrawUpdate = LCDVIEW_CLEAR_CALL_REDRAW;
     }
 
+    /**
+     * 
+     * "Maintenence Menu
+     * 
+     */
+    void lcd_maintenence_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_MAIN);
+    
+      //
+      // Auto Home
+      //
+      MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
+
+      //
+      // Disable Steppers
+      //
+      MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84")); 
+
+      //
+      // Extrude Submenu
+      //
+      MENU_ITEM(submenu, MSG_EXTRUDE_MENU, lcd_extrude_menu); 
+      
+      END_MENU();
+    }
+
+    /**
+     * 
+     * "Extrude" > Maintenence Menu
+     * 
+     */
+    void lcd_extrude_menu(){
+      START_MENU();
+      
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      if (degHotend(active_extruder) < extrude_min_temp) {
+        STATIC_ITEM("-----------------" );
+        STATIC_ITEM("Please set and wait ");
+        STATIC_ITEM("for Nozzle to reach");
+        STATIC_ITEM("extruding temperature");
+      }
+      else{
+        MENU_ITEM(gcode, MSG_EXTRUDE_.5MM , PSTR("G1 E-0.5"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_10MM , PSTR("G1 E-10"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_50MM , PSTR("G1 E-50"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_100MM , PSTR("G1 E-100"));
+      }
+      
+      END_MENU();
+    }
+   
     /**
      *
      * "Print from SD" submenu
