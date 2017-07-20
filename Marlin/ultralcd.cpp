@@ -30,7 +30,6 @@
 #include "stepper.h"
 #include "configuration_store.h"
 #include "utility.h"
-#define HAS_TEMP_BED true
 #if HAS_BUZZER && DISABLED(LCD_USE_I2C_BUZZER)
   #include "buzzer.h"
 #endif
@@ -120,6 +119,8 @@ uint16_t max_display_update_time = 0;
   void lcd_move_menu();
   void lcd_control_menu();
   void lcd_maintenence_menu();
+  void lcd_move_select_axis();
+  void lcd_extrude_menu();
   void lcd_control_temperature_menu();
   void lcd_control_temperature_preheat_material1_settings_menu();
   void lcd_control_temperature_preheat_material2_settings_menu();
@@ -954,7 +955,7 @@ void kill_screen(const char* lcd_msg) {
     //
     //Maintenence Menu
     //
-    MENU_ITEM(submenu, MSG_MAINTENENCE, lcd_maintenence_menu);
+    MENU_ITEM(submenu, MSG_MAINTENANCE, lcd_maintenence_menu);
 
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
@@ -3817,14 +3818,19 @@ void kill_screen(const char* lcd_msg) {
       //
       // Extrude Submenu
       //
-      MENU_ITEM(submenu, MSG_EXTRUDE_MENU, lcd_extrude_menu); 
+      MENU_ITEM(submenu, MSG_EXTRUDE, lcd_extrude_menu); 
+
+      //
+      // Move Axis
+      //
+      MENU_ITEM(submenu, MSG_MOVE_AXIS, lcd_move_select_axis);
       
       END_MENU();
     }
 
     /**
      * 
-     * "Extrude" > Maintenence Menu
+     * "Extrude" > Maintenance Menu
      * 
      */
     void lcd_extrude_menu(){
@@ -3835,22 +3841,93 @@ void kill_screen(const char* lcd_msg) {
       //
       MENU_BACK(MSG_BACK);
 
-      if (degHotend(active_extruder) < extrude_min_temp) {
+      if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
         STATIC_ITEM("-----------------" );
         STATIC_ITEM("Please set and wait ");
         STATIC_ITEM("for Nozzle to reach");
         STATIC_ITEM("extruding temperature");
       }
       else{
-        MENU_ITEM(gcode, MSG_EXTRUDE_.5MM , PSTR("G1 E-0.5"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_10MM , PSTR("G1 E-10"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_50MM , PSTR("G1 E-50"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_100MM , PSTR("G1 E-100"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_PFIVE, PSTR("G1 E0.5"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_TEN, PSTR("G1 E10"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_FIFTY, PSTR("G1 E50"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_HUNDRED, PSTR("G1 E100"));
       }
       
       END_MENU();
     }
-   
+
+  /**
+ *
+ * "Move _lcd_move
+ *
+ */
+ float move_menu_scale_bt;
+
+ inline void line_to_current_bt(AxisEnum axis) {
+    planner.buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate_mm_m[axis]/60, active_extruder);
+}
+
+static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
+  if (encoderPosition != 0) {
+    refresh_cmd_timeout();
+    (current_position[axis] += float((int)encoderPosition)) * move_menu_scale;
+    if (current_position[axis] < min){
+      #if (ENABLED(MIN_SOFTWARE_ENDSTOPS))
+        current_position[axis] = min;
+      #endif
+    }
+      
+    if (current_position[axis] > max) {
+      #if (ENABLED(MAX_SOFTWARE_ENDSTOPS))
+        current_position[axis] = max;
+      #endif
+    }
+    encoderPosition = 0;
+    line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+    lcdDrawUpdate = 1;
+  }
+  if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
+  if (lcd_clicked) {
+    lcd_goto_screen(lcd_move_select_axis);
+  }
+} 
+
+static void lcd_move_x_1mm() {
+  move_menu_scale = 1.0;
+  _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
+}
+static void lcd_move_y_1mm() {
+  move_menu_scale = 1.0;
+  _lcd_move(PSTR(MSG_MOVE_Y), Y_AXIS, Y_MIN_POS, Y_MAX_POS);
+}
+static void lcd_move_z_1mm() {
+  move_menu_scale = 1.0;
+  _lcd_move(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
+}
+     /**
+   *
+   * "Move axis" submenu
+   *
+   */
+static void lcd_move_select_axis() {
+  START_MENU();
+  
+  //
+  // ^ Set
+  //
+  MENU_ITEM(back, MSG_BACK, lcd_set_menu);
+  
+  MENU_ITEM(submenu,"Move X", lcd_move_x_1mm);
+
+  MENU_ITEM(submenu,"Move Y", lcd_move_y_1mm);
+
+  MENU_ITEM(submenu,"Move Z", lcd_move_z_1mm);
+
+
+  END_MENU();
+}
+
     /**
      *
      * "Print from SD" submenu

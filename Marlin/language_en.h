@@ -61,7 +61,7 @@
   #define MSG_PROGRESS_BAR_TEST               _UxGT("Progress Bar Test")
 #endif
 #ifndef MSG_AUTO_HOME
-  #define MSG_AUTO_HOME                       _UxGT("Auto home")
+  #define MSG_AUTO_HOME                       _UxGT("Home XYZ")
 #endif
 #ifndef MSG_AUTO_HOME_X
   #define MSG_AUTO_HOME_X                     _UxGT("Home X")
@@ -413,6 +413,27 @@
   #define MSG_UBL_STEP_BY_STEP_MENU           _UxGT("Step-By-Step UBL")
 #endif
 
+#ifndef MSG_MAINTENANCE
+  #define MSG_MAINTENANCE                       _UxGT("Maintenance")
+#endif
+#ifndef MSG_EXTRUDE
+  #define MSG_EXTRUDE                         _UxGT("Extrude")
+#endif
+#ifndef MSG_EXTRUDE_PFIVE
+  #define MSG_EXTRUDE_PFIVE                   _UxGT("0.5 mm")
+#endif
+#ifndef MSG_EXTRUDE_TEN
+  #define MSG_EXTRUDE_TEN                  _UxGT("10 mm")
+#endif
+#ifndef MSG_EXTRUDE_FIFTY
+  #define MSG_EXTRUDE_FIFTY                  _UxGT("50 mm")
+#endif
+#ifndef MSG_EXTRUDE_HUNDRED
+  #define MSG_EXTRUDE_HUNDRED                 _UxGT("100 mm")
+#endif
+#ifndef MSG_MOVE_AXIS
+  #define MSG_MOVE_AXIS                   _UxGT("Move XYZ axis")
+#endif
 #ifndef MSG_MOVING
   #define MSG_MOVING                          _UxGT("Moving...")
 #endif
