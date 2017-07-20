@@ -118,10 +118,11 @@ uint16_t max_display_update_time = 0;
   void lcd_prepare_menu();
   void lcd_move_menu();
   void lcd_control_menu();
-  void lcd_maintenence_menu();
+  void lcd_maintenance_menu();
   void lcd_move_select_axis();
   void lcd_extrude_menu();
   void lcd_danger_zone();
+  void lcd_settings_menu();
   void lcd_factory_reset();
   void lcd_control_temperature_menu();
   void lcd_control_temperature_preheat_material1_settings_menu();
@@ -957,7 +958,12 @@ void kill_screen(const char* lcd_msg) {
     //
     //Maintenence Menu
     //
-    MENU_ITEM(submenu, MSG_MAINTENANCE, lcd_maintenence_menu);
+    MENU_ITEM(submenu, MSG_MAINTENANCE, lcd_maintenance_menu);
+
+    //
+    //Settings Menu
+    //
+    MENU_ITEM(submenu, MSG_SETTINGS, lcd_settings_menu);
 
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
@@ -3327,9 +3333,9 @@ void kill_screen(const char* lcd_msg) {
     START_MENU();
 
     //
-    // ^ Control
+    // ^ Settings
     //
-    MENU_BACK(MSG_CONTROL);
+    MENU_ITEM(back, MSG_BACK , lcd_settings_menu);
 
     //
     // Nozzle:
@@ -3442,22 +3448,22 @@ void kill_screen(const char* lcd_msg) {
     //
     // Preheat Material 1 conf
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_1_SETTINGS, lcd_control_temperature_preheat_material1_settings_menu);
+    //MENU_ITEM(submenu, MSG_PREHEAT_1_SETTINGS, lcd_control_temperature_preheat_material1_settings_menu);
 
     //
     // Preheat Material 2 conf
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_2_SETTINGS, lcd_control_temperature_preheat_material2_settings_menu);
+    //MENU_ITEM(submenu, MSG_PREHEAT_2_SETTINGS, lcd_control_temperature_preheat_material2_settings_menu);
 
     //
     // Preheat Material 3 conf
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_3_SETTINGS, lcd_control_temperature_preheat_material3_settings_menu);
+    //MENU_ITEM(submenu, MSG_PREHEAT_3_SETTINGS, lcd_control_temperature_preheat_material3_settings_menu);
 
     //
     // Preheat Material 4 conf
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_4_SETTINGS, lcd_control_temperature_preheat_material4_settings_menu);
+    //MENU_ITEM(submenu, MSG_PREHEAT_4_SETTINGS, lcd_control_temperature_preheat_material4_settings_menu);
     END_MENU();
   }
 
@@ -3807,10 +3813,10 @@ void kill_screen(const char* lcd_msg) {
 
     /**
      * 
-     * "Maintenence Menu
+     * "maintenance Menu
      * 
      */
-    void lcd_maintenence_menu(){
+    void lcd_maintenance_menu(){
       START_MENU();
 
       //
@@ -4010,6 +4016,29 @@ static void lcd_move_select_axis() {
       }
 
     }
+
+    /**
+     * 
+     * "Settings Menu" 
+     * 
+     */
+
+     void lcd_settings_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Temperature (from control)
+      //
+      MENU_ITEM(submenu, MSG_TEMPERATURE, lcd_control_temperature_menu); 
+      
+      END_MENU();
+     }
+     
     /**
      *
      * "Print from SD" submenu

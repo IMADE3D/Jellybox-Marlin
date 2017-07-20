@@ -439,6 +439,9 @@
 #ifndef MSG_CUSTOM_EXTRUDE
   #define MSG_CUSTOM_EXTRUDE                 _UxGT("Custom length (mm)")
 #endif
+#ifndef MSG_SETTINGS
+  #define MSG_SETTINGS                 _UxGT("Setting")
+#endif
 #ifndef MSG_MOVE_AXIS
   #define MSG_MOVE_AXIS                   _UxGT("Move XYZ axis")
 #endif
