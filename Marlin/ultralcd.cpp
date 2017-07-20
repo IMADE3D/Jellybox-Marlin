@@ -125,6 +125,7 @@ uint16_t max_display_update_time = 0;
   void lcd_settings_menu();
   void lcd_factory_reset();
   void lcd_control_temperature_menu();
+  void lcd_support_menu();
   void lcd_control_temperature_preheat_material1_settings_menu();
   void lcd_control_temperature_preheat_material2_settings_menu();
   void lcd_control_temperature_preheat_material3_settings_menu();
@@ -965,6 +966,11 @@ void kill_screen(const char* lcd_msg) {
     //
     MENU_ITEM(submenu, MSG_SETTINGS, lcd_settings_menu);
 
+    //
+    // Support Menu
+    //
+    MENU_ITEM(submenu, MSG_SUPPORT, lcd_support_menu);
+    
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
         if (card.isFileOpen()) {
@@ -4246,6 +4252,30 @@ static void lcd_move_select_axis() {
     }
 
     /**
+     * 
+     * Support Menu
+     * 
+     */
+
+     void lcd_support_menu(){
+       START_MENU();
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // About this jellybox
+      //
+      MENU_ITEM(submenu , MSG_ABOUT_JELLYBOX , lcd_info_menu);
+
+      STATIC_ITEM("docs.imade3d.com");
+      STATIC_ITEM("forum.imade3d.com");
+      STATIC_ITEM("imade3d.com/support");
+      
+       END_MENU();
+     }
+    /**
      *
      * "About Printer" submenu
      *
@@ -4255,7 +4285,7 @@ static void lcd_move_select_axis() {
       MENU_BACK(MSG_MAIN);
       MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, lcd_info_printer_menu);        // Printer Info >
       MENU_ITEM(submenu, MSG_INFO_BOARD_MENU, lcd_info_board_menu);            // Board Info >
-      MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, lcd_info_thermistors_menu); // Thermistors >
+      //MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, lcd_info_thermistors_menu); // Thermistors >
       #if ENABLED(PRINTCOUNTER)
         MENU_ITEM(submenu, MSG_INFO_STATS_MENU, lcd_info_stats_menu);          // Printer Statistics >
       #endif

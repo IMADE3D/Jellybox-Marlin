@@ -412,6 +412,12 @@
 #ifndef MSG_UBL_STEP_BY_STEP_MENU
   #define MSG_UBL_STEP_BY_STEP_MENU           _UxGT("Step-By-Step UBL")
 #endif
+#ifndef MSG_SUPPORT
+  #define MSG_SUPPORT                         _UxGT("Support")
+#endif
+#ifndef MSG_ABOUT_JELLYBOX
+  #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBox")
+#endif
 #ifndef MSG_MAINTENANCE
   #define MSG_MAINTENANCE                       _UxGT("Maintenance")
 #endif
