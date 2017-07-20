@@ -3851,34 +3851,7 @@ void kill_screen(const char* lcd_msg) {
       END_MENU();
     }
 
-    /**
-     * 
-     * "Extrude" > Maintenance Menu
-     * 
-     */
-    void lcd_extrude_menu(){
-      START_MENU();
-      
-      //
-      // ^ Main
-      //
-      MENU_BACK(MSG_BACK);
-
-      if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
-        STATIC_ITEM("-----------------" );
-        STATIC_ITEM("Please set and wait ");
-        STATIC_ITEM("for Nozzle to reach");
-        STATIC_ITEM("extruding temperature");
-      }
-      else{
-        MENU_ITEM(gcode, MSG_EXTRUDE_PFIVE, PSTR("G1 E0.5"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_TEN, PSTR("G1 E10"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_FIFTY, PSTR("G1 E50"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_HUNDRED, PSTR("G1 E100"));
-      }
-      
-      END_MENU();
-    }
+ 
 
   /**
  *
@@ -3928,6 +3901,11 @@ static void lcd_move_z_1mm() {
   move_menu_scale = 1.0;
   _lcd_move(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
 }
+static void lcd_move_e_1mm() {
+  move_menu_scale = .5;
+  _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, -200, 200);
+}
+ 
      /**
    *
    * "Move axis" submenu
@@ -3951,6 +3929,35 @@ static void lcd_move_select_axis() {
   END_MENU();
 }
 
+   /**
+     * 
+     * "Extrude" > Maintenance Menu
+     * 
+     */
+    void lcd_extrude_menu(){
+      START_MENU();
+      
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
+        STATIC_ITEM("-----------------" );
+        STATIC_ITEM("Please set and wait ");
+        STATIC_ITEM("for Nozzle to reach");
+        STATIC_ITEM("extruding temperature");
+      }
+      else{
+        MENU_ITEM(gcode, MSG_EXTRUDE_PFIVE, PSTR("G1 E0.5"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_TEN, PSTR("G1 E10"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_FIFTY, PSTR("G1 E50"));
+        MENU_ITEM(gcode, MSG_EXTRUDE_HUNDRED, PSTR("G1 E100"));
+        MENU_ITEM(submenu,MSG_CUSTOM_EXTRUDE, lcd_move_e_1mm);
+      }
+      
+      END_MENU();
+    }
     /**
      * 
      * "Danger Zone" > Maintenance
