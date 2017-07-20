@@ -2563,7 +2563,60 @@ void kill_screen(const char* lcd_msg) {
     }
 
   #endif // AUTO_BED_LEVELING_UBL
-
+  /**
+   *
+   * Preheat PLA > Preheat Nozzle
+   *
+   */
+  void cooldown(){
+    enqueue_and_echo_commands_P(PSTR("M104 S0"));
+    lcd_return_to_status();
+   }
+/**
+   *
+   * Preheat PLA > Preheat Nozzle
+   *
+   */
+  void preheat_pla(){
+    enqueue_and_echo_commands_P(PSTR("M104 S210"));
+    lcd_return_to_status();
+   }
+   
+    /**
+   *
+   * Preheat PET > Preheat Nozzle
+   *
+   */
+   void preheat_pet(){
+    enqueue_and_echo_commands_P(PSTR("M104 S235"));
+    lcd_return_to_status();
+   }
+   
+    /**
+   *
+   * Preheat FLEX > Preheat Nozzle
+   *
+   */
+   void preheat_flex(){
+    enqueue_and_echo_commands_P(PSTR("M104 S230"));
+    lcd_return_to_status();
+   }
+   
+    /**
+   *
+   * Preheat CUSTOM > Preheat Nozzle
+   *
+   */
+   void lcd_preheat_custom(){
+    START_MENU();
+    //
+    // ^ Main
+    //
+    MENU_BACK(MSG_MAIN);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    END_MENU();
+   }
+   
   /**
    *
    *"Preheat Nozzle" submenu
@@ -2577,29 +2630,36 @@ void kill_screen(const char* lcd_msg) {
     //
     MENU_BACK(MSG_MAIN);
 
-    #if TEMP_SENSOR_0 != 0
+    //
+    //Cooldown
+    //
 
-      //
-      // Cooldown
-      //
-      bool has_heat = false;
-      HOTEND_LOOP() if (thermalManager.target_temperature[HOTEND_INDEX]) { has_heat = true; break; }
-      if (has_heat) MENU_ITEM(function, MSG_COOLDOWN, lcd_cooldown);
+    MENU_ITEM(function, MSG_COOLDOWN, cooldown); 
 
-      //
-      // Preheat for Material 1 and 2
-      //
-      #if TEMP_SENSOR_1 != 0 || TEMP_SENSOR_2 != 0 || TEMP_SENSOR_3 != 0 || TEMP_SENSOR_4 != 0 || TEMP_SENSOR_BED != 0
-        MENU_ITEM(submenu, MSG_PREHEAT_1, lcd_preheat_m1_menu);
-        MENU_ITEM(submenu, MSG_PREHEAT_2, lcd_preheat_m2_menu);
-      #else
-        MENU_ITEM(function, MSG_PREHEAT_1, lcd_preheat_m1_e0_only);
-        MENU_ITEM(function, MSG_PREHEAT_2, lcd_preheat_m2_e0_only);
-      #endif
+    //
+    //Preheat PLA
+    //
 
-    #endif // TEMP_SENSOR_0 != 0
+    MENU_ITEM(function, MSG_PREHEAT_PLA, preheat_pla);
+
+    //
+    //Preheat PET
+    //
+    MENU_ITEM(function, MSG_PREHEAT_PET, preheat_pet);
+
+    //
+    //Preheat FLEX
+    //
+    MENU_ITEM(function, MSG_PREHEAT_FLEX, preheat_flex);
+
+    //
+    //Preheat Custom
+    //
+    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM, lcd_preheat_custom);
     END_MENU();
   }
+  
+  
   /**
    *
    * "Prepare" submenu

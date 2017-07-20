@@ -171,6 +171,21 @@
 #ifndef MSG_PREHEAT_NOZZLE
   #define MSG_PREHEAT_NOZZLE                  _UxGT("Preheat Nozzle")
 #endif
+#ifndef MSG_PREHEAT_PLA
+  #define MSG_PREHEAT_PLA                       _UxGT("PLA - 210C")
+#endif
+#ifndef MSG_PREHEAT_PET
+  #define MSG_PREHEAT_PET                       _UxGT("PET - 235C")
+#endif
+#ifndef MSG_PREHEAT_FLEX
+  #define MSG_PREHEAT_FLEX                      _UxGT("FLEX - 230C")
+#endif
+#ifndef MSG_PREHEAT_CUSTOM
+  #define MSG_PREHEAT_CUSTOM                      _UxGT("Custom - ?C")
+#endif
+#ifndef MSG_CUSTOM_TEMP
+  #define MSG_CUSTOM_TEMP                     _UxGT("Custom Temp")
+#endif
 #ifndef MSG_COOLDOWN
   #define MSG_COOLDOWN                        _UxGT("Cooldown")
 #endif
