@@ -121,6 +121,8 @@ uint16_t max_display_update_time = 0;
   void lcd_maintenence_menu();
   void lcd_move_select_axis();
   void lcd_extrude_menu();
+  void lcd_danger_zone();
+  void lcd_factory_reset();
   void lcd_control_temperature_menu();
   void lcd_control_temperature_preheat_material1_settings_menu();
   void lcd_control_temperature_preheat_material2_settings_menu();
@@ -3840,6 +3842,11 @@ void kill_screen(const char* lcd_msg) {
       // Test Auto Bed Level
       //
       MENU_ITEM(function, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level);
+
+      //
+      // Danger Zone
+      //
+      MENU_ITEM(submenu, MSG_DANGER_ZONE, lcd_danger_zone);
       
       END_MENU();
     }
@@ -3932,7 +3939,7 @@ static void lcd_move_select_axis() {
   //
   // ^ Set
   //
-  MENU_ITEM(back, MSG_BACK, lcd_set_menu);
+  MENU_ITEM(back, MSG_BACK, lcd_maintenance_menu);
   
   MENU_ITEM(submenu,"Move X", lcd_move_x_1mm);
 
@@ -3944,6 +3951,58 @@ static void lcd_move_select_axis() {
   END_MENU();
 }
 
+    /**
+     * 
+     * "Danger Zone" > Maintenance
+     * 
+     */
+    void lcd_danger_zone(){
+      START_MENU();
+      
+      //
+      // ^ Set
+      //
+      MENU_ITEM(back, MSG_BACK, lcd_maintenance_menu);
+
+      //
+      //Factory Reset
+      //
+      MENU_ITEM(submenu, MSG_FACTORY_RESET, lcd_factory_reset);
+      
+      END_MENU();
+    }
+
+     /**
+     * 
+     * "Factory Reset > Danger Zone> Maintenance
+     * 
+     */
+     int clicks = 0;
+    void lcd_factory_reset(){
+   
+      
+      START_MENU();
+      
+      //
+      // ^ Set
+      //
+      MENU_ITEM(back, MSG_BACK, lcd_danger_zone);
+
+      //
+      //Factory Reset
+      //
+      STATIC_ITEM("To erase all changed");
+      STATIC_ITEM("settings, hit button");
+      //STATIC_ITEM("for 5 seconds");
+     
+      
+      END_MENU();
+
+      if (lcd_clicked){
+        enqueue_and_echo_commands_P(PSTR("M502\nM500")); 
+      }
+
+    }
     /**
      *
      * "Print from SD" submenu

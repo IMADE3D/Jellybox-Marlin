@@ -412,9 +412,14 @@
 #ifndef MSG_UBL_STEP_BY_STEP_MENU
   #define MSG_UBL_STEP_BY_STEP_MENU           _UxGT("Step-By-Step UBL")
 #endif
-
 #ifndef MSG_MAINTENANCE
   #define MSG_MAINTENANCE                       _UxGT("Maintenance")
+#endif
+#ifndef MSG_DANGER_ZONE
+  #define MSG_DANGER_ZONE                       _UxGT("Danger Zone")
+#endif
+#ifndef MSG_FACTORY_RESET
+  #define MSG_FACTORY_RESET                       _UxGT("Factory Reset")
 #endif
 #ifndef MSG_EXTRUDE
   #define MSG_EXTRUDE                         _UxGT("Extrude")
