@@ -4036,6 +4036,11 @@ static void lcd_move_select_axis() {
       //
       MENU_ITEM(submenu, MSG_TEMPERATURE, lcd_control_temperature_menu); 
       
+      //
+      // X Homing Offset
+      //
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X homing offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
+      
       END_MENU();
      }
      
