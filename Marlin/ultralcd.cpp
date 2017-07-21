@@ -929,7 +929,7 @@ void kill_screen(const char* lcd_msg) {
     #endif
 
     if (planner.movesplanned() || IS_SD_PRINTING) {
-      MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
+      //MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
       //
       // Live Adjustments menu
       //
@@ -953,12 +953,12 @@ void kill_screen(const char* lcd_msg) {
         MENU_ITEM(submenu, MSG_PREHEAT_NOZZLE_AND_BED, lcd_preheat_nozzle_and_bed_menu);
       #endif 
       
-      MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+      //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
       #if ENABLED(DELTA_CALIBRATION_MENU)
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
       #endif
     }
-    MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
+    //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
     
     //
     //Maintenence Menu
@@ -999,9 +999,9 @@ void kill_screen(const char* lcd_msg) {
       }
     #endif // SDSUPPORT
 
-    #if ENABLED(LCD_INFO_MENU)
+    /*#if ENABLED(LCD_INFO_MENU)
       MENU_ITEM(submenu, MSG_INFO_MENU, lcd_info_menu);
-    #endif
+    #endif*/
 
     END_MENU();
   }
