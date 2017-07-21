@@ -474,7 +474,8 @@ uint16_t max_display_update_time = 0;
       #endif
 
       currentScreen = screen;
-      encoderPosition = encoder;
+      //encoderPosition = encoder;
+      encoderPosition = encoderTopLine;
       if (screen == lcd_status_screen) {
         defer_return_to_status = false;
         screen_history_depth = 0;
@@ -904,7 +905,10 @@ void kill_screen(const char* lcd_msg) {
 
   void lcd_main_menu() {
     START_MENU();
-    MENU_BACK(MSG_WATCH);
+    //
+    // ^ Status Screen
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_status_screen);
 
     #if ENABLED(CUSTOM_USER_MENUS)
       MENU_ITEM(submenu, MSG_USER_MENU, _lcd_user_menu);
@@ -1198,7 +1202,7 @@ void kill_screen(const char* lcd_msg) {
     //
     // ^ Main
     //
-    MENU_BACK(MSG_MAIN);
+    MENU_ITEM(back, MSG_BACK , lcd_main_menu);
 
     //
     // Babystep X:
@@ -2659,14 +2663,18 @@ void kill_screen(const char* lcd_msg) {
    */
    void lcd_preheat_custom(){
     START_MENU();
+    
     //
     // ^ Main
     //
-    MENU_BACK(MSG_MAIN);
+    MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
+    
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+   
     #if HAS_TEMP_BED
       MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
     #endif
+    
     END_MENU();
    }
    
@@ -2681,7 +2689,7 @@ void kill_screen(const char* lcd_msg) {
     //
     // ^ Main
     //
-    MENU_BACK(MSG_MAIN);
+    MENU_ITEM(back, MSG_BACK , lcd_main_menu);
     
     //
     //Cooldown
@@ -2724,7 +2732,7 @@ void kill_screen(const char* lcd_msg) {
     //
     // ^ Main
     //
-    MENU_BACK(MSG_MAIN);
+    MENU_ITEM(back, MSG_BACK , lcd_main_menu);
     
     //
     //Cooldown
@@ -3586,7 +3594,11 @@ void kill_screen(const char* lcd_msg) {
   // M203 / M205 Velocity options
   void lcd_control_motion_velocity_menu() {
     START_MENU();
-    MENU_BACK(MSG_MOTION);
+    
+    //
+    // ^ Main
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
     // M203 Max Feedrate
     MENU_ITEM_EDIT(float3, MSG_VMAX MSG_X, &planner.max_feedrate_mm_s[X_AXIS], 1, 999);
@@ -3622,7 +3634,11 @@ void kill_screen(const char* lcd_msg) {
   // M201 / M204 Accelerations
   void lcd_control_motion_acceleration_menu() {
     START_MENU();
-    MENU_BACK(MSG_MOTION);
+    
+    //
+    // ^ Main
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
     // M204 P Acceleration
     MENU_ITEM_EDIT(float5, MSG_ACC, &planner.acceleration, 10, 99000);
@@ -3661,7 +3677,11 @@ void kill_screen(const char* lcd_msg) {
   // M205 Jerk
   void lcd_control_motion_jerk_menu() {
     START_MENU();
-    MENU_BACK(MSG_MOTION);
+    
+    //
+    // ^ Main
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
     MENU_ITEM_EDIT(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990);
     MENU_ITEM_EDIT(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990);
@@ -3678,7 +3698,11 @@ void kill_screen(const char* lcd_msg) {
   // M92 Steps-per-mm
   void lcd_control_motion_steps_per_mm_menu() {
     START_MENU();
-    MENU_BACK(MSG_MOTION);
+    
+    //
+    // ^ Main
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_XSTEPS, &planner.axis_steps_per_mm[X_AXIS], 5, 9999, _planner_refresh_positioning);
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_YSTEPS, &planner.axis_steps_per_mm[Y_AXIS], 5, 9999, _planner_refresh_positioning);
@@ -3706,7 +3730,11 @@ void kill_screen(const char* lcd_msg) {
 
   void lcd_control_motion_menu() {
     START_MENU();
-    MENU_BACK(MSG_CONTROL);
+    
+    //
+    // ^ Main
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_settings_menu);
 
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
       MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
@@ -3835,7 +3863,7 @@ void kill_screen(const char* lcd_msg) {
       //
       // ^ Main
       //
-      MENU_BACK(MSG_MAIN);
+      MENU_ITEM(back, MSG_BACK , lcd_main_menu);
     
       //
       // Auto Home
@@ -3959,7 +3987,7 @@ static void lcd_move_select_axis() {
       //
       // ^ Main
       //
-      MENU_BACK(MSG_BACK);
+      MENU_ITEM(back, MSG_BACK , lcd_maintenance_menu);
 
       if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
         STATIC_ITEM("-----------------" );
@@ -4042,7 +4070,7 @@ static void lcd_move_select_axis() {
       //
       // ^ Main
       //
-      MENU_BACK(MSG_BACK);
+      MENU_ITEM(back, MSG_BACK , lcd_main_menu);
 
       //
       // Temperature (from control)
@@ -4072,7 +4100,12 @@ static void lcd_move_select_axis() {
       if (!lcdDrawUpdate && !lcd_clicked) return; // nothing to do (so don't thrash the SD card)
       const uint16_t fileCnt = card.getnrfilenames();
       START_MENU();
-      MENU_BACK(MSG_MAIN);
+      
+      //
+      // ^ Main
+      //
+      MENU_ITEM(back, MSG_BACK , lcd_main_menu);
+      
       card.getWorkDirName();
       if (card.filename[0] == '/') {
         #if !PIN_EXISTS(SD_DETECT)
@@ -4266,11 +4299,12 @@ static void lcd_move_select_axis() {
 
      void lcd_support_menu(){
        START_MENU();
+   
       //
       // ^ Main
       //
-      MENU_BACK(MSG_BACK);
-
+      MENU_ITEM(back, MSG_BACK , lcd_main_menu);
+      
       //
       // About this jellybox
       //
@@ -4289,7 +4323,12 @@ static void lcd_move_select_axis() {
      */
     void lcd_info_menu() {
       START_MENU();
-      MENU_BACK(MSG_MAIN);
+      
+      //
+      // ^ Main
+      //
+      MENU_ITEM(back, MSG_BACK , lcd_support_menu);
+      
       MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, lcd_info_printer_menu);        // Printer Info >
       MENU_ITEM(submenu, MSG_INFO_BOARD_MENU, lcd_info_board_menu);            // Board Info >
       //MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, lcd_info_thermistors_menu); // Thermistors >

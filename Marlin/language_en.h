@@ -34,7 +34,7 @@
   #define WELCOME_MSG                         MACHINE_NAME _UxGT(" ready.")
 #endif
 #ifndef MSG_BACK
-  #define MSG_BACK                            _UxGT("Back")
+  #define MSG_BACK                            _UxGT("Go Back")
 #endif
 #ifndef MSG_SD_INSERTED
   #define MSG_SD_INSERTED                     _UxGT("Card inserted")
