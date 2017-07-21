@@ -133,6 +133,9 @@ uint16_t max_display_update_time = 0;
   void lcd_control_motion_menu();
   void lcd_control_filament_menu();
 
+  int fanSpeed100;
+  int fanSpeed;
+  
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
       void lcd_info_stats_menu();
@@ -1190,7 +1193,16 @@ void kill_screen(const char* lcd_msg) {
     }
 
   #endif // ADVANCED_PAUSE_FEATURE
-
+/**
+ * 
+ * Update Fan Speed Function
+ * 
+ */
+ static void update_fan_speed() {
+  fanSpeed = (((255 * fanSpeed100) /100)+0.5);
+  //lcd_completion_feedback(settings.save()); 
+  //lcd_store_settings();
+}
   /**
    *
    * "Tune" submenu
@@ -1268,7 +1280,10 @@ void kill_screen(const char* lcd_msg) {
         #else
           #define MSG_1ST_FAN_SPEED MSG_FAN_SPEED
         #endif
-        MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_1ST_FAN_SPEED, &fanSpeeds[0], 0, 255);
+        //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_1ST_FAN_SPEED, &fanSpeeds[0], 0, 255);
+        //fanSpeed100 = int((fanSpeed * 100)/255);
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_1ST_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
+        fanSpeeds[0] = fanSpeed;
       #endif
       #if HAS_FAN1
         MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED " 2", &fanSpeeds[1], 0, 255);
@@ -3344,6 +3359,7 @@ void kill_screen(const char* lcd_msg) {
     #endif // PID_PARAMS_PER_HOTEND
 
   #endif // PIDTEMP
+
 
   /**
    *
