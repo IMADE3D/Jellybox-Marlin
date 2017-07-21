@@ -446,7 +446,10 @@
   #define MSG_CUSTOM_EXTRUDE                 _UxGT("Custom length (mm)")
 #endif
 #ifndef MSG_SETTINGS
-  #define MSG_SETTINGS                 _UxGT("Setting")
+  #define MSG_SETTINGS                 _UxGT("Settings")
+#endif
+#ifndef MSG_LIVE_ADJUSTMENTS
+  #define MSG_LIVE_ADJUSTMENTS           _UxGT("Live adjustments")
 #endif
 #ifndef MSG_MOVE_AXIS
   #define MSG_MOVE_AXIS                   _UxGT("Move XYZ axis")
@@ -747,6 +750,9 @@
 #endif
 #ifndef MSG_FIRST
   #define MSG_FIRST                           _UxGT("first")
+#endif
+#ifndef MSG_TWEAK_FIRST_LAYER
+  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Tweak 1st layer")
 #endif
 #ifndef MSG_ZPROBE_ZOFFSET
   #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z Offset")

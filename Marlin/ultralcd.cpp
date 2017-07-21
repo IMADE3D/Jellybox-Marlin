@@ -930,6 +930,10 @@ void kill_screen(const char* lcd_msg) {
 
     if (planner.movesplanned() || IS_SD_PRINTING) {
       MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
+      //
+      // Live Adjustments menu
+      //
+      MENU_ITEM(submenu, MSG_LIVE_ADJUSTMENTS, lcd_tune_menu);
     }
     else {
       //
@@ -1197,6 +1201,23 @@ void kill_screen(const char* lcd_msg) {
     MENU_BACK(MSG_MAIN);
 
     //
+    // Babystep X:
+    // Babystep Y:
+    // Babystep Z:
+    //
+    #if ENABLED(BABYSTEPPING)
+      #if ENABLED(BABYSTEP_XY)
+        MENU_ITEM(submenu, MSG_BABYSTEP_X, lcd_babystep_x);
+        MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
+      #endif
+      #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
+        MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_babystep_zoffset);
+      #else
+        MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
+      #endif
+    #endif
+    
+    //
     // Speed:
     //
     MENU_ITEM_EDIT(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
@@ -1274,22 +1295,7 @@ void kill_screen(const char* lcd_msg) {
       #endif // EXTRUDERS > 2
     #endif // EXTRUDERS > 1
 
-    //
-    // Babystep X:
-    // Babystep Y:
-    // Babystep Z:
-    //
-    #if ENABLED(BABYSTEPPING)
-      #if ENABLED(BABYSTEP_XY)
-        MENU_ITEM(submenu, MSG_BABYSTEP_X, lcd_babystep_x);
-        MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
-      #endif
-      #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-        MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
-      #else
-        MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
-      #endif
-    #endif
+
 
     //
     // Change filament
@@ -1350,6 +1356,7 @@ void kill_screen(const char* lcd_msg) {
 
   constexpr int16_t heater_maxtemp[HOTENDS] = ARRAY_BY_HOTENDS(HEATER_0_MAXTEMP, HEATER_1_MAXTEMP, HEATER_2_MAXTEMP, HEATER_3_MAXTEMP, HEATER_4_MAXTEMP);
 
+  
   /**
    *
    * "Prepare" submenu items
