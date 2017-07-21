@@ -477,8 +477,8 @@ uint16_t max_display_update_time = 0;
       #endif
 
       currentScreen = screen;
-      //encoderPosition = encoder;
-      encoderPosition = encoderTopLine;
+      encoderPosition = encoder;
+      //encoderPosition = encoderTopLine;
       if (screen == lcd_status_screen) {
         defer_return_to_status = false;
         screen_history_depth = 0;
@@ -549,7 +549,8 @@ uint16_t max_display_update_time = 0;
       --screen_history_depth;
       lcd_goto_screen(
         screen_history[screen_history_depth].menu_function,
-        screen_history[screen_history_depth].encoder_position
+        //screen_history[screen_history_depth].encoder_position
+        encoderTopLine
       );
     }
     else
@@ -4071,6 +4072,7 @@ static void lcd_move_select_axis() {
       if (lcd_clicked){
         enqueue_and_echo_commands_P(PSTR("M502\nM500")); 
       }
+
 
     }
 
