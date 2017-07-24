@@ -4048,7 +4048,46 @@ static void lcd_move_select_axis() {
      * "Factory Reset > Danger Zone> Maintenance
      * 
      */
-     int clicks = 0;
+     
+
+
+     /**
+      * 
+      * Function for holding button; holdTime = approximate number of seconds to hold button before function is run
+      * 
+      */
+
+      float NewClickTime;
+      float OldClickTime;
+      float TimeBetweenClick;
+      int clicks = 0;
+           
+      void buttonHold(int holdTime){
+        
+        if (lcd_clicked){
+         
+          NewClickTime = millis();
+          TimeBetweenClick = NewClickTime - OldClickTime;
+          OldClickTime = NewClickTime;
+
+          if (TimeBetweenClick < 600){
+            clicks = clicks +1;
+            //buzzer.tone(1,1);
+          }
+          else{
+            clicks = 0;
+          }
+          
+        }
+
+        if (clicks==(1.6*holdTime)){
+           buzzer.tone(1000,1000);
+           enqueue_and_echo_commands_P(PSTR("M502\nM500"));
+           clicks = 0;
+         }
+
+      }
+    
     void lcd_factory_reset(){
    
       
@@ -4069,10 +4108,10 @@ static void lcd_move_select_axis() {
       
       END_MENU();
 
-      if (lcd_clicked){
+      /*if (lcd_clicked){
         enqueue_and_echo_commands_P(PSTR("M502\nM500")); 
-      }
-
+      }*/
+     buttonHold(5);
 
     }
 
