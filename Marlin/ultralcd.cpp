@@ -4103,7 +4103,7 @@ static void lcd_move_select_axis() {
       //
       STATIC_ITEM("To erase all changed");
       STATIC_ITEM("settings, hit button");
-      //STATIC_ITEM("for 5 seconds");
+      STATIC_ITEM("for 5 seconds");
      
       
       END_MENU();
