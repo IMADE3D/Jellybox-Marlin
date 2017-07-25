@@ -1032,7 +1032,7 @@ void kill_screen(const char* lcd_msg) {
       lcd_return_to_status();
     }
   #endif
-
+  
   #if ENABLED(BABYSTEPPING)
 
     void _lcd_babystep(const AxisEnum axis, const char* msg) {
@@ -1783,6 +1783,7 @@ void kill_screen(const char* lcd_msg) {
     static void lcd_store_settings()   { lcd_completion_feedback(settings.save()); }
     static void lcd_load_settings()    { lcd_completion_feedback(settings.load()); }
   #endif
+
 
   #if HAS_BED_PROBE && DISABLED(BABYSTEP_ZPROBE_OFFSET)
     static void lcd_refresh_zprobe_zoffset() { refresh_zprobe_zoffset(); }
@@ -2623,6 +2624,9 @@ void kill_screen(const char* lcd_msg) {
     }
 
   #endif // AUTO_BED_LEVELING_UBL
+ 
+
+  
   /**
    *
    * Preheat PLA > Preheat Nozzle
@@ -3531,7 +3535,28 @@ void kill_screen(const char* lcd_msg) {
      //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE, "", &autotune_temp[0], 150, heater_maxtemp[0] - 15, lcd_autotune_callback_E, 0);
      MENU_ITEM(submenu, MSG_EDIT_PID, lcd_edit_pid);
           
-     //STATIC_ITEM(MSG_PID_VALUES);
+     STATIC_ITEM(MSG_PID_VALUES);
+     //STATIC_ITEM(MSG_INFO_PRINT_COUNT ": ", false, false, itostr3left(stats.totalPrints));
+     //STATIC_ITEM(MSG_INFO_PRINT_LONGEST ": ", false, false);                                        // Longest job time:
+       // STATIC_ITEM("", false, false, buffer);                                                         // 99y 364d 23h 59m 59s
+
+        //sprintf_P(buffer, PSTR("%ld.%im"), long(stats.filamentUsed / 1000), int16_t(stats.filamentUsed / 100) % 10);
+     //#define MSGTHING _UxGT(ftostr4sign(raw_Ki))
+     STATIC_ITEM("P:" , false, false, ftostr52sign(PID_PARAM(Kp,0))); 
+     STATIC_ITEM("I:" , false, false, ftostr52sign(raw_Ki)); 
+     STATIC_ITEM("D:" , false, false, ftostr52sign(raw_Kd)); 
+     //ftostr4sign
+     //ftostr52sign
+     //sprintf_P(buffer, PSTR("%id %ih %im %is"), d, h, m, s);
+     //char buffer[21];
+     //const char kp = ftostr52sign(PID_PARAM(Kp,0));
+     //STATIC_ITEM(MSG_PID_VALUES, false, false); 
+     //STATIC_ITEM("", false, false, buffer); 
+     //sprintf(buffer, kp);
+     //sprintf_P(buffer, PSTR("P:%s I:%s"), ftostr4sign(PID_PARAM(Kp,0)) , ftostr4sign(raw_Ki));
+     //sprintf_P(buffer, PSTR("P:%s I:%s D:%s"), ftostr52sign(PID_PARAM(Kp,0)) , "1.3", "122.0");
+     //sprintf_P(buffer, PSTR("I:%s"), ftostr52sign(raw_Ki));
+     //sprintf_P(buffer, PSTR("D:%s"), ftostr52sign(raw_Kd));
      //char words = raw_Ki;
      //int ki = 8;//raw_Ki;
      //String words = ftostr52sign(raw_Ki);
