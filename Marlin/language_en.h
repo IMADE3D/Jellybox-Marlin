@@ -448,6 +448,15 @@
 #ifndef MSG_SETTINGS
   #define MSG_SETTINGS                 _UxGT("Settings")
 #endif
+#ifndef MSG_PID_TUNING
+  #define MSG_PID_TUNING                 _UxGT("PID Tuning")
+#endif
+#ifndef MSG_EDIT_PID
+  #define MSG_EDIT_PID                 _UxGT("Edit PID Values")
+#endif
+#ifndef MSG_PID_VALUES
+  #define MSG_PID_VALUES                 _UxGT("Current PID values:                ")
+#endif
 #ifndef MSG_LIVE_ADJUSTMENTS
   #define MSG_LIVE_ADJUSTMENTS           _UxGT("Live adjustments")
 #endif
@@ -524,13 +533,13 @@
   #define MSG_OFF                             _UxGT("Off")
 #endif
 #ifndef MSG_PID_P
-  #define MSG_PID_P                           _UxGT("PID-P")
+  #define MSG_PID_P                           _UxGT("PID-Kp")
 #endif
 #ifndef MSG_PID_I
-  #define MSG_PID_I                           _UxGT("PID-I")
+  #define MSG_PID_I                           _UxGT("PID-Ki")
 #endif
 #ifndef MSG_PID_D
-  #define MSG_PID_D                           _UxGT("PID-D")
+  #define MSG_PID_D                           _UxGT("PID-Kd")
 #endif
 #ifndef MSG_PID_C
   #define MSG_PID_C                           _UxGT("PID-C")
