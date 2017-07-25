@@ -742,6 +742,11 @@ void MarlinSettings::postprocess() {
         home_offset[Z_AXIS] -= DELTA_HEIGHT;
       #endif
 
+      #if ENABLED(JELLYBOX)
+        home_offset[X_AXIS] = 10;
+        home_offset[Y_AXIS] = 0.0;
+      #endif 
+      
       #if HOTENDS > 1
         // Skip hotend 0 which must be 0
         for (uint8_t e = 1; e < HOTENDS; e++)

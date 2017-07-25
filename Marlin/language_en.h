@@ -416,7 +416,7 @@
   #define MSG_SUPPORT                         _UxGT("Support")
 #endif
 #ifndef MSG_ABOUT_JELLYBOX
-  #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBox")
+  #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBOX")
 #endif
 #ifndef MSG_MAINTENANCE
   #define MSG_MAINTENANCE                       _UxGT("Maintenance")
@@ -503,7 +503,7 @@
   #define MSG_BED                             _UxGT("Bed")
 #endif
 #ifndef MSG_FAN_SPEED
-  #define MSG_FAN_SPEED                       _UxGT("Fan speed")
+  #define MSG_FAN_SPEED                       _UxGT("Fan speed (%)")
 #endif
 #ifndef MSG_FLOW
   #define MSG_FLOW                            _UxGT("Flow")
