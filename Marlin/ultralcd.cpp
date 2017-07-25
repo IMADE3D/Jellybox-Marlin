@@ -1000,7 +1000,7 @@ void kill_screen(const char* lcd_msg) {
         }
       }
       else {
-        MENU_ITEM(submenu, MSG_NO_CARD, lcd_sdcard_menu);
+        STATIC_ITEM("No SD card                ");
         #if !PIN_EXISTS(SD_DETECT)
           MENU_ITEM(gcode, MSG_INIT_SDCARD, PSTR("M21")); // Manually initialize the SD-card via user interface
         #endif
