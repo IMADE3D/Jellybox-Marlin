@@ -4474,7 +4474,7 @@ static void lcd_move_select_axis() {
       STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
       STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
       STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
-      #if ENABLED(AUTO_BED_LEVELING_3POINT)
+      /*#if ENABLED(AUTO_BED_LEVELING_3POINT)
         STATIC_ITEM(MSG_3POINT_LEVELING, true);                        // 3-Point Leveling
       #elif ENABLED(AUTO_BED_LEVELING_LINEAR)
         STATIC_ITEM(MSG_LINEAR_LEVELING, true);                        // Linear Leveling
@@ -4484,7 +4484,7 @@ static void lcd_move_select_axis() {
         STATIC_ITEM(MSG_UBL_LEVELING, true);                           // Unified Bed Leveling
       #elif ENABLED(MESH_BED_LEVELING)
         STATIC_ITEM(MSG_MESH_LEVELING, true);                          // Mesh Leveling
-      #endif
+      #endif*/
       END_SCREEN();
     }
 
