@@ -175,16 +175,16 @@
   #define MSG_PREHEAT_NOZZLE_AND_BED          _UxGT("Preheat bed & nozzle")
 #endif
 #ifndef MSG_PREHEAT_PLA
-  #define MSG_PREHEAT_PLA                       _UxGT("PLA - 210C")
+  #define MSG_PREHEAT_PLA                       _UxGT("      PLA - 210C")
 #endif
 #ifndef MSG_PREHEAT_PET
-  #define MSG_PREHEAT_PET                       _UxGT("PET - 235C")
+  #define MSG_PREHEAT_PET                       _UxGT("     PETG - 235C")
 #endif
 #ifndef MSG_PREHEAT_FLEX
-  #define MSG_PREHEAT_FLEX                      _UxGT("FLEX - 230C")
+  #define MSG_PREHEAT_FLEX                      _UxGT("     FLEX - 230C")
 #endif
 #ifndef MSG_PREHEAT_CUSTOM
-  #define MSG_PREHEAT_CUSTOM                    _UxGT("Custom - ?C")
+  #define MSG_PREHEAT_CUSTOM                    _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_COOLDOWN_AND_BED
   #define MSG_COOLDOWN_AND_BED                  _UxGT("Cooldown - 0/0C")
@@ -202,13 +202,13 @@
   #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("Custom - ?/?C")
 #endif
 #ifndef MSG_CUSTOM_TEMP
-  #define MSG_CUSTOM_TEMP                     _UxGT("Custom Temp")
+  #define MSG_CUSTOM_TEMP                     _UxGT("Custom temp")
 #endif
 #ifndef MSG_CUSTOM_BED_TEMP
   #define MSG_CUSTOM_BED_TEMP                 _UxGT("Custom Bed Temp")
 #endif
 #ifndef MSG_COOLDOWN
-  #define MSG_COOLDOWN                        _UxGT("Cooldown - 0C")
+  #define MSG_COOLDOWN                        _UxGT(" Cooldown - 0C")
 #endif
 #ifndef MSG_SWITCH_PS_ON
   #define MSG_SWITCH_PS_ON                    _UxGT("Switch power on")
