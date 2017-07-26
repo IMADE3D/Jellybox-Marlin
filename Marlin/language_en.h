@@ -491,16 +491,16 @@
   #define MSG_MOVE_10MM                       _UxGT("Move 10mm")
 #endif
 #ifndef MSG_SPEED
-  #define MSG_SPEED                           _UxGT("Speed")
+  #define MSG_SPEED                           _UxGT("Speed (%)")
 #endif
 #ifndef MSG_BED_Z
   #define MSG_BED_Z                           _UxGT("Bed Z")
 #endif
 #ifndef MSG_NOZZLE
-  #define MSG_NOZZLE                          _UxGT("Nozzle")
+  #define MSG_NOZZLE                          _UxGT("Nozzle (C)")
 #endif
 #ifndef MSG_BED
-  #define MSG_BED                             _UxGT("Bed")
+  #define MSG_BED                             _UxGT("Bed (C)")
 #endif
 #ifndef MSG_FAN_SPEED
   #define MSG_FAN_SPEED                       _UxGT("Fan speed (%)")
