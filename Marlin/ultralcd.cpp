@@ -705,11 +705,11 @@ void kill_screen(const char* lcd_msg) {
   }
 
   void lcd_completion_feedback(const bool good/*=true*/) {
-    if (good) {
+    /*if (good) {
       lcd_buzz(100, 659);
       lcd_buzz(100, 698);
     }
-    else lcd_buzz(20, 440);
+    else lcd_buzz(20, 440);*/
   }
 
   inline void line_to_current_z() {
