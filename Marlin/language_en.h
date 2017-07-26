@@ -434,34 +434,43 @@
   #define MSG_EXTRUDE_PFIVE                   _UxGT("0.5 mm")
 #endif
 #ifndef MSG_EXTRUDE_TEN
-  #define MSG_EXTRUDE_TEN                  _UxGT("10 mm")
-#endif
+  #define MSG_EXTRUDE_TEN                     _UxGT("10 mm")
+#endif 
 #ifndef MSG_EXTRUDE_FIFTY
-  #define MSG_EXTRUDE_FIFTY                  _UxGT("50 mm")
+  #define MSG_EXTRUDE_FIFTY                   _UxGT("50 mm")
 #endif
 #ifndef MSG_EXTRUDE_HUNDRED
   #define MSG_EXTRUDE_HUNDRED                 _UxGT("100 mm")
 #endif
 #ifndef MSG_CUSTOM_EXTRUDE
-  #define MSG_CUSTOM_EXTRUDE                 _UxGT("Custom length (mm)")
+  #define MSG_CUSTOM_EXTRUDE                  _UxGT("Custom length (mm)")
 #endif
 #ifndef MSG_SETTINGS
-  #define MSG_SETTINGS                 _UxGT("Settings")
+  #define MSG_SETTINGS                        _UxGT("Settings")
 #endif
 #ifndef MSG_PID_TUNING
-  #define MSG_PID_TUNING                 _UxGT("PID Tuning")
+  #define MSG_PID_TUNING                      _UxGT("PID Tuning")
+#endif
+#ifndef MSG_START_PID_AUTOTUNE
+  #define MSG_START_PID_AUTOTUNE              _UxGT("Start PID Autotune")
+#endif
+#ifndef MSG_ABORT_PID_AUTOTUNE
+  #define MSG_ABORT_PID_AUTOTUNE              _UxGT("Abort PID Autotune")
+#endif
+#ifndef MSG_RETURN_TO_MAIN
+  #define MSG_RETURN_TO_MAIN                  _UxGT("Return to main menu")
 #endif
 #ifndef MSG_EDIT_PID
-  #define MSG_EDIT_PID                 _UxGT("Edit PID Values")
+  #define MSG_EDIT_PID                        _UxGT("Edit PID Values")
 #endif
 #ifndef MSG_PID_VALUES
-  #define MSG_PID_VALUES                 _UxGT("Current PID values:                ")
+  #define MSG_PID_VALUES                      _UxGT("Current PID values:                ")
 #endif
 #ifndef MSG_LIVE_ADJUSTMENTS
-  #define MSG_LIVE_ADJUSTMENTS           _UxGT("Live adjustments")
+  #define MSG_LIVE_ADJUSTMENTS                _UxGT("Live adjustments")
 #endif
 #ifndef MSG_MOVE_AXIS
-  #define MSG_MOVE_AXIS                   _UxGT("Move XYZ axis")
+  #define MSG_MOVE_AXIS                       _UxGT("Move XYZ axis")
 #endif
 #ifndef MSG_MOVING
   #define MSG_MOVING                          _UxGT("Moving...")

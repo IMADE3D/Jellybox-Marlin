@@ -26,6 +26,7 @@
 #include "language.h"
 #include "cardreader.h"
 #include "temperature.h"
+//#include "temperature.cpp"
 #include "planner.h"
 #include "stepper.h"
 #include "configuration_store.h"
@@ -33,7 +34,7 @@
 #if HAS_BUZZER && DISABLED(LCD_USE_I2C_BUZZER)
   #include "buzzer.h"
 #endif
-
+//int cycles = 0;
 #if ENABLED(PRINTCOUNTER)
   #include "printcounter.h"
   #include "duration_t.h"
@@ -134,6 +135,10 @@ uint16_t max_display_update_time = 0;
   void lcd_control_temperature_preheat_material4_settings_menu();
   void lcd_control_motion_menu();
   void lcd_control_filament_menu();
+  void lcd_pid_autotune();
+  void lcd_pid_autotune_running();
+  void lcd_pid_autotune_aborted();
+  void lcd_pid_autotune_finished();
 
   int fanSpeed100;
   int fanSpeed;
@@ -720,7 +725,7 @@ void kill_screen(const char* lcd_msg) {
     current_position[Z_AXIS] = z;
     line_to_current_z();
   }
-
+  
   #if ENABLED(SDSUPPORT)
 
     void lcd_sdcard_pause() {
@@ -745,6 +750,7 @@ void kill_screen(const char* lcd_msg) {
     void lcd_sdcard_stop() {
       card.stopSDPrint();
       clear_command_queue();
+      //enqueue_and_echo_commands_P(PSTR("G28 X Y"));
       quickstop_stepper();
       print_job_timer.stop();
       thermalManager.disable_all_heaters();
@@ -753,11 +759,13 @@ void kill_screen(const char* lcd_msg) {
       #endif
       wait_for_heatup = false;
       lcd_setstatusPGM(PSTR(MSG_PRINT_ABORTED), -1);
-      lcd_return_to_status();
+      lcd_return_to_status();      
     }
 
-  #endif // SDSUPPORT
+    
 
+  #endif // SDSUPPORT
+    
   #if ENABLED(MENU_ITEM_CASE_LIGHT)
 
     extern int case_light_brightness;
@@ -992,7 +1000,7 @@ void kill_screen(const char* lcd_msg) {
             MENU_ITEM(function, MSG_PAUSE_PRINT, lcd_sdcard_pause);
           else
             MENU_ITEM(function, MSG_RESUME_PRINT, lcd_sdcard_resume);
-          MENU_ITEM(function, MSG_STOP_PRINT, lcd_sdcard_stop);
+            MENU_ITEM(function, MSG_STOP_PRINT, lcd_sdcard_stop);
         }
         else {
           MENU_ITEM(submenu, MSG_CARD_MENU, lcd_sdcard_menu);
@@ -3487,6 +3495,8 @@ void kill_screen(const char* lcd_msg) {
     // PID-P E4, PID-I E4, PID-D E4, PID-C E4, PID Autotune E4
     // PID-P E5, PID-I E5, PID-D E5, PID-C E5, PID Autotune E5
     //
+    MENU_ITEM(submenu, MSG_PID_AUTOTUNE, lcd_pid_autotune);
+    
     #if ENABLED(PIDTEMP)
 
       #if ENABLED(PID_AUTOTUNE_MENU)
@@ -3571,7 +3581,121 @@ void kill_screen(const char* lcd_msg) {
      //u8g.print('%');
     END_MENU();
    }
+  /*
+   * 
+   * PID Autotune Menu 1
+   * 
+   */
+    void lcd_pid_autotune(){
+      START_MENU();
 
+      //
+      // ^ PID Tuning
+      //
+      MENU_ITEM(back, MSG_BACK , lcd_pid_tuning);
+      
+      //
+      // Start PID autotune 
+      //
+      MENU_ITEM(submenu, MSG_START_PID_AUTOTUNE, lcd_pid_autotune_running);
+
+      STATIC_ITEM("-- ? -- The PID            ");
+      STATIC_ITEM("Autotune procedure         ");
+      STATIC_ITEM("takes several              ");
+      STATIC_ITEM("minutes. It lets the       ");
+      STATIC_ITEM("hotend heat up and         ");
+      STATIC_ITEM("cool down multiple         ");
+      STATIC_ITEM("times, and uses the        ");
+      STATIC_ITEM("data to optimize the       ");
+      STATIC_ITEM("heating performance.       ");
+      STATIC_ITEM("The results will           ");
+      STATIC_ITEM("overwrite the old PID      ");
+      STATIC_ITEM("settings.                  ");
+      
+      END_MENU();
+    }
+   
+  /*
+   * 
+   * PID Autotune Menu 2 - running
+   * 
+   */
+    void lcd_pid_autotune_running(){
+      enqueue_and_echo_commands_P(PSTR("M303 S225 C5 U1"));
+      START_MENU();
+
+      //
+      // ^ PID Tuning
+      //
+      MENU_ITEM(back, MSG_BACK , lcd_pid_autotune);
+      
+      //
+      // Abort PID autotune 
+      //
+      MENU_ITEM(submenu, MSG_ABORT_PID_AUTOTUNE, lcd_pid_autotune_aborted);
+
+      STATIC_ITEM("-- ! -- Don't touch        ");
+      STATIC_ITEM("the hotend. PID            ");
+      STATIC_ITEM("Autotune in progress       ");
+      //cycles;
+      //STATIC_ITEM("Autotune progress:        ");
+      //STATIC_ITEM("_ out of 8 heat-up         ");
+      //STATIC_ITEM("cycles finished.           ");
+      char buffer[21]; 
+     STATIC_ITEM("", false, false, buffer); 
+     sprintf_P(buffer, PSTR("%s out of 8 heat-up"), PIDcycles);
+      
+      
+      
+
+      END_MENU();
+    }   
+
+  /*
+   * 
+   * PID Autotune Menu 3 - aborted
+   * 
+   */
+    void lcd_pid_autotune_aborted(){
+      //clear_command_queue();
+      START_MENU();
+
+      //
+      // ^ PID Tuning
+      //
+      MENU_ITEM(back, MSG_BACK , lcd_pid_tuning);
+
+      STATIC_ITEM("PID Autotune aborted       ");
+      STATIC_ITEM("PID values not             ");
+      STATIC_ITEM("updated                    ");
+
+      END_MENU();
+    }   
+
+  /*
+   * 
+   * PID Autotune Menu 4 - finished
+   * 
+   */
+    void lcd_pid_autotune_finished(){
+      
+      START_MENU();
+
+      //
+      // ^ PID Tuning
+      //
+      MENU_ITEM(back, MSG_BACK , lcd_pid_tuning);
+
+      STATIC_ITEM("PID values calculated      ");
+      STATIC_ITEM("and saved to memory!       ");
+
+      //
+      // ^ Main
+      //
+      MENU_ITEM(back, MSG_RETURN_TO_MAIN , lcd_main_menu);
+
+      END_MENU();
+    }       
    /*
     * 
     * Edit PID values menu
