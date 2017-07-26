@@ -31,7 +31,7 @@
 #define LANGUAGE_EN_H
 
 #ifndef WELCOME_MSG
-  #define WELCOME_MSG                         MACHINE_NAME _UxGT("is ready.")
+  #define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
 #endif
 #ifndef MSG_BACK
   #define MSG_BACK                            _UxGT("Go Back")
