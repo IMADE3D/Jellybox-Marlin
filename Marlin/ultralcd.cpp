@@ -3681,9 +3681,24 @@ void kill_screen(const char* lcd_msg) {
    * 
    */
     void lcd_pid_autotune_aborted(){
-      //clear_command_queue();
+      //lcd_sdcard_stop();
+      card.stopSDPrint();
+      clear_command_queue();
+      //enqueue_and_echo_commands_P(PSTR("G28 X Y"));
+      quickstop_stepper();
+      //print_job_timer.stop();
+      thermalManager.disable_all_heaters();
+      #if FAN_COUNT > 0
+        for (uint8_t i = 0; i < FAN_COUNT; i++) fanSpeeds[i] = 0;
+      #endif
+      wait_for_heatup = false;
+      lcd_setstatusPGM(PSTR("PID autotune aborted"), -1);
+      lcd_return_to_status();
+      //aborted = true;
+      //lcd_goto_screen(printaborted);     
+      enqueue_and_echo_commands_P(PSTR("M104 S0"));
       START_MENU();
-
+/*
       //
       // ^ PID Tuning
       //
@@ -3691,7 +3706,7 @@ void kill_screen(const char* lcd_msg) {
 
       STATIC_ITEM("PID Autotune aborted       ");
       STATIC_ITEM("PID values not             ");
-      STATIC_ITEM("updated                    ");
+      STATIC_ITEM("updated                    ");*/
 
       END_MENU();
     }   
@@ -4368,8 +4383,8 @@ static void lcd_move_select_axis() {
             clicks = 0;
           }
           
-        }
-
+        }    
+        
         if (clicks==(1.4*holdTime)){
            buzzer.tone(100,1000);
            enqueue_and_echo_commands_P(PSTR("M502\nM500"));
