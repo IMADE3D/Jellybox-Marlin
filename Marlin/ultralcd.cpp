@@ -4136,10 +4136,18 @@ static void lcd_move_select_axis() {
       MENU_ITEM(back, MSG_BACK , lcd_maintenance_menu);
 
       if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
-        STATIC_ITEM("-----------------" );
-        STATIC_ITEM("Please set and wait ");
-        STATIC_ITEM("for Nozzle to reach");
-        STATIC_ITEM("extruding temperature");
+        STATIC_ITEM("The nozzle is too              ");
+        STATIC_ITEM("cold. Please heat it           ");
+        STATIC_ITEM("up to at least 170C.           ");
+        STATIC_ITEM("========= ? =========          ");
+        STATIC_ITEM("Forcing filament into          ");
+        STATIC_ITEM("a cold nozzle will             ");
+        STATIC_ITEM("only lead to jamming           ");
+        STATIC_ITEM("and grinding. Your             ");
+        STATIC_ITEM("JellyBOX is                    ");
+        STATIC_ITEM("prohibited from even           ");
+        STATIC_ITEM("trying; for its own            ");
+        STATIC_ITEM("safety.                        ");
       }
       else{
         MENU_ITEM(gcode, MSG_EXTRUDE_PFIVE, PSTR("G1 E0.5"));
