@@ -818,7 +818,7 @@
   #define MSG_SHORT_MINUTE                    _UxGT("m") // One character only
 #endif
 #ifndef MSG_HEATING
-  #define MSG_HEATING                         _UxGT("Heating...")
+  #define MSG_HEATING                         _UxGT("Heating up...")
 #endif
 #ifndef MSG_HEATING_COMPLETE
   #define MSG_HEATING_COMPLETE                _UxGT("Heating done.")
