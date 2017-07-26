@@ -175,28 +175,28 @@
   #define MSG_PREHEAT_NOZZLE_AND_BED          _UxGT("Preheat bed & nozzle")
 #endif
 #ifndef MSG_PREHEAT_PLA
-  #define MSG_PREHEAT_PLA                       _UxGT("      PLA - 210C")
+  #define MSG_PREHEAT_PLA                       _UxGT("      PLA - 210"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_PET
-  #define MSG_PREHEAT_PET                       _UxGT("     PETG - 235C")
+  #define MSG_PREHEAT_PET                       _UxGT("     PETG - 235"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_FLEX
-  #define MSG_PREHEAT_FLEX                      _UxGT("     FLEX - 230C")
+  #define MSG_PREHEAT_FLEX                      _UxGT("     FLEX - 230"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_CUSTOM
   #define MSG_PREHEAT_CUSTOM                    _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_COOLDOWN_AND_BED
-  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown - 0/0C")
+  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown - 0/0"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_PLA_AND_BED 
-  #define MSG_PREHEAT_PLA_AND_BED               _UxGT("      PLA - 55/210C")
+  #define MSG_PREHEAT_PLA_AND_BED               _UxGT("      PLA - 55/210"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_PET_AND_BED 
-  #define MSG_PREHEAT_PET_AND_BED               _UxGT("     PETG - 55/235C")
+  #define MSG_PREHEAT_PET_AND_BED               _UxGT("     PETG - 55/235"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_FLEX_AND_BED 
-  #define MSG_PREHEAT_FLEX_AND_BED              _UxGT("     FLEX - 50/235C")
+  #define MSG_PREHEAT_FLEX_AND_BED              _UxGT("     FLEX - 50/230"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_CUSTOM_AND_BED 
   #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("   Custom - ?")
@@ -208,7 +208,7 @@
   #define MSG_CUSTOM_BED_TEMP                 _UxGT("Custom bed temp")
 #endif
 #ifndef MSG_COOLDOWN
-  #define MSG_COOLDOWN                        _UxGT(" Cooldown - 0C")
+  #define MSG_COOLDOWN                        _UxGT(" Cooldown - 0"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_SWITCH_PS_ON
   #define MSG_SWITCH_PS_ON                    _UxGT("Switch power on")
@@ -506,10 +506,10 @@
   #define MSG_BED_Z                           _UxGT("Bed Z")
 #endif
 #ifndef MSG_NOZZLE
-  #define MSG_NOZZLE                          _UxGT("Nozzle (C)")
+  #define MSG_NOZZLE                          _UxGT("Nozzle ("LCD_STR_DEGREE"C)")
 #endif
 #ifndef MSG_BED
-  #define MSG_BED                             _UxGT("Bed (C)")
+  #define MSG_BED                             _UxGT("Bed ("LCD_STR_DEGREE"C)")
 #endif
 #ifndef MSG_FAN_SPEED
   #define MSG_FAN_SPEED                       _UxGT("Fan speed (%)")

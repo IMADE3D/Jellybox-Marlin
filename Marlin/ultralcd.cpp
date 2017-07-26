@@ -4291,7 +4291,7 @@ static void lcd_move_select_axis() {
       if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
         STATIC_ITEM("The nozzle is too              ");
         STATIC_ITEM("cold. Please heat it           ");
-        STATIC_ITEM("up to at least 170C.           ");
+        STATIC_ITEM("up to at least 170"LCD_STR_DEGREE"C.           ");
         STATIC_ITEM("========= ? =========          ");
         STATIC_ITEM("Forcing filament into          ");
         STATIC_ITEM("a cold nozzle will             ");
