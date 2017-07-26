@@ -4230,10 +4230,21 @@ static void lcd_move_select_axis() {
       //
       //Factory Reset
       //
-      STATIC_ITEM("To erase all changed");
-      STATIC_ITEM("settings, hit button");
-      STATIC_ITEM("for 5 seconds");
-     
+      STATIC_ITEM("Press and hold the       ");
+      STATIC_ITEM("LCD knob for             ");
+      STATIC_ITEM("5 seconds to reset       ");
+      STATIC_ITEM("your JellyBOX            ");
+      STATIC_ITEM("========= ? =========    ");
+      STATIC_ITEM("Factory reset wipes      ");
+      STATIC_ITEM("the internal settings    ");
+      STATIC_ITEM("memory (EEPROM).         ");
+      STATIC_ITEM("Nothing will happen      ");
+      STATIC_ITEM("to your files on the     ");
+      STATIC_ITEM("SD card, but all         ");
+      STATIC_ITEM("settings, like PID or    ");
+      STATIC_ITEM("E-steps, will be         ");
+      STATIC_ITEM("reset to default         ");
+      STATIC_ITEM("values.                  ");
       
       END_MENU();
 
