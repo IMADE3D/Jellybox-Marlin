@@ -216,11 +216,12 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
   uint32_t Temperature::current_ADCKey_raw = 0;
   uint8_t Temperature::ADCKey_count = 0;
 #endif
-
+  //  int cycles = 0;
 #if HAS_PID_HEATING
 
   void Temperature::PID_autotune(float temp, int hotend, int ncycles, bool set_result/*=false*/) {
     float input = 0.0;
+    //cycles = 0;
     int cycles = 0;
     bool heating = true;
 
@@ -381,6 +382,7 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
               soft_pwm_amount_bed = (bias + d) >> 1;
             #endif
             cycles++;
+            //PIDcycles = cycles;
             min = temp;
           }
         }

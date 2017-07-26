@@ -139,6 +139,8 @@ uint16_t max_display_update_time = 0;
   void lcd_pid_autotune_running();
   void lcd_pid_autotune_aborted();
   void lcd_pid_autotune_finished();
+  void abortPrint();
+   void homeafterabort();
 
   int fanSpeed100;
   int fanSpeed;
@@ -725,7 +727,7 @@ void kill_screen(const char* lcd_msg) {
     current_position[Z_AXIS] = z;
     line_to_current_z();
   }
-  
+  bool aborted = false;
   #if ENABLED(SDSUPPORT)
 
     void lcd_sdcard_pause() {
@@ -759,13 +761,33 @@ void kill_screen(const char* lcd_msg) {
       #endif
       wait_for_heatup = false;
       lcd_setstatusPGM(PSTR(MSG_PRINT_ABORTED), -1);
-      lcd_return_to_status();      
+      lcd_return_to_status();
+      //aborted = true;
+      //lcd_goto_screen(printaborted);      
     }
 
     
 
   #endif // SDSUPPORT
-    
+ /*void abortPrint(){
+    lcd_sdcard_stop();
+    homeafterabort();
+  }
+
+ void homeafterabort(){
+    while (true) {
+    enqueue_and_echo_commands_P(PSTR("G28 X Y"));
+    break;
+    }
+    buzzer.tone(1000,1000);
+ }
+
+ void printaborted(){
+   enqueue_and_echo_commands_P(PSTR("G28 X Y"));
+   STATIC_ITEM("Homing Now");
+
+ }*/
+ 
   #if ENABLED(MENU_ITEM_CASE_LIGHT)
 
     extern int case_light_brightness;
@@ -1001,6 +1023,7 @@ void kill_screen(const char* lcd_msg) {
           else
             MENU_ITEM(function, MSG_RESUME_PRINT, lcd_sdcard_resume);
             MENU_ITEM(function, MSG_STOP_PRINT, lcd_sdcard_stop);
+            //MENU_ITEM(function, MSG_STOP_PRINT, abortPrint);
         }
         else {
           MENU_ITEM(submenu, MSG_CARD_MENU, lcd_sdcard_menu);
@@ -3641,9 +3664,9 @@ void kill_screen(const char* lcd_msg) {
       //STATIC_ITEM("Autotune progress:        ");
       //STATIC_ITEM("_ out of 8 heat-up         ");
       //STATIC_ITEM("cycles finished.           ");
-      char buffer[21]; 
-     STATIC_ITEM("", false, false, buffer); 
-     sprintf_P(buffer, PSTR("%s out of 8 heat-up"), PIDcycles);
+     // char buffer[21]; 
+     //STATIC_ITEM("", false, false, buffer); 
+     //sprintf_P(buffer, PSTR("%s out of 8 heat-up"), PIDcycles);
       
       
       
