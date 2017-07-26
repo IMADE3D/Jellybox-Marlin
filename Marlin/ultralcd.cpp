@@ -4209,8 +4209,8 @@ static void lcd_move_select_axis() {
           
         }
 
-           buzzer.tone(1000,1000);
         if (clicks==(1.4*holdTime)){
+           buzzer.tone(100,1000);
            enqueue_and_echo_commands_P(PSTR("M502\nM500"));
            clicks = 0;
          }
