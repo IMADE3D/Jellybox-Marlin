@@ -141,6 +141,7 @@ uint16_t max_display_update_time = 0;
   void lcd_pid_autotune_finished();
   void abortPrint();
    void homeafterabort();
+  void lcd_disable_steppers();
 
   int fanSpeed100;
   int fanSpeed;
@@ -979,7 +980,7 @@ void kill_screen(const char* lcd_msg) {
       //
       // Disable Steppers
       //
-      MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
+      MENU_ITEM(function, MSG_DISABLE_STEPPERS, lcd_disable_steppers);
       
       //
       //Preheat Nozzle Menu
@@ -2873,7 +2874,7 @@ void kill_screen(const char* lcd_msg) {
     //
     // Disable Steppers
     //
-    MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84"));
+    MENU_ITEM(function, MSG_DISABLE_STEPPERS, lcd_disable_steppers);
 
     //
     // Change filament
@@ -4145,6 +4146,11 @@ void kill_screen(const char* lcd_msg) {
        enqueue_and_echo_commands_P(PSTR("G29")); 
      }
 
+     void lcd_disable_steppers(){
+       enqueue_and_echo_commands_P(PSTR("M18"));
+       lcd_return_to_status();
+     }
+     
     /**
      * 
      * "maintenance Menu
@@ -4166,7 +4172,7 @@ void kill_screen(const char* lcd_msg) {
       //
       // Disable Steppers
       //
-      MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M84")); 
+      MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M18")); 
 
       //
       // Extrude Submenu
@@ -4349,7 +4355,7 @@ static void lcd_move_select_axis() {
       void buttonHold(int holdTime){
         
         if (lcd_clicked){
-         
+
           NewClickTime = millis();
           TimeBetweenClick = NewClickTime - OldClickTime;
           OldClickTime = NewClickTime;
