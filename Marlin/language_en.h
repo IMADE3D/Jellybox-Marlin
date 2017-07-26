@@ -187,25 +187,25 @@
   #define MSG_PREHEAT_CUSTOM                    _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_COOLDOWN_AND_BED
-  #define MSG_COOLDOWN_AND_BED                  _UxGT("Cooldown - 0/0C")
+  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown - 0/0C")
 #endif
 #ifndef MSG_PREHEAT_PLA_AND_BED 
-  #define MSG_PREHEAT_PLA_AND_BED               _UxGT("PLA - 210/55C")
+  #define MSG_PREHEAT_PLA_AND_BED               _UxGT("      PLA - 55/210C")
 #endif
 #ifndef MSG_PREHEAT_PET_AND_BED 
-  #define MSG_PREHEAT_PET_AND_BED                _UxGT("PET - 235/55C")
+  #define MSG_PREHEAT_PET_AND_BED               _UxGT("     PETG - 55/235C")
 #endif
 #ifndef MSG_PREHEAT_FLEX_AND_BED 
-  #define MSG_PREHEAT_FLEX_AND_BED               _UxGT("FLEX - 23/500C")
+  #define MSG_PREHEAT_FLEX_AND_BED              _UxGT("     FLEX - 50/235C")
 #endif
 #ifndef MSG_PREHEAT_CUSTOM_AND_BED 
-  #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("Custom - ?/?C")
+  #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_CUSTOM_TEMP
   #define MSG_CUSTOM_TEMP                     _UxGT("Custom temp")
 #endif
 #ifndef MSG_CUSTOM_BED_TEMP
-  #define MSG_CUSTOM_BED_TEMP                 _UxGT("Custom Bed Temp")
+  #define MSG_CUSTOM_BED_TEMP                 _UxGT("Custom bed temp")
 #endif
 #ifndef MSG_COOLDOWN
   #define MSG_COOLDOWN                        _UxGT(" Cooldown - 0C")
