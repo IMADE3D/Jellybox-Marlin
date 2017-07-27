@@ -187,7 +187,7 @@
   #define MSG_PREHEAT_CUSTOM                    _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_COOLDOWN_AND_BED
-  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown - 0/0"LCD_STR_DEGREE"C")
+  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown -  0/  0"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_PLA_AND_BED 
   #define MSG_PREHEAT_PLA_AND_BED               _UxGT("      PLA - 55/210"LCD_STR_DEGREE"C")
@@ -202,13 +202,13 @@
   #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_CUSTOM_TEMP
-  #define MSG_CUSTOM_TEMP                     _UxGT("Custom temp")
+  #define MSG_CUSTOM_TEMP                     _UxGT("Nozzle temp")
 #endif
 #ifndef MSG_CUSTOM_BED_TEMP
-  #define MSG_CUSTOM_BED_TEMP                 _UxGT("Custom bed temp")
+  #define MSG_CUSTOM_BED_TEMP                 _UxGT("Bed temp")
 #endif
 #ifndef MSG_COOLDOWN
-  #define MSG_COOLDOWN                        _UxGT(" Cooldown - 0"LCD_STR_DEGREE"C")
+  #define MSG_COOLDOWN                        _UxGT(" Cooldown -   0"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_SWITCH_PS_ON
   #define MSG_SWITCH_PS_ON                    _UxGT("Switch power on")
@@ -434,10 +434,10 @@
   #define MSG_EXTRUDE_PFIVE                   _UxGT("0.5 mm")
 #endif
 #ifndef MSG_EXTRUDE_TEN
-  #define MSG_EXTRUDE_TEN                     _UxGT("10 mm")
+  #define MSG_EXTRUDE_TEN                     _UxGT(" 10 mm")
 #endif 
 #ifndef MSG_EXTRUDE_FIFTY
-  #define MSG_EXTRUDE_FIFTY                   _UxGT("50 mm")
+  #define MSG_EXTRUDE_FIFTY                   _UxGT(" 50 mm")
 #endif
 #ifndef MSG_EXTRUDE_HUNDRED
   #define MSG_EXTRUDE_HUNDRED                 _UxGT("100 mm")
