@@ -3615,7 +3615,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       #if ENABLED(PID_AUTOTUNE_MENU)
        #define PID_MENU_ITEMS(ELABEL, eindex) \
           _PID_MENU_ITEMS(ELABEL, eindex); \
-          MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
+          //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
       #else
         #define PID_MENU_ITEMS(ELABEL, eindex) _PID_MENU_ITEMS(ELABEL, eindex)
       #endif
@@ -3734,7 +3734,14 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    * 
    */
     void lcd_pid_autotune_running(){
-      enqueue_and_echo_commands_P(PSTR("M303 S225 C5 U1"));
+      //enqueue_and_echo_commands_P(PSTR("M303 S225 C1 U1"));
+      lcd_setstatusPGM(PSTR("PID autotune in progress"), -1);
+      //enqueue_and_echo_commands_P(PSTR("G28"));
+      //autotune_temp[0];
+      //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
+      autotune_temp[0] = 225;
+      _lcd_autotune(0); 
+      lcd_return_to_status();
       START_MENU();
 
       //

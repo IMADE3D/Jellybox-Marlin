@@ -381,6 +381,48 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
             #else
               soft_pwm_amount_bed = (bias + d) >> 1;
             #endif
+            //char msg42[50];
+           // char buffer[10];
+           // string msg42;
+           //char msg42[8] = {'a', 'r', 'd', 'u', 'i', 'n', 'o', '\0'};
+            //char msg42 = "alsdjf";
+           // sprintf_P(msg42, PSTR("%i out of 8"), cycles);
+            //strcpy(msg42, msg42);
+                    //sprintf_P(buffer, PSTR("%ld.%im"), long(stats.filamentUsed / 1000), int16_t(stats.filamentUsed / 100) % 10);
+        //STATIC_ITEM(MSG_INFO_PRINT_FILAMENT ": ", false, false);                                       // Extruded total:
+        //STATIC_ITEM("", false, false, buffer);
+            //lcd_setstatusPGM(PSTR(ftostr52sign(cycles)), -1);
+            //lcd_setstatusPGM(PSTR("%s out of 8" msg42), -1);
+            //lcd_setstatusPGM(PSTR("I have no clue what I am doing"), -1);
+            switch (cycles) {
+             case 1:
+              lcd_setstatusPGM(PSTR("1 / 5 cycles complete"), -1);
+             break;
+             case 2:
+               lcd_setstatusPGM(PSTR("2 / 5 cycles complete"), -1);
+             break;
+             case 3:
+               lcd_setstatusPGM(PSTR("3 / 5 cycles complete"), -1);
+             break;
+             case 4:
+               lcd_setstatusPGM(PSTR("4 / 5 cycles complete"), -1);
+             break;
+             case 5:
+               lcd_setstatusPGM(PSTR("5 / 5 cycles complete"), -1);
+             break;
+             case 6:
+               lcd_setstatusPGM(PSTR("6 of 8 cycles complete"), -1);
+             break;
+             case 7:
+               lcd_setstatusPGM(PSTR("7 of 8 cycles complete"), -1);
+             break;
+             case 8:
+               lcd_setstatusPGM(PSTR("8 of 8 cycles complete"), -1);
+             break;
+             default: 
+               lcd_setstatusPGM(PSTR("PID autotune in progress"), -1);
+             break;
+            }
             cycles++;
             //PIDcycles = cycles;
             min = temp;
@@ -408,7 +450,8 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
       }
       if (cycles > ncycles) {
         SERIAL_PROTOCOLLNPGM(MSG_PID_AUTOTUNE_FINISHED);
-
+        lcd_setstatusPGM(PSTR("PID autotune complete!"), -1);
+        
         #if HAS_PID_FOR_BOTH
           const char* estring = hotend < 0 ? "bed" : "";
           SERIAL_PROTOCOLPAIR("#define  DEFAULT_", estring); SERIAL_PROTOCOLPAIR("Kp ", workKp); SERIAL_EOL();
@@ -452,6 +495,7 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
         return;
       }
       lcd_update();
+     
     }
     if (!wait_for_heatup) disable_all_heaters();
   }
