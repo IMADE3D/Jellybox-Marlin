@@ -4283,6 +4283,26 @@ static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
   }
 } 
 
+/**
+ *
+ * "Move _lcd_move_e_bt
+ *
+ */
+static void _lcd_move_e_bt(const char* name, AxisEnum axis, float elength) {
+//  if (encoderPosition != 0) {
+//    current_position[E_AXIS] += float((int)encoderPosition) * move_menu_scale_bt;
+//    encoderPosition = 0;
+
+    current_position[E_AXIS] += float(elength);
+    line_to_current_bt(E_AXIS);   //used by _lcd_move_e_bt
+    lcdDrawUpdate = 1;
+//  }
+
+  //if (lcdDrawUpdate) lcd_implementation_drawedit(PSTR(MSG_MOVE_E), ftostr31(current_position[E_AXIS]));
+  if (LCD_CLICKED) lcd_goto_screen(lcd_extrude_menu,true);
+
+}
+
 static void lcd_move_x_1mm() {
   move_menu_scale = 1.0;
   _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
@@ -4299,7 +4319,21 @@ static void lcd_move_e_1mm() {
   move_menu_scale = .5;
   _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, -200, 200);
 }
- 
+static void lcd_move_e_05mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 0.5);
+}
+static void lcd_move_e_5mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 5);
+}
+static void lcd_move_e_10mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 10);
+}
+static void lcd_move_e_50mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 50);
+}
+static void lcd_move_e_100mm_bt() {
+  _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 100);
+}
      /**
    *
    * "Move axis" submenu
@@ -4351,10 +4385,11 @@ static void lcd_move_select_axis() {
         STATIC_ITEM("safety.                        ");
       }
       else{
-        MENU_ITEM(gcode, MSG_EXTRUDE_PFIVE, PSTR("G1 E0.5"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_TEN, PSTR("G1 E10"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_FIFTY, PSTR("G1 E50"));
-        MENU_ITEM(gcode, MSG_EXTRUDE_HUNDRED, PSTR("G1 E100"));
+        MENU_ITEM(function, MSG_EXTRUDE_PFIVE, lcd_move_e_05mm_bt);
+        //MENU_ITEM(gcode, MSG_EXTRUDE_PFIVE, PSTR("G1 E0.5"));
+        MENU_ITEM(function, MSG_EXTRUDE_TEN, lcd_move_e_10mm_bt);
+        MENU_ITEM(function, MSG_EXTRUDE_FIFTY, lcd_move_e_50mm_bt);
+        MENU_ITEM(function, MSG_EXTRUDE_HUNDRED, lcd_move_e_100mm_bt);
         MENU_ITEM(submenu,MSG_CUSTOM_EXTRUDE, lcd_move_e_1mm);
       }
       
