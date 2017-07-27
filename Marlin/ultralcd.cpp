@@ -142,6 +142,7 @@ uint16_t max_display_update_time = 0;
   void abortPrint();
   void homeafterabort();
   void lcd_disable_steppers();
+  void lcd_home_xyz();
 
   int fanSpeed100;
   int fanSpeed;
@@ -977,6 +978,12 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_LIVE_ADJUSTMENTS, lcd_tune_menu);
     }
     else {
+      
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(function, "Home XYZ & "LCD_STR_UPLEVEL, lcd_home_xyz);
+      
       //
       // Disable Steppers
       //
@@ -4182,7 +4189,11 @@ void kill_screen(const char* lcd_msg) {
        enqueue_and_echo_commands_P(PSTR("M18"));
        lcd_return_to_status();
      }
-     
+
+     void lcd_home_xyz(){
+       enqueue_and_echo_commands_P(PSTR("G28"));
+       lcd_return_to_status();
+     }
     /**
      * 
      * "maintenance Menu
