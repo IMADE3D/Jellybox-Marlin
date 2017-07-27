@@ -2703,9 +2703,9 @@ void kill_screen(const char* lcd_msg) {
    *
    */
    void preheat_flex(){
-    enqueue_and_echo_commands_P(PSTR("M104 S230"));
+    enqueue_and_echo_commands_P(PSTR("M104 S225"));
     #if HAS_TEMP_BED
-      enqueue_and_echo_commands_P(PSTR("M140 S50"));
+      enqueue_and_echo_commands_P(PSTR("M140 S25"));
     #endif
     lcd_return_to_status();
    }
