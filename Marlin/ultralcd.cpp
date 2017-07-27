@@ -980,7 +980,7 @@ void kill_screen(const char* lcd_msg) {
       //
       // Disable Steppers
       //
-      MENU_ITEM(function, MSG_DISABLE_STEPPERS, lcd_disable_steppers);
+      MENU_ITEM(function, "Unlock motors & "LCD_STR_UPLEVEL, lcd_disable_steppers);
       
       //
       //Preheat Nozzle Menu
