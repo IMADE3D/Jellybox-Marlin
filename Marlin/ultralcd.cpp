@@ -4535,12 +4535,17 @@ static void lcd_move_select_axis() {
       MENU_ITEM(back, MSG_BACK, lcd_danger_zone);
 
       //
+      // Display Text to entice user to scroll off the go back line
+      //
+      MENU_ITEM(gcode, "Reset! (click & hold)", PSTR(""));
+      
+      //
       //Factory Reset
       //
-      STATIC_ITEM("Press and hold the       ");
-      STATIC_ITEM("LCD knob for             ");
-      STATIC_ITEM("5 seconds to reset       ");
-      STATIC_ITEM("your JellyBOX            ");
+      STATIC_ITEM("-- ? -- Press the        ");
+      STATIC_ITEM("'Reset!' button and      ");
+      STATIC_ITEM("hold for 5 seconds to    ");
+      STATIC_ITEM("reset your JellyBOX      ");
       STATIC_ITEM("========= ? =========    ");
       STATIC_ITEM("Factory reset wipes      ");
       STATIC_ITEM("the internal settings    ");
