@@ -2753,12 +2753,39 @@ void kill_screen(const char* lcd_msg) {
     enqueue_and_echo_commands_P(PSTR("M104 S230"));
     lcd_return_to_status();
    }
-    /**
+
+static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, int max) {
+  if (encoderPosition != 0) {
+    refresh_cmd_timeout();
+    (thermalManager.target_temperature[0] += float((int)encoderPosition));
+    
+    if (thermalManager.target_temperature[0] < min){
+        thermalManager.target_temperature[0] = min;
+    }
+      
+    if (thermalManager.target_temperature[0] > max) {
+        thermalManager.target_temperature[0] = max;
+    }
+    encoderPosition = 0;
+    //line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+    lcdDrawUpdate = 1;
+  }
+  if (lcdDrawUpdate) lcd_implementation_drawedit(name, i8tostr3(thermalManager.target_temperature[0]));
+  if (lcd_clicked) {
+      lcd_return_to_status();
+  }
+} 
+
+  static void lcd_preheat_custom_nozzle() {
+    _lcd_adjust_nozzle_temp(PSTR("Custom Temp"), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
+  }
+  
+  /**
    *
    * Preheat CUSTOM > Preheat Nozzle
    *
    */
-   void lcd_preheat_custom_nozzle(){
+ /*  void lcd_preheat_custom_nozzle(){
     START_MENU();
     
     //
@@ -2769,7 +2796,7 @@ void kill_screen(const char* lcd_msg) {
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
     
     END_MENU();
-   }
+   }*/
 
    /**
    *
@@ -2832,7 +2859,7 @@ void kill_screen(const char* lcd_msg) {
     //Preheat Custom
     //
     MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM, lcd_preheat_custom_nozzle);
-    
+
     END_MENU();
   }
   
