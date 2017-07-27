@@ -2668,7 +2668,7 @@ void kill_screen(const char* lcd_msg) {
   
   /**
    *
-   * Preheat PLA > Preheat Nozzle
+   * Preheat PLA > Preheat Nozzle and bed
    *
    */
   void cooldown(){
@@ -2678,45 +2678,82 @@ void kill_screen(const char* lcd_msg) {
     #endif
     lcd_return_to_status();
    }
-/**
+   
+     /**
    *
    * Preheat PLA > Preheat Nozzle
+   *
+   */
+  void cooldown_nozzle(){
+    enqueue_and_echo_commands_P(PSTR("M104 S0"));
+    lcd_return_to_status();
+   }
+   
+/**
+   *
+   * Preheat PLA > Preheat Nozzle and bed
    *
    */
   void preheat_pla(){
     enqueue_and_echo_commands_P(PSTR("M104 S210"));
     #if HAS_TEMP_BED
-      enqueue_and_echo_commands_P(PSTR("M140 S55"));
+      enqueue_and_echo_commands_P(PSTR("M140 S55"));  
     #endif
+    lcd_return_to_status();
+   }
+
+   /**
+   *
+   * Preheat PLA > Preheat Nozzle Only
+   *
+   */
+  void preheat_pla_nozzle(){
+    enqueue_and_echo_commands_P(PSTR("M104 S210"));
     lcd_return_to_status();
    }
    
     /**
    *
-   * Preheat PET > Preheat Nozzle
+   * Preheat PET > Preheat Nozzle and bed
    *
    */
    void preheat_pet(){
     enqueue_and_echo_commands_P(PSTR("M104 S235"));
-    #if HAS_TEMP_BED
+    #if HAS_TEMP_BED && onlyPreheat==0
       enqueue_and_echo_commands_P(PSTR("M140 S55"));
     #endif
     lcd_return_to_status();
    }
-   
+   /**
+   *
+   * Preheat PET > Preheat Nozzle only
+   *
+   */
+   void preheat_pet_nozzle(){
+    enqueue_and_echo_commands_P(PSTR("M104 S235"));
+    lcd_return_to_status();
+   }
     /**
    *
-   * Preheat FLEX > Preheat Nozzle
+   * Preheat FLEX > Preheat Nozzle and bed
    *
    */
    void preheat_flex(){
     enqueue_and_echo_commands_P(PSTR("M104 S230"));
-    #if HAS_TEMP_BED
+    #if HAS_TEMP_BED && !onlyPreheat
       enqueue_and_echo_commands_P(PSTR("M140 S50"));
     #endif
     lcd_return_to_status();
    }
-   
+       /**
+   *
+   * Preheat FLEX > Preheat Nozzle only
+   *
+   */
+   void preheat_flex_nozzle(){
+    enqueue_and_echo_commands_P(PSTR("M104 S230"));
+    lcd_return_to_status();
+   }
     /**
    *
    * Preheat CUSTOM > Preheat Nozzle
@@ -2762,6 +2799,7 @@ void kill_screen(const char* lcd_msg) {
    *
    */
   void lcd_preheat_nozzle_menu() {
+    
     START_MENU();
 
     //
@@ -2773,23 +2811,23 @@ void kill_screen(const char* lcd_msg) {
     //Cooldown
     //
 
-    MENU_ITEM(function, MSG_COOLDOWN, cooldown); 
+    MENU_ITEM(function, MSG_COOLDOWN, cooldown_nozzle); 
 
     //
     //Preheat PLA
     //
 
-    MENU_ITEM(function, MSG_PREHEAT_PLA, preheat_pla);
+    MENU_ITEM(function, MSG_PREHEAT_PLA, preheat_pla_nozzle);
 
     //
     //Preheat PET
     //
-    MENU_ITEM(function, MSG_PREHEAT_PET, preheat_pet);
+    MENU_ITEM(function, MSG_PREHEAT_PET, preheat_pet_nozzle);
 
     //
     //Preheat FLEX
     //
-    MENU_ITEM(function, MSG_PREHEAT_FLEX, preheat_flex);
+    MENU_ITEM(function, MSG_PREHEAT_FLEX, preheat_flex_nozzle);
 
     //
     //Preheat Custom
@@ -2805,6 +2843,7 @@ void kill_screen(const char* lcd_msg) {
    *
    */
   void lcd_preheat_nozzle_and_bed_menu() {
+    
     START_MENU();
 
     //
