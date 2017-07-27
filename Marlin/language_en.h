@@ -515,7 +515,7 @@
   #define MSG_FAN_SPEED                       _UxGT("Fan speed (%)")
 #endif
 #ifndef MSG_FLOW
-  #define MSG_FLOW                            _UxGT("Flow")
+  #define MSG_FLOW                            _UxGT("Flow (%)")
 #endif
 #ifndef MSG_CONTROL
   #define MSG_CONTROL                         _UxGT("Control")
