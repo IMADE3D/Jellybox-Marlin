@@ -140,7 +140,7 @@ uint16_t max_display_update_time = 0;
   void lcd_pid_autotune_aborted();
   void lcd_pid_autotune_finished();
   void abortPrint();
-   void homeafterabort();
+  void homeafterabort();
   void lcd_disable_steppers();
 
   int fanSpeed100;
@@ -2715,7 +2715,25 @@ void kill_screen(const char* lcd_msg) {
    * Preheat CUSTOM > Preheat Nozzle
    *
    */
-   void lcd_preheat_custom(){
+   void lcd_preheat_custom_nozzle(){
+    START_MENU();
+    
+    //
+    // ^ Main
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
+    
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    
+    END_MENU();
+   }
+
+   /**
+   *
+   * Preheat CUSTOM > Preheat Nozzle and Bed
+   *
+   */
+   void lcd_preheat_custom_nozzle_and_bed(){
     START_MENU();
     
     //
@@ -2731,7 +2749,6 @@ void kill_screen(const char* lcd_msg) {
     
     END_MENU();
    }
-   
   /**
    *
    *"Preheat Nozzle" submenu
@@ -2770,7 +2787,7 @@ void kill_screen(const char* lcd_msg) {
     //
     //Preheat Custom
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM, lcd_preheat_custom);
+    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM, lcd_preheat_custom_nozzle);
     
     END_MENU();
   }
@@ -2813,7 +2830,7 @@ void kill_screen(const char* lcd_msg) {
     //
     //Preheat Custom
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM_AND_BED, lcd_preheat_custom);
+    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM_AND_BED, lcd_preheat_custom_nozzle_and_bed);
         
     END_MENU();
   }
