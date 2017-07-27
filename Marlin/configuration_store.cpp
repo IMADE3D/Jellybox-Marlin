@@ -1197,12 +1197,16 @@ void MarlinSettings::reset() {
   #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
     planner.z_fade_height = 0.0;
   #endif
-
+/*#if ENABLED(CUSTOM_DEFAULT_OFFSETS)
+  #define CUSTOM_DEFAULT_X_OFFSET 0
+  #define CUSTOM_DEFAULT_Y_OFFSET 0
+  #define CUSTOM_DEFAULT_Z_OFFSET 0
+#endif*/
   #if HAS_HOME_OFFSET
-    #if ENABLED(JELLYBOX)
-      home_offset[X_AXIS]  = 10;
-      home_offset[Y_AXIS] = 0; 
-      home_offset[Z_AXIS] = 0;
+    #if ENABLED(CUSTOM_DEFAULT_OFFSETS)
+      home_offset[X_AXIS]  = CUSTOM_DEFAULT_X_OFFSET;
+      home_offset[Y_AXIS] = CUSTOM_DEFAULT_Y_OFFSET;
+      home_offset[Z_AXIS] = CUSTOM_DEFAULT_Z_OFFSET;
     #else
       ZERO(home_offset);
     #endif
