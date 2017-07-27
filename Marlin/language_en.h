@@ -202,10 +202,10 @@
   #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_CUSTOM_TEMP
-  #define MSG_CUSTOM_TEMP                     _UxGT("Custom temp")
+  #define MSG_CUSTOM_TEMP                     _UxGT("Nozzle temp")
 #endif
 #ifndef MSG_CUSTOM_BED_TEMP
-  #define MSG_CUSTOM_BED_TEMP                 _UxGT("Custom bed temp")
+  #define MSG_CUSTOM_BED_TEMP                 _UxGT("Bed temp")
 #endif
 #ifndef MSG_COOLDOWN
   #define MSG_COOLDOWN                        _UxGT(" Cooldown -   0"LCD_STR_DEGREE"C")
