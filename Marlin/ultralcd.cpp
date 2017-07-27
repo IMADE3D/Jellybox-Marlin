@@ -4515,7 +4515,6 @@ static void lcd_move_select_axis() {
           else{
             clicks = 0;
           }
-          
         }    
         
         if (clicks==(1.4*holdTime)){
@@ -4523,12 +4522,11 @@ static void lcd_move_select_axis() {
            enqueue_and_echo_commands_P(PSTR("M502\nM500"));
            clicks = 0;
          }
-
+         
       }
     
     void lcd_factory_reset(){
-   
-      
+
       START_MENU();
       
       //
