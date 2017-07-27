@@ -4757,6 +4757,7 @@ static void lcd_move_select_axis() {
       if (lcd_clicked) { return lcd_goto_previous_menu(); }
       START_SCREEN();
       //STATIC_ITEM(BOARD_NAME, true, true);                           // MyPrinterController
+      STATIC_ITEM(BOARD_NAME);
       STATIC_ITEM(MSG_INFO_BAUDRATE ": " STRINGIFY(BAUDRATE), true); // Baud: 250000
       STATIC_ITEM(MSG_INFO_PROTOCOL ": " PROTOCOL_VERSION, true);    // Protocol: 1.0
       #if POWER_SUPPLY == 0
