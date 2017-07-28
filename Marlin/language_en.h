@@ -202,7 +202,10 @@
   #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_CUSTOM_TEMP
-  #define MSG_CUSTOM_TEMP                     _UxGT("Nozzle temp")
+  #define MSG_CUSTOM_TEMP                     _UxGT("Custom temp")
+#endif
+#ifndef MSG_NOZZLE_TEMP
+  #define MSG_NOZZLE_TEMP                     _UxGT("Nozzle temp")
 #endif
 #ifndef MSG_CUSTOM_BED_TEMP
   #define MSG_CUSTOM_BED_TEMP                 _UxGT("Bed temp")
@@ -454,11 +457,23 @@
 #ifndef MSG_START_PID_AUTOTUNE
   #define MSG_START_PID_AUTOTUNE              _UxGT("Start PID Autotune")
 #endif
+#ifndef MSG_PID_AUTOTUNE_RUNNING
+  #define MSG_PID_AUTOTUNE_RUNNING            _UxGT("PID autotune in progress")
+#endif
 #ifndef MSG_ABORT_PID_AUTOTUNE
   #define MSG_ABORT_PID_AUTOTUNE              _UxGT("Abort PID Autotune")
 #endif
+#ifndef MSG_PID_AUTOTUNE_ABORTED
+  #define MSG_PID_AUTOTUNE_ABORTED            _UxGT("PID autotune aborted")
+#endif
 #ifndef MSG_RETURN_TO_MAIN
   #define MSG_RETURN_TO_MAIN                  _UxGT("Return to main menu")
+#endif
+#ifndef MSG_RETURN_AND_DISABLE_STEPPERS
+  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors & "LCD_STR_UPLEVEL)
+#endif
+#ifndef MSG_RETURN_AND_HOME
+  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ & "LCD_STR_UPLEVEL)
 #endif
 #ifndef MSG_EDIT_PID
   #define MSG_EDIT_PID                        _UxGT("Edit PID Values")

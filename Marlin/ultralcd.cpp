@@ -982,12 +982,12 @@ void kill_screen(const char* lcd_msg) {
       //
       // Home XYZ
       //
-      MENU_ITEM(function, "Home XYZ          & "LCD_STR_UPLEVEL, lcd_home_xyz);
+      MENU_ITEM(function, MSG_RETURN_AND_HOME, lcd_home_xyz);
       
       //
       // Disable Steppers
       //
-      MENU_ITEM(function, "Unlock motors     & "LCD_STR_UPLEVEL, lcd_disable_steppers);
+      MENU_ITEM(function, MSG_RETURN_AND_DISABLE_STEPPERS, lcd_disable_steppers);
       
       //
       //Preheat Nozzle Menu
@@ -2777,7 +2777,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
 } 
 
   static void lcd_preheat_custom_nozzle() {
-    _lcd_adjust_nozzle_temp(PSTR("Custom Temp"), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
+    _lcd_adjust_nozzle_temp(PSTR(MSG_CUSTOM_TEMP), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
   }
   
   /**
@@ -2793,7 +2793,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
     
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
     
     END_MENU();
    }*/
@@ -2811,7 +2811,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
     
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
    
     #if HAS_TEMP_BED
       MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
@@ -3735,7 +3735,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    */
     void lcd_pid_autotune_running(){
       //enqueue_and_echo_commands_P(PSTR("M303 S225 C1 U1"));
-      lcd_setstatusPGM(PSTR("PID autotune in progress."), -1);
+      lcd_setstatusPGM(PSTR(MSG_PID_AUTOTUNE_RUNNING), -1);
       //enqueue_and_echo_commands_P(PSTR("G28"));
       //autotune_temp[0];
       //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
@@ -3788,7 +3788,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
         for (uint8_t i = 0; i < FAN_COUNT; i++) fanSpeeds[i] = 0;
       #endif
       wait_for_heatup = false;
-      lcd_setstatusPGM(PSTR("PID autotune aborted"), -1);
+      lcd_setstatusPGM(PSTR(MSG_PID_AUTOTUNE_ABORTED), -1);
       lcd_return_to_status();
       //aborted = true;
       //lcd_goto_screen(printaborted);     
