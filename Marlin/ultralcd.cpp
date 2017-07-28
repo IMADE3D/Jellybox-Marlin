@@ -4520,8 +4520,24 @@ static void lcd_move_select_axis() {
      * 
      */
      
+     /**
+      * 
+      * Factor Reset sucess screen
+      * 
+      */
+     void lcd_factory_reset_sucess(){
+      
+       START_MENU();
+       STATIC_ITEM("Success! All settings           ");
+       STATIC_ITEM("have been reset to              ");
+       STATIC_ITEM("their factory                   ");
+       STATIC_ITEM("defaults.                       ");
+       END_MENU();
 
-
+       if (lcd_clicked){
+         lcd_goto_screen(lcd_danger_zone);
+       }
+     }
      /**
       * 
       * Function for holding button; holdTime = approximate number of seconds to hold button before function is run
@@ -4553,6 +4569,7 @@ static void lcd_move_select_axis() {
         if (clicks==(1.4*holdTime)){
            buzzer.tone(100,1000);
            enqueue_and_echo_commands_P(PSTR("M502\nM500"));
+           lcd_goto_screen(lcd_factory_reset_sucess);
            clicks = 0;
          }
          
