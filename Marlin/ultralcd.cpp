@@ -4328,7 +4328,20 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
 static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
   if (encoderPosition != 0) {
     refresh_cmd_timeout();
-    (current_position[axis] += float((int)encoderPosition)) * move_menu_scale;
+
+    /*if (axis == E_AXIS){
+      int between = min;
+      min = -1*max;
+      max = between;
+    }*/
+    
+    if (axis == E_AXIS){
+      (current_position[axis] -= float((int)encoderPosition)) * move_menu_scale;
+    }
+    else{
+      (current_position[axis] += float((int)encoderPosition)) * move_menu_scale;
+    }
+    
     if (current_position[axis] < min){
       #if (ENABLED(MIN_SOFTWARE_ENDSTOPS))
         current_position[axis] = min;
@@ -4340,11 +4353,21 @@ static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
         current_position[axis] = max;
       #endif
     }
+
+    if (current_position[axis] < 0 && axis == E_AXIS){
+      current_position[axis] = 0;
+    }
     encoderPosition = 0;
     line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
     lcdDrawUpdate = 1;
   }
-  if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
+  
+    if (axis == E_AXIS){
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]*-1));
+    }
+    else{
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
+    }
   if (lcd_clicked) {
     encoderTopLine = 0;
     lcd_goto_previous_menu();
@@ -4385,7 +4408,7 @@ static void lcd_move_z_1mm() {
 }
 static void lcd_move_e_1mm() {
   move_menu_scale = .5;
-  _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, -200, 200);
+  _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, 0, 200);
 }
 static void lcd_move_e_05mm_bt() {
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 0.5);
@@ -4444,14 +4467,15 @@ static void lcd_move_select_axis() {
         STATIC_ITEM("The nozzle is too              ");
         STATIC_ITEM("cold. Please heat it           ");
         STATIC_ITEM("up to at least 170"LCD_STR_DEGREE"C.           ");
-        STATIC_ITEM("-- ? -- Forcing                ");
-        STATIC_ITEM("filament into a cold           ");
-        STATIC_ITEM("nozzle will only lead          ");
-        STATIC_ITEM("to jamming and                 ");
-        STATIC_ITEM("grinding. Your                 ");
-        STATIC_ITEM("JellyBOX is forbidden          ");
-        STATIC_ITEM("from even trying; for          ");
-        STATIC_ITEM("its own sake.                  ");
+        STATIC_ITEM("========= ? =========          ");
+        STATIC_ITEM("Forcing filament into          ");
+        STATIC_ITEM("a cold nozzle will             ");
+        STATIC_ITEM("only lead to jamming           ");
+        STATIC_ITEM("and grinding. Your             ");
+        STATIC_ITEM("JellyBOX is                    ");
+        STATIC_ITEM("prohibited from even           ");
+        STATIC_ITEM("trying; for its own            ");
+        STATIC_ITEM("safety.                        ");
       }
       else{
         MENU_ITEM(function, MSG_EXTRUDE_PFIVE, lcd_move_e_05mm_bt);
@@ -4549,7 +4573,8 @@ static void lcd_move_select_axis() {
       STATIC_ITEM("-- ? -- Press the        ");
       STATIC_ITEM("'Reset!' button and      ");
       STATIC_ITEM("hold for 5 seconds to    ");
-      STATIC_ITEM("reset your JellyBOX.     ");
+      STATIC_ITEM("reset your JellyBOX      ");
+      STATIC_ITEM("========= ? =========    ");
       STATIC_ITEM("Factory reset wipes      ");
       STATIC_ITEM("the internal settings    ");
       STATIC_ITEM("memory (EEPROM).         ");
@@ -4592,7 +4617,7 @@ static void lcd_move_select_axis() {
       //
       // X Homing Offset
       //
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X home offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X homing offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
 
       //
       // Motion Menu
@@ -4788,12 +4813,8 @@ static void lcd_move_select_axis() {
       STATIC_ITEM(SHORT_BUILD_VERSION, true);                          // x.x.x-Branch
       STATIC_ITEM(STRING_DISTRIBUTION_DATE, true);                     // YYYY-MM-DD HH:MM
       STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
-      STATIC_ITEM(SOURCE_CODE_URL_LINE1, true);                                  // www.github.com/myfork
-      STATIC_ITEM(SOURCE_CODE_URL_LINE2, true);                                  // www.github.com/myfork
-      // STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
-      #if EXTRUDERS>1
-        STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
-      #endif
+      STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
+      STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
       /*#if ENABLED(AUTO_BED_LEVELING_3POINT)
         STATIC_ITEM(MSG_3POINT_LEVELING, true);                        // 3-Point Leveling
       #elif ENABLED(AUTO_BED_LEVELING_LINEAR)
