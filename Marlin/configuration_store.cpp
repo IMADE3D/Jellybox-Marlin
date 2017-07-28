@@ -467,9 +467,9 @@ void MarlinSettings::postprocess() {
     #endif
 
     #if DISABLED(ULTIPANEL)
-      constexpr int lcd_preheat_hotend_temp[2] = { PREHEAT_1_TEMP_HOTEND, PREHEAT_2_TEMP_HOTEND },
-                    lcd_preheat_bed_temp[2] = { PREHEAT_1_TEMP_BED, PREHEAT_2_TEMP_BED },
-                    lcd_preheat_fan_speed[2] = { PREHEAT_1_FAN_SPEED, PREHEAT_2_FAN_SPEED };
+      constexpr int lcd_preheat_hotend_temp[2] = { PREHEAT_1_TEMP_HOTEND, PREHEAT_2_TEMP_HOTEND, PREHEAT_3_TEMP_HOTEND, PREHEAT_4_TEMP_HOTEND },
+                    lcd_preheat_bed_temp[2] = { PREHEAT_1_TEMP_BED, PREHEAT_2_TEMP_BED, PREHEAT_3_TEMP_BED, PREHEAT_4_TEMP_BED },
+                    lcd_preheat_fan_speed[2] = { PREHEAT_1_FAN_SPEED, PREHEAT_2_FAN_SPEED, PREHEAT_3_FAN_SPEED, PREHEAT_4_FAN_SPEED };
     #endif
 
     EEPROM_WRITE(lcd_preheat_hotend_temp);
@@ -1197,9 +1197,19 @@ void MarlinSettings::reset() {
   #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
     planner.z_fade_height = 0.0;
   #endif
-
+/*#if ENABLED(CUSTOM_DEFAULT_OFFSETS)
+  #define CUSTOM_DEFAULT_X_OFFSET 0
+  #define CUSTOM_DEFAULT_Y_OFFSET 0
+  #define CUSTOM_DEFAULT_Z_OFFSET 0
+#endif*/
   #if HAS_HOME_OFFSET
-    ZERO(home_offset);
+    #if ENABLED(CUSTOM_DEFAULT_OFFSETS)
+      home_offset[X_AXIS]  = CUSTOM_DEFAULT_X_OFFSET;
+      home_offset[Y_AXIS] = CUSTOM_DEFAULT_Y_OFFSET;
+      home_offset[Z_AXIS] = CUSTOM_DEFAULT_Z_OFFSET;
+    #else
+      ZERO(home_offset);
+    #endif
   #endif
 
   #if HOTENDS > 1
@@ -1255,10 +1265,16 @@ void MarlinSettings::reset() {
   #if ENABLED(ULTIPANEL)
     lcd_preheat_hotend_temp[0] = PREHEAT_1_TEMP_HOTEND;
     lcd_preheat_hotend_temp[1] = PREHEAT_2_TEMP_HOTEND;
+    lcd_preheat_hotend_temp[2] = PREHEAT_3_TEMP_HOTEND;
+    lcd_preheat_hotend_temp[3] = PREHEAT_4_TEMP_HOTEND;
     lcd_preheat_bed_temp[0] = PREHEAT_1_TEMP_BED;
     lcd_preheat_bed_temp[1] = PREHEAT_2_TEMP_BED;
+    lcd_preheat_bed_temp[2] = PREHEAT_3_TEMP_BED;
+    lcd_preheat_bed_temp[3] = PREHEAT_4_TEMP_BED;
     lcd_preheat_fan_speed[0] = PREHEAT_1_FAN_SPEED;
     lcd_preheat_fan_speed[1] = PREHEAT_2_FAN_SPEED;
+    lcd_preheat_fan_speed[2] = PREHEAT_3_FAN_SPEED;
+    lcd_preheat_fan_speed[3] = PREHEAT_4_FAN_SPEED;
   #endif
 
   #if HAS_LCD_CONTRAST

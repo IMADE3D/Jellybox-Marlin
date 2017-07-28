@@ -118,7 +118,7 @@
  * Also, if the temperature is set to a value below mintemp, it will not be changed by autotemp.
  * On an Ultimaker, some initial testing worked with M109 S215 B260 F1 in the start.gcode
  */
-#define AUTOTEMP
+//#define AUTOTEMP
 #if ENABLED(AUTOTEMP)
   #define AUTOTEMP_OLDWEIGHT 0.98
 #endif
@@ -453,7 +453,7 @@
 #define LCD_DECIMAL_SMALL_XY
 
 // The timeout (in ms) to return to the status screen from sub-menus
-#define LCD_TIMEOUT_TO_STATUS 20000
+#define LCD_TIMEOUT_TO_STATUS 60000
 
 #if ENABLED(SDSUPPORT)
 
@@ -789,7 +789,7 @@
    #define PAUSE_PARK_X_POS 0                  // X position of hotend
    #define PAUSE_PARK_Y_POS 0                  // Y position of hotend
    #define PAUSE_PARK_Z_ADD 10                 // Z addition of hotend (lift)
-   #define PAUSE_PARK_XY_FEEDRATE 100          // X and Y axes feedrate in mm/s (also used for delta printers Z axis) 
+   #define PAUSE_PARK_XY_FEEDRATE 100          // X and Y axes feedrate in mm/s (also used for delta printers Z axis)
    #define PAUSE_PARK_Z_FEEDRATE 5             // Z axis feedrate in mm/s (not used for delta printers)
    #define PAUSE_PARK_RETRACT_FEEDRATE 60      // Initial retract feedrate in mm/s
    #define PAUSE_PARK_RETRACT_LENGTH 2         // Initial retract in mm
@@ -812,7 +812,7 @@
    #define FILAMENT_CHANGE_NUMBER_OF_ALERT_BEEPS 0 // Number of alert beeps before printer goes quiet
    #define PAUSE_PARK_NO_STEPPER_TIMEOUT       // Enable to have stepper motors hold position during filament change
                                                // even if it takes longer than DEFAULT_STEPPER_DEACTIVE_TIME.
-   //#define PARK_HEAD_ON_PAUSE                // Go to filament change position on pause, return to print position on resume
+   #define PARK_HEAD_ON_PAUSE                // Go to filament change position on pause, return to print position on resume
    //#define HOME_BEFORE_FILAMENT_CHANGE       // Ensure homing has been completed prior to parking for filament change
  #endif
 
@@ -1248,7 +1248,7 @@
 /**
  * User-defined menu items that execute custom GCode
  */
-#define CUSTOM_USER_MENUS
+//#define CUSTOM_USER_MENUS
 #if ENABLED(CUSTOM_USER_MENUS)
   #define USER_SCRIPT_DONE "M117 User Script Done"
 
@@ -1266,6 +1266,12 @@
 
   #define USER_DESC_5 "Home & Info"
   #define USER_GCODE_5 "G28\nM503"
+
+  #define USER_DESC_6 "Preheat for PET"
+  #define USER_GCODE_6 "M140 S" STRINGIFY(PREHEAT_3_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_3_TEMP_HOTEND)
+
+  #define USER_DESC_7 "Preheat for FLEX"
+  #define USER_GCODE_7 "M140 S" STRINGIFY(PREHEAT_4_TEMP_BED) "\nM104 S" STRINGIFY(PREHEAT_4_TEMP_HOTEND)
 #endif
 
 /**

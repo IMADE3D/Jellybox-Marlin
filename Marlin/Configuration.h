@@ -38,6 +38,7 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 #define CONFIGURATION_H_VERSION 010100
+#define JELLYBOX
 
 //===========================================================================
 //============================= Getting Started =============================
@@ -74,10 +75,10 @@
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_CONFIG_H_AUTHOR "(none, default config)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(IMADE3D)" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
-#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
+#define STRING_SPLASH_LINE2 "JellyBOX waking up!"         // will be shown during bootup in line 2
 
 //
 // *** VENDORS PLEASE READ *****************************************************
@@ -272,7 +273,7 @@
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_BED 0 //FG Heated Bed
+#define TEMP_SENSOR_BED 1 //FG Heated Bed
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
 #define DUMMY_THERMISTOR_998_VALUE 25
@@ -498,6 +499,24 @@
  * total number of extruders, the last value applies to the rest.
  */
 //#define DISTINCT_E_FACTORS
+//#define CUSTOM_DEFAULT_OFFSETS
+/*#if ENABLED(CUSTOM_DEFAULT_OFFSETS)
+  #define CUSTOM_DEFAULT_X_OFFSET 12
+  #define CUSTOM_DEFAULT_Y_OFFSET 0
+  #define CUSTOM_DEFAULT_Z_OFFSET 0
+#endif*/
+
+/**
+ * Default Axis Offsets
+ * 
+ *                                  
+ */
+#define CUSTOM_DEFAULT_OFFSETS
+#if ENABLED(CUSTOM_DEFAULT_OFFSETS)
+  #define CUSTOM_DEFAULT_X_OFFSET 10
+  #define CUSTOM_DEFAULT_Y_OFFSET 0
+  #define CUSTOM_DEFAULT_Z_OFFSET 0
+#endif
 
 /**
  * Default Axis Steps Per Unit (steps/mm)
@@ -771,7 +790,7 @@
  * For other boards you may need to define FIL_RUNOUT_PIN.
  * By default the firmware assumes HIGH = has filament, LOW = ran out
  */
-//#define FILAMENT_RUNOUT_SENSOR
+#define FILAMENT_RUNOUT_SENSOR
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
   #define FIL_RUNOUT_INVERTING false // set to true to invert the logic of the sensor.
   #define ENDSTOPPULLUP_FIL_RUNOUT // Uncomment to use internal pullup for filament runout pins if the sensor is defined.
@@ -849,7 +868,7 @@
 
   // Set the boundaries for probing (where the probe can reach).
   #define LEFT_PROBE_BED_POSITION 17
-  #define RIGHT_PROBE_BED_POSITION 160 
+  #define RIGHT_PROBE_BED_POSITION 160
   #define FRONT_PROBE_BED_POSITION 13
   #define BACK_PROBE_BED_POSITION 137
 
@@ -1018,13 +1037,21 @@
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_TEMP_HOTEND 200
+#define PREHEAT_1_TEMP_HOTEND 210
 #define PREHEAT_1_TEMP_BED     30
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
 #define PREHEAT_2_TEMP_HOTEND 220
-#define PREHEAT_2_TEMP_BED    50
+#define PREHEAT_2_TEMP_BED     50
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
+
+#define PREHEAT_3_TEMP_HOTEND 235
+#define PREHEAT_3_TEMP_BED     55
+#define PREHEAT_3_FAN_SPEED     0 // Value from 0 to 255
+
+#define PREHEAT_4_TEMP_HOTEND 230
+#define PREHEAT_4_TEMP_BED     50
+#define PREHEAT_4_FAN_SPEED     0 // Value from 0 to 255
 
 /**
  * Nozzle Park -- EXPERIMENTAL

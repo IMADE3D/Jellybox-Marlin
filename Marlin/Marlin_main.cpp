@@ -5281,7 +5281,7 @@ void home_all_axes() { gcode_G28(true); }
       #if DISABLED(PROBE_MANUALLY)
         home_offset[Z_AXIS] -= probe_pt(dx, dy, stow_after_each, 1, false); // 1st probe to set height
       #endif
-      
+
       do {
 
         float z_at_pt[13] = { 0.0 };
@@ -5381,7 +5381,7 @@ void home_all_axes() { gcode_G28(true); }
           #if ENABLED(PROBE_MANUALLY)
             test_precision = 0.00; // forced end
           #endif
-          
+
           switch (probe_points) {
             case 1:
               test_precision = 0.00; // forced end
@@ -7062,7 +7062,8 @@ inline void gcode_M104() {
     #endif
 
     if (parser.value_celsius() > thermalManager.degHotend(target_extruder))
-      lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+      lcd_status_printf_P(0, PSTR("%s"), MSG_HEATING);
+      //lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
   }
 
   #if ENABLED(AUTOTEMP)
@@ -7277,7 +7278,8 @@ inline void gcode_M109() {
         print_job_timer.start();
     #endif
 
-    if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+    //if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+    if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("%s"), MSG_HEATING);
   }
   else return;
 
@@ -7611,7 +7613,7 @@ inline void gcode_M140() {
   /**
    * M145: Set the heatup state for a material in the LCD menu
    *
-   *   S<material> (0=PLA, 1=ABS)
+   *   S<material> (0=PLA, 1=ABS, 2=PET, 3=FLEX)
    *   H<hotend temp>
    *   B<bed temp>
    *   F<fan speed>
@@ -12862,7 +12864,7 @@ void kill(const char* lcd_msg) {
   #if defined(ACTION_ON_KILL)
     SERIAL_ECHOLNPGM("//action:" ACTION_ON_KILL);
   #endif
-  
+
   #if HAS_POWER_SWITCH
     SET_INPUT(PS_ON_PIN);
   #endif
@@ -13177,4 +13179,3 @@ void loop() {
   endstops.report_state();
   idle();
 }
-
