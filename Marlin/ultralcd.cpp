@@ -146,6 +146,8 @@ uint16_t max_display_update_time = 0;
 
   int fanSpeed100;
   int fanSpeed;
+
+  bool longActionRunning = false;
   
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
@@ -4410,10 +4412,12 @@ static void lcd_move_y_1mm() {
 }
 static void lcd_move_z_1mm() {
   move_menu_scale = 1.0;
+  longActionRunning = true;
   _lcd_move(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
 }
 static void lcd_move_e_1mm() {
   move_menu_scale = .5;
+  longActionRunning = true;
   _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, 0, 200);
 }
 static void lcd_move_e_05mm_bt() {
@@ -4423,14 +4427,23 @@ static void lcd_move_e_5mm_bt() {
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 5);
 }
 static void lcd_move_e_10mm_bt() {
+  longActionRunning = true;
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 10);
 }
 static void lcd_move_e_50mm_bt() {
+  longActionRunning = true;
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 50);
 }
 static void lcd_move_e_100mm_bt() {
+  longActionRunning = true;
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 100);
 }
+
+   void lcd_abort_action(){
+     clear_command_queue();
+     quickstop_stepper();
+     longActionRunning = false;
+   }
 
    /**
    *
@@ -4445,6 +4458,10 @@ static void lcd_move_select_axis() {
   //
   MENU_ITEM(back, MSG_BACK, lcd_maintenance_menu);
   //MENU_ITEM(function, MSG_BACK, lcd_back_to_maintenance);
+
+  if (longActionRunning && planner.movesplanned()){
+      MENU_ITEM(function , MSG_ABORT_ACTION , lcd_abort_action);
+  }
   
   MENU_ITEM(submenu,"Move X", lcd_move_x_1mm);
 
@@ -4455,6 +4472,7 @@ static void lcd_move_select_axis() {
 
   END_MENU();
 }
+
 
    /**
      * 
@@ -4468,6 +4486,10 @@ static void lcd_move_select_axis() {
       // ^ Main
       //
       MENU_BACK(MSG_BACK);
+
+      if (longActionRunning && planner.movesplanned()){
+      MENU_ITEM(function , MSG_ABORT_ACTION , lcd_abort_action);
+      }
       
       if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
         STATIC_ITEM("The nozzle is too              ");
