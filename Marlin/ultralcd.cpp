@@ -4147,6 +4147,11 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_refresh_zprobe_zoffset);
     #endif
 
+    //
+    // X Homing Offset
+    //
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X homing offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
+    
     // M203 / M205 - Feedrate items
     MENU_ITEM(submenu, MSG_VELOCITY, lcd_control_motion_velocity_menu);
 
@@ -4613,11 +4618,6 @@ static void lcd_move_select_axis() {
       // Temperature (from control)
       //
       MENU_ITEM(submenu, MSG_TEMPERATURE, lcd_control_temperature_menu); 
-      
-      //
-      // X Homing Offset
-      //
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X homing offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
 
       //
       // Motion Menu
