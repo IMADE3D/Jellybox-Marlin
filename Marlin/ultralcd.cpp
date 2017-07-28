@@ -982,12 +982,12 @@ void kill_screen(const char* lcd_msg) {
       //
       // Home XYZ
       //
-      MENU_ITEM(function, "Home XYZ & "LCD_STR_UPLEVEL, lcd_home_xyz);
+      MENU_ITEM(function, "Home XYZ          & "LCD_STR_UPLEVEL, lcd_home_xyz);
       
       //
       // Disable Steppers
       //
-      MENU_ITEM(function, "Unlock motors & "LCD_STR_UPLEVEL, lcd_disable_steppers);
+      MENU_ITEM(function, "Unlock motors     & "LCD_STR_UPLEVEL, lcd_disable_steppers);
       
       //
       //Preheat Nozzle Menu
@@ -3735,7 +3735,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    */
     void lcd_pid_autotune_running(){
       //enqueue_and_echo_commands_P(PSTR("M303 S225 C1 U1"));
-      lcd_setstatusPGM(PSTR("PID autotune in progress"), -1);
+      lcd_setstatusPGM(PSTR("PID autotune in progress."), -1);
       //enqueue_and_echo_commands_P(PSTR("G28"));
       //autotune_temp[0];
       //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
