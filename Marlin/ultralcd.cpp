@@ -982,12 +982,12 @@ void kill_screen(const char* lcd_msg) {
       //
       // Home XYZ
       //
-      MENU_ITEM(function, "Home XYZ & "LCD_STR_UPLEVEL, lcd_home_xyz);
+      MENU_ITEM(function, "Home XYZ          & "LCD_STR_UPLEVEL, lcd_home_xyz);
       
       //
       // Disable Steppers
       //
-      MENU_ITEM(function, "Unlock motors & "LCD_STR_UPLEVEL, lcd_disable_steppers);
+      MENU_ITEM(function, "Unlock motors     & "LCD_STR_UPLEVEL, lcd_disable_steppers);
       
       //
       //Preheat Nozzle Menu
