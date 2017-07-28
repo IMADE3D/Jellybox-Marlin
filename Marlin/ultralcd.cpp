@@ -4790,7 +4790,9 @@ static void lcd_move_select_axis() {
       STATIC_ITEM(SHORT_BUILD_VERSION, true);                          // x.x.x-Branch
       STATIC_ITEM(STRING_DISTRIBUTION_DATE, true);                     // YYYY-MM-DD HH:MM
       STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
-      STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
+      STATIC_ITEM(SOURCE_CODE_URL_LINE1, true);                                  // www.github.com/myfork
+      STATIC_ITEM(SOURCE_CODE_URL_LINE2, true);                                  // www.github.com/myfork
+      // STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
       #if EXTRUDERS>1
         STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
       #endif
