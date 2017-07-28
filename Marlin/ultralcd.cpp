@@ -4594,7 +4594,7 @@ static void lcd_move_select_axis() {
       //
       // X Homing Offset
       //
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X homing offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X home offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
 
       //
       // Motion Menu
