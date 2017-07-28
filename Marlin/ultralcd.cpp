@@ -4346,12 +4346,8 @@ static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
   }
   if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
   if (lcd_clicked) {
-    if (axis == E_AXIS){
-      lcd_goto_screen(lcd_extrude_menu);
-    }
-    else{
-    lcd_goto_screen(lcd_move_select_axis);
-    }
+    encoderTopLine = 0;
+    lcd_goto_previous_menu();
   }
 } 
 
@@ -4406,7 +4402,8 @@ static void lcd_move_e_50mm_bt() {
 static void lcd_move_e_100mm_bt() {
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 100);
 }
-     /**
+
+   /**
    *
    * "Move axis" submenu
    *
@@ -4418,6 +4415,7 @@ static void lcd_move_select_axis() {
   // ^ Set
   //
   MENU_ITEM(back, MSG_BACK, lcd_maintenance_menu);
+  //MENU_ITEM(function, MSG_BACK, lcd_back_to_maintenance);
   
   MENU_ITEM(submenu,"Move X", lcd_move_x_1mm);
 
@@ -4440,8 +4438,8 @@ static void lcd_move_select_axis() {
       //
       // ^ Main
       //
-      MENU_ITEM(back, MSG_BACK , lcd_maintenance_menu);
-
+      MENU_BACK(MSG_BACK);
+      
       if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
         STATIC_ITEM("The nozzle is too              ");
         STATIC_ITEM("cold. Please heat it           ");
