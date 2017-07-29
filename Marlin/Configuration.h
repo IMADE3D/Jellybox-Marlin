@@ -499,12 +499,6 @@
  * total number of extruders, the last value applies to the rest.
  */
 //#define DISTINCT_E_FACTORS
-//#define CUSTOM_DEFAULT_OFFSETS
-/*#if ENABLED(CUSTOM_DEFAULT_OFFSETS)
-  #define CUSTOM_DEFAULT_X_OFFSET 12
-  #define CUSTOM_DEFAULT_Y_OFFSET 0
-  #define CUSTOM_DEFAULT_Z_OFFSET 0
-#endif*/
 
 /**
  * Default Axis Offsets

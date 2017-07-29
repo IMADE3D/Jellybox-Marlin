@@ -146,6 +146,8 @@ uint16_t max_display_update_time = 0;
 
   int fanSpeed100;
   int fanSpeed;
+
+  bool longActionRunning = false;
   
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
@@ -477,7 +479,7 @@ uint16_t max_display_update_time = 0;
           if (currentScreen == lcd_status_screen)
             doubleclick_expire_ms = millis() + DOUBLECLICK_MAX_INTERVAL;
         }
-        else if (screen == lcd_status_screen && currentScreen == lcd_main_menu && PENDING(millis(), doubleclick_expire_ms))
+        else if (IS_SD_PRINTING && screen == lcd_status_screen && currentScreen == lcd_main_menu && PENDING(millis(), doubleclick_expire_ms))
           screen =
             #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
               lcd_babystep_zoffset
@@ -970,7 +972,8 @@ void kill_screen(const char* lcd_msg) {
         MENU_ITEM_EDIT_CALLBACK(bool, MSG_CASE_LIGHT, (bool*)&case_light_on, update_case_light);
     #endif
 
-    if (planner.movesplanned() || IS_SD_PRINTING) {
+    //if (planner.movesplanned() || IS_SD_PRINTING) {
+    if (IS_SD_PRINTING) {
       //MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
       //
       // Live Adjustments menu
@@ -982,12 +985,12 @@ void kill_screen(const char* lcd_msg) {
       //
       // Home XYZ
       //
-      MENU_ITEM(function, "Home XYZ & "LCD_STR_UPLEVEL, lcd_home_xyz);
+      MENU_ITEM(function, MSG_RETURN_AND_HOME, lcd_home_xyz);
       
       //
       // Disable Steppers
       //
-      MENU_ITEM(function, "Unlock motors & "LCD_STR_UPLEVEL, lcd_disable_steppers);
+      MENU_ITEM(function, MSG_RETURN_AND_DISABLE_STEPPERS, lcd_disable_steppers);
       
       //
       //Preheat Nozzle Menu
@@ -2777,7 +2780,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
 } 
 
   static void lcd_preheat_custom_nozzle() {
-    _lcd_adjust_nozzle_temp(PSTR("Custom Temp"), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
+    _lcd_adjust_nozzle_temp(PSTR(MSG_CUSTOM_TEMP), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
   }
   
   /**
@@ -2793,7 +2796,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
     
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
     
     END_MENU();
    }*/
@@ -2811,7 +2814,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
     
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
    
     #if HAS_TEMP_BED
       MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
@@ -3735,7 +3738,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    */
     void lcd_pid_autotune_running(){
       //enqueue_and_echo_commands_P(PSTR("M303 S225 C1 U1"));
-      lcd_setstatusPGM(PSTR("PID autotune in progress"), -1);
+      lcd_setstatusPGM(PSTR(MSG_PID_AUTOTUNE_RUNNING), -1);
       //enqueue_and_echo_commands_P(PSTR("G28"));
       //autotune_temp[0];
       //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
@@ -3756,7 +3759,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
 
       STATIC_ITEM("-- ! -- Don't touch        ");
       STATIC_ITEM("the hotend. PID            ");
-      STATIC_ITEM("Autotune in progress       ");
+      STATIC_ITEM("Autotune in progress.      ");
       //cycles;
       //STATIC_ITEM("Autotune progress:        ");
       //STATIC_ITEM("_ out of 8 heat-up         ");
@@ -3788,7 +3791,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
         for (uint8_t i = 0; i < FAN_COUNT; i++) fanSpeeds[i] = 0;
       #endif
       wait_for_heatup = false;
-      lcd_setstatusPGM(PSTR("PID autotune aborted"), -1);
+      lcd_setstatusPGM(PSTR(MSG_PID_AUTOTUNE_ABORTED), -1);
       lcd_return_to_status();
       //aborted = true;
       //lcd_goto_screen(printaborted);     
@@ -4147,6 +4150,11 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_refresh_zprobe_zoffset);
     #endif
 
+    //
+    // X Homing Offset
+    //
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X homing offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
+    
     // M203 / M205 - Feedrate items
     MENU_ITEM(submenu, MSG_VELOCITY, lcd_control_motion_velocity_menu);
 
@@ -4328,7 +4336,20 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
 static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
   if (encoderPosition != 0) {
     refresh_cmd_timeout();
-    (current_position[axis] += float((int)encoderPosition)) * move_menu_scale;
+
+    /*if (axis == E_AXIS){
+      int between = min;
+      min = -1*max;
+      max = between;
+    }*/
+    
+    if (axis == E_AXIS){
+      (current_position[axis] -= float((int)encoderPosition)) * move_menu_scale;
+    }
+    else{
+      (current_position[axis] += float((int)encoderPosition)) * move_menu_scale;
+    }
+    
     if (current_position[axis] < min){
       #if (ENABLED(MIN_SOFTWARE_ENDSTOPS))
         current_position[axis] = min;
@@ -4340,18 +4361,24 @@ static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
         current_position[axis] = max;
       #endif
     }
+
+    if (current_position[axis] < 0 && axis == E_AXIS){
+      current_position[axis] = 0;
+    }
     encoderPosition = 0;
     line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
     lcdDrawUpdate = 1;
   }
-  if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
-  if (lcd_clicked) {
+  
     if (axis == E_AXIS){
-      lcd_goto_screen(lcd_extrude_menu);
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]*-1));
     }
     else{
-    lcd_goto_screen(lcd_move_select_axis);
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
     }
+  if (lcd_clicked) {
+    encoderTopLine = 0;
+    lcd_goto_previous_menu();
   }
 } 
 
@@ -4385,11 +4412,13 @@ static void lcd_move_y_1mm() {
 }
 static void lcd_move_z_1mm() {
   move_menu_scale = 1.0;
+  longActionRunning = true;
   _lcd_move(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
 }
 static void lcd_move_e_1mm() {
   move_menu_scale = .5;
-  _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, -200, 200);
+  longActionRunning = true;
+  _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, 0, 200);
 }
 static void lcd_move_e_05mm_bt() {
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 0.5);
@@ -4398,15 +4427,25 @@ static void lcd_move_e_5mm_bt() {
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 5);
 }
 static void lcd_move_e_10mm_bt() {
+  longActionRunning = true;
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 10);
 }
 static void lcd_move_e_50mm_bt() {
+  longActionRunning = true;
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 50);
 }
 static void lcd_move_e_100mm_bt() {
+  longActionRunning = true;
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 100);
 }
-     /**
+
+   void lcd_abort_action(){
+     clear_command_queue();
+     quickstop_stepper();
+     longActionRunning = false;
+   }
+
+   /**
    *
    * "Move axis" submenu
    *
@@ -4418,6 +4457,11 @@ static void lcd_move_select_axis() {
   // ^ Set
   //
   MENU_ITEM(back, MSG_BACK, lcd_maintenance_menu);
+  //MENU_ITEM(function, MSG_BACK, lcd_back_to_maintenance);
+
+  if (longActionRunning && planner.movesplanned()){
+      MENU_ITEM(function , MSG_ABORT_ACTION , lcd_abort_action);
+  }
   
   MENU_ITEM(submenu,"Move X", lcd_move_x_1mm);
 
@@ -4428,6 +4472,7 @@ static void lcd_move_select_axis() {
 
   END_MENU();
 }
+
 
    /**
      * 
@@ -4440,8 +4485,12 @@ static void lcd_move_select_axis() {
       //
       // ^ Main
       //
-      MENU_ITEM(back, MSG_BACK , lcd_maintenance_menu);
+      MENU_BACK(MSG_BACK);
 
+      if (longActionRunning && planner.movesplanned()){
+      MENU_ITEM(function , MSG_ABORT_ACTION , lcd_abort_action);
+      }
+      
       if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
         STATIC_ITEM("The nozzle is too              ");
         STATIC_ITEM("cold. Please heat it           ");
@@ -4493,8 +4542,24 @@ static void lcd_move_select_axis() {
      * 
      */
      
+     /**
+      * 
+      * Factor Reset sucess screen
+      * 
+      */
+     void lcd_factory_reset_sucess(){
+      
+       START_MENU();
+       STATIC_ITEM("Success! All settings           ");
+       STATIC_ITEM("have been reset to              ");
+       STATIC_ITEM("their factory                   ");
+       STATIC_ITEM("defaults.                       ");
+       END_MENU();
 
-
+       if (lcd_clicked){
+         lcd_goto_screen(lcd_danger_zone);
+       }
+     }
      /**
       * 
       * Function for holding button; holdTime = approximate number of seconds to hold button before function is run
@@ -4526,6 +4591,7 @@ static void lcd_move_select_axis() {
         if (clicks==(1.4*holdTime)){
            buzzer.tone(100,1000);
            enqueue_and_echo_commands_P(PSTR("M502\nM500"));
+           lcd_goto_screen(lcd_factory_reset_sucess);
            clicks = 0;
          }
          
@@ -4590,11 +4656,6 @@ static void lcd_move_select_axis() {
       // Temperature (from control)
       //
       MENU_ITEM(submenu, MSG_TEMPERATURE, lcd_control_temperature_menu); 
-      
-      //
-      // X Homing Offset
-      //
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X home offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
 
       //
       // Motion Menu

@@ -420,7 +420,7 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
                lcd_setstatusPGM(PSTR("8 of 8 cycles complete"), -1);
              break;
              default: 
-               lcd_setstatusPGM(PSTR("PID autotune in progress"), -1);
+               lcd_setstatusPGM(PSTR(MSG_PID_AUTOTUNE_RUNNING), -1);
              break;
             }
             cycles++;
