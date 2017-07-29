@@ -4495,15 +4495,14 @@ static void lcd_move_select_axis() {
         STATIC_ITEM("The nozzle is too              ");
         STATIC_ITEM("cold. Please heat it           ");
         STATIC_ITEM("up to at least 170"LCD_STR_DEGREE"C.           ");
-        STATIC_ITEM("========= ? =========          ");
-        STATIC_ITEM("Forcing filament into          ");
-        STATIC_ITEM("a cold nozzle will             ");
-        STATIC_ITEM("only lead to jamming           ");
-        STATIC_ITEM("and grinding. Your             ");
-        STATIC_ITEM("JellyBOX is                    ");
-        STATIC_ITEM("prohibited from even           ");
-        STATIC_ITEM("trying; for its own            ");
-        STATIC_ITEM("safety.                        ");
+        STATIC_ITEM("-- ? -- Forcing                ");
+        STATIC_ITEM("filament into a cold           ");
+        STATIC_ITEM("nozzle will only lead          ");
+        STATIC_ITEM("to jamming and                 ");
+        STATIC_ITEM("grinding. Your                 ");
+        STATIC_ITEM("JellyBOX is forbidden          ");
+        STATIC_ITEM("from even trying; for          ");
+        STATIC_ITEM("its own sake.                  ");
       }
       else{
         MENU_ITEM(function, MSG_EXTRUDE_PFIVE, lcd_move_e_05mm_bt);
@@ -4618,8 +4617,7 @@ static void lcd_move_select_axis() {
       STATIC_ITEM("-- ? -- Press the        ");
       STATIC_ITEM("'Reset!' button and      ");
       STATIC_ITEM("hold for 5 seconds to    ");
-      STATIC_ITEM("reset your JellyBOX      ");
-      STATIC_ITEM("========= ? =========    ");
+      STATIC_ITEM("reset your JellyBOX.     ");
       STATIC_ITEM("Factory reset wipes      ");
       STATIC_ITEM("the internal settings    ");
       STATIC_ITEM("memory (EEPROM).         ");
@@ -4853,8 +4851,12 @@ static void lcd_move_select_axis() {
       STATIC_ITEM(SHORT_BUILD_VERSION, true);                          // x.x.x-Branch
       STATIC_ITEM(STRING_DISTRIBUTION_DATE, true);                     // YYYY-MM-DD HH:MM
       STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
-      STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
-      STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
+      STATIC_ITEM(SOURCE_CODE_URL_LINE1, true);                                  // www.github.com/myfork
+      STATIC_ITEM(SOURCE_CODE_URL_LINE2, true);                                  // www.github.com/myfork
+      // STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
+      #if EXTRUDERS>1
+        STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
+      #endif
       /*#if ENABLED(AUTO_BED_LEVELING_3POINT)
         STATIC_ITEM(MSG_3POINT_LEVELING, true);                        // 3-Point Leveling
       #elif ENABLED(AUTO_BED_LEVELING_LINEAR)
