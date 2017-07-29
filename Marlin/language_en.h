@@ -458,7 +458,7 @@
   #define MSG_START_PID_AUTOTUNE              _UxGT("Start PID Autotune")
 #endif
 #ifndef MSG_PID_AUTOTUNE_RUNNING
-  #define MSG_PID_AUTOTUNE_RUNNING            _UxGT("PID autotune in progress")
+  #define MSG_PID_AUTOTUNE_RUNNING            _UxGT("PID autotune in progress.")
 #endif
 #ifndef MSG_ABORT_PID_AUTOTUNE
   #define MSG_ABORT_PID_AUTOTUNE              _UxGT("Abort PID Autotune")
@@ -476,7 +476,7 @@
   #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors     & "LCD_STR_UPLEVEL)
 #endif
 #ifndef MSG_RETURN_AND_HOME
-  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ          &"LCD_STR_UPLEVEL )
+  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ          & "LCD_STR_UPLEVEL )
 #endif
 #ifndef MSG_EDIT_PID
   #define MSG_EDIT_PID                        _UxGT("Edit PID Values")
