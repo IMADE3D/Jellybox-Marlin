@@ -458,7 +458,7 @@
   #define MSG_START_PID_AUTOTUNE              _UxGT("Start PID Autotune")
 #endif
 #ifndef MSG_PID_AUTOTUNE_RUNNING
-  #define MSG_PID_AUTOTUNE_RUNNING            _UxGT("PID autotune in progress")
+  #define MSG_PID_AUTOTUNE_RUNNING            _UxGT("PID autotune in progress.")
 #endif
 #ifndef MSG_ABORT_PID_AUTOTUNE
   #define MSG_ABORT_PID_AUTOTUNE              _UxGT("Abort PID Autotune")

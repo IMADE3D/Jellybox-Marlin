@@ -3759,7 +3759,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
 
       STATIC_ITEM("-- ! -- Don't touch        ");
       STATIC_ITEM("the hotend. PID            ");
-      STATIC_ITEM("Autotune in progress       ");
+      STATIC_ITEM("Autotune in progress.      ");
       //cycles;
       //STATIC_ITEM("Autotune progress:        ");
       //STATIC_ITEM("_ out of 8 heat-up         ");
