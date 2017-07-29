@@ -4151,9 +4151,9 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     #endif
 
     //
-    // X Homing Offset
+    // X Homing Offset | X Home Offset
     //
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X homing offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X home offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
     
     // M203 / M205 - Feedrate items
     MENU_ITEM(submenu, MSG_VELOCITY, lcd_control_motion_velocity_menu);
