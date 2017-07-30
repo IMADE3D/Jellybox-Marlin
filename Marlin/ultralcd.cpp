@@ -4263,7 +4263,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
 
      void lcd_test_auto_bed_level(){
        enqueue_and_echo_commands_P(PSTR("G28")); 
-       enqueue_and_echo_commands_P(PSTR("G29")); 
+       enqueue_and_echo_commands_P(PSTR("G29 D")); 
      }
 
      void lcd_disable_steppers(){
