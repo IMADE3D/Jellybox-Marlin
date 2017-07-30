@@ -35,20 +35,20 @@
   /**
    * Marlin release version identifier
    */
-  #define SHORT_BUILD_VERSION "Marlin 1.1.4"
+  #define SHORT_BUILD_VERSION "JB-Marlin-2.0-RC1"
 
   /**
    * Verbose version identifier which should contain a reference to the location
    * from where the binary was downloaded or the source code was compiled.
    */
-  #define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION " (github.com/imade3d)"
+  #define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION " (github.com/imade3d/Marlin/releases)"
 
   /**
    * The STRING_DISTRIBUTION_DATE represents when the binary file was built,
    * here we define this default string as the date where the latest release
    * version was tagged.
    */
-  #define STRING_DISTRIBUTION_DATE "2017-07-04 12:00"
+  #define STRING_DISTRIBUTION_DATE "2017-07-29-12:25CET"
 
   /**
    * Required minimum Configuration.h and Configuration_adv.h file versions.
