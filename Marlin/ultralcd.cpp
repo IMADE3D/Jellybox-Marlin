@@ -1121,6 +1121,7 @@ void kill_screen(const char* lcd_msg) {
         }
         if (lcdDrawUpdate)
           lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr43sign(zprobe_zoffset));
+          settings.save();
       }
 
     #else // !BABYSTEP_ZPROBE_OFFSET
