@@ -865,7 +865,7 @@
   // as then there's no redundant movements between g28 and g29
   #define LEFT_PROBE_BED_POSITION 10
   #define RIGHT_PROBE_BED_POSITION 155
-  #define FRONT_PROBE_BED_POSITION 13
+  #define FRONT_PROBE_BED_POSITION 25
   #define BACK_PROBE_BED_POSITION 140-25
 
   // The Z probe minimum outer margin (to validate G29 parameters).
@@ -981,7 +981,7 @@
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT (10) // ((X_MIN_POS + X_MAX_POS) / 2)    // X point for Z homing when homing all axis (G28).
-  #define Z_SAFE_HOMING_Y_POINT (13) // ((Y_MIN_POS + Y_MAX_POS) / 2)    // Y point for Z homing when homing all axis (G28).
+  #define Z_SAFE_HOMING_Y_POINT (25) // ((Y_MIN_POS + Y_MAX_POS) / 2)    // Y point for Z homing when homing all axis (G28).
 #endif
 
 // Homing speeds (mm/m)
