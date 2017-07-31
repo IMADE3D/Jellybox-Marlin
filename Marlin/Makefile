@@ -396,13 +396,12 @@ ifneq ($(HARDWARE_MOTHERBOARD),)
 CTUNING += -DMOTHERBOARD=${HARDWARE_MOTHERBOARD}
 endif
 #CEXTRA = -Wa,-adhlns=$(<:.c=.lst)
-CEXTRA = -fno-use-cxa-atexit -fno-threadsafe-statics
+CEXTRA = -fno-use-cxa-atexit -fno-threadsafe-statics -fpermissive
 
 CFLAGS := $(CDEBUG) $(CDEFS) $(CINCS) -O$(OPT) $(CWARN) $(CEXTRA) $(CTUNING) $(CSTANDARD)
 CXXFLAGS :=         $(CDEFS) $(CINCS) -O$(OPT) -Wall    $(CEXTRA) $(CTUNING) $(CXXSTANDARD)
 #ASFLAGS = -Wa,-adhlns=$(<:.S=.lst),-gstabs
 LDFLAGS = -lm
-
 
 # Programming support using avrdude. Settings and variables.
 AVRDUDE_PORT = $(UPLOAD_PORT)
