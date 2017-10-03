@@ -1,5 +1,5 @@
 // JellyBOX CONFIGURATION VERSION: 
-// JellyBOX_1.4-heated_bed-one_fan
+// JellyBOX_2.0-heated_bed-one_fan
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
