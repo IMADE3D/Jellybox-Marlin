@@ -1,3 +1,5 @@
+// JellyBOX CONFIGURATION VERSION: 
+// JellyBOX_1.4-two_fans
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
