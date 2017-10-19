@@ -4332,11 +4332,6 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       // Test Auto Bed Level
       //
       MENU_ITEM(function, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level);
-
-      //
-      // Danger Zone
-      //
-      MENU_ITEM(submenu, MSG_DANGER_ZONE, lcd_danger_zone);
       
       END_MENU();
     }
@@ -4682,6 +4677,11 @@ static void lcd_move_select_axis() {
       // Motion Menu
       //
       MENU_ITEM(submenu, MSG_MOTION, lcd_control_motion_menu);
+
+      //
+      // Danger Zone
+      //
+      MENU_ITEM(submenu, MSG_DANGER_ZONE, lcd_danger_zone);
       
       END_MENU();
      }
