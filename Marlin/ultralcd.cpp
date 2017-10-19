@@ -3978,7 +3978,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     #endif // E_STEPPERS > 2
   #endif
 
-  void _planner_refresh_positioning() { planner.refresh_positioning(); }
+  void _planner_refresh_positioning() { planner.refresh_positioning(); settings.save(); }
   #if ENABLED(DISTINCT_E_FACTORS)
     void _planner_refresh_e_positioning(const uint8_t e) {
       if (e == active_extruder)
