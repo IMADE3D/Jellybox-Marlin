@@ -3462,8 +3462,8 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       thermalManager.updatePID();
     }
     #define _DEFINE_PIDTEMP_BASE_FUNCS(N) \
-      void copy_and_scalePID_i_E ## N() { copy_and_scalePID_i(N); } \
-      void copy_and_scalePID_d_E ## N() { copy_and_scalePID_d(N); }
+      void copy_and_scalePID_i_E ## N() { copy_and_scalePID_i(N); settings.save(); } \
+      void copy_and_scalePID_d_E ## N() { copy_and_scalePID_d(N); settings.save(); }
 
     #if ENABLED(PID_AUTOTUNE_MENU)
       #define DEFINE_PIDTEMP_FUNCS(N) \
@@ -3863,14 +3863,14 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
         #define _PID_BASE_MENU_ITEMS(ELABEL, eindex) \
         raw_Ki = unscalePID_i(PID_PARAM(Ki, eindex)); \
         raw_Kd = unscalePID_d(PID_PARAM(Kd, eindex)); \
-        MENU_ITEM_EDIT(float52, MSG_PID_P ELABEL, &PID_PARAM(Kp, eindex), 1, 9990); \
+        MENU_ITEM_EDIT_CALLBACK(float52, MSG_PID_P ELABEL, &PID_PARAM(Kp, eindex), 1, 9990, lcd_store_settings); \
         MENU_ITEM_EDIT_CALLBACK(float52, MSG_PID_I ELABEL, &raw_Ki, 0.01, 9990, copy_and_scalePID_i_E ## eindex); \
         MENU_ITEM_EDIT_CALLBACK(float52, MSG_PID_D ELABEL, &raw_Kd, 1, 9990, copy_and_scalePID_d_E ## eindex)
 
       #if ENABLED(PID_EXTRUSION_SCALING)
         #define _PID_MENU_ITEMS(ELABEL, eindex) \
           _PID_BASE_MENU_ITEMS(ELABEL, eindex); \
-          MENU_ITEM_EDIT(float3, MSG_PID_C ELABEL, &PID_PARAM(Kc, eindex), 1, 9990)
+          MENU_ITEM_EDIT_CALLBACK(float3, MSG_PID_C ELABEL, &PID_PARAM(Kc, eindex), 1, 9990,lcd_store_settings)
       #else
         #define _PID_MENU_ITEMS(ELABEL, eindex) _PID_BASE_MENU_ITEMS(ELABEL, eindex)
       #endif
