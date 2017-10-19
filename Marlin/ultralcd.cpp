@@ -4107,14 +4107,19 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
-    MENU_ITEM_EDIT(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990);
-    MENU_ITEM_EDIT(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990);
+    //MENU_ITEM_EDIT(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990,lcd_store_settings);
+    //MENU_ITEM_EDIT(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990,lcd_store_settings);
     #if ENABLED(DELTA)
-      MENU_ITEM_EDIT(float3, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 1, 990);
+     // MENU_ITEM_EDIT(float3, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 1, 990);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 1, 990,lcd_store_settings);
     #else
-      MENU_ITEM_EDIT(float52, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 0.1, 990);
+      //MENU_ITEM_EDIT(float52, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 0.1, 990);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float52, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 0.1, 990,lcd_store_settings);
     #endif
-    MENU_ITEM_EDIT(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990);
+    //MENU_ITEM_EDIT(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990,lcd_store_settings);
 
     END_MENU();
   }
