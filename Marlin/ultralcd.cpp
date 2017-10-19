@@ -3962,7 +3962,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    *
    */
 
-  void _reset_acceleration_rates() { planner.reset_acceleration_rates(); }
+  void _reset_acceleration_rates() { planner.reset_acceleration_rates(); settings.save(); }
   #if ENABLED(DISTINCT_E_FACTORS)
     void _reset_e_acceleration_rate(const uint8_t e) { if (e == active_extruder) _reset_acceleration_rates(); }
     void _reset_e0_acceleration_rate() { _reset_e_acceleration_rate(0); }
@@ -4061,13 +4061,16 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
     // M204 P Acceleration
-    MENU_ITEM_EDIT(float5, MSG_ACC, &planner.acceleration, 10, 99000);
+    //MENU_ITEM_EDIT(float5, MSG_ACC, &planner.acceleration, 10, 99000);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float5, MSG_ACC, &planner.acceleration, 10, 99000,lcd_store_settings);
 
     // M204 R Retract Acceleration
-    MENU_ITEM_EDIT(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000);
+    //MENU_ITEM_EDIT(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000,lcd_store_settings);
 
     // M204 T Travel Acceleration
-    MENU_ITEM_EDIT(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000);
+    //MENU_ITEM_EDIT(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000,lcd_store_settings);
 
     // M201 settings
     MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_X, &planner.max_acceleration_mm_per_s2[X_AXIS], 100, 99000, _reset_acceleration_rates);
@@ -4075,13 +4078,14 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_Z, &planner.max_acceleration_mm_per_s2[Z_AXIS], 10, 99000, _reset_acceleration_rates);
 
     #if ENABLED(DISTINCT_E_FACTORS)
-      MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E, &planner.max_acceleration_mm_per_s2[E_AXIS + active_extruder], 100, 99000, _reset_acceleration_rates);
-      MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E1, &planner.max_acceleration_mm_per_s2[E_AXIS], 100, 99000, _reset_e0_acceleration_rate);
-      MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E2, &planner.max_acceleration_mm_per_s2[E_AXIS + 1], 100, 99000, _reset_e1_acceleration_rate);
+    MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E, &planner.max_acceleration_mm_per_s2[E_AXIS + active_extruder], 100, 99000, _reset_acceleration_rates);
+    MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E1, &planner.max_acceleration_mm_per_s2[E_AXIS], 100, 99000, _reset_e0_acceleration_rate);
+    MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E2, &planner.max_acceleration_mm_per_s2[E_AXIS + 1], 100, 99000, _reset_e1_acceleration_rate);
+
       #if E_STEPPERS > 2
-        MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E3, &planner.max_acceleration_mm_per_s2[E_AXIS + 2], 100, 99000, _reset_e2_acceleration_rate);
+            MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E3, &planner.max_acceleration_mm_per_s2[E_AXIS + 2], 100, 99000, _reset_e2_acceleration_rate);
         #if E_STEPPERS > 3
-          MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E4, &planner.max_acceleration_mm_per_s2[E_AXIS + 3], 100, 99000, _reset_e3_acceleration_rate);
+            MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E4, &planner.max_acceleration_mm_per_s2[E_AXIS + 3], 100, 99000, _reset_e3_acceleration_rate);
           #if E_STEPPERS > 4
             MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E5, &planner.max_acceleration_mm_per_s2[E_AXIS + 4], 100, 99000, _reset_e4_acceleration_rate);
           #endif // E_STEPPERS > 4
