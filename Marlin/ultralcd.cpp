@@ -3962,7 +3962,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    *
    */
 
-  void _reset_acceleration_rates() { planner.reset_acceleration_rates(); }
+  void _reset_acceleration_rates() { planner.reset_acceleration_rates(); settings.save(); }
   #if ENABLED(DISTINCT_E_FACTORS)
     void _reset_e_acceleration_rate(const uint8_t e) { if (e == active_extruder) _reset_acceleration_rates(); }
     void _reset_e0_acceleration_rate() { _reset_e_acceleration_rate(0); }
@@ -3978,7 +3978,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     #endif // E_STEPPERS > 2
   #endif
 
-  void _planner_refresh_positioning() { planner.refresh_positioning(); }
+  void _planner_refresh_positioning() { planner.refresh_positioning(); settings.save(); }
   #if ENABLED(DISTINCT_E_FACTORS)
     void _planner_refresh_e_positioning(const uint8_t e) {
       if (e == active_extruder)
@@ -4009,32 +4009,44 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
     // M203 Max Feedrate
-    MENU_ITEM_EDIT(float3, MSG_VMAX MSG_X, &planner.max_feedrate_mm_s[X_AXIS], 1, 999);
-    MENU_ITEM_EDIT(float3, MSG_VMAX MSG_Y, &planner.max_feedrate_mm_s[Y_AXIS], 1, 999);
-    MENU_ITEM_EDIT(float3, MSG_VMAX MSG_Z, &planner.max_feedrate_mm_s[Z_AXIS], 1, 999);
+    //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_X, &planner.max_feedrate_mm_s[X_AXIS], 1, 999);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_X, &planner.max_feedrate_mm_s[X_AXIS], 1, 999,lcd_store_settings);
+    //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_Y, &planner.max_feedrate_mm_s[Y_AXIS], 1, 999);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_Y, &planner.max_feedrate_mm_s[Y_AXIS], 1, 999,lcd_store_settings);
+    //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_Z, &planner.max_feedrate_mm_s[Z_AXIS], 1, 999);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_Z, &planner.max_feedrate_mm_s[Z_AXIS], 1, 999,lcd_store_settings);
 
     #if ENABLED(DISTINCT_E_FACTORS)
-      MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS + active_extruder], 1, 999);
-      MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E1, &planner.max_feedrate_mm_s[E_AXIS], 1, 999);
-      MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E2, &planner.max_feedrate_mm_s[E_AXIS + 1], 1, 999);
+      //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS + active_extruder], 1, 999);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS + active_extruder], 1, 999,lcd_store_settings);
+      //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E1, &planner.max_feedrate_mm_s[E_AXIS], 1, 999);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E1, &planner.max_feedrate_mm_s[E_AXIS], 1, 999,lcd_store_settings);
+      //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E2, &planner.max_feedrate_mm_s[E_AXIS + 1], 1, 999);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E2, &planner.max_feedrate_mm_s[E_AXIS + 1], 1, 999,lcd_store_settings);
       #if E_STEPPERS > 2
-        MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E3, &planner.max_feedrate_mm_s[E_AXIS + 2], 1, 999);
+        //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E3, &planner.max_feedrate_mm_s[E_AXIS + 2], 1, 999);
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E3, &planner.max_feedrate_mm_s[E_AXIS + 2], 1, 999,lcd_store_settings);
         #if E_STEPPERS > 3
-          MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E4, &planner.max_feedrate_mm_s[E_AXIS + 3], 1, 999);
+          //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E4, &planner.max_feedrate_mm_s[E_AXIS + 3], 1, 999);
+          MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E4, &planner.max_feedrate_mm_s[E_AXIS + 3], 1, 999,lcd_store_settings);
           #if E_STEPPERS > 4
-            MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E5, &planner.max_feedrate_mm_s[E_AXIS + 4], 1, 999);
+            //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E5, &planner.max_feedrate_mm_s[E_AXIS + 4], 1, 999);
+            MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E5, &planner.max_feedrate_mm_s[E_AXIS + 4], 1, 999,lcd_store_settings);
           #endif // E_STEPPERS > 4
         #endif // E_STEPPERS > 3
       #endif // E_STEPPERS > 2
     #else
-      MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS], 1, 999);
+      //MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS], 1, 999);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS], 1, 999,lcd_store_settings);
     #endif
 
     // M205 S Min Feedrate
-    MENU_ITEM_EDIT(float3, MSG_VMIN, &planner.min_feedrate_mm_s, 0, 999);
+    //MENU_ITEM_EDIT(float3, MSG_VMIN, &planner.min_feedrate_mm_s, 0, 999);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VMIN, &planner.min_feedrate_mm_s, 0, 999,lcd_store_settings);
 
     // M205 T Min Travel Feedrate
-    MENU_ITEM_EDIT(float3, MSG_VTRAV_MIN, &planner.min_travel_feedrate_mm_s, 0, 999);
+    //MENU_ITEM_EDIT(float3, MSG_VTRAV_MIN, &planner.min_travel_feedrate_mm_s, 0, 999);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VTRAV_MIN, &planner.min_travel_feedrate_mm_s, 0, 999,lcd_store_settings);
 
     END_MENU();
   }
@@ -4049,13 +4061,16 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
     // M204 P Acceleration
-    MENU_ITEM_EDIT(float5, MSG_ACC, &planner.acceleration, 10, 99000);
+    //MENU_ITEM_EDIT(float5, MSG_ACC, &planner.acceleration, 10, 99000);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float5, MSG_ACC, &planner.acceleration, 10, 99000,lcd_store_settings);
 
     // M204 R Retract Acceleration
-    MENU_ITEM_EDIT(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000);
+    //MENU_ITEM_EDIT(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000,lcd_store_settings);
 
     // M204 T Travel Acceleration
-    MENU_ITEM_EDIT(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000);
+    //MENU_ITEM_EDIT(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000,lcd_store_settings);
 
     // M201 settings
     MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_X, &planner.max_acceleration_mm_per_s2[X_AXIS], 100, 99000, _reset_acceleration_rates);
@@ -4063,13 +4078,14 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_Z, &planner.max_acceleration_mm_per_s2[Z_AXIS], 10, 99000, _reset_acceleration_rates);
 
     #if ENABLED(DISTINCT_E_FACTORS)
-      MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E, &planner.max_acceleration_mm_per_s2[E_AXIS + active_extruder], 100, 99000, _reset_acceleration_rates);
-      MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E1, &planner.max_acceleration_mm_per_s2[E_AXIS], 100, 99000, _reset_e0_acceleration_rate);
-      MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E2, &planner.max_acceleration_mm_per_s2[E_AXIS + 1], 100, 99000, _reset_e1_acceleration_rate);
+    MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E, &planner.max_acceleration_mm_per_s2[E_AXIS + active_extruder], 100, 99000, _reset_acceleration_rates);
+    MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E1, &planner.max_acceleration_mm_per_s2[E_AXIS], 100, 99000, _reset_e0_acceleration_rate);
+    MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E2, &planner.max_acceleration_mm_per_s2[E_AXIS + 1], 100, 99000, _reset_e1_acceleration_rate);
+
       #if E_STEPPERS > 2
-        MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E3, &planner.max_acceleration_mm_per_s2[E_AXIS + 2], 100, 99000, _reset_e2_acceleration_rate);
+            MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E3, &planner.max_acceleration_mm_per_s2[E_AXIS + 2], 100, 99000, _reset_e2_acceleration_rate);
         #if E_STEPPERS > 3
-          MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E4, &planner.max_acceleration_mm_per_s2[E_AXIS + 3], 100, 99000, _reset_e3_acceleration_rate);
+            MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E4, &planner.max_acceleration_mm_per_s2[E_AXIS + 3], 100, 99000, _reset_e3_acceleration_rate);
           #if E_STEPPERS > 4
             MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_E5, &planner.max_acceleration_mm_per_s2[E_AXIS + 4], 100, 99000, _reset_e4_acceleration_rate);
           #endif // E_STEPPERS > 4
@@ -4091,14 +4107,19 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
 
-    MENU_ITEM_EDIT(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990);
-    MENU_ITEM_EDIT(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990);
+    //MENU_ITEM_EDIT(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VX_JERK, &planner.max_jerk[X_AXIS], 1, 990,lcd_store_settings);
+    //MENU_ITEM_EDIT(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VY_JERK, &planner.max_jerk[Y_AXIS], 1, 990,lcd_store_settings);
     #if ENABLED(DELTA)
-      MENU_ITEM_EDIT(float3, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 1, 990);
+     // MENU_ITEM_EDIT(float3, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 1, 990);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 1, 990,lcd_store_settings);
     #else
-      MENU_ITEM_EDIT(float52, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 0.1, 990);
+      //MENU_ITEM_EDIT(float52, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 0.1, 990);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float52, MSG_VZ_JERK, &planner.max_jerk[Z_AXIS], 0.1, 990,lcd_store_settings);
     #endif
-    MENU_ITEM_EDIT(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990);
+    //MENU_ITEM_EDIT(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990,lcd_store_settings);
 
     END_MENU();
   }
