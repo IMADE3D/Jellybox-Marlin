@@ -980,6 +980,11 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_LIVE_ADJUSTMENTS, lcd_tune_menu);
     }
     else {
+
+      //
+      // For testing purposes 
+      //
+      MENU_ITEM(submenu, MSG_LIVE_ADJUSTMENTS, lcd_tune_menu);
       
       //
       // Home XYZ
@@ -1087,7 +1092,7 @@ void kill_screen(const char* lcd_msg) {
         babysteps_done += babystep_increment;
       }
       if (lcdDrawUpdate)
-        lcd_implementation_drawedit(msg, ftostr43sign(planner.steps_to_mm[axis] * babysteps_done));
+        lcd_implementation_drawedit(msg, ftostr52sign(planner.steps_to_mm[axis] * babysteps_done));
     }
 
     #if ENABLED(BABYSTEP_XY)
@@ -1119,7 +1124,7 @@ void kill_screen(const char* lcd_msg) {
           }
         }
         if (lcdDrawUpdate)
-          lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr43sign(zprobe_zoffset));
+          lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr52sign(zprobe_zoffset));
           settings.save();
       }
 
