@@ -791,7 +791,7 @@
   #define MSG_TWEAK_FIRST_LAYER               _UxGT("Tweak the 1st layer")
 #endif
 #ifndef MSG_ZPROBE_ZOFFSET
-  #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z Offset")
+  #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z offset")
 #endif
 #ifndef MSG_BABYSTEP_X
   #define MSG_BABYSTEP_X                      _UxGT("Babystep X")
