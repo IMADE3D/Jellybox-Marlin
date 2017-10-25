@@ -4171,7 +4171,9 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_ITEM(back, MSG_BACK , lcd_settings_menu);
 
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-      MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+      //MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+//      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_ZPROBE_OFFSET, &zprobe_zoffset[X_AXIS], Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX,lcd_babystep_zoffset);
+      MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_babystep_zoffset);
     #elif HAS_BED_PROBE
       MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_refresh_zprobe_zoffset);
     #endif
