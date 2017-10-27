@@ -469,6 +469,9 @@
 #ifndef MSG_ABORT_ACTION
   #define MSG_ABORT_ACTION                    _UxGT("Abort")
 #endif
+#ifndef MSG_ABORT_EXTRUSION
+  #define MSG_ABORT_EXTRUSION                  _UxGT("Abort extrusion")
+#endif
 #ifndef MSG_RETURN_TO_MAIN
   #define MSG_RETURN_TO_MAIN                  _UxGT("Return to main menu")
 #endif
