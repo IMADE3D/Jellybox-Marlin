@@ -4499,10 +4499,6 @@ static void lcd_move_select_axis() {
       // ^ Main
       //
       MENU_BACK(MSG_BACK);
-
-      if (longActionRunning && planner.movesplanned()){
-      MENU_ITEM(function , MSG_ABORT_ACTION , lcd_abort_action);
-      }
       
       if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
         STATIC_ITEM("The nozzle is too              ");
@@ -4518,8 +4514,12 @@ static void lcd_move_select_axis() {
         STATIC_ITEM("its own sake.                  ");
       }
       else{
-        MENU_ITEM(function, MSG_EXTRUDE_PFIVE, lcd_move_e_05mm_bt);
+        
         //MENU_ITEM(gcode, MSG_EXTRUDE_PFIVE, PSTR("G1 E0.5"));
+         //if (longActionRunning && planner.movesplanned()){
+      MENU_ITEM(function , MSG_ABORT_EXTRUSION , lcd_abort_action);
+      //}
+        MENU_ITEM(function, MSG_EXTRUDE_PFIVE, lcd_move_e_05mm_bt);
         MENU_ITEM(function, MSG_EXTRUDE_TEN, lcd_move_e_10mm_bt);
         MENU_ITEM(function, MSG_EXTRUDE_FIFTY, lcd_move_e_50mm_bt);
         MENU_ITEM(function, MSG_EXTRUDE_HUNDRED, lcd_move_e_100mm_bt);
