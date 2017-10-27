@@ -114,6 +114,7 @@ uint16_t max_display_update_time = 0;
 
   void lcd_main_menu();
   void lcd_tune_menu();
+  void lcd_adjustments_menu();
   void lcd_preheat_nozzle_menu();
   void lcd_preheat_bed_menu();
   void lcd_prepare_menu();
@@ -980,6 +981,11 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_LIVE_ADJUSTMENTS, lcd_tune_menu);
     }
     else {
+
+      //
+      // Adjustments menu
+      //
+      MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
       
       //
       // Home XYZ
@@ -1370,7 +1376,120 @@ void kill_screen(const char* lcd_msg) {
 
     END_MENU();
   }
+/**
+   *
+   * "Adjustments" submenu
+   *
+   */
+  void lcd_adjustments_menu() {
+    START_MENU();
 
+    //
+    // ^ Main
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_main_menu);
+
+    //
+    // Babystep X:
+    // Babystep Y:
+    // Babystep Z:
+    //
+    #if ENABLED(BABYSTEPPING)
+      #if ENABLED(BABYSTEP_XY)
+        MENU_ITEM(submenu, MSG_BABYSTEP_X, lcd_babystep_x);
+        MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
+      #endif
+      #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
+        MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_babystep_zoffset);
+      #else
+        MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
+      #endif
+    #endif
+
+
+    //
+    // Flow:
+    // Flow [1-5]:
+    //
+    #if EXTRUDERS == 1
+      MENU_ITEM_EDIT(int3, MSG_FLOW, &flow_percentage[0], 10, 999);
+    #else // EXTRUDERS > 1
+      MENU_ITEM_EDIT(int3, MSG_FLOW, &flow_percentage[active_extruder], 10, 999);
+      MENU_ITEM_EDIT(int3, MSG_FLOW MSG_N1, &flow_percentage[0], 10, 999);
+      MENU_ITEM_EDIT(int3, MSG_FLOW MSG_N2, &flow_percentage[1], 10, 999);
+      #if EXTRUDERS > 2
+        MENU_ITEM_EDIT(int3, MSG_FLOW MSG_N3, &flow_percentage[2], 10, 999);
+        #if EXTRUDERS > 3
+          MENU_ITEM_EDIT(int3, MSG_FLOW MSG_N4, &flow_percentage[3], 10, 999);
+          #if EXTRUDERS > 4
+            MENU_ITEM_EDIT(int3, MSG_FLOW MSG_N5, &flow_percentage[4], 10, 999);
+          #endif // EXTRUDERS > 4
+        #endif // EXTRUDERS > 3
+      #endif // EXTRUDERS > 2
+    #endif // EXTRUDERS > 1
+    
+    //
+    // Speed:
+    //
+    MENU_ITEM_EDIT(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
+
+    // Manual bed leveling, Bed Z:
+    #if ENABLED(MESH_BED_LEVELING) && ENABLED(LCD_BED_LEVELING)
+      MENU_ITEM_EDIT(float43, MSG_BED_Z, &mbl.z_offset, -1, 1);
+    #endif
+
+    //
+    // Nozzle:
+    // Nozzle [1-4]:
+    //
+    #if HOTENDS == 1
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+    #else // HOTENDS > 1
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N1, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N2, &thermalManager.target_temperature[1], 0, HEATER_1_MAXTEMP - 15, watch_temp_callback_E1);
+      #if HOTENDS > 2
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N3, &thermalManager.target_temperature[2], 0, HEATER_2_MAXTEMP - 15, watch_temp_callback_E2);
+        #if HOTENDS > 3
+          MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N4, &thermalManager.target_temperature[3], 0, HEATER_3_MAXTEMP - 15, watch_temp_callback_E3);
+          #if HOTENDS > 4
+            MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N5, &thermalManager.target_temperature[4], 0, HEATER_4_MAXTEMP - 15, watch_temp_callback_E4);
+          #endif // HOTENDS > 4
+        #endif // HOTENDS > 3
+      #endif // HOTENDS > 2
+    #endif // HOTENDS > 1
+
+    //
+    // Bed:
+    //
+    #if HAS_TEMP_BED
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_BED, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
+    #endif
+
+    //
+    // Fan Speed:
+    //
+    #if FAN_COUNT > 0
+      #if HAS_FAN0
+        #if FAN_COUNT > 1
+          #define MSG_1ST_FAN_SPEED MSG_FAN_SPEED " 1"
+        #else
+          #define MSG_1ST_FAN_SPEED MSG_FAN_SPEED
+        #endif
+        //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_1ST_FAN_SPEED, &fanSpeeds[0], 0, 255);
+        //fanSpeed100 = int((fanSpeed * 100)/255);
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_1ST_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
+        fanSpeeds[0] = fanSpeed;
+      #endif
+      #if HAS_FAN1
+        MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED " 2", &fanSpeeds[1], 0, 255);
+      #endif
+      #if HAS_FAN2
+        MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED " 3", &fanSpeeds[2], 0, 255);
+      #endif
+    #endif // FAN_COUNT > 0
+
+    END_MENU();
+  }
   /**
    *
    * "Driver current control" submenu items

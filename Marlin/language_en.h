@@ -490,6 +490,9 @@
 #ifndef MSG_LIVE_ADJUSTMENTS
   #define MSG_LIVE_ADJUSTMENTS                _UxGT("Live adjustments")
 #endif
+#ifndef MSG_ADJUSTMENTS
+  #define MSG_ADJUSTMENTS                     _UxGT("Adjustments")
+#endif
 #ifndef MSG_MOVE_AXIS
   #define MSG_MOVE_AXIS                       _UxGT("Move XYZ axis")
 #endif
