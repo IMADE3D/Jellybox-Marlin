@@ -148,7 +148,6 @@ uint16_t max_display_update_time = 0;
   int fanSpeed;
 
   bool longActionRunning = false;
-  bool zoffset_relative = false;
   
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
@@ -1068,8 +1067,7 @@ void kill_screen(const char* lcd_msg) {
    * "Tune" submenu items
    *
    */
-  float zoffset_change = 0;
-  const int16_t babystep_increment = 0;
+
   #if HAS_M206_COMMAND
     /**
      * Set the home offset based on the current_position
@@ -1119,17 +1117,14 @@ void kill_screen(const char* lcd_msg) {
 
             if (planner.abl_enabled)
               thermalManager.babystep_axis(Z_AXIS, babystep_increment);
-            zoffset_change = new_zoffset - zprobe_zoffset;
+
             zprobe_zoffset = new_zoffset;
             refresh_zprobe_zoffset(true);
             lcdDrawUpdate = LCDVIEW_CALL_REDRAW_NEXT;
           }
         }
         if (lcdDrawUpdate)
-          lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr52sign(encoderPosition));
-          //if (zoffset_relative == true){
-            //lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr52sign(zprobe_zoffset));
-          //}
+          lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr52sign(zprobe_zoffset));
           settings.save();
       }
 
@@ -1270,7 +1265,6 @@ void kill_screen(const char* lcd_msg) {
     // ^ Main
     //
     MENU_ITEM(back, MSG_BACK , lcd_main_menu);
-    zoffset_relative = true;
 
     //
     // Babystep X:
