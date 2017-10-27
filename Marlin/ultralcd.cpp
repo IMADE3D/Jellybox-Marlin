@@ -4343,7 +4343,13 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
  float move_menu_scale_bt;
 
  inline void line_to_current_bt(AxisEnum axis) {
-    planner.buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate_mm_m[axis]/60, active_extruder);
+      if (axis == E_AXIS){
+      planner.buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate_mm_m[axis]/20, active_extruder);
+       }
+     else{
+      planner.buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate_mm_m[axis]/60, active_extruder);
+     }
+    //planner.buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate_mm_m[axis]/60, active_extruder);
 }
 
 static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
