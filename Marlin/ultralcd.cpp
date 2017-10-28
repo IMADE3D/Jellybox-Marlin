@@ -149,7 +149,8 @@ uint16_t max_display_update_time = 0;
   int fanSpeed;
 
   bool longActionRunning = false;
-  
+  bool printer_paused = false;
+
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
       void lcd_info_stats_menu();
@@ -742,6 +743,7 @@ void kill_screen(const char* lcd_msg) {
         enqueue_and_echo_commands_P(PSTR("M125"));
       #endif
       lcd_setstatusPGM(PSTR(MSG_PRINT_PAUSED), -1);
+      printer_paused = true;
     }
 
     void lcd_sdcard_resume() {
@@ -752,6 +754,7 @@ void kill_screen(const char* lcd_msg) {
         print_job_timer.start();
       #endif
       lcd_reset_status();
+      printer_paused = false;
     }
 
     void lcd_sdcard_stop() {
@@ -986,7 +989,7 @@ void kill_screen(const char* lcd_msg) {
       // Adjustments menu
       //
       MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
-      
+
       //
       // Home XYZ
       //
@@ -995,7 +998,9 @@ void kill_screen(const char* lcd_msg) {
       //
       // Disable Steppers
       //
+      if (printer_paused == false){
       MENU_ITEM(function, MSG_RETURN_AND_DISABLE_STEPPERS, lcd_disable_steppers);
+      }
       
       //
       //Preheat Nozzle Menu
@@ -3082,7 +3087,9 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     // Disable Steppers
     //
+    if (printer_paused == false){
     MENU_ITEM(function, MSG_DISABLE_STEPPERS, lcd_disable_steppers);
+    }
 
     //
     // Change filament
@@ -4434,7 +4441,9 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       //
       // Disable Steppers
       //
+      if (printer_paused == false) {
       MENU_ITEM(gcode, MSG_DISABLE_STEPPERS, PSTR("M18")); 
+      }
 
       //
       // Extrude Submenu
