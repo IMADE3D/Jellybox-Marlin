@@ -1093,7 +1093,7 @@ void kill_screen(const char* lcd_msg) {
         babysteps_done += babystep_increment;
       }
       if (lcdDrawUpdate)
-        lcd_implementation_drawedit(msg, ftostr43sign(planner.steps_to_mm[axis] * babysteps_done));
+        lcd_implementation_drawedit(msg, ftostr52sign(planner.steps_to_mm[axis] * babysteps_done));
     }
 
     #if ENABLED(BABYSTEP_XY)
@@ -1125,7 +1125,7 @@ void kill_screen(const char* lcd_msg) {
           }
         }
         if (lcdDrawUpdate)
-          lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr43sign(zprobe_zoffset));
+          lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr52sign(zprobe_zoffset));
           settings.save();
       }
 
@@ -4282,7 +4282,9 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_ITEM(back, MSG_BACK , lcd_settings_menu);
 
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-      MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+      //MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+//      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_ZPROBE_OFFSET, &zprobe_zoffset[X_AXIS], Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX,lcd_babystep_zoffset);
+      MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_babystep_zoffset);
     #elif HAS_BED_PROBE
       MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_refresh_zprobe_zoffset);
     #endif
