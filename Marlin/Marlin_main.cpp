@@ -4958,7 +4958,8 @@ void home_all_axes() { gcode_G28(true); }
 
       #if ABL_GRID
 
-        bool zig = PR_OUTER_END & 1;  // Always end at RIGHT and BACK_PROBE_BED_POSITION
+        bool zig = (PR_OUTER_END & 1) ? false : true;  // FG: Always end at LEFT and BACK_PROBE_BED_POSITION
+         // bool zig = PR_OUTER_END & 1;  // Always end at RIGHT and BACK_PROBE_BED_POSITION //
 
         // Outer loop is Y with PROBE_Y_FIRST disabled
         for (uint8_t PR_OUTER_VAR = 0; PR_OUTER_VAR < PR_OUTER_END && !isnan(measured_z); PR_OUTER_VAR++) {
@@ -4976,7 +4977,7 @@ void home_all_axes() { gcode_G28(true); }
             inInc = -1;
           }
 
-          zig ^= true; // zag
+          zig ^= true; // zag //fg this reverses the direction, but makes a zigzag
 
           // Inner loop is Y with PROBE_Y_FIRST enabled
           for (int8_t PR_INNER_VAR = inStart; PR_INNER_VAR != inStop; PR_INNER_VAR += inInc) {
@@ -5533,6 +5534,11 @@ void home_all_axes() { gcode_G28(true); }
 
       print_G33_settings(!_1p_calibration, _7p_calibration && towers_set);
 
+// seems that this has been completely deleted in newest marlin? check. FG. 
+      #if DISABLED(PROBE_MANUALLY)
+        home_offset[Z_AXIS] -= probe_pt(dx, dy, stow_after_each, 1, false); // 1st probe to set height
+      #endif
+      
       do {
 
         float z_at_pt[13] = { 0.0 };
@@ -7320,7 +7326,8 @@ inline void gcode_M104() {
     #endif
 
     if (parser.value_celsius() > thermalManager.degHotend(target_extruder))
-      lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+      lcd_status_printf_P(0, PSTR("%s"), MSG_HEATING);
+      //lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
   }
 
   #if ENABLED(AUTOTEMP)
@@ -7539,7 +7546,8 @@ inline void gcode_M109() {
         print_job_timer.start();
     #endif
 
-    if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+    //if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+    if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("%s"), MSG_HEATING);
   }
   else return;
 
@@ -7904,7 +7912,7 @@ inline void gcode_M140() {
   /**
    * M145: Set the heatup state for a material in the LCD menu
    *
-   *   S<material> (0=PLA, 1=ABS)
+   *   S<material> (0=PLA, 1=ABS, 2=PET, 3=FLEX)
    *   H<hotend temp>
    *   B<bed temp>
    *   F<fan speed>
@@ -13686,4 +13694,3 @@ void loop() {
   endstops.report_state();
   idle();
 }
-
