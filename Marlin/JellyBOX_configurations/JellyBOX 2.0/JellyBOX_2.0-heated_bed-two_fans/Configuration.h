@@ -915,11 +915,7 @@
   #define GRID_MAX_POINTS_X 3      // _def 10 Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
   #define UBL_PROBE_PT_1_X 39       // These set the probe locations for when UBL does a 3-Point leveling
-<<<<<<< HEAD
-  #define UBL_PROBE_PT_1_Y 145      // of the mesh.
-=======
   #define UBL_PROBE_PT_1_Y 110      // of the mesh.
->>>>>>> cf398bb... make a restore point before playing with bed leveling more
   #define UBL_PROBE_PT_2_X 39
   #define UBL_PROBE_PT_2_Y 100
   #define UBL_PROBE_PT_3_X 145
