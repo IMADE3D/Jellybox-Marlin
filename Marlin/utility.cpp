@@ -216,6 +216,18 @@ void safe_delay(millis_t ms) {
     return conv;
   }
 
+/*  // Convert float to fixed-length string with 123.4 format
+  char* ftostr41(const float &x) {
+    int xx = x * 10;
+    //conv[1] = MINUSOR(xx, '+');
+    conv[2] = DIGIMOD(xx, 1000);
+    conv[3] = DIGIMOD(xx, 100);
+    conv[4] = DIGIMOD(xx, 10);
+    conv[5] = '.';
+    conv[6] = DIGIMOD(xx, 1);
+    return &conv[2];
+  }*/
+
   // Convert unsigned float to string with 1234.56 format omitting trailing zeros
   char* ftostr62rj(const float &x) {
     const long xx = (x < 0 ? -x : x) * 100;

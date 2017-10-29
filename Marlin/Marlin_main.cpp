@@ -4864,7 +4864,8 @@ void home_all_axes() { gcode_G28(true); }
 
       #if ABL_GRID
 
-        bool zig = PR_OUTER_END & 1;  // Always end at RIGHT and BACK_PROBE_BED_POSITION
+        bool zig = (PR_OUTER_END & 1) ? false : true;  // FG: Always end at LEFT and BACK_PROBE_BED_POSITION
+         // bool zig = PR_OUTER_END & 1;  // Always end at RIGHT and BACK_PROBE_BED_POSITION //
 
         measured_z = 0;
 
@@ -4884,7 +4885,7 @@ void home_all_axes() { gcode_G28(true); }
             inInc = -1;
           }
 
-          zig ^= true; // zag
+          zig ^= true; // zag //fg this reverses the direction, but makes a zigzag
 
           // Inner loop is Y with PROBE_Y_FIRST enabled
           for (int8_t PR_INNER_VAR = inStart; PR_INNER_VAR != inStop; PR_INNER_VAR += inInc) {
@@ -7637,7 +7638,8 @@ inline void gcode_M104() {
     #endif
 
     if (parser.value_celsius() > thermalManager.degHotend(target_extruder))
-      lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+      lcd_status_printf_P(0, PSTR("%s"), MSG_HEATING);
+      //lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
   }
 
   #if ENABLED(AUTOTEMP)
@@ -7794,7 +7796,8 @@ inline void gcode_M109() {
         print_job_timer.start();
     #endif
 
-    if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+    //if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+    if (thermalManager.isHeatingHotend(target_extruder)) lcd_status_printf_P(0, PSTR("%s"), MSG_HEATING);
   }
   else return;
 
@@ -8149,7 +8152,7 @@ inline void gcode_M140() {
   /**
    * M145: Set the heatup state for a material in the LCD menu
    *
-   *   S<material> (0=PLA, 1=ABS)
+   *   S<material> (0=PLA, 1=ABS, 2=PET, 3=FLEX)
    *   H<hotend temp>
    *   B<bed temp>
    *   F<fan speed>
