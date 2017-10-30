@@ -171,8 +171,8 @@
 #ifndef MSG_PREHEAT_NOZZLE
   #define MSG_PREHEAT_NOZZLE                  _UxGT("Preheat nozzle")
 #endif
-#ifndef MSG_PREHEAT_NOZZLE_AND_BED
-  #define MSG_PREHEAT_NOZZLE_AND_BED          _UxGT("Preheat bed & nozzle")
+#ifndef MSG_PREHEAT_BED
+  #define MSG_PREHEAT_BED                       _UxGT("Preheat bed")
 #endif
 #ifndef MSG_PREHEAT_PLA
   #define MSG_PREHEAT_PLA                       _UxGT("      PLA - 210"LCD_STR_DEGREE"C")
@@ -187,19 +187,19 @@
   #define MSG_PREHEAT_CUSTOM                    _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_COOLDOWN_AND_BED
-  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown -  0/  0"LCD_STR_DEGREE"C")
+  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown -  0"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_PLA_AND_BED 
-  #define MSG_PREHEAT_PLA_AND_BED               _UxGT("      PLA - 55/210"LCD_STR_DEGREE"C")
+  #define MSG_PREHEAT_PLA_AND_BED               _UxGT("      PLA - 55"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_PET_AND_BED 
-  #define MSG_PREHEAT_PET_AND_BED               _UxGT("     PETG - 55/235"LCD_STR_DEGREE"C")
+  #define MSG_PREHEAT_PET_AND_BED               _UxGT("     PETG - 55"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_PREHEAT_FLEX_AND_BED 
-  #define MSG_PREHEAT_FLEX_AND_BED              _UxGT("     FLEX - 25/225"LCD_STR_DEGREE"C")
+  #define MSG_PREHEAT_FLEX_AND_BED              _UxGT("     FLEX - 25"LCD_STR_DEGREE"C")
 #endif
-#ifndef MSG_PREHEAT_CUSTOM_AND_BED 
-  #define MSG_PREHEAT_CUSTOM_AND_BED            _UxGT("   Custom - ?")
+#ifndef MSG_PREHEAT_CUSTOM_BED 
+  #define MSG_PREHEAT_CUSTOM_BED            _UxGT("   Custom - ?")
 #endif
 #ifndef MSG_CUSTOM_TEMP
   #define MSG_CUSTOM_TEMP                     _UxGT("Custom temp")
