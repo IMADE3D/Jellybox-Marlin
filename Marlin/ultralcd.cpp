@@ -2821,8 +2821,10 @@ void kill_screen(const char* lcd_msg) {
    *
    */
   void cooldown_bed(){
+    #if HAS_TEMP_BED
     enqueue_and_echo_commands_P(PSTR("M140 S0"));
     lcd_return_to_status();
+    #endif
    }
    
 /**
@@ -2831,8 +2833,10 @@ void kill_screen(const char* lcd_msg) {
    *
    */
   void preheat_pla_bed(){
+    #if HAS_TEMP_BED
     enqueue_and_echo_commands_P(PSTR("M140 S55"));  
     lcd_return_to_status();
+    #endif
    }
 
    /**
@@ -2851,8 +2855,10 @@ void kill_screen(const char* lcd_msg) {
    *
    */
    void preheat_pet_bed(){
+    #if HAS_TEMP_BED
     enqueue_and_echo_commands_P(PSTR("M140 S55"));
     lcd_return_to_status();
+    #endif
    }
    /**
    *
@@ -2869,8 +2875,10 @@ void kill_screen(const char* lcd_msg) {
    *
    */
    void preheat_flex_bed(){
+    #if HAS_TEMP_BED
     enqueue_and_echo_commands_P(PSTR("M140 S25"));
     lcd_return_to_status();
+    #endif
    }
        /**
    *
@@ -2938,9 +2946,9 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     // ^ Main
     //
     MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
-   
+   #if HAS_TEMP_BED
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
-    
+    #endif
     END_MENU();
    }
   /**
