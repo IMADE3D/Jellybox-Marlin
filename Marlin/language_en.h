@@ -421,8 +421,8 @@
 #ifndef MSG_ABOUT_JELLYBOX
   #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBOX")
 #endif
-#ifndef MSG_MAINTENANCE
-  #define MSG_MAINTENANCE                       _UxGT("Maintenance")
+#ifndef MSG_CONTROL_IM3D
+  #define MSG_CONTROL_IM3D                       _UxGT("Control")
 #endif
 #ifndef MSG_DANGER_ZONE
   #define MSG_DANGER_ZONE                       _UxGT("Danger Zone")
@@ -476,10 +476,10 @@
   #define MSG_RETURN_TO_MAIN                  _UxGT("Return to main menu")
 #endif
 #ifndef MSG_RETURN_AND_DISABLE_STEPPERS
-  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors     & "LCD_STR_UPLEVEL)
+  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors       "LCD_STR_UPLEVEL)
 #endif
 #ifndef MSG_RETURN_AND_HOME
-  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ          & "LCD_STR_UPLEVEL )
+  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ            "LCD_STR_UPLEVEL )
 #endif
 #ifndef MSG_EDIT_PID
   #define MSG_EDIT_PID                        _UxGT("Edit PID Values")
