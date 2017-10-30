@@ -120,7 +120,7 @@ uint16_t max_display_update_time = 0;
   void lcd_prepare_menu();
   void lcd_move_menu();
   void lcd_control_menu();
-  void lcd_maintenance_menu();
+  void lcd_control_im3d_menu();
   void lcd_move_select_axis();
   void lcd_extrude_menu();
   void lcd_danger_zone();
@@ -1024,7 +1024,7 @@ void kill_screen(const char* lcd_msg) {
     //
     //Maintenence Menu
     //
-    MENU_ITEM(submenu, MSG_MAINTENANCE, lcd_maintenance_menu);
+    MENU_ITEM(submenu, MSG_CONTROL_IM3D, lcd_control_im3d_menu);
 
     //
     //Settings Menu
@@ -4430,10 +4430,10 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
      }
     /**
      * 
-     * "maintenance Menu
+     * control_im3d Menu
      * 
      */
-    void lcd_maintenance_menu(){
+    void lcd_control_im3d_menu(){
       START_MENU();
 
       //
@@ -4607,8 +4607,8 @@ static void lcd_move_select_axis() {
   //
   // ^ Set
   //
-  MENU_ITEM(back, MSG_BACK, lcd_maintenance_menu);
-  //MENU_ITEM(function, MSG_BACK, lcd_back_to_maintenance);
+  MENU_ITEM(back, MSG_BACK, lcd_control_im3d_menu);
+  //MENU_ITEM(function, MSG_BACK, lcd_back_to_control_im3d);
 
   if (longActionRunning && planner.movesplanned()){
       MENU_ITEM(function , MSG_ABORT_ACTION , lcd_abort_action);
@@ -4627,7 +4627,7 @@ static void lcd_move_select_axis() {
 
    /**
      * 
-     * "Extrude" > Maintenance Menu
+     * "Extrude" > Control_IM3D Menu
      * 
      */
     void lcd_extrude_menu(){
@@ -4668,7 +4668,7 @@ static void lcd_move_select_axis() {
     }
     /**
      * 
-     * "Danger Zone" > Maintenance
+     * "Danger Zone" > Control_IM3D
      * 
      */
     void lcd_danger_zone(){
@@ -4677,7 +4677,7 @@ static void lcd_move_select_axis() {
       //
       // ^ Set
       //
-      MENU_ITEM(back, MSG_BACK, lcd_maintenance_menu);
+      MENU_ITEM(back, MSG_BACK, lcd_control_im3d_menu);
 
       //
       //Factory Reset
@@ -4689,7 +4689,7 @@ static void lcd_move_select_axis() {
 
      /**
      * 
-     * "Factory Reset > Danger Zone> Maintenance
+     * "Factory Reset > Danger Zone> Control_IM3D
      * 
      */
      

@@ -421,8 +421,8 @@
 #ifndef MSG_ABOUT_JELLYBOX
   #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBOX")
 #endif
-#ifndef MSG_MAINTENANCE
-  #define MSG_MAINTENANCE                       _UxGT("Maintenance")
+#ifndef MSG_CONTROL_IM3D
+  #define MSG_CONTROL_IM3D                       _UxGT("Control")
 #endif
 #ifndef MSG_DANGER_ZONE
   #define MSG_DANGER_ZONE                       _UxGT("Danger Zone")
