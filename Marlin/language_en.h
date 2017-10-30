@@ -476,10 +476,10 @@
   #define MSG_RETURN_TO_MAIN                  _UxGT("Return to main menu")
 #endif
 #ifndef MSG_RETURN_AND_DISABLE_STEPPERS
-  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors     & "LCD_STR_UPLEVEL)
+  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors       "LCD_STR_UPLEVEL)
 #endif
 #ifndef MSG_RETURN_AND_HOME
-  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ          & "LCD_STR_UPLEVEL )
+  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ            "LCD_STR_UPLEVEL )
 #endif
 #ifndef MSG_EDIT_PID
   #define MSG_EDIT_PID                        _UxGT("Edit PID Values")
