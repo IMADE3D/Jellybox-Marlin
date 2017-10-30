@@ -116,7 +116,7 @@ uint16_t max_display_update_time = 0;
   void lcd_tune_menu();
   void lcd_adjustments_menu();
   void lcd_preheat_nozzle_menu();
-  void lcd_preheat_nozzle_and_bed_menu();
+  void lcd_preheat_bed_menu();
   void lcd_prepare_menu();
   void lcd_move_menu();
   void lcd_control_menu();
@@ -1011,7 +1011,7 @@ void kill_screen(const char* lcd_msg) {
         //
         //Preheat Nozzle and Bed
         //
-        MENU_ITEM(submenu, MSG_PREHEAT_NOZZLE_AND_BED, lcd_preheat_nozzle_and_bed_menu);
+        MENU_ITEM(submenu, MSG_PREHEAT_BED, lcd_preheat_bed_menu);
       #endif 
       
       //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
@@ -2814,17 +2814,24 @@ void kill_screen(const char* lcd_msg) {
     enqueue_and_echo_commands_P(PSTR("M104 S0"));
     lcd_return_to_status();
    }
+
+        /**
+   *
+   * Preheat PLA > Cooldown Bed
+   *
+   */
+  void cooldown_bed(){
+    enqueue_and_echo_commands_P(PSTR("M140 S0"));
+    lcd_return_to_status();
+   }
    
 /**
    *
-   * Preheat PLA > Preheat Nozzle and bed
+   * Preheat PLA > Preheat bed
    *
    */
-  void preheat_pla(){
-    enqueue_and_echo_commands_P(PSTR("M104 S210"));
-    #if HAS_TEMP_BED
-      enqueue_and_echo_commands_P(PSTR("M140 S55"));  
-    #endif
+  void preheat_pla_bed(){
+    enqueue_and_echo_commands_P(PSTR("M140 S55"));  
     lcd_return_to_status();
    }
 
@@ -2840,14 +2847,11 @@ void kill_screen(const char* lcd_msg) {
    
     /**
    *
-   * Preheat PET > Preheat Nozzle and bed
+   * Preheat PET > Preheat bed
    *
    */
-   void preheat_pet(){
-    enqueue_and_echo_commands_P(PSTR("M104 S235"));
-    #if HAS_TEMP_BED && onlyPreheat==0
-      enqueue_and_echo_commands_P(PSTR("M140 S55"));
-    #endif
+   void preheat_pet_bed(){
+    enqueue_and_echo_commands_P(PSTR("M140 S55"));
     lcd_return_to_status();
    }
    /**
@@ -2861,14 +2865,11 @@ void kill_screen(const char* lcd_msg) {
    }
     /**
    *
-   * Preheat FLEX > Preheat Nozzle and bed
+   * Preheat FLEX > Preheat Bed
    *
    */
-   void preheat_flex(){
-    enqueue_and_echo_commands_P(PSTR("M104 S225"));
-    #if HAS_TEMP_BED && !onlyPreheat
-      enqueue_and_echo_commands_P(PSTR("M140 S25"));
-    #endif
+   void preheat_flex_bed(){
+    enqueue_and_echo_commands_P(PSTR("M140 S25"));
     lcd_return_to_status();
    }
        /**
@@ -2930,19 +2931,15 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    * Preheat CUSTOM > Preheat Nozzle and Bed
    *
    */
-   void lcd_preheat_custom_nozzle_and_bed(){
+   void lcd_preheat_custom_bed(){
     START_MENU();
     
     //
     // ^ Main
     //
     MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
-    
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE_TEMP, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
    
-    #if HAS_TEMP_BED
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
-    #endif
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
     
     END_MENU();
    }
@@ -2992,10 +2989,10 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
   
    /**
    *
-   *"Preheat Nozzle and Bed" submenu
+   *"Preheat Bed" submenu
    *
    */
-  void lcd_preheat_nozzle_and_bed_menu() {
+  void lcd_preheat_bed_menu() {
     
     START_MENU();
 
@@ -3008,28 +3005,28 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //Cooldown
     //
 
-    MENU_ITEM(function, MSG_COOLDOWN_AND_BED, cooldown); 
+    MENU_ITEM(function, MSG_COOLDOWN_AND_BED, cooldown_bed); 
 
     //
     //Preheat PLA
     //
 
-    MENU_ITEM(function, MSG_PREHEAT_PLA_AND_BED, preheat_pla);
+    MENU_ITEM(function, MSG_PREHEAT_PLA_AND_BED, preheat_pla_bed);
 
     //
     //Preheat PET
     //
-    MENU_ITEM(function, MSG_PREHEAT_PET_AND_BED, preheat_pet);
+    MENU_ITEM(function, MSG_PREHEAT_PET_AND_BED, preheat_pet_bed);
 
     //
     //Preheat FLEX
     //
-    MENU_ITEM(function, MSG_PREHEAT_FLEX_AND_BED, preheat_flex);
+    MENU_ITEM(function, MSG_PREHEAT_FLEX_AND_BED, preheat_flex_bed);
 
     //
     //Preheat Custom
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM_AND_BED, lcd_preheat_custom_nozzle_and_bed);
+    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM_BED, lcd_preheat_custom_bed);
         
     END_MENU();
   }
