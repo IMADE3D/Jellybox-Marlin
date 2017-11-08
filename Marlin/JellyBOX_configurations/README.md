@@ -1,0 +1,1 @@
+To use one of these configurations, simply copy it, and then paste and OVERWRITE the `Configuration.h` in `Marlin` folder. Then, compile and flash with the latest Arduino IDE (https://www.arduino.cc/).
