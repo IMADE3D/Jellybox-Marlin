@@ -1,7 +1,39 @@
-# Marlin 3D Printer Firmware
+# JB-Marlin 3D Printer Firmware
 <img align="right" src="../../raw/1.1.x/buildroot/share/pixmaps/logo/marlin-250.png" />
 
-## JB-Marlin Compile from Source
+# How and Why Upgrade JellyBOX Firmware
+
+You can think of firmware as the sum of your printer's knowledge and skills. It's the contents of its imaginary brain. It's a piece of software directly controlling the motors and temperatures and interpreting the gcode. 
+
+The firmware that came with your JellyBOX works fine, but if there is a newer firmware available, you should upgrade. We constantly work to bring you new features and fix any mistakes we may discover.  
+
+## Upgrading the firmware takes only a few minutes and it's not difficult at all: 
+
+1. You download the latest firmware from our website. 
+2. You connect your JellyBOX to the computer with a USB cable
+3. You run the upgrade procedure using Cura - the same program you are already using to slice your 3D models. 
+4. That's it. 
+
+Let me show you. 
+
+- Go to the imade3d support page and download the latest firmware.
+    - ![](https://i.imgur.com/JZS8vLg.png)
+    - If you are tech inclined, you can always find the latest firmware ready to hack on our Github. https://github.com/IMADE3D/Marlin/releases
+- Connect your JellyBOX to a computer with a USB cable. 
+- Start Cura. Go to Settings > Printer > Manage Printers. 
+  - ![](https://i.imgur.com/LcbgyQs.png)
+- Select the Upgrade Firmware button. 
+  - ![](https://i.imgur.com/ASCHe6t.png)
+- Then, Upload custom Firmware. 
+  - ![](https://i.imgur.com/DetdfS0.png)
+- Select the file you just downloaded with .hex extension
+- Wait a bit. 
+- And it's done!
+- Restart your JellyBOX.  Watch the splash screen and you will see your JellyBOX is running a new firmware version. 
+
+## Compile JB-Marlin from Source
+
+If you want to compile from source, you can. 
 
 You have to use the correct Configuration.h file! Go to Marlin/JellyBOX_configurations and to find the one one need.
 
@@ -9,39 +41,17 @@ To use one of these configurations, simply copy it, and then paste and OVERWRITE
 
 Finally, compile and flash with the latest Arduino IDE (https://www.arduino.cc/). You will also need to have the U8GLIB library installed (from zip or through the Arduino library manager.)
 
+## Marlin Documentation
 
-## Marlin 1.1
-
-Marlin 1.1 represents an evolutionary leap over Marlin 1.0.2. It is the result of over two years of effort by several volunteers around the world who have paid meticulous and sometimes obsessive attention to every detail. For this release we focused on code quality, performance, stability, and overall user experience. Several new features have also been added, many of which require no extra hardware.
-
-For complete Marlin documentation click over to the [Marlin Homepage <marlinfw.org>](http://marlinfw.org/), where you will find in-depth articles, how-to videos, and tutorials on every aspect of Marlin, as the site develops. For release notes, see the [Releases](https://github.com/MarlinFirmware/Marlin/releases) page.
+For complete Marlin documentation click over to the [Marlin Homepage <marlinfw.org>](http://marlinfw.org/), where you will find in-depth articles, how-to videos, and tutorials on every aspect of Marlin, as the site develops. 
 
 ## Stable Release Branch
 
-This Release branch contains the latest tagged version of Marlin (currently 1.1.4 – July 2017).
-
-Previous releases of Marlin include [1.0.2-2](https://github.com/MarlinFirmware/Marlin/tree/1.0.2-2) (December 2016) and [1.0.1](https://github.com/MarlinFirmware/Marlin/tree/1.0.1) (December 2014). Any version of Marlin prior to 1.0.1 (when we started tagging versions) can be collectively referred to as Marlin 1.0.0.
+It's whatever is in Master branch. 
 
 ## Contributing to Marlin
 
-Click on the [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues) and [Pull Requests](https://github.com/MarlinFirmware/Marlin/pulls) links above at any time to see what we're currently working on.
-
-To submit patches and new features for Marlin 1.1 check out the [bugfix-1.1.x](https://github.com/MarlinFirmware/Marlin/tree/bugfix-1.1.x) branch, add your commits, and submit a Pull Request back to the `bugfix-1.1.x` branch. Periodically that branch will form the basis for the next minor release.
-
-Note that our "bugfix" branch will always contain the latest patches to the current release version. These patches may not be widely tested. As always, when using "nightly" builds of Marlin, proceed with full caution.
-
-## Current Status: In Development
-
-Marlin development has reached an important milestone with its first stable release in over 2 years. During this period we focused on cleaning up the code and making it more modern, consistent, readable, and sensible.
-
-## Future Development
-
-Marlin 1.1 is the last "flat" version of Marlin!
-
-Arduino IDE now has support for folder hierarchies, so Marlin 1.2 will have a [hierarchical file structure](https://github.com/MarlinFirmware/Marlin/tree/breakup-marlin-idea). Marlin's newly reorganized code will be easier to work with and form a stronger starting-point as we get into [32-bit CPU support](https://github.com/MarlinFirmware/Marlin/tree/32-Bit-RCBugFix-new) and the Hardware Access Layer (HAL).
-
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/2224/badge.svg)](https://scan.coverity.com/projects/2224)
-[![Travis Build Status](https://travis-ci.org/MarlinFirmware/Marlin.svg)](https://travis-ci.org/MarlinFirmware/Marlin)
+Click on the [Issue Queue](https://github.com/MarlinFirmware/Marlin/issues) and [Pull Requests](https://github.com/MarlinFirmware/Marlin/pulls) links above at any time to see what the Marlin community is currently working on.
 
 ## Marlin Resources
 
@@ -86,10 +96,15 @@ More features have been added by:
  - [[@paulusjacobus](https://github.com/paulusjacobus)]
  - ...and many others
 
+The IMADE3D JB-Marlin team consists of
+- Filip
+- Ian
+- Bruce
+- Ladi
+- and others
+
 ## License
 
-Marlin is published under the [GPL license](https://github.com/COPYING.md) because we believe in open development. The GPL comes with both rights and obligations. Whether you use Marlin firmware as the driver for your open or closed-source product, you must keep Marlin open, and you must provide your compatible Marlin source code to end users upon request. The most straightforward way to comply with the Marlin license is to make a fork of Marlin on Github, perform your modifications, and direct users to your modified fork.
+Marlin is published under the [GPL license](https://github.com/COPYING.md) because we believe in open development. The GPL comes with both rights and obligations. 
 
 While we can't prevent the use of this code in products (3D printers, CNC, etc.) that are closed source or crippled by a patent, we would prefer that you choose another firmware or, better yet, make your own.
-
-[![Flattr this git repo](http://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/submit/auto?user_id=ErikZalm&url=https://github.com/MarlinFirmware/Marlin&title=Marlin&language=&tags=github&category=software)
