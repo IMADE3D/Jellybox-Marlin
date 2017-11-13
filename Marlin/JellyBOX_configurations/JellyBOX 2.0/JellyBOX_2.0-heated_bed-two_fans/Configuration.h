@@ -278,8 +278,8 @@
 #define TEMP_SENSOR_BED 1 //FG Heated Bed
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
-#define DUMMY_THERMISTOR_998_VALUE 25
-#define DUMMY_THERMISTOR_999_VALUE 100
+#define DUMMY_THERMISTOR_998_VALUE 66
+#define DUMMY_THERMISTOR_999_VALUE 222
 
 // Use temp sensor 1 as a redundant sensor with sensor 0. If the readings
 // from the two sensors differ too much the print will be aborted.
