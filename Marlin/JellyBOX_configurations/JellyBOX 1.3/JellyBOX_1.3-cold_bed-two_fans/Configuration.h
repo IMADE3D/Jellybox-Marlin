@@ -1,3 +1,5 @@
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3"
+#define JELLYBOX_VARIANT_LINE2 "cold bed, two fans"
 // JellyBOX CONFIGURATION VERSION: 
 // JellyBOX_1.3-cold_bed-two_fans
 /**

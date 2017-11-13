@@ -1,5 +1,5 @@
-// JellyBOX CONFIGURATION VERSION: 
-// JellyBOX_1.3-heated_bed-two_fans
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3"
+#define JELLYBOX_VARIANT_LINE2 "hot bed, two fans"
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
