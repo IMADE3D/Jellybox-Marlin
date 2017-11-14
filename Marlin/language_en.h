@@ -1062,4 +1062,18 @@
   #endif
 #endif // LCD_HEIGHT < 4
 
+// About Printer Menu Annotations
+#ifndef MSG_FIRMWARE_VERSION
+  #define MSG_FIRMWARE_VERSION            _UxGT("FIRMWARE VERSION:")
+#endif
+#ifndef MSG_JELLYBOX_VARIANT
+  #define MSG_JELLYBOX_VARIANT           _UxGT("JELLYBOX VARIANT:")
+#endif
+#ifndef MSG_DISTRIBUTION_DATE
+  #define MSG_DISTRIBUTION_DATE           _UxGT("DISTRIBUTION DATE:")
+#endif
+#ifndef MSG_SOURCE_URL
+  #define MSG_SOURCE_URL           _UxGT("SOURCE URL:")
+#endif
+
 #endif // LANGUAGE_EN_H

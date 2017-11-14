@@ -278,8 +278,8 @@
 #define TEMP_SENSOR_BED 1 //FG Heated Bed
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
-#define DUMMY_THERMISTOR_998_VALUE 25
-#define DUMMY_THERMISTOR_999_VALUE 100
+#define DUMMY_THERMISTOR_998_VALUE 66
+#define DUMMY_THERMISTOR_999_VALUE 222
 
 // Use temp sensor 1 as a redundant sensor with sensor 0. If the readings
 // from the two sensors differ too much the print will be aborted.
@@ -867,8 +867,8 @@
   // as then there's no redundant movements between g28 and g29
   #define LEFT_PROBE_BED_POSITION 10
   #define RIGHT_PROBE_BED_POSITION 155
-  #define FRONT_PROBE_BED_POSITION 25
-  #define BACK_PROBE_BED_POSITION 140-25
+  #define FRONT_PROBE_BED_POSITION 23
+  #define BACK_PROBE_BED_POSITION 140
 
   // The Z probe minimum outer margin (to validate G29 parameters).
   #define MIN_PROBE_EDGE 5

@@ -1,5 +1,5 @@
-// JellyBOX CONFIGURATION VERSION: 
-// JellyBOX_1.3-heated_bed-one_fan-yellow_probe
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3, one fan"
+#define JELLYBOX_VARIANT_LINE2 "hot bed, yellow probe"
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -278,8 +278,8 @@
 #define TEMP_SENSOR_BED 1 //FG Heated Bed
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
-#define DUMMY_THERMISTOR_998_VALUE 25
-#define DUMMY_THERMISTOR_999_VALUE 100
+#define DUMMY_THERMISTOR_998_VALUE 66
+#define DUMMY_THERMISTOR_999_VALUE 222
 
 // Use temp sensor 1 as a redundant sensor with sensor 0. If the readings
 // from the two sensors differ too much the print will be aborted.
@@ -509,7 +509,7 @@
  */
 #define CUSTOM_DEFAULT_OFFSETS
 #if ENABLED(CUSTOM_DEFAULT_OFFSETS)
-  #define CUSTOM_DEFAULT_X_OFFSET 0
+  #define CUSTOM_DEFAULT_X_OFFSET 10
   #define CUSTOM_DEFAULT_Y_OFFSET 0
   #define CUSTOM_DEFAULT_Z_OFFSET 0
 #endif

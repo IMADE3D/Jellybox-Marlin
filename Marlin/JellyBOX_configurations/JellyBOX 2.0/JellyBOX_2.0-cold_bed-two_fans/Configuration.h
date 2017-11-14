@@ -1,5 +1,5 @@
 // JellyBOX CONFIGURATION VERSION: 
-// JellyBOX_2.0-one_fan
+// JellyBOX_2.0-two_fans
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -278,8 +278,8 @@
 #define TEMP_SENSOR_BED 0 //FG Heated Bed
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
-#define DUMMY_THERMISTOR_998_VALUE 25
-#define DUMMY_THERMISTOR_999_VALUE 100
+#define DUMMY_THERMISTOR_998_VALUE 66
+#define DUMMY_THERMISTOR_999_VALUE 222
 
 // Use temp sensor 1 as a redundant sensor with sensor 0. If the readings
 // from the two sensors differ too much the print will be aborted.
@@ -673,8 +673,8 @@
  *      O-- FRONT --+
  *    (0,0)
  */
-#define X_PROBE_OFFSET_FROM_EXTRUDER 22 // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 2 // Y offset: -front +behind [the nozzle]
+#define X_PROBE_OFFSET_FROM_EXTRUDER 25 // X offset: -left  +right  [of the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 25 // Y offset: -front +behind [the nozzle]
 #define Z_PROBE_OFFSET_FROM_EXTRUDER 0 // Z offset: -below +above  [the nozzle]
 
 // X and Y axis travel speed (mm/m) between probes
@@ -867,8 +867,8 @@
   // as then there's no redundant movements between g28 and g29
   #define LEFT_PROBE_BED_POSITION 10
   #define RIGHT_PROBE_BED_POSITION 155
-  #define FRONT_PROBE_BED_POSITION 25
-  #define BACK_PROBE_BED_POSITION 140-25
+  #define FRONT_PROBE_BED_POSITION 23
+  #define BACK_PROBE_BED_POSITION 140
 
   // The Z probe minimum outer margin (to validate G29 parameters).
   #define MIN_PROBE_EDGE 5
