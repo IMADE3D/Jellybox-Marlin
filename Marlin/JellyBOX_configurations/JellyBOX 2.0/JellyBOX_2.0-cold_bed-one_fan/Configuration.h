@@ -1,5 +1,5 @@
-// JellyBOX CONFIGURATION VERSION: 
-// JellyBOX_2.0-one_fan
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2.0"
+#define JELLYBOX_VARIANT_LINE2 "cold bed, one fan"
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
