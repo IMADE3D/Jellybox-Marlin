@@ -35,7 +35,7 @@
   /**
    * Marlin release version identifier
    */
-  #define SHORT_BUILD_VERSION "JB-Marlin-2.0-RC1"
+  #define SHORT_BUILD_VERSION "JB-Marlin-2.0-RC2"
 
   /**
    * Verbose version identifier which should contain a reference to the location
@@ -48,7 +48,7 @@
    * here we define this default string as the date where the latest release
    * version was tagged.
    */
-  #define STRING_DISTRIBUTION_DATE "2017-07-29-12:25CET"
+  #define STRING_DISTRIBUTION_DATE "2017-10-30"
 
   /**
    * Required minimum Configuration.h and Configuration_adv.h file versions.
