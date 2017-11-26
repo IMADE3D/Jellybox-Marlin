@@ -441,6 +441,7 @@
       0x0C, 0x00, 0x00, 0x06, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     };
   #endif // Extruders
+#endif // HAS_TEMP_BED
 
   #if ENABLED(BABYSTEP_ZPROBE_GFX_OVERLAY)
     const unsigned char cw_bmp[] PROGMEM = { //AVR-GCC, WinAVR
@@ -533,4 +534,3 @@
       0x0C,0x00  // 0000110000000000
     };
   #endif // BABYSTEP_ZPROBE_GFX_OVERLAY
-#endif // HAS_TEMP_BED
