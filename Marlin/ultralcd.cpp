@@ -3104,7 +3104,9 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
    
+    #if HAS_TEMP_BED
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
+    #endif
     
     END_MENU();
    }
