@@ -2110,9 +2110,9 @@ void kill_screen(const char* lcd_msg) {
   #endif
 
 //the following IF seems to be missing in marlin 1.1.7 and 8 ? verify , FG Jan 2, 2018
-  #if HAS_BED_PROBE && DISABLED(BABYSTEP_ZPROBE_OFFSET)
-    static void lcd_refresh_zprobe_zoffset() { refresh_zprobe_zoffset(); }
-  #endif
+ // #if HAS_BED_PROBE && DISABLED(BABYSTEP_ZPROBE_OFFSET)
+   // static void lcd_refresh_zprobe_zoffset() { refresh_zprobe_zoffset(); }
+  //#endif
 
 
   #if ENABLED(LEVEL_BED_CORNERS)
