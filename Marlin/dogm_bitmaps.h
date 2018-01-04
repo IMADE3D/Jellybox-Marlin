@@ -89,8 +89,8 @@
     };
 
   #else
-
-    #define START_BMPWIDTH      56
+    #define START_BMPWIDTH  80    //56
+    #define START_BMPHEIGHT 22    //19
 
     const unsigned char start_bmp[] PROGMEM = {
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
