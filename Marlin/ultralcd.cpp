@@ -5355,7 +5355,7 @@ static void lcd_move_select_axis() {
       STATIC_ITEM(MSG_INFO_BAUDRATE ": " STRINGIFY(BAUDRATE), true); // Baud: 250000
       STATIC_ITEM(MSG_INFO_PROTOCOL ": " PROTOCOL_VERSION, true);    // Protocol: 1.0
       #if POWER_SUPPLY == 0
-        STATIC_ITEM(MSG_INFO_PSU ": Generic", true);
+        // STATIC_ITEM(MSG_INFO_PSU ": Generic", true);
       #elif POWER_SUPPLY == 1
         STATIC_ITEM(MSG_INFO_PSU ": ATX", true);  // Power Supply: ATX
       #elif POWER_SUPPLY == 2
@@ -5373,7 +5373,7 @@ static void lcd_move_select_axis() {
       if (lcd_clicked) { return lcd_goto_previous_menu(); }
       START_SCREEN();
       //STATIC_ITEM(MSG_MARLIN, true, true);                             // Marlin
-      STATIC_ITEM(MSG_FIRMWARE_VERSIONT, false);
+      STATIC_ITEM(MSG_FIRMWARE_VERSION, false);
       STATIC_ITEM(SHORT_BUILD_VERSION, true);                          // x.x.x-Branch
       #ifdef JELLYBOX_VARIANT_LINE1
       STATIC_ITEM(MSG_JELLYBOX_VARIANT, false);
