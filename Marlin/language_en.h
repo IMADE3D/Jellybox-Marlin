@@ -439,6 +439,7 @@
 #ifndef MSG_UBL_STEP_BY_STEP_MENU
   #define MSG_UBL_STEP_BY_STEP_MENU           _UxGT("Step-By-Step UBL")
 #endif
+
 #ifndef MSG_LED_CONTROL
   #define MSG_LED_CONTROL                     _UxGT("LED Control")
 #endif
@@ -496,14 +497,15 @@
 #ifndef MSG_LED_BRIGHTNESS
   #define MSG_LED_BRIGHTNESS                  _UxGT("Brightness")
 #endif
+
 #ifndef MSG_SUPPORT
   #define MSG_SUPPORT                         _UxGT("Support")
 #endif
 #ifndef MSG_ABOUT_JELLYBOX
   #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBOX")
 #endif
-#ifndef MSG_MAINTENANCE
-  #define MSG_MAINTENANCE                       _UxGT("Maintenance")
+#ifndef MSG_CONTROL_IM3D
+  #define MSG_CONTROL_IM3D                       _UxGT("Control")
 #endif
 #ifndef MSG_DANGER_ZONE
   #define MSG_DANGER_ZONE                       _UxGT("Danger Zone")
@@ -557,10 +559,10 @@
   #define MSG_RETURN_TO_MAIN                  _UxGT("Return to main menu")
 #endif
 #ifndef MSG_RETURN_AND_DISABLE_STEPPERS
-  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors     & "LCD_STR_UPLEVEL)
+  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors       "LCD_STR_UPLEVEL)
 #endif
 #ifndef MSG_RETURN_AND_HOME
-  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ          & "LCD_STR_UPLEVEL )
+  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ            "LCD_STR_UPLEVEL )
 #endif
 #ifndef MSG_EDIT_PID
   #define MSG_EDIT_PID                        _UxGT("Edit PID Values")
@@ -569,13 +571,16 @@
   #define MSG_PID_VALUES                      _UxGT("Current PID values:                ")
 #endif
 #ifndef MSG_LIVE_ADJUSTMENTS
-  #define MSG_LIVE_ADJUSTMENTS                _UxGT("Live adjustments")
+  #define MSG_LIVE_ADJUSTMENTS                _UxGT("Adjustments")
 #endif
 #ifndef MSG_ADJUSTMENTS
   #define MSG_ADJUSTMENTS                     _UxGT("Adjustments")
 #endif
 #ifndef MSG_MOVE_AXIS
   #define MSG_MOVE_AXIS                       _UxGT("Move XYZ axis")
+#endif
+#ifndef MSG_MOVING
+  #define MSG_MOVING                          _UxGT("Moving...")
 #endif
 #ifndef MSG_MOVING
   #define MSG_MOVING                          _UxGT("Moving...")
@@ -1071,7 +1076,7 @@
   #define MSG_INFO_MAX_TEMP                   _UxGT("Max Temp")
 #endif
 #ifndef MSG_INFO_PSU
-  #define MSG_INFO_PSU                        _UxGT("PSU")
+  #define MSG_INFO_PSU                        _UxGT("Power Supply")
 #endif
 #ifndef MSG_DRIVE_STRENGTH
   #define MSG_DRIVE_STRENGTH                  _UxGT("Drive Strength")
@@ -1169,5 +1174,19 @@
     #define MSG_FILAMENT_CHANGE_RESUME_1        _UxGT("Resuming...")
   #endif
 #endif // LCD_HEIGHT < 4
+
+// About Printer Menu Annotations
+#ifndef MSG_FIRMWARE_VERSION
+  #define MSG_FIRMWARE_VERSION            _UxGT("FIRMWARE VERSION:")
+#endif
+#ifndef MSG_JELLYBOX_VARIANT
+  #define MSG_JELLYBOX_VARIANT           _UxGT("JELLYBOX VARIANT:")
+#endif
+#ifndef MSG_DISTRIBUTION_DATE
+  #define MSG_DISTRIBUTION_DATE           _UxGT("DISTRIBUTION DATE:")
+#endif
+#ifndef MSG_SOURCE_URL
+  #define MSG_SOURCE_URL           _UxGT("SOURCE URL:")
+#endif
 
 #endif // LANGUAGE_EN_H
