@@ -571,7 +571,7 @@
   #define MSG_PID_VALUES                      _UxGT("Current PID values:                ")
 #endif
 #ifndef MSG_LIVE_ADJUSTMENTS
-  #define MSG_LIVE_ADJUSTMENTS                _UxGT("Live adjustments")
+  #define MSG_LIVE_ADJUSTMENTS                _UxGT("Adjustments")
 #endif
 #ifndef MSG_ADJUSTMENTS
   #define MSG_ADJUSTMENTS                     _UxGT("Adjustments")
