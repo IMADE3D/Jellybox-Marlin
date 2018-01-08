@@ -5374,8 +5374,15 @@ static void lcd_move_select_axis() {
       START_SCREEN();
       //STATIC_ITEM(MSG_MARLIN, true, true);                             // Marlin
       STATIC_ITEM(SHORT_BUILD_VERSION, true);                          // x.x.x-Branch
+      #ifdef JELLYBOX_VARIANT_LINE1
+      STATIC_ITEM(MSG_JELLYBOX_VARIANT, false);
+      STATIC_ITEM(JELLYBOX_VARIANT_LINE1, true);                          // JellyBOX_2.0-one_fan
+      #endif
+      #ifdef JELLYBOX_VARIANT_LINE2
+      STATIC_ITEM(JELLYBOX_VARIANT_LINE2, true);                          // JellyBOX_2.0-one_fan
+      #endif
       STATIC_ITEM(STRING_DISTRIBUTION_DATE, true);                     // YYYY-MM-DD HH:MM
-      STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
+      // STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
       STATIC_ITEM(SOURCE_CODE_URL_LINE1, true);                                  // www.github.com/myfork
       STATIC_ITEM(SOURCE_CODE_URL_LINE2, true);                                  // www.github.com/myfork
       // STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
