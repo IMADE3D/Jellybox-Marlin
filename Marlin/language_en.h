@@ -37,10 +37,10 @@
 #undef en
 
 #ifndef WELCOME_MSG
-  #define WELCOME_MSG                         MACHINE_NAME _UxGT(" ready.")
+  #define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
 #endif
 #ifndef MSG_BACK
-  #define MSG_BACK                            _UxGT("Back")
+  #define MSG_BACK                            _UxGT("Go Back")
 #endif
 #ifndef MSG_SD_INSERTED
   #define MSG_SD_INSERTED                     _UxGT("Card inserted")
@@ -58,7 +58,7 @@
   #define MSG_AUTOSTART                       _UxGT("Autostart")
 #endif
 #ifndef MSG_DISABLE_STEPPERS
-  #define MSG_DISABLE_STEPPERS                _UxGT("Disable steppers")
+  #define MSG_DISABLE_STEPPERS                _UxGT("Unlock motors")
 #endif
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")
@@ -67,7 +67,7 @@
   #define MSG_PROGRESS_BAR_TEST               _UxGT("Progress Bar Test")
 #endif
 #ifndef MSG_AUTO_HOME
-  #define MSG_AUTO_HOME                       _UxGT("Auto home")
+  #define MSG_AUTO_HOME                       _UxGT("Home XYZ")
 #endif
 #ifndef MSG_AUTO_HOME_X
   #define MSG_AUTO_HOME_X                     _UxGT("Home X")
@@ -103,7 +103,7 @@
   #define MSG_SET_ORIGIN                      _UxGT("Set origin")
 #endif
 #ifndef MSG_PREHEAT_1
-  #define MSG_PREHEAT_1                       _UxGT("Preheat PLA")
+  #define MSG_PREHEAT_1                       _UxGT("PLA - 210°C")
 #endif
 #ifndef MSG_PREHEAT_1_N
   #define MSG_PREHEAT_1_N                     MSG_PREHEAT_1 _UxGT(" ")
@@ -121,7 +121,7 @@
   #define MSG_PREHEAT_1_SETTINGS              MSG_PREHEAT_1 _UxGT(" conf")
 #endif
 #ifndef MSG_PREHEAT_2
-  #define MSG_PREHEAT_2                       _UxGT("Preheat ABS")
+  #define MSG_PREHEAT_2                       _UxGT("ABS - 220°C")
 #endif
 #ifndef MSG_PREHEAT_2_N
   #define MSG_PREHEAT_2_N                     MSG_PREHEAT_2 _UxGT(" ")
@@ -138,8 +138,86 @@
 #ifndef MSG_PREHEAT_2_SETTINGS
   #define MSG_PREHEAT_2_SETTINGS              MSG_PREHEAT_2 _UxGT(" conf")
 #endif
+#ifndef MSG_PREHEAT_3
+  #define MSG_PREHEAT_3                       _UxGT("PET - 235°C")
+#endif
+#ifndef MSG_PREHEAT_3_N
+  #define MSG_PREHEAT_3_N                     MSG_PREHEAT_3 _UxGT(" ")
+#endif
+#ifndef MSG_PREHEAT_3_ALL
+  #define MSG_PREHEAT_3_ALL                   MSG_PREHEAT_3 _UxGT(" All")
+#endif
+#ifndef MSG_PREHEAT_3_END
+  #define MSG_PREHEAT_3_END                   MSG_PREHEAT_3 _UxGT(" End")
+#endif
+#ifndef MSG_PREHEAT_3_BEDONLY
+  #define MSG_PREHEAT_3_BEDONLY               MSG_PREHEAT_3 _UxGT(" Bed")
+#endif
+#ifndef MSG_PREHEAT_3_SETTINGS
+  #define MSG_PREHEAT_3_SETTINGS              MSG_PREHEAT_3 _UxGT(" conf")
+#endif
+#ifndef MSG_PREHEAT_4
+  #define MSG_PREHEAT_4                       _UxGT("FLEX - 225°C")
+#endif
+#ifndef MSG_PREHEAT_4_N
+  #define MSG_PREHEAT_4_N                     MSG_PREHEAT_4 _UxGT(" ")
+#endif
+#ifndef MSG_PREHEAT_4_ALL
+  #define MSG_PREHEAT_4_ALL                   MSG_PREHEAT_4 _UxGT(" All")
+#endif
+#ifndef MSG_PREHEAT_4_END
+  #define MSG_PREHEAT_4_END                   MSG_PREHEAT_4 _UxGT(" End")
+#endif
+#ifndef MSG_PREHEAT_4_BEDONLY
+  #define MSG_PREHEAT_4_BEDONLY               MSG_PREHEAT_4 _UxGT(" Bed")
+#endif
+#ifndef MSG_PREHEAT_4_SETTINGS
+  #define MSG_PREHEAT_4_SETTINGS              MSG_PREHEAT_4 _UxGT(" conf")
+#endif
+#ifndef MSG_PREHEAT_NOZZLE
+  #define MSG_PREHEAT_NOZZLE                  _UxGT("Preheat nozzle")
+#endif
+#ifndef MSG_PREHEAT_BED
+  #define MSG_PREHEAT_BED                       _UxGT("Preheat bed")
+#endif
+#ifndef MSG_PREHEAT_PLA
+  #define MSG_PREHEAT_PLA                       _UxGT("      PLA - 210"LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_PET
+  #define MSG_PREHEAT_PET                       _UxGT("     PETG - 235"LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_FLEX
+  #define MSG_PREHEAT_FLEX                      _UxGT("     FLEX - 225"LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_CUSTOM
+  #define MSG_PREHEAT_CUSTOM                    _UxGT("   Custom - ?")
+#endif
+#ifndef MSG_COOLDOWN_AND_BED
+  #define MSG_COOLDOWN_AND_BED                  _UxGT(" Cooldown -  0"LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_PLA_AND_BED 
+  #define MSG_PREHEAT_PLA_AND_BED               _UxGT("      PLA - 55"LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_PET_AND_BED 
+  #define MSG_PREHEAT_PET_AND_BED               _UxGT("     PETG - 55"LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_FLEX_AND_BED 
+  #define MSG_PREHEAT_FLEX_AND_BED              _UxGT("     FLEX - 25"LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_CUSTOM_BED 
+  #define MSG_PREHEAT_CUSTOM_BED            _UxGT("   Custom - ?")
+#endif
+#ifndef MSG_CUSTOM_TEMP
+  #define MSG_CUSTOM_TEMP                     _UxGT("Custom temp")
+#endif
+#ifndef MSG_NOZZLE_TEMP
+  #define MSG_NOZZLE_TEMP                     _UxGT("Nozzle temp")
+#endif
+#ifndef MSG_CUSTOM_BED_TEMP
+  #define MSG_CUSTOM_BED_TEMP                 _UxGT("Bed temp")
+#endif
 #ifndef MSG_COOLDOWN
-  #define MSG_COOLDOWN                        _UxGT("Cooldown")
+  #define MSG_COOLDOWN                        _UxGT(" Cooldown -   0"LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_SWITCH_PS_ON
   #define MSG_SWITCH_PS_ON                    _UxGT("Switch power on")
@@ -420,6 +498,90 @@
   #define MSG_LED_BRIGHTNESS                  _UxGT("Brightness")
 #endif
 
+#ifndef MSG_SUPPORT
+  #define MSG_SUPPORT                         _UxGT("Support")
+#endif
+#ifndef MSG_ABOUT_JELLYBOX
+  #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBOX")
+#endif
+#ifndef MSG_CONTROL_IM3D
+  #define MSG_CONTROL_IM3D                       _UxGT("Control")
+#endif
+#ifndef MSG_DANGER_ZONE
+  #define MSG_DANGER_ZONE                       _UxGT("Danger Zone")
+#endif
+#ifndef MSG_FACTORY_RESET
+  #define MSG_FACTORY_RESET                       _UxGT("Factory Reset")
+#endif
+#ifndef MSG_EXTRUDE
+  #define MSG_EXTRUDE                         _UxGT("Extrude")
+#endif
+#ifndef MSG_EXTRUDE_PFIVE
+  #define MSG_EXTRUDE_PFIVE                   _UxGT("0.5 mm")
+#endif
+#ifndef MSG_EXTRUDE_TEN
+  #define MSG_EXTRUDE_TEN                     _UxGT(" 10 mm")
+#endif 
+#ifndef MSG_EXTRUDE_FIFTY
+  #define MSG_EXTRUDE_FIFTY                   _UxGT(" 50 mm")
+#endif
+#ifndef MSG_EXTRUDE_HUNDRED
+  #define MSG_EXTRUDE_HUNDRED                 _UxGT("100 mm")
+#endif
+#ifndef MSG_CUSTOM_EXTRUDE
+  #define MSG_CUSTOM_EXTRUDE                  _UxGT("Custom length (mm)")
+#endif
+#ifndef MSG_SETTINGS
+  #define MSG_SETTINGS                        _UxGT("Settings")
+#endif
+#ifndef MSG_PID_TUNING
+  #define MSG_PID_TUNING                      _UxGT("PID Tuning")
+#endif
+#ifndef MSG_START_PID_AUTOTUNE
+  #define MSG_START_PID_AUTOTUNE              _UxGT("Start PID Autotune")
+#endif
+#ifndef MSG_PID_AUTOTUNE_RUNNING
+  #define MSG_PID_AUTOTUNE_RUNNING            _UxGT("PID autotune in progress.")
+#endif
+#ifndef MSG_ABORT_PID_AUTOTUNE
+  #define MSG_ABORT_PID_AUTOTUNE              _UxGT("Abort PID Autotune")
+#endif
+#ifndef MSG_PID_AUTOTUNE_ABORTED
+  #define MSG_PID_AUTOTUNE_ABORTED            _UxGT("PID autotune aborted")
+#endif
+#ifndef MSG_ABORT_ACTION
+  #define MSG_ABORT_ACTION                    _UxGT("Abort")
+#endif
+#ifndef MSG_ABORT_EXTRUSION
+  #define MSG_ABORT_EXTRUSION                  _UxGT("Abort extrusion")
+#endif
+#ifndef MSG_RETURN_TO_MAIN
+  #define MSG_RETURN_TO_MAIN                  _UxGT("Return to main menu")
+#endif
+#ifndef MSG_RETURN_AND_DISABLE_STEPPERS
+  #define MSG_RETURN_AND_DISABLE_STEPPERS     _UxGT("Unlock motors       "LCD_STR_UPLEVEL)
+#endif
+#ifndef MSG_RETURN_AND_HOME
+  #define MSG_RETURN_AND_HOME                  _UxGT("Home XYZ            "LCD_STR_UPLEVEL )
+#endif
+#ifndef MSG_EDIT_PID
+  #define MSG_EDIT_PID                        _UxGT("Edit PID Values")
+#endif
+#ifndef MSG_PID_VALUES
+  #define MSG_PID_VALUES                      _UxGT("Current PID values:                ")
+#endif
+#ifndef MSG_LIVE_ADJUSTMENTS
+  #define MSG_LIVE_ADJUSTMENTS                _UxGT("Live adjustments")
+#endif
+#ifndef MSG_ADJUSTMENTS
+  #define MSG_ADJUSTMENTS                     _UxGT("Adjustments")
+#endif
+#ifndef MSG_MOVE_AXIS
+  #define MSG_MOVE_AXIS                       _UxGT("Move XYZ axis")
+#endif
+#ifndef MSG_MOVING
+  #define MSG_MOVING                          _UxGT("Moving...")
+#endif
 #ifndef MSG_MOVING
   #define MSG_MOVING                          _UxGT("Moving...")
 #endif
@@ -448,28 +610,31 @@
   #define MSG_MOVE_10MM                       _UxGT("Move 10mm")
 #endif
 #ifndef MSG_SPEED
-  #define MSG_SPEED                           _UxGT("Speed")
+  #define MSG_SPEED                           _UxGT("Speed (%)")
 #endif
 #ifndef MSG_BED_Z
   #define MSG_BED_Z                           _UxGT("Bed Z")
 #endif
 #ifndef MSG_NOZZLE
-  #define MSG_NOZZLE                          _UxGT("Nozzle")
+  #define MSG_NOZZLE                          _UxGT("Nozzle ("LCD_STR_DEGREE"C)")
 #endif
 #ifndef MSG_BED
-  #define MSG_BED                             _UxGT("Bed")
+  #define MSG_BED                             _UxGT("Bed ("LCD_STR_DEGREE"C)")
 #endif
 #ifndef MSG_FAN_SPEED
-  #define MSG_FAN_SPEED                       _UxGT("Fan speed")
+  #define MSG_FAN_SPEED                       _UxGT("Fan speed (%)")
 #endif
 #ifndef MSG_EXTRA_FAN_SPEED
   #define MSG_EXTRA_FAN_SPEED                 _UxGT("Extra fan speed")
 #endif
 #ifndef MSG_FLOW
-  #define MSG_FLOW                            _UxGT("Flow")
+  #define MSG_FLOW                            _UxGT("Flow (%)")
 #endif
 #ifndef MSG_CONTROL
   #define MSG_CONTROL                         _UxGT("Control")
+#endif
+#ifndef MSG_TEST_AUTO_BED_LEVEL
+  #define MSG_TEST_AUTO_BED_LEVEL             _UxGT("Test auto bed level")
 #endif
 #ifndef MSG_MIN
   #define MSG_MIN                             _UxGT(" ") LCD_STR_THERMOMETER _UxGT(" Min")
@@ -490,13 +655,13 @@
   #define MSG_OFF                             _UxGT("Off")
 #endif
 #ifndef MSG_PID_P
-  #define MSG_PID_P                           _UxGT("PID-P")
+  #define MSG_PID_P                           _UxGT("PID-Kp")
 #endif
 #ifndef MSG_PID_I
-  #define MSG_PID_I                           _UxGT("PID-I")
+  #define MSG_PID_I                           _UxGT("PID-Ki")
 #endif
 #ifndef MSG_PID_D
-  #define MSG_PID_D                           _UxGT("PID-D")
+  #define MSG_PID_D                           _UxGT("PID-Kd")
 #endif
 #ifndef MSG_PID_C
   #define MSG_PID_C                           _UxGT("PID-C")
@@ -723,8 +888,11 @@
 #ifndef MSG_FIRST
   #define MSG_FIRST                           _UxGT("first")
 #endif
+#ifndef MSG_TWEAK_FIRST_LAYER
+  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Tweak the 1st layer")
+#endif
 #ifndef MSG_ZPROBE_ZOFFSET
-  #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z Offset")
+  #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z offset")
 #endif
 #ifndef MSG_BABYSTEP_X
   #define MSG_BABYSTEP_X                      _UxGT("Babystep X")
@@ -778,7 +946,7 @@
   #define MSG_SHORT_MINUTE                    _UxGT("m") // One character only
 #endif
 #ifndef MSG_HEATING
-  #define MSG_HEATING                         _UxGT("Heating...")
+  #define MSG_HEATING                         _UxGT("Heating up...")
 #endif
 #ifndef MSG_HEATING_COMPLETE
   #define MSG_HEATING_COMPLETE                _UxGT("Heating done.")
@@ -908,7 +1076,7 @@
   #define MSG_INFO_MAX_TEMP                   _UxGT("Max Temp")
 #endif
 #ifndef MSG_INFO_PSU
-  #define MSG_INFO_PSU                        _UxGT("PSU")
+  #define MSG_INFO_PSU                        _UxGT("Power Supply")
 #endif
 #ifndef MSG_DRIVE_STRENGTH
   #define MSG_DRIVE_STRENGTH                  _UxGT("Drive Strength")
@@ -1006,5 +1174,19 @@
     #define MSG_FILAMENT_CHANGE_RESUME_1        _UxGT("Resuming...")
   #endif
 #endif // LCD_HEIGHT < 4
+
+// About Printer Menu Annotations
+#ifndef MSG_FIRMWARE_VERSION
+  #define MSG_FIRMWARE_VERSION            _UxGT("FIRMWARE VERSION:")
+#endif
+#ifndef MSG_JELLYBOX_VARIANT
+  #define MSG_JELLYBOX_VARIANT           _UxGT("JELLYBOX VARIANT:")
+#endif
+#ifndef MSG_DISTRIBUTION_DATE
+  #define MSG_DISTRIBUTION_DATE           _UxGT("DISTRIBUTION DATE:")
+#endif
+#ifndef MSG_SOURCE_URL
+  #define MSG_SOURCE_URL           _UxGT("SOURCE URL:")
+#endif
 
 #endif // LANGUAGE_EN_H
