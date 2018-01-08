@@ -523,7 +523,7 @@
   #define SDCARD_RATHERRECENTFIRST
 
   // Add an option in the menu to run all auto#.g files
-  //#define MENU_ADDAUTOSTART
+  #define MENU_ADDAUTOSTART
 
   /**
    * Sort SD file listings in alphabetical order.
