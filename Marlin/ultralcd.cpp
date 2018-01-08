@@ -3089,6 +3089,32 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
   static void lcd_preheat_custom_nozzle() {
     _lcd_adjust_nozzle_temp(PSTR(MSG_CUSTOM_TEMP), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
   }
+
+static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int max) {
+  if (encoderPosition != 0) {
+    refresh_cmd_timeout();
+    (thermalManager.target_temperature_bed += float((int)encoderPosition));
+    
+    if (thermalManager.target_temperature_bed < min){
+        thermalManager.target_temperature_bed = min;
+    }
+      
+    if (thermalManager.target_temperature_bed > max) {
+        thermalManager.target_temperature_bed = max;
+    }
+    encoderPosition = 0;
+    //line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+    lcdDrawUpdate = 1;
+  }
+  if (lcdDrawUpdate) lcd_implementation_drawedit(name, i8tostr3(thermalManager.target_temperature_bed));
+  if (lcd_clicked) {
+      lcd_return_to_status();
+  }
+} 
+
+  static void lcd_preheat_custom_bed() {
+    _lcd_adjust_bed_temp(PSTR(MSG_CUSTOM_TEMP), &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15);
+  }
   
   /**
    *
@@ -3113,20 +3139,20 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    * Preheat CUSTOM > Preheat Nozzle and Bed
    *
    */
-   void lcd_preheat_custom_bed(){
-    START_MENU();
+/*   void lcd_preheat_custom_bed(){
+    //START_MENU();
     
     //
     // ^ Main
     //
-    MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
+    //MENU_ITEM(back, MSG_BACK , lcd_preheat_nozzle_menu);
    
     #if HAS_TEMP_BED
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
     #endif
     
-    END_MENU();
-   }
+    //END_MENU();
+   }*/
   /**
    *
    *"Preheat Nozzle" submenu
