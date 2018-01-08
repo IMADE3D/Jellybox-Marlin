@@ -147,14 +147,14 @@
 
 // The number of consecutive low temperature errors that can occur
 // before a min_temp_error is triggered. (Shouldn't be more than 10.)
-//#define MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED 0
+#define MAX_CONSECUTIVE_LOW_TEMPERATURE_ERROR_ALLOWED 5
 
 // The number of milliseconds a hotend will preheat before starting to check
 // the temperature. This value should NOT be set to the time it takes the
 // hot end to reach the target temperature, but the time it takes to reach
 // the minimum temperature your thermistor can read. The lower the better/safer.
 // This shouldn't need to be more than 30 seconds (30000)
-//#define MILLISECONDS_PREHEAT_TIME 0
+#define MILLISECONDS_PREHEAT_TIME 10000
 
 // @section extruder
 
@@ -193,7 +193,7 @@
 // When first starting the main fan, run it at full speed for the
 // given number of milliseconds.  This gets the fan spinning reliably
 // before setting a PWM value. (Does not work with software PWM for fan on Sanguinololu)
-//#define FAN_KICKSTART_TIME 100
+#define FAN_KICKSTART_TIME 1500
 
 // This defines the minimal speed for the main fan, run in PWM mode
 // to enable uncomment and set minimal PWM speed for reliable running (1-255)
@@ -480,6 +480,7 @@
 #define LCD_DECIMAL_SMALL_XY
 
 // The timeout (in ms) to return to the status screen from sub-menus
+#define LCD_TIMEOUT_TO_STATUS 20000
 
 /**
  * LED Control Menu
@@ -497,7 +498,6 @@
     //#define LED_USER_PRESET_STARTUP       // Have the printer display the user preset color on startup
   #endif
 #endif // LED_CONTROL_MENU
-#define LCD_TIMEOUT_TO_STATUS 20000
 
 #if ENABLED(SDSUPPORT)
 
@@ -668,20 +668,6 @@
 #endif
 
 // @section extruder
-
-// extruder advance constant (s2/mm3)
-//
-// advance (steps) = STEPS_PER_CUBIC_MM_E * EXTRUDER_ADVANCE_K * cubic mm per second ^ 2
-//
-// Hooke's law says:    force = k * distance
-// Bernoulli's principle says:  v ^ 2 / 2 + g . h + pressure / density = constant
-// so: v ^ 2 is proportional to number of steps we advance the extruder
-//#define ADVANCE
-
-#if ENABLED(ADVANCE)
-  #define EXTRUDER_ADVANCE_K .0
-  #define D_FILAMENT 2.85
-#endif
 
 /**
  * Implementation of linear pressure control
@@ -1117,8 +1103,8 @@
   #define X2_HYBRID_THRESHOLD    100
   #define Y_HYBRID_THRESHOLD     100
   #define Y2_HYBRID_THRESHOLD    100
-  #define Z_HYBRID_THRESHOLD       4
-  #define Z2_HYBRID_THRESHOLD      4
+  #define Z_HYBRID_THRESHOLD       3
+  #define Z2_HYBRID_THRESHOLD      3
   #define E0_HYBRID_THRESHOLD     30
   #define E1_HYBRID_THRESHOLD     30
   #define E2_HYBRID_THRESHOLD     30
@@ -1140,8 +1126,8 @@
   //#define SENSORLESS_HOMING // TMC2130 only
 
   #if ENABLED(SENSORLESS_HOMING)
-    #define X_HOMING_SENSITIVITY  19
-    #define Y_HOMING_SENSITIVITY  19
+    #define X_HOMING_SENSITIVITY  8
+    #define Y_HOMING_SENSITIVITY  8
   #endif
 
   /**
@@ -1377,12 +1363,12 @@
 /**
  * Auto-report temperatures with M155 S<seconds>
  */
-//#define AUTO_REPORT_TEMPERATURES
+#define AUTO_REPORT_TEMPERATURES
 
 /**
  * Include capabilities in M115 output
  */
-//#define EXTENDED_CAPABILITIES_REPORT
+#define EXTENDED_CAPABILITIES_REPORT
 
 /**
  * Disable all Volumetric extrusion options
