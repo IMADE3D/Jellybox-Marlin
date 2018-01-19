@@ -2530,13 +2530,13 @@ void kill_screen(const char* lcd_msg) {
       #if HAS_TEMP_BED
         MENU_ITEM(gcode, MSG_UBL_VALIDATE_PLA_MESH, PSTR("G28\nG26 C B" STRINGIFY(PREHEAT_1_TEMP_BED) " H" STRINGIFY(PREHEAT_1_TEMP_HOTEND) " P"));
         MENU_ITEM(gcode, MSG_UBL_VALIDATE_ABS_MESH, PSTR("G28\nG26 C B" STRINGIFY(PREHEAT_2_TEMP_BED) " H" STRINGIFY(PREHEAT_2_TEMP_HOTEND) " P"));
-        MENU_ITEM(gcode, MSG_UBL_VALIDATE_PET_MESH, PSTR("G28\nG26 C B" STRINGIFY(PREHEAT_3_TEMP_BED) " H" STRINGIFY(PREHEAT_3_TEMP_HOTEND) " P"));
-        MENU_ITEM(gcode, MSG_UBL_VALIDATE_FLEX_MESH, PSTR("G28\nG26 C B" STRINGIFY(PREHEAT_4_TEMP_BED) " H" STRINGIFY(PREHEAT_4_TEMP_HOTEND) " P"));
+        //MENU_ITEM(gcode, MSG_UBL_VALIDATE_PET_MESH, PSTR("G28\nG26 C B" STRINGIFY(PREHEAT_3_TEMP_BED) " H" STRINGIFY(PREHEAT_3_TEMP_HOTEND) " P"));
+        //MENU_ITEM(gcode, MSG_UBL_VALIDATE_FLEX_MESH, PSTR("G28\nG26 C B" STRINGIFY(PREHEAT_4_TEMP_BED) " H" STRINGIFY(PREHEAT_4_TEMP_HOTEND) " P"));
       #else
         MENU_ITEM(gcode, MSG_UBL_VALIDATE_PLA_MESH, PSTR("G28\nG26 C B0 H" STRINGIFY(PREHEAT_1_TEMP_HOTEND) " P"));
         MENU_ITEM(gcode, MSG_UBL_VALIDATE_ABS_MESH, PSTR("G28\nG26 C B0 H" STRINGIFY(PREHEAT_2_TEMP_HOTEND) " P"));
-        MENU_ITEM(gcode, MSG_UBL_VALIDATE_PET_MESH, PSTR("G28\nG26 C B0 H" STRINGIFY(PREHEAT_3_TEMP_HOTEND) " P"));
-        MENU_ITEM(gcode, MSG_UBL_VALIDATE_FLEX_MESH, PSTR("G28\nG26 C B0 H" STRINGIFY(PREHEAT_4_TEMP_HOTEND) " P"));
+        //MENU_ITEM(gcode, MSG_UBL_VALIDATE_PET_MESH, PSTR("G28\nG26 C B0 H" STRINGIFY(PREHEAT_3_TEMP_HOTEND) " P"));
+        //MENU_ITEM(gcode, MSG_UBL_VALIDATE_FLEX_MESH, PSTR("G28\nG26 C B0 H" STRINGIFY(PREHEAT_4_TEMP_HOTEND) " P"));
       #endif
       MENU_ITEM(function, MSG_UBL_VALIDATE_CUSTOM_MESH, _lcd_ubl_validate_custom_mesh);
       MENU_ITEM(function, MSG_WATCH, lcd_return_to_status);
@@ -2663,7 +2663,7 @@ void kill_screen(const char* lcd_msg) {
           "M104 S0\n"
           "M140 S0"
         ));
-        MENU_ITEM(gcode, MSG_UBL_BUILD_PET_MESH, PSTR(
+/*        MENU_ITEM(gcode, MSG_UBL_BUILD_PET_MESH, PSTR(
           "G28\n"
           "M190 S" STRINGIFY(PREHEAT_3_TEMP_BED) "\n"
           "M109 S" STRINGIFY(PREHEAT_3_TEMP_HOTEND) "\n"
@@ -2678,7 +2678,7 @@ void kill_screen(const char* lcd_msg) {
           "G29 P1\n"
           "M104 S0\n"
           "M140 S0"
-        ));
+        ));*/
       #else
         MENU_ITEM(gcode, MSG_UBL_BUILD_PLA_MESH, PSTR(
           "G28\n"
@@ -2692,7 +2692,7 @@ void kill_screen(const char* lcd_msg) {
           "G29 P1\n"
           "M104 S0"
         ));
-        MENU_ITEM(gcode, MSG_UBL_BUILD_PET_MESH, PSTR(
+        /*MENU_ITEM(gcode, MSG_UBL_BUILD_PET_MESH, PSTR(
           "G28\n"
           "M109 S" STRINGIFY(PREHEAT_3_TEMP_HOTEND) "\n"
           "G29 P1\n"
@@ -2703,7 +2703,7 @@ void kill_screen(const char* lcd_msg) {
           "M109 S" STRINGIFY(PREHEAT_4_TEMP_HOTEND) "\n"
           "G29 P1\n"
           "M104 S0"
-        ));
+        ));*/
       #endif
       MENU_ITEM(submenu, MSG_UBL_BUILD_CUSTOM_MESH, _lcd_ubl_custom_mesh);
       MENU_ITEM(gcode, MSG_UBL_BUILD_COLD_MESH, PSTR("G28\nG29 P1"));
