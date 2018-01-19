@@ -1087,7 +1087,7 @@ void kill_screen(const char* lcd_msg) {
         MENU_ITEM(submenu, MSG_PREHEAT_BED, lcd_preheat_bed_menu);
       #endif 
       
-      //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+      MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
       #if ENABLED(DELTA_CALIBRATION_MENU)
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
       #endif
