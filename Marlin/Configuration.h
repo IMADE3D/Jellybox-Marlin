@@ -816,7 +816,7 @@
 #define Y_MIN_POS -2
 #define Z_MIN_POS 0
 #define X_MAX_POS 186
-#define Y_MAX_POS 166
+#define Y_MAX_POS 160
 #define Z_MAX_POS 146
 
 /**
@@ -990,7 +990,7 @@
   //========================= Unified Bed Leveling ============================
   //===========================================================================
 
-  //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
+  #define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
   #define MESH_INSET 1          // Mesh inset margin on print area
   #define GRID_MAX_POINTS_X 3       // Don't use more than 15 points per axis, implementation limited.
