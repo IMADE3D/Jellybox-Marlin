@@ -2932,6 +2932,7 @@ void kill_screen(const char* lcd_msg) {
     void _lcd_ubl_step_by_step() {
       START_MENU();
       MENU_BACK(MSG_UBL_LEVEL_BED);
+      MENU_ITEM(gcode, "1 TEST", PSTR("G29 P1"));
       MENU_ITEM(gcode, "1 " MSG_UBL_BUILD_COLD_MESH, PSTR("G28\nG29 P1"));
       MENU_ITEM(function, "2 " MSG_UBL_SMART_FILLIN, _lcd_ubl_smart_fillin_cmd);
       MENU_ITEM(submenu, "3 " MSG_UBL_VALIDATE_MESH_MENU, _lcd_ubl_validate_mesh);
