@@ -943,7 +943,8 @@
   // in our case, the left probe position is the same as safe homing position,
   // as then there's no redundant movements between g28 and g29
   #define LEFT_PROBE_BED_POSITION 10
-  #define RIGHT_PROBE_BED_POSITION 155  #define FRONT_PROBE_BED_POSITION 23
+  #define RIGHT_PROBE_BED_POSITION 155
+  #define FRONT_PROBE_BED_POSITION 23
   #define BACK_PROBE_BED_POSITION 140
 
   // The Z probe minimum outer margin (to validate G29 parameters).
