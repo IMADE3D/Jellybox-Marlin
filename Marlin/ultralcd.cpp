@@ -1212,6 +1212,7 @@ void kill_screen(const char* lcd_msg) {
         lcdDrawUpdate = LCDVIEW_REDRAW_NOW;
         thermalManager.babystep_axis(axis, babystep_increment);
         babysteps_done += babystep_increment;
+        lcd_completion_feedback(settings.save()); 
       }
       if (lcdDrawUpdate)
         lcd_implementation_drawedit(msg, ftostr52sign(planner.steps_to_mm[axis] * babysteps_done));
@@ -1227,7 +1228,7 @@ void kill_screen(const char* lcd_msg) {
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
 
       void lcd_babystep_zoffset() {
-        if (lcd_clicked) { return lcd_goto_previous_menu_no_defer(); }
+        if (lcd_clicked) { return lcd_goto_previous_menu_no_defer(); lcd_completion_feedback(settings.save()); }
         defer_return_to_status = true;
         ENCODER_DIRECTION_NORMAL();
         if (encoderPosition) {
@@ -1242,12 +1243,13 @@ void kill_screen(const char* lcd_msg) {
 
             zprobe_zoffset = new_zoffset;
             lcdDrawUpdate = LCDVIEW_CALL_REDRAW_NEXT;
+            settings.save();
           }
         }
         // there are changes because of the overlay. need to check against older im3d dev 3 code! FG.
             // if (lcdDrawUpdate)
             // lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr52sign(zprobe_zoffset));
-            // settings.save();
+             settings.save();
         if (lcdDrawUpdate) {
           lcd_implementation_drawedit(PSTR(MSG_ZPROBE_ZOFFSET), ftostr43sign(zprobe_zoffset));
           #if ENABLED(BABYSTEP_ZPROBE_GFX_OVERLAY)
@@ -1258,8 +1260,8 @@ void kill_screen(const char* lcd_msg) {
 
     #else // !BABYSTEP_ZPROBE_OFFSET
 
-      void _lcd_babystep_z() { _lcd_babystep(Z_AXIS, PSTR(MSG_BABYSTEP_Z)); }
-      void lcd_babystep_z() { lcd_goto_screen(_lcd_babystep_z); babysteps_done = 0; defer_return_to_status = true; }
+      void _lcd_babystep_z() { _lcd_babystep(Z_AXIS, PSTR(MSG_BABYSTEP_Z)); lcd_store_settings(); }
+      void lcd_babystep_z() { lcd_goto_screen(_lcd_babystep_z); babysteps_done = 0; defer_return_to_status = true; lcd_store_settings(); }
 
     #endif // !BABYSTEP_ZPROBE_OFFSET
 
@@ -1281,6 +1283,7 @@ void kill_screen(const char* lcd_msg) {
         mesh_edit_value = mesh_edit_accumulator;
         encoderPosition = 0;
         lcdDrawUpdate = LCDVIEW_CALL_REDRAW_NEXT;
+        lcd_completion_feedback(settings.save()); 
 
         const int32_t rounded = (int32_t)(mesh_edit_value * 1000.0);
         mesh_edit_value = float(rounded - (rounded % 5L)) / 1000.0;
