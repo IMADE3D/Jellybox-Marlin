@@ -3113,7 +3113,9 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
 } 
 
   static void lcd_preheat_custom_bed() {
+    #if HAS_TEMP_BED
     _lcd_adjust_bed_temp(PSTR(MSG_CUSTOM_TEMP), &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15);
+    #endif
   }
   
   /**
