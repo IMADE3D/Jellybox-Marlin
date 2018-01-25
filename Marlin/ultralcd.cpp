@@ -4657,6 +4657,11 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
     END_MENU();
   }
 
+void lcd_babystep_zoffset_and_save() {
+  lcd_babystep_zoffset();
+  lcd_store_settings();
+}
+
   void lcd_control_motion_menu() {
     START_MENU();
     
@@ -4667,8 +4672,9 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
 
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
       //MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
-//      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_ZPROBE_OFFSET, &zprobe_zoffset[X_AXIS], Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX,lcd_babystep_zoffset);
-      MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_babystep_zoffset);
+      //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_ZPROBE_OFFSET, &zprobe_zoffset[X_AXIS], Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX,lcd_babystep_zoffset);
+      //MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_babystep_zoffset);
+      MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX,lcd_babystep_zoffset_and_save );
     #elif HAS_BED_PROBE
       MENU_ITEM_EDIT(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
     #endif
