@@ -35,7 +35,7 @@
   /**
    * Marlin release version identifier
    */
-  #define SHORT_BUILD_VERSION "JB-Marlin-2.1-1.1.8-dev"
+  #define SHORT_BUILD_VERSION "2.1-UBL-dev"
 
   /**
    * Verbose version identifier which should contain a reference to the location
