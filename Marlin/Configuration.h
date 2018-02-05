@@ -822,8 +822,8 @@
 #define X_MIN_POS -20
 #define Y_MIN_POS -2
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
-#define Y_MAX_POS Y_BED_SIZE
+#define X_MAX_POS X_BED_SIZE + 5
+#define Y_MAX_POS Y_BED_SIZE + 5
 #define Z_MAX_POS Z_HEIGHT_SIZE
 
 /**
@@ -952,10 +952,10 @@
   #define MIN_PROBE_EDGE 5
 
   // Set the boundaries for probing (where the probe can reach).
-  #define LEFT_PROBE_BED_POSITION 15 // JellyBOX 10
-  #define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - 15) //JellyBOX 155
-  #define FRONT_PROBE_BED_POSITION 15 // JellyBOX 13
-  #define BACK_PROBE_BED_POSITION (Y_BED_SIZE - 15) // JellyBOX 140
+  #define LEFT_PROBE_BED_POSITION 10 // JellyBOX 10
+  #define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - 15) //JellyBOX 1.3 - 155
+  #define FRONT_PROBE_BED_POSITION 13 // JellyBOX 13
+  #define BACK_PROBE_BED_POSITION (Y_BED_SIZE - 20) // 1.3 - JellyBOX 140
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
