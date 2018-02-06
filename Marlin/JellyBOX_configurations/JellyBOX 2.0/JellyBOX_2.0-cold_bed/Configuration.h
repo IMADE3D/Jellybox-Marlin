@@ -1,5 +1,5 @@
 ﻿#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2.0"
-#define JELLYBOX_VARIANT_LINE2 "cold bed, two fans"
+#define JELLYBOX_VARIANT_LINE2 "cold bed"
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -712,7 +712,7 @@
  *    (0,0)
  */
 #define X_PROBE_OFFSET_FROM_EXTRUDER 22 // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 2 // Y offset: -front +behind [the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 25 // Y offset: -front +behind [the nozzle]
 #define Z_PROBE_OFFSET_FROM_EXTRUDER 0 // Z offset: -below +above  [the nozzle]
 
 // X and Y axis travel speed (mm/m) between probes
@@ -808,17 +808,17 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 170
-#define Y_BED_SIZE 160
+#define X_BED_SIZE 180
+#define Y_BED_SIZE 170
 // Safe values are 145 for JellyBOX 1.3... FG fill in the rest later
 #define Z_HEIGHT_SIZE 145
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-#define X_MIN_POS -20
-#define Y_MIN_POS -2
+#define X_MIN_POS -13
+#define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
-#define Y_MAX_POS Y_BED_SIZE
+#define X_MAX_POS X_BED_SIZE + 5
+#define Y_MAX_POS Y_BED_SIZE + 5
 #define Z_MAX_POS Z_HEIGHT_SIZE
 
 /**
@@ -1068,7 +1068,7 @@
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT (10) // ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT (13) // ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_Y_POINT (50) // ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
 #endif
 
 // Homing speeds (mm/m)
