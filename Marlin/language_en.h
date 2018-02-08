@@ -756,6 +756,12 @@
 #ifndef MSG_FILAMENT_DIAM
   #define MSG_FILAMENT_DIAM                   _UxGT("Fil. Dia.")
 #endif
+#ifndef MSG_FILAMENT_UNLOAD
+  #define MSG_FILAMENT_UNLOAD                 _UxGT("Unload mm")
+#endif
+#ifndef MSG_FILAMENT_LOAD
+  #define MSG_FILAMENT_LOAD                   _UxGT("Load mm")
+#endif
 #ifndef MSG_ADVANCE_K
   #define MSG_ADVANCE_K                       _UxGT("Advance K")
 #endif
@@ -854,6 +860,15 @@
 #endif
 #ifndef MSG_FILAMENTCHANGE
   #define MSG_FILAMENTCHANGE                  _UxGT("Change filament")
+#endif
+#ifndef MSG_FILAMENTLOAD
+  #define MSG_FILAMENTLOAD                    _UxGT("Load filament")
+#endif
+#ifndef MSG_FILAMENTUNLOAD
+  #define MSG_FILAMENTUNLOAD                  _UxGT("Unload filament")
+#endif
+#ifndef MSG_FILAMENTUNLOAD_ALL
+  #define MSG_FILAMENTUNLOAD_ALL              _UxGT("Unload All")
 #endif
 #ifndef MSG_INIT_SDCARD
   #define MSG_INIT_SDCARD                     _UxGT("Init. SD card")
@@ -1087,6 +1102,15 @@
 #ifndef MSG_DAC_EEPROM_WRITE
   #define MSG_DAC_EEPROM_WRITE                _UxGT("DAC EEPROM Write")
 #endif
+#ifndef MSG_FILAMENT_CHANGE_HEADER_PAUSE
+  #define MSG_FILAMENT_CHANGE_HEADER_PAUSE    _UxGT("PRINT PAUSED")
+#endif
+#ifndef MSG_FILAMENT_CHANGE_HEADER_LOAD
+  #define MSG_FILAMENT_CHANGE_HEADER_LOAD     _UxGT("LOAD FILAMENT")
+#endif
+#ifndef MSG_FILAMENT_CHANGE_HEADER_UNLOAD
+  #define MSG_FILAMENT_CHANGE_HEADER_UNLOAD   _UxGT("UNLOAD FILAMENT")
+#endif
 #ifndef MSG_FILAMENT_CHANGE_HEADER
   #define MSG_FILAMENT_CHANGE_HEADER          _UxGT("PRINT PAUSED")
 #endif
@@ -1111,7 +1135,9 @@
 #ifndef MSG_ERR_PROBING_FAILED
   #define MSG_ERR_PROBING_FAILED              _UxGT("Probing failed")
 #endif
-
+#ifndef MSG_M600_TOO_COLD
+  #define MSG_M600_TOO_COLD                   _UxGT("M600: Too cold")
+#endif
 //
 // Filament Change screens show up to 3 lines on a 4-line display
 //                        ...or up to 2 lines on a 3-line display
