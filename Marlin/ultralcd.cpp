@@ -875,24 +875,6 @@ void kill_screen(const char* lcd_msg) {
     
 
   #endif // SDSUPPORT
- /*void abortPrint(){
-    lcd_sdcard_stop();
-    homeafterabort();
-  }
-
- void homeafterabort(){
-    while (true) {
-    enqueue_and_echo_commands_P(PSTR("G28 X Y"));
-    break;
-    }
-    buzzer.tone(1000,1000);
- }
-
- void printaborted(){
-   enqueue_and_echo_commands_P(PSTR("G28 X Y"));
-   STATIC_ITEM("Homing Now");
-
- }*/
  
   #if ENABLED(MENU_ITEM_CASE_LIGHT)
 
@@ -1624,9 +1606,9 @@ void kill_screen(const char* lcd_msg) {
         #if ENABLED(EXTRA_FAN_SPEED)
           MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED FAN_SPEED_1_SUFFIX, &new_fanSpeeds[0], 3, 255);
         #endif
-        //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_1ST_FAN_SPEED, &fanSpeeds[0], 0, 255);
+        //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED, &fanSpeeds[0], 0, 255);
         //fanSpeed100 = int((fanSpeed * 100)/255);
-        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_1ST_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
         fanSpeeds[0] = fanSpeed;
       #endif
       #if HAS_FAN1
@@ -4059,8 +4041,8 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
         #if ENABLED(EXTRA_FAN_SPEED)
           MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED FAN_SPEED_1_SUFFIX, &new_fanSpeeds[0], 3, 255);
         #endif
-        //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_1ST_FAN_SPEED, &fanSpeeds[0], 0, 255);
-        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_1ST_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
+        //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED, &fanSpeeds[0], 0, 255);
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
         fanSpeeds[0] = fanSpeed;
       #endif
       #if HAS_FAN1
@@ -4145,7 +4127,8 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
         //MENU_ITEM_EDIT(float52, MSG_PID_P ELABEL, &PID_PARAM(Kp, eindex), 1, 9990); \
         //MENU_ITEM_EDIT_CALLBACK(float52, MSG_PID_I ELABEL, &raw_Ki, 0.01, 9990, copy_and_scalePID_i_E ## eindex); \
         //MENU_ITEM_EDIT_CALLBACK(float52, MSG_PID_D ELABEL, &raw_Kd, 1, 9990, copy_and_scalePID_d_E ## eindex)
-
+      #endif
+      
       #if ENABLED(PID_EXTRUSION_SCALING)
         #define _PID_MENU_ITEMS(ELABEL, eindex) \
           _PID_BASE_MENU_ITEMS(ELABEL, eindex); \
@@ -4618,39 +4601,6 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
     }
 
   #endif // !SLIM_LCD_MENUS
-
-  // M92 Steps-per-mm
-  void lcd_control_motion_steps_per_mm_menu() {
-    START_MENU();
-    
-    //
-    // ^ Main
-    //
-    MENU_ITEM(back, MSG_BACK , lcd_control_motion_menu);
-
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_XSTEPS, &planner.axis_steps_per_mm[X_AXIS], 5, 9999, _planner_refresh_positioning);
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_YSTEPS, &planner.axis_steps_per_mm[Y_AXIS], 5, 9999, _planner_refresh_positioning);
-    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_ZSTEPS, &planner.axis_steps_per_mm[Z_AXIS], 5, 9999, _planner_refresh_positioning);
-
-    #if ENABLED(DISTINCT_E_FACTORS)
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_ESTEPS, &planner.axis_steps_per_mm[E_AXIS + active_extruder], 5, 9999, _planner_refresh_positioning);
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_E1STEPS, &planner.axis_steps_per_mm[E_AXIS], 5, 9999, _planner_refresh_e0_positioning);
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_E2STEPS, &planner.axis_steps_per_mm[E_AXIS + 1], 5, 9999, _planner_refresh_e1_positioning);
-      #if E_STEPPERS > 2
-        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_E3STEPS, &planner.axis_steps_per_mm[E_AXIS + 2], 5, 9999, _planner_refresh_e2_positioning);
-        #if E_STEPPERS > 3
-          MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_E4STEPS, &planner.axis_steps_per_mm[E_AXIS + 3], 5, 9999, _planner_refresh_e3_positioning);
-          #if E_STEPPERS > 4
-            MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_E5STEPS, &planner.axis_steps_per_mm[E_AXIS + 4], 5, 9999, _planner_refresh_e4_positioning);
-          #endif // E_STEPPERS > 4
-        #endif // E_STEPPERS > 3
-      #endif // E_STEPPERS > 2
-    #else
-      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_ESTEPS, &planner.axis_steps_per_mm[E_AXIS], 5, 9999, _planner_refresh_positioning);
-    #endif
-
-    END_MENU();
-  }
 
   void lcd_control_motion_menu() {
     START_MENU();
@@ -5471,8 +5421,9 @@ static void lcd_move_select_axis() {
       STATIC_ITEM(STRING_DISTRIBUTION_DATE, true);                     // YYYY-MM-DD HH:MM
       // STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
       STATIC_ITEM(MSG_SOURCE_URL, false);
-      STATIC_ITEM(SOURCE_CODE_URL_LINE1, true);                                  // www.github.com/myfork
-      STATIC_ITEM(SOURCE_CODE_URL_LINE2, true);                                  // www.github.com/myfork
+  //    STATIC_ITEM(SOURCE_CODE_URL_LINE1, true);                                  // www.github.com/myfork
+    //  STATIC_ITEM(SOURCE_CODE_URL_LINE2, true);                                  // www.github.com/myfork
+     STATIC_ITEM(SOURCE_CODE_URL); // Did this need two lines? It might have gotten messed up in version.h
       // STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
       #if EXTRUDERS>1
         STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
