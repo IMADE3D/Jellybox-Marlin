@@ -546,7 +546,7 @@
  */
 #define CUSTOM_DEFAULT_OFFSETS
 #if ENABLED(CUSTOM_DEFAULT_OFFSETS)
-  #define CUSTOM_DEFAULT_X_OFFSET 5
+  #define CUSTOM_DEFAULT_X_OFFSET 0
   #define CUSTOM_DEFAULT_Y_OFFSET 0
   #define CUSTOM_DEFAULT_Z_OFFSET 0
 #endif
@@ -815,7 +815,7 @@
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS -13
-#define Y_MIN_POS 0
+#define Y_MIN_POS -3
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE + 5
 #define Y_MAX_POS Y_BED_SIZE + 5
@@ -979,12 +979,12 @@
 
   // 3 arbitrary points to probe.
   // A simple cross-product is used to estimate the plane of the bed.
-  #define ABL_PROBE_PT_1_X 15
-  #define ABL_PROBE_PT_1_Y 180
-  #define ABL_PROBE_PT_2_X 15
-  #define ABL_PROBE_PT_2_Y 20
-  #define ABL_PROBE_PT_3_X 170
-  #define ABL_PROBE_PT_3_Y 20
+  #define ABL_PROBE_PT_1_X 20
+  #define ABL_PROBE_PT_1_Y 155
+  #define ABL_PROBE_PT_2_X 20
+  #define ABL_PROBE_PT_2_Y 25
+  #define ABL_PROBE_PT_3_X 165
+  #define ABL_PROBE_PT_3_Y 25
 
 #elif ENABLED(AUTO_BED_LEVELING_UBL)
 
@@ -999,11 +999,11 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
-  #define UBL_PROBE_PT_1_Y 120
-  #define UBL_PROBE_PT_2_X 39
-  #define UBL_PROBE_PT_2_Y 20
-  #define UBL_PROBE_PT_3_X 120
-  #define UBL_PROBE_PT_3_Y 20
+  #define UBL_PROBE_PT_1_Y 155
+  #define UBL_PROBE_PT_2_X 20
+  #define UBL_PROBE_PT_2_Y 30
+  #define UBL_PROBE_PT_3_X 165
+  #define UBL_PROBE_PT_3_Y 30
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
@@ -1068,7 +1068,7 @@
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT (10) // ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
-  #define Z_SAFE_HOMING_Y_POINT (50) // ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
+  #define Z_SAFE_HOMING_Y_POINT (25) // ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axes (G28).
 #endif
 
 // Homing speeds (mm/m)
