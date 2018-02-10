@@ -1,5 +1,5 @@
 #define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3, one fan"
-#define JELLYBOX_VARIANT_LINE2 "cold bed, green probe"
+#define JELLYBOX_VARIANT_LINE2 "hot bed, green probe"
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
