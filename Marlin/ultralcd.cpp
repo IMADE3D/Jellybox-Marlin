@@ -5085,7 +5085,7 @@ static void lcd_move_select_axis() {
        STATIC_ITEM("defaults.                       ");
        END_MENU();
 
-       if (lcd_clicked){
+       if (use_click()){
          lcd_goto_screen(lcd_danger_zone);
        }
      }
@@ -5102,7 +5102,7 @@ static void lcd_move_select_axis() {
            
       void buttonHold(int holdTime){
         
-        if (lcd_clicked){
+        if (use_click()){
 
           NewClickTime = millis();
           TimeBetweenClick = NewClickTime - OldClickTime;
