@@ -697,8 +697,9 @@
  *   X and Y offsets must be integers.
  *
  *   In the following example the X and Y offsets are both positive:
- *   #define X_PROBE_OFFSET_FROM_EXTRUDER 22
- *   #define Y_PROBE_OFFSET_FROM_EXTRUDER 25 *
+ *   #define X_PROBE_OFFSET_FROM_EXTRUDER 10
+ *   #define Y_PROBE_OFFSET_FROM_EXTRUDER 10
+ *
  *      +-- BACK ---+
  *      |           |
  *    L |    (+) P  | R <-- probe (20,20)
@@ -946,7 +947,8 @@
   // in our case, the left probe position is the same as safe homing position,
   // as then there's no redundant movements between g28 and g29
   #define LEFT_PROBE_BED_POSITION 10
-  #define RIGHT_PROBE_BED_POSITION 155  #define FRONT_PROBE_BED_POSITION 23
+  #define RIGHT_PROBE_BED_POSITION 155
+  #define FRONT_PROBE_BED_POSITION 13
   #define BACK_PROBE_BED_POSITION 140
 
   // The Z probe minimum outer margin (to validate G29 parameters).
@@ -999,9 +1001,9 @@
   #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
   #define UBL_PROBE_PT_1_Y 120
   #define UBL_PROBE_PT_2_X 39
-  #define UBL_PROBE_PT_2_Y 20
+  #define UBL_PROBE_PT_2_Y 25
   #define UBL_PROBE_PT_3_X 120
-  #define UBL_PROBE_PT_3_Y 20
+  #define UBL_PROBE_PT_3_Y 25
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
