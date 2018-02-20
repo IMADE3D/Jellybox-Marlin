@@ -9894,7 +9894,7 @@ void quickstop_stepper() {
       }
     }
     
-    LOOP_XYZ(i) if(i = !"z") {set_home_offset((AxisEnum)i, diff[i]);};
+    LOOP_XYZ(i) if(i != 2) {set_home_offset((AxisEnum)i, diff[i]);};
     report_current_position();
     LCD_MESSAGEPGM(MSG_HOME_OFFSETS_APPLIED);
     BUZZ(100, 659);
