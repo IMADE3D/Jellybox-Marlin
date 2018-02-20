@@ -299,7 +299,7 @@
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_BED 0 //FG Heated Bed
+#define TEMP_SENSOR_BED 1 //FG Heated Bed
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
 #define DUMMY_THERMISTOR_998_VALUE 66
@@ -1001,12 +1001,12 @@
   #define GRID_MAX_POINTS_X 3       // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
-  #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
-  #define UBL_PROBE_PT_1_Y 120
-  #define UBL_PROBE_PT_2_X 39
-  #define UBL_PROBE_PT_2_Y 20
-  #define UBL_PROBE_PT_3_X 120
-  #define UBL_PROBE_PT_3_Y 20
+  #define UBL_PROBE_PT_1_X 30       // Probing points for 3-Point leveling of the mesh
+  #define UBL_PROBE_PT_1_Y 155
+  #define UBL_PROBE_PT_2_X 20
+  #define UBL_PROBE_PT_2_Y 30
+  #define UBL_PROBE_PT_3_X 165
+  #define UBL_PROBE_PT_3_Y 30
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
