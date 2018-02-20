@@ -203,6 +203,7 @@ uint16_t max_display_update_time = 0;
   void homeafterabort();
   void lcd_disable_steppers();
   void lcd_home_xyz();
+  void lcd_testoffsets_menu();
 
   int fanSpeed100;
   int fanSpeed;
@@ -1031,6 +1032,7 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_USER_MENU, _lcd_user_menu);
     #endif
 
+    MENU_ITEM(submenu, "Test Offsets" , lcd_testoffsets_menu);
     //
     // Debug Menu when certain options are enabled
     //
@@ -4604,6 +4606,19 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
 
   #endif // !SLIM_LCD_MENUS
 
+    void lcd_testoffsets_menu(){
+      START_MENU();
+
+    MENU_ITEM(back, MSG_BACK , lcd_main_menu);
+    MENU_ITEM(gcode, "Home" , PSTR("G28"));
+    MENU_ITEM(gcode , "Set offsets" , PSTR("M428"));
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "X home offset", &home_offset[X_AXIS], -50, 50,lcd_store_settings);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "Y home offset", &home_offset[Y_AXIS], -50, 50,lcd_store_settings);
+    MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, "Z home offset", &home_offset[Z_AXIS], -50, 50,lcd_store_settings);
+
+    END_MENU();
+    }
+
   void lcd_control_motion_menu() {
     START_MENU();
     
@@ -5804,7 +5819,6 @@ static void lcd_move_select_axis() {
       }
       return PSTR(MSG_FILAMENT_CHANGE_HEADER_PAUSE);
     }
-
 
     // Portions from STATIC_ITEM...
     #define HOTEND_STATUS_ITEM() do { \
