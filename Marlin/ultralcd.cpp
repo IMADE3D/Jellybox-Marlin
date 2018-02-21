@@ -1070,6 +1070,16 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
 
       //
+      // Load Filament
+      //
+      MENU_ITEM(gcode, MSG_LOAD_FILAMENT, PSTR(""));
+
+      //
+      //Eject Filament
+      //
+      MENU_ITEM(gcode, MSG_EJECT_FILAMENT, PSTR(""));
+
+      //
       // Disable Steppers
       //
       if (printer_paused == false){
