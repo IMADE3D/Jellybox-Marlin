@@ -1059,15 +1059,15 @@ void kill_screen(const char* lcd_msg) {
     else {
 
       //
-      // Adjustments menu
-      //
-      MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
-
-      //
       // Home XYZ
       //
       MENU_ITEM(function, MSG_RETURN_AND_HOME, lcd_home_xyz);
       
+      //
+      // Adjustments menu
+      //
+      MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
+
       //
       // Disable Steppers
       //
