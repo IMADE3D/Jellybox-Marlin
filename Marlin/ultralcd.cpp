@@ -173,7 +173,7 @@ uint16_t max_display_update_time = 0;
   void lcd_prepare_menu();
   void lcd_move_menu();
   void lcd_control_menu();
-  void lcd_control_im3d_menu();
+  void lcd_calibration_menu();
   void lcd_move_select_axis();
   void lcd_extrude_menu();
   void lcd_danger_zone();
@@ -1108,10 +1108,10 @@ void kill_screen(const char* lcd_msg) {
     //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
     
     //
-    //Control IMADE3D Menu
+    //Calibration Menu
     //
      
-    MENU_ITEM(submenu, MSG_CONTROL_IM3D, lcd_control_im3d_menu);
+    MENU_ITEM(submenu, MSG_CALIBRATION, lcd_calibration_menu);
 
     //
     //Settings Menu
@@ -4833,10 +4833,10 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
      }
     /**
      * 
-     * "maintenance Menu
+     * "Calibration" Menu
      * 
      */
-    void lcd_control_im3d_menu(){
+    void lcd_calibration_menu(){
       START_MENU();
 
       //
@@ -5010,7 +5010,7 @@ static void lcd_move_select_axis() {
   //
   // ^ Set
   //
-  MENU_ITEM(back, MSG_BACK, lcd_control_im3d_menu);
+  MENU_ITEM(back, MSG_BACK, lcd_calibration_menu);
   //MENU_ITEM(function, MSG_BACK, lcd_back_to_maintenance);
 
   if (longActionRunning && planner.movesplanned()){
@@ -5080,7 +5080,7 @@ static void lcd_move_select_axis() {
       //
       // ^ Set
       //
-      MENU_ITEM(back, MSG_BACK, lcd_control_im3d_menu);
+      MENU_ITEM(back, MSG_BACK, lcd_calibration_menu);
 
       //
       //Factory Reset
