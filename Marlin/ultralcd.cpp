@@ -198,6 +198,7 @@ uint16_t max_display_update_time = 0;
   void lcd_disable_steppers();
   void lcd_home_xyz();
   void lcd_change_filament();
+  void lcd_preflight_check();
 
   int fanSpeed100;
   int fanSpeed;
@@ -4843,6 +4844,11 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
       // ^ Main
       //
       MENU_ITEM(back, MSG_BACK , lcd_main_menu);
+
+      //
+      // Preflight Check
+      //
+      MENU_ITEM(submenu, MSG_PREFLIGHT_CHECK, lcd_preflight_check);
     
       //
       // Auto Home
@@ -4874,7 +4880,21 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
       END_MENU();
     }
 
- 
+      /*
+      * 
+      * Preflight Check Menu
+      * 
+      */
+
+      void lcd_preflight_check(){
+
+      START_MENU();
+    
+      MENU_ITEM(back, MSG_BACK , lcd_calibration_menu);
+
+
+      END_MENU();
+      }
 
   /**
  *

@@ -54,6 +54,9 @@
 #ifndef MSG_MAIN
   #define MSG_MAIN                            _UxGT("Main")
 #endif
+#ifndef MSG_PREFLIGHT_CHECK
+  #define MSG_PREFLIGHT_CHECK                 _UxGT("Preflight Check")
+#endif
 #ifndef MSG_AUTOSTART
   #define MSG_AUTOSTART                       _UxGT("Autostart")
 #endif
