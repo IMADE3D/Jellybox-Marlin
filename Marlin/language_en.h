@@ -889,7 +889,7 @@
   #define MSG_FIRST                           _UxGT("first")
 #endif
 #ifndef MSG_TWEAK_FIRST_LAYER
-  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Tweak the 1st layer")
+  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Live adjust Z")
 #endif
 #ifndef MSG_ZPROBE_ZOFFSET
   #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z offset")
