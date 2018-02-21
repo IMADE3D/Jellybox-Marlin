@@ -197,6 +197,7 @@ uint16_t max_display_update_time = 0;
   void homeafterabort();
   void lcd_disable_steppers();
   void lcd_home_xyz();
+  void lcd_change_filament();
 
   int fanSpeed100;
   int fanSpeed;
@@ -1525,8 +1526,26 @@ void kill_screen(const char* lcd_msg) {
       #endif
     #endif // FAN_COUNT > 0
 
+    MENU_ITEM(submenu, MSG_FILAMENTCHANGE, lcd_change_filament);
+
     END_MENU();
   }
+
+  /*
+   * 
+   * Change Filament subment
+   * 
+   */
+
+   void lcd_change_filament(){
+      START_MENU();
+ 
+      MENU_ITEM(back, MSG_BACK , lcd_adjustments_menu);
+//      MENU_ITEM(something, MSG_LOAD_FILAMENT, something);
+//      MENU_ITEM(something, MSG_EJECT_FILAMENT, soemthign);
+
+      END_MENU();
+   }
 
 /**
    *

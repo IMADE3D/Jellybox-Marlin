@@ -750,6 +750,12 @@
 #ifndef MSG_FILAMENT
   #define MSG_FILAMENT                        _UxGT("Filament")
 #endif
+#ifndef MSG_LOAD_FILAMENT
+  #define MSG_LOAD_FILAMENT                   _UxGT("Load filament")
+#endif
+#ifndef MSG_EJECT_FILAMENT
+  #define MSG_EJECT_FILAMENT                  _UxGT("Eject filament")
+#endif
 #ifndef MSG_VOLUMETRIC_ENABLED
   #define MSG_VOLUMETRIC_ENABLED              _UxGT("E in mm3")
 #endif
