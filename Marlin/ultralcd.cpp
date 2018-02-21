@@ -1082,9 +1082,11 @@ void kill_screen(const char* lcd_msg) {
       //
       // Disable Steppers
       //
+      /*
       if (printer_paused == false){
       MENU_ITEM(function, MSG_RETURN_AND_DISABLE_STEPPERS, lcd_disable_steppers);
       }
+      */
       
       //
       //Preheat Nozzle Menu
