@@ -1041,7 +1041,7 @@ void kill_screen(const char* lcd_msg) {
         MENU_ITEM_EDIT_CALLBACK(bool, MSG_CASE_LIGHT, (bool*)&case_light_on, update_case_light);
     #endif
 
-    if (planner.movesplanned() || IS_SD_PRINTING) {
+    if (IS_SD_PRINTING) {
       MENU_ITEM(submenu, MSG_TUNE,
         #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
           _lcd_goto_tune_menu
@@ -1052,6 +1052,10 @@ void kill_screen(const char* lcd_msg) {
     }
     else {
     //  MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+
+    MENU_ITEM(gcode, MSG_HOME_RELEASE, PSTR("G28\nM84")); // Home all 3 axes and disable steppers
+    //ian
+    
     }
     //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
 
