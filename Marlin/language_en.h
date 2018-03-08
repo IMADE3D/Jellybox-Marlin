@@ -457,25 +457,25 @@
   #define MSG_MOVE_10MM                       _UxGT("Move 10mm")
 #endif
 #ifndef MSG_SPEED
-  #define MSG_SPEED                           _UxGT("Speed")
+  #define MSG_SPEED                           _UxGT("Speed (%)")
 #endif
 #ifndef MSG_BED_Z
   #define MSG_BED_Z                           _UxGT("Bed Z")
 #endif
 #ifndef MSG_NOZZLE
-  #define MSG_NOZZLE                          _UxGT("Nozzle")
+  #define MSG_NOZZLE                          _UxGT("Nozzle ("LCD_STR_DEGREE"C)")
 #endif
 #ifndef MSG_BED
-  #define MSG_BED                             _UxGT("Bed")
+  #define MSG_BED                             _UxGT("Bed ("LCD_STR_DEGREE"C)")
 #endif
 #ifndef MSG_FAN_SPEED
-  #define MSG_FAN_SPEED                       _UxGT("Fan speed")
+  #define MSG_FAN_SPEED                       _UxGT("Fan speed (%)")
 #endif
 #ifndef MSG_EXTRA_FAN_SPEED
   #define MSG_EXTRA_FAN_SPEED                 _UxGT("Extra fan speed")
 #endif
 #ifndef MSG_FLOW
-  #define MSG_FLOW                            _UxGT("Flow")
+  #define MSG_FLOW                            _UxGT("Flow (%)")
 #endif
 #ifndef MSG_CONTROL
   #define MSG_CONTROL                         _UxGT("Control")
