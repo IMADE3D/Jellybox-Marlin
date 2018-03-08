@@ -58,6 +58,9 @@
 #ifndef MSG_MAIN
   #define MSG_MAIN                            _UxGT("Main")
 #endif
+#ifndef MSG_PRINT_ADJUSTMENTS
+  #define MSG_PRINT_ADJUSTMENTS               _UxGT("Print Adjustments")
+#endif
 #ifndef MSG_AUTOSTART
   #define MSG_AUTOSTART                       _UxGT("Autostart")
 #endif

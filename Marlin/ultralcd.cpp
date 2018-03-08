@@ -182,6 +182,7 @@ uint16_t max_display_update_time = 0;
   void lcd_control_menu();
   void lcd_control_temperature_menu();
   void lcd_control_motion_menu();
+  void lcd_print_adjustments_menu();
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
@@ -1059,6 +1060,11 @@ void kill_screen(const char* lcd_msg) {
     }
     //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
 
+    //
+    // Print Adjustments Menu
+    //
+    MENU_ITEM(submenu, MSG_PRINT_ADJUSTMENTS, lcd_print_adjustments_menu);
+
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
         if (card.isFileOpen()) {
@@ -1093,6 +1099,24 @@ void kill_screen(const char* lcd_msg) {
 
     END_MENU();
   }
+
+  /**
+   * 
+   * Print Adjustments Menu
+   * 
+   */
+
+   void lcd_print_adjustments_menu(){
+    START_MENU();
+
+    //
+    // ^ Main
+    //
+    MENU_BACK(MSG_BACK);
+
+    END_MENU();
+   }
+   
 
   /**
    *
