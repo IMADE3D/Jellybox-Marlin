@@ -1101,26 +1101,6 @@ void kill_screen(const char* lcd_msg) {
   }
 
   /**
-   * 
-   * Print Adjustments Menu
-   * 
-   */
-
-   void lcd_print_adjustments_menu(){
-    START_MENU();
-
-    //
-    // ^ Main
-    //
-    MENU_BACK(MSG_BACK);
-
-    MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
-
-    END_MENU();
-   }
-   
-
-  /**
    *
    * "Tune" submenu items
    *
@@ -5613,5 +5593,26 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     return 0;
   }
 #endif
+
+  /**
+   * 
+   * Print Adjustments Menu
+   * 
+   */
+
+   void lcd_print_adjustments_menu(){
+    START_MENU();
+
+    //
+    // ^ Main
+    //
+    MENU_BACK(MSG_BACK);
+
+    //
+    // Adjust Z Probe Offset
+    // 
+    MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+    END_MENU();
+   }
 
 #endif // ULTRA_LCD
