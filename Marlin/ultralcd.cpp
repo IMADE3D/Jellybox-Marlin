@@ -5634,6 +5634,10 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       #endif // EXTRUDERS > 2
     #endif // EXTRUDERS > 1
 
+    //
+    // Speed:
+    //
+    MENU_ITEM_EDIT(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
     END_MENU();
    }
 
