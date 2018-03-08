@@ -5596,6 +5596,17 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
   /**
    * 
+   * Update Fan Speed Function
+   * 
+   */
+   int fanSpeed100;
+   int fanSpeed;
+   static void update_fan_speed() {
+     fanSpeed = (((255 * fanSpeed100) /100)+0.5);
+   }
+
+  /**
+   * 
    * Print Adjustments Menu
    * 
    */
@@ -5665,6 +5676,32 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     #if HAS_TEMP_BED
       MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_BED, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
     #endif
+
+    //
+    // Fan Speed:
+    //
+    #if FAN_COUNT > 0
+      #if HAS_FAN0
+        //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED FAN_SPEED_1_SUFFIX, &fanSpeeds[0], 0, 255);
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
+        fanSpeeds[0] = fanSpeed;
+        #if ENABLED(EXTRA_FAN_SPEED)
+          MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED FAN_SPEED_1_SUFFIX, &new_fanSpeeds[0], 3, 255);
+        #endif
+      #endif
+      #if HAS_FAN1
+        MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED " 2", &fanSpeeds[1], 0, 255);
+        #if ENABLED(EXTRA_FAN_SPEED)
+          MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED " 2", &new_fanSpeeds[1], 3, 255);
+        #endif
+      #endif
+      #if HAS_FAN2
+        MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED " 3", &fanSpeeds[2], 0, 255);
+        #if ENABLED(EXTRA_FAN_SPEED)
+          MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED " 3", &new_fanSpeeds[2], 3, 255);
+        #endif
+      #endif
+    #endif // FAN_COUNT > 0
 
     END_MENU();
    }
