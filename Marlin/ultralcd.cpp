@@ -1051,9 +1051,9 @@ void kill_screen(const char* lcd_msg) {
       );
     }
     else {
-      MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+    //  MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
     }
-    MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
+    //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
 
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
@@ -1080,7 +1080,7 @@ void kill_screen(const char* lcd_msg) {
     #endif // SDSUPPORT
 
     #if ENABLED(LCD_INFO_MENU)
-      MENU_ITEM(submenu, MSG_INFO_MENU, lcd_info_menu);
+    //  MENU_ITEM(submenu, MSG_INFO_MENU, lcd_info_menu);
     #endif
 
     #if ENABLED(LED_CONTROL_MENU)
