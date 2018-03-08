@@ -5659,6 +5659,13 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       #endif // HOTENDS > 2
     #endif // HOTENDS > 1
 
+    //
+    // Bed:
+    //
+    #if HAS_TEMP_BED
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_BED, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
+    #endif
+
     END_MENU();
    }
 
