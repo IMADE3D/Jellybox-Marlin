@@ -1017,7 +1017,7 @@ void kill_screen(const char* lcd_msg) {
 
   void lcd_main_menu() {
     START_MENU();
-    MENU_BACK(MSG_WATCH);
+    MENU_BACK(MSG_BACK);
 
     #if ENABLED(CUSTOM_USER_MENUS)
       MENU_ITEM(submenu, MSG_USER_MENU, _lcd_user_menu);
