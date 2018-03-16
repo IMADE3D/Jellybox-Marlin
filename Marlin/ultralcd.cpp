@@ -1054,12 +1054,12 @@ void kill_screen(const char* lcd_msg) {
       );
     }
     else {
-    //  MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+    MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
 
     MENU_ITEM(gcode, MSG_HOME_RELEASE, PSTR("G28\nM84")); // Home all 3 axes and disable steppers
     
     }
-    //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
+    MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
 
     //
     // Print Adjustments Menu
@@ -3347,6 +3347,7 @@ void kill_screen(const char* lcd_msg) {
       #endif
       PID_PARAM(Ki, e) = scalePID_i(raw_Ki);
       thermalManager.updatePID();
+      lcd_store_settings();
     }
     void copy_and_scalePID_d(int16_t e) {
       #if DISABLED(PID_PARAMS_PER_HOTEND) || HOTENDS == 1
@@ -3354,6 +3355,7 @@ void kill_screen(const char* lcd_msg) {
       #endif
       PID_PARAM(Kd, e) = scalePID_d(raw_Kd);
       thermalManager.updatePID();
+      lcd_store_settings();
     }
     #define _DEFINE_PIDTEMP_BASE_FUNCS(N) \
       void copy_and_scalePID_i_E ## N() { copy_and_scalePID_i(N); } \
@@ -3487,7 +3489,7 @@ void kill_screen(const char* lcd_msg) {
       #if ENABLED(PID_AUTOTUNE_MENU)
         #define PID_MENU_ITEMS(ELABEL, eindex) \
           _PID_MENU_ITEMS(ELABEL, eindex); \
-          MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
+          //MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_PID_AUTOTUNE ELABEL, &autotune_temp[eindex], 150, heater_maxtemp[eindex] - 15, lcd_autotune_callback_E ## eindex)
       #else
         #define PID_MENU_ITEMS(ELABEL, eindex) _PID_MENU_ITEMS(ELABEL, eindex)
       #endif
@@ -5824,7 +5826,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     //
     MENU_ITEM_EDIT(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
 
-        //
+    //
     // Nozzle:
     // Nozzle [1-5]:
     //
@@ -5880,7 +5882,61 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     END_MENU();
    }
 
-   void lcd_settings_menu(){
+   /**
+    * 
+    * Settings -> Hotend PID Menu -> Edit Hotend Pid Values
+    * 
+    */
+
+    static void lcd_edit_hotend_pid_values(){
+      START_MENU();
+      
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      #define _PID_BASE_MENU_ITEMS(ELABEL, eindex) \
+        raw_Ki = unscalePID_i(PID_PARAM(Ki, eindex)); \
+        raw_Kd = unscalePID_d(PID_PARAM(Kd, eindex)); \
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float52, MSG_PID_P ELABEL, &PID_PARAM(Kp, eindex), 1, 9990,lcd_store_settings); \
+        MENU_ITEM_EDIT_CALLBACK(float52, MSG_PID_I ELABEL, &raw_Ki, 0.01, 9990, copy_and_scalePID_i_E ## eindex); \
+        MENU_ITEM_EDIT_CALLBACK(float52, MSG_PID_D ELABEL, &raw_Kd, 1, 9990, copy_and_scalePID_d_E ## eindex);
+
+        PID_MENU_ITEMS("", 0);
+
+      END_MENU();
+    }
+
+
+   /**
+    * 
+    * Settings -> Hotend PID Menu -> Edit Bed PID values
+    * 
+    */
+    static void lcd_edit_bed_pid_values(){
+
+      START_MENU();
+      
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+     
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float52, MSG_PID_P, &thermalManager.bedKp, 0,9990,lcd_store_settings);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float52, MSG_PID_I, &thermalManager.bedKi, 0,9990,lcd_store_settings);
+      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float52, MSG_PID_D, &thermalManager.bedKd, 0,9990,lcd_store_settings);
+      
+      END_MENU();
+    }
+    
+  /**
+   * 
+   * Settings-> Hotend PID Menu
+   * 
+   */
+   static void lcd_hotend_pid_menu(){
+
       START_MENU();
 
       //
@@ -5888,7 +5944,166 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       MENU_BACK(MSG_BACK);
 
+      //
+      // Hotend PID Autotune
+      //
+      MENU_ITEM(gcode, MSG_HOTEND_PID_AUTOTUNE, PSTR("M303 C8 E0 S225 U"));
+
+      //
+      //Edit PID Values
+      //
+      MENU_ITEM(submenu, MSG_EDIT_PID_VALUES, lcd_edit_hotend_pid_values);
+
+      //
+      //Current PID Values
+      //
+      MENU_ITEM(gcode, "Current PID values:", PSTR(""));
+
+      //
+      //Current PID Values Display
+      //
+      MENU_ITEM(gcode, "P:00.0 I:0.0 D:000.0", PSTR(""));
+
+      END_MENU();
+
+   }
+
+  /**
+   * 
+   * Settings-> Bed PID Menu
+   * 
+   */
+   static void lcd_bed_pid_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Bed PID Autotune
+      //
+      MENU_ITEM(gcode, MSG_BED_PID_AUTOTUNE, PSTR("M303 C5 E-1 S65 U"));
+
+      //
+      //Edit PID Values
+      //
+      MENU_ITEM(submenu, MSG_EDIT_PID_VALUES, lcd_edit_bed_pid_values);
+
+      //
+      //Current PID Values
+      //
+      MENU_ITEM(gcode, "Current PID values:", PSTR(""));
+
+      //
+      //Current PID Values Display
+      //
+      MENU_ITEM(gcode, "P:00.0 I:0.0 D:000.0", PSTR(""));
+
       END_MENU();
    }
+
+  /**
+   * 
+   * Temperature Menu
+   * 
+   */
+
+   void lcd_temperature_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      //Hotend PID Menu
+      // 
+      MENU_ITEM(submenu, MSG_HOTEND_PID, lcd_hotend_pid_menu);  
+
+      //
+      //Bed PID Menu
+      // 
+      MENU_ITEM(submenu, MSG_BED_PID, lcd_bed_pid_menu);
+
+      //
+      // Bed:
+      //
+      #if HAS_TEMP_BED
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_BED, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
+      #endif
+
+      //
+      // Nozzle:
+      // Nozzle [1-5]:
+      //
+      #if HOTENDS == 1
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+      #else // HOTENDS > 1
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N1, &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15, watch_temp_callback_E0);
+        MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N2, &thermalManager.target_temperature[1], 0, HEATER_1_MAXTEMP - 15, watch_temp_callback_E1);
+        #if HOTENDS > 2
+          MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N3, &thermalManager.target_temperature[2], 0, HEATER_2_MAXTEMP - 15, watch_temp_callback_E2);
+          #if HOTENDS > 3
+            MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N4, &thermalManager.target_temperature[3], 0, HEATER_3_MAXTEMP - 15, watch_temp_callback_E3);
+            #if HOTENDS > 4
+              MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_NOZZLE MSG_N5, &thermalManager.target_temperature[4], 0, HEATER_4_MAXTEMP - 15, watch_temp_callback_E4);
+            #endif // HOTENDS > 4
+          #endif // HOTENDS > 3
+        #endif // HOTENDS > 2
+      #endif // HOTENDS > 1    
+
+      //
+      // Fan Speed:
+      //
+      #if FAN_COUNT > 0
+        #if HAS_FAN0
+          //MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED FAN_SPEED_1_SUFFIX, &fanSpeeds[0], 0, 255);
+          MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_FAN_SPEED, &fanSpeed100, 0, 100,update_fan_speed);
+          fanSpeeds[0] = fanSpeed;
+          #if ENABLED(EXTRA_FAN_SPEED)
+            MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED FAN_SPEED_1_SUFFIX, &new_fanSpeeds[0], 3, 255);
+          #endif
+        #endif
+        #if HAS_FAN1
+          MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED " 2", &fanSpeeds[1], 0, 255);
+          #if ENABLED(EXTRA_FAN_SPEED)
+            MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED " 2", &new_fanSpeeds[1], 3, 255);
+          #endif
+        #endif
+        #if HAS_FAN2
+          MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_FAN_SPEED " 3", &fanSpeeds[2], 0, 255);
+          #if ENABLED(EXTRA_FAN_SPEED)
+            MENU_MULTIPLIER_ITEM_EDIT(int3, MSG_EXTRA_FAN_SPEED " 3", &new_fanSpeeds[2], 3, 255);
+          #endif
+        #endif
+      #endif // FAN_COUNT > 0
+
+      END_MENU();
+   }
+
+   /**
+    * 
+    * Settings Menu
+    * 
+    */
+
+    void lcd_settings_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // ^ Main
+      //
+      MENU_ITEM(submenu, MSG_TEMPERATURE, lcd_temperature_menu);
+
+      END_MENU();
+    }
 
 #endif // ULTRA_LCD
