@@ -183,6 +183,7 @@ uint16_t max_display_update_time = 0;
   void lcd_control_temperature_menu();
   void lcd_control_motion_menu();
   void lcd_print_adjustments_menu();
+  void lcd_preheat_menu();
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
@@ -1055,7 +1056,6 @@ void kill_screen(const char* lcd_msg) {
     //  MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
 
     MENU_ITEM(gcode, MSG_HOME_RELEASE, PSTR("G28\nM84")); // Home all 3 axes and disable steppers
-    //ian
     
     }
     //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
@@ -1074,6 +1074,12 @@ void kill_screen(const char* lcd_msg) {
     // Eject Filament
     //
     MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(""));
+
+    //
+    //Preheat Menu
+    //
+    MENU_ITEM(submenu, MSG_PREHEAT, lcd_preheat_menu);
+
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
         if (card.isFileOpen()) {
@@ -5602,6 +5608,159 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     return 0;
   }
 #endif
+
+     /**
+     * 
+     * Update Bed Temp Function 
+     * 
+     */
+        static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int max) {
+      if (encoderPosition != 0) {
+        refresh_cmd_timeout();
+        (thermalManager.target_temperature_bed += float((int)encoderPosition));
+        
+        if (thermalManager.target_temperature_bed < min){
+            thermalManager.target_temperature_bed = min;
+        }
+          
+        if (thermalManager.target_temperature_bed > max) {
+            thermalManager.target_temperature_bed = max;
+        }
+        encoderPosition = 0;
+        //line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+        lcdDrawUpdate = 1;
+      }
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, i8tostr3(thermalManager.target_temperature_bed));
+      if (lcd_clicked) {
+          lcd_return_to_status();
+      }
+    } 
+
+    /**
+     * Preheat Custom Bed 
+     */
+    static void lcd_preheat_custom_bed() {
+      #if HAS_TEMP_BED
+        _lcd_adjust_bed_temp(PSTR(MSG_BED), &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15);
+      #endif
+     }
+
+     /**
+     * 
+     * Update Nozzle Temp Function 
+     * 
+     */
+    static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, int max) {
+      if (encoderPosition != 0) {
+        refresh_cmd_timeout();
+        (thermalManager.target_temperature[0] += float((int)encoderPosition));
+        
+        if (thermalManager.target_temperature[0] < min){
+            thermalManager.target_temperature[0] = min;
+        }
+          
+        if (thermalManager.target_temperature[0] > max) {
+            thermalManager.target_temperature[0] = max;
+        }
+        encoderPosition = 0;
+        //line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+        lcdDrawUpdate = 1;
+      }
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, i8tostr3(thermalManager.target_temperature[0]));
+      if (lcd_clicked) {
+          #if HAS_TEMP_BED
+            lcd_goto_screen(lcd_preheat_custom_bed);
+           #else
+            lcd_return_to_status();
+          #endif
+      }
+    } 
+
+    /**
+     * Preheat Custom Nozzle 
+     */
+    static void lcd_preheat_custom() {
+        _lcd_adjust_nozzle_temp(PSTR(MSG_NOZZLE), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
+     }
+
+   /**
+    * Lcd Cooldown
+    */
+   static void lcd_preheat_cooldown(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S0\nM140 S0"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S0")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+    /**
+    * Lcd Preheat PLA
+    */
+   static void lcd_preheat_pla(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S210\nM140 S55"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S210")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+   /**
+    * Lcd Preheat PLA
+    */
+   static void lcd_preheat_pet(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S235\nM140 S65"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S235")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+   /**
+    * Lcd Preheat FLEX
+    */
+   static void lcd_preheat_flex(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S230\nM140 S50"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S230")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+   /**
+   * 
+   * Preheat Menu
+   * 
+   */
+   void lcd_preheat_menu(){
+      START_MENU();
+
+     //
+     // ^ Main
+     //
+     MENU_BACK(MSG_BACK);
+     
+     #if HAS_TEMP_BED
+      MENU_ITEM(function, MSG_COOLDOWN_BOTH, lcd_preheat_cooldown);
+      MENU_ITEM(function, MSG_PREHEAT_PLA_BOTH, lcd_preheat_pla);
+      MENU_ITEM(function, MSG_PREHEAT_PET_BOTH, lcd_preheat_pet);
+      MENU_ITEM(function, MSG_PREHEAT_FLEX_BOTH, lcd_preheat_flex);
+      MENU_ITEM(submenu, MSG_CUSTOM_BOTH, lcd_preheat_custom);
+     #else
+      MENU_ITEM(function, MSG_COOLDOWN, lcd_preheat_cooldown);
+      MENU_ITEM(function, MSG_PREHEAT_PLA, lcd_preheat_pla);
+      MENU_ITEM(function, MSG_PREHEAT_PET, lcd_preheat_pet);
+      MENU_ITEM(function, MSG_PREHEAT_FLEX, lcd_preheat_flex);
+      MENU_ITEM(submenu, MSG_CUSTOM, lcd_preheat_custom);
+
+     #endif
+
+      END_MENU();
+   }
 
   /**
    * 
