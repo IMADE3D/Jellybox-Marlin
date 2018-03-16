@@ -3575,7 +3575,7 @@ void kill_screen(const char* lcd_msg) {
      */
     void lcd_control_temperature_preheat_material2_settings_menu() { _lcd_control_temperature_preheat_settings_menu(1); }
 
-    void _reset_acceleration_rates() { planner.reset_acceleration_rates(); }
+    void _reset_acceleration_rates() { planner.reset_acceleration_rates(); lcd_store_settings(); }
     #if ENABLED(DISTINCT_E_FACTORS)
       void _reset_e_acceleration_rate(const uint8_t e) { if (e == active_extruder) _reset_acceleration_rates(); }
       void _reset_e0_acceleration_rate() { _reset_e_acceleration_rate(0); }
@@ -3591,7 +3591,7 @@ void kill_screen(const char* lcd_msg) {
       #endif // E_STEPPERS > 2
     #endif
 
-    void _planner_refresh_positioning() { planner.refresh_positioning(); }
+    void _planner_refresh_positioning() { planner.refresh_positioning(); lcd_store_settings();}
     #if ENABLED(DISTINCT_E_FACTORS)
       void _planner_refresh_e_positioning(const uint8_t e) {
         if (e == active_extruder)
@@ -3618,32 +3618,32 @@ void kill_screen(const char* lcd_msg) {
       MENU_BACK(MSG_MOTION);
 
       // M203 Max Feedrate
-      MENU_ITEM_EDIT(float3, MSG_VMAX MSG_A, &planner.max_feedrate_mm_s[A_AXIS], 1, 999);
-      MENU_ITEM_EDIT(float3, MSG_VMAX MSG_B, &planner.max_feedrate_mm_s[B_AXIS], 1, 999);
-      MENU_ITEM_EDIT(float3, MSG_VMAX MSG_C, &planner.max_feedrate_mm_s[C_AXIS], 1, 999);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_A, &planner.max_feedrate_mm_s[A_AXIS], 1, 999, lcd_store_settings);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_B, &planner.max_feedrate_mm_s[B_AXIS], 1, 999, lcd_store_settings);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_C, &planner.max_feedrate_mm_s[C_AXIS], 1, 999, lcd_store_settings);
 
       #if ENABLED(DISTINCT_E_FACTORS)
-        MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS + active_extruder], 1, 999);
-        MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E1, &planner.max_feedrate_mm_s[E_AXIS], 1, 999);
-        MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E2, &planner.max_feedrate_mm_s[E_AXIS + 1], 1, 999);
+        MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS + active_extruder], 1, 999, lcd_store_settings);
+        MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E1, &planner.max_feedrate_mm_s[E_AXIS], 1, 999, lcd_store_settings);
+        MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E2, &planner.max_feedrate_mm_s[E_AXIS + 1], 1, 999, lcd_store_settings);
         #if E_STEPPERS > 2
-          MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E3, &planner.max_feedrate_mm_s[E_AXIS + 2], 1, 999);
+          MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E3, &planner.max_feedrate_mm_s[E_AXIS + 2], 1, 999, lcd_store_settings);
           #if E_STEPPERS > 3
-            MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E4, &planner.max_feedrate_mm_s[E_AXIS + 3], 1, 999);
+            MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E4, &planner.max_feedrate_mm_s[E_AXIS + 3], 1, 999, lcd_store_settings);
             #if E_STEPPERS > 4
-              MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E5, &planner.max_feedrate_mm_s[E_AXIS + 4], 1, 999);
+              MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E5, &planner.max_feedrate_mm_s[E_AXIS + 4], 1, 999, lcd_store_settings);
             #endif // E_STEPPERS > 4
           #endif // E_STEPPERS > 3
         #endif // E_STEPPERS > 2
       #else
-        MENU_ITEM_EDIT(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS], 1, 999);
+        MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_E, &planner.max_feedrate_mm_s[E_AXIS], 1, 999, lcd_store_settings);
       #endif
 
       // M205 S Min Feedrate
-      MENU_ITEM_EDIT(float3, MSG_VMIN, &planner.min_feedrate_mm_s, 0, 999);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMIN, &planner.min_feedrate_mm_s, 0, 999, lcd_store_settings);
 
       // M205 T Min Travel Feedrate
-      MENU_ITEM_EDIT(float3, MSG_VTRAV_MIN, &planner.min_travel_feedrate_mm_s, 0, 999);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VTRAV_MIN, &planner.min_travel_feedrate_mm_s, 0, 999, lcd_store_settings);
 
       END_MENU();
     }
@@ -3654,13 +3654,13 @@ void kill_screen(const char* lcd_msg) {
       MENU_BACK(MSG_MOTION);
 
       // M204 P Acceleration
-      MENU_ITEM_EDIT(float5, MSG_ACC, &planner.acceleration, 10, 99000);
+      MENU_ITEM_EDIT_CALLBACK(float5, MSG_ACC, &planner.acceleration, 10, 99000, lcd_store_settings);
 
       // M204 R Retract Acceleration
-      MENU_ITEM_EDIT(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000);
+      MENU_ITEM_EDIT_CALLBACK(float5, MSG_A_RETRACT, &planner.retract_acceleration, 100, 99000, lcd_store_settings);
 
       // M204 T Travel Acceleration
-      MENU_ITEM_EDIT(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000);
+      MENU_ITEM_EDIT_CALLBACK(float5, MSG_A_TRAVEL, &planner.travel_acceleration, 100, 99000, lcd_store_settings);
 
       // M201 settings
       MENU_ITEM_EDIT_CALLBACK(long5, MSG_AMAX MSG_A, &planner.max_acceleration_mm_per_s2[A_AXIS], 100, 99000, _reset_acceleration_rates);
@@ -3692,14 +3692,14 @@ void kill_screen(const char* lcd_msg) {
       START_MENU();
       MENU_BACK(MSG_MOTION);
 
-      MENU_ITEM_EDIT(float3, MSG_VA_JERK, &planner.max_jerk[A_AXIS], 1, 990);
-      MENU_ITEM_EDIT(float3, MSG_VB_JERK, &planner.max_jerk[B_AXIS], 1, 990);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VA_JERK, &planner.max_jerk[A_AXIS], 1, 990, lcd_store_settings);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VB_JERK, &planner.max_jerk[B_AXIS], 1, 990, lcd_store_settings);
       #if ENABLED(DELTA)
-        MENU_ITEM_EDIT(float3, MSG_VC_JERK, &planner.max_jerk[C_AXIS], 1, 990);
+        MENU_ITEM_EDIT_CALLBACK(float3, MSG_VC_JERK, &planner.max_jerk[C_AXIS], 1, 990, lcd_store_settings);
       #else
-        MENU_ITEM_EDIT(float52, MSG_VC_JERK, &planner.max_jerk[C_AXIS], 0.1, 990);
+        MENU_ITEM_EDIT_CALLBACK(float52, MSG_VC_JERK, &planner.max_jerk[C_AXIS], 0.1, 990, lcd_store_settings);
       #endif
-      MENU_ITEM_EDIT(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990);
+      MENU_ITEM_EDIT_CALLBACK(float3, MSG_VE_JERK, &planner.max_jerk[E_AXIS], 1, 990, lcd_store_settings);
 
       END_MENU();
     }
@@ -6102,6 +6102,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // ^ Main
       //
       MENU_ITEM(submenu, MSG_TEMPERATURE, lcd_temperature_menu);
+
+      //
+      // ^ Main
+      //
+      MENU_ITEM(submenu, MSG_MOTION, lcd_control_motion_menu);
 
       END_MENU();
     }
