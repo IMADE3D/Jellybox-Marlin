@@ -1065,6 +1065,15 @@ void kill_screen(const char* lcd_msg) {
     //
     MENU_ITEM(submenu, MSG_PRINT_ADJUSTMENTS, lcd_print_adjustments_menu);
 
+    //
+    // Load Filament
+    //
+    MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(""));
+
+    //
+    // Eject Filament
+    //
+    MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(""));
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
         if (card.isFileOpen()) {

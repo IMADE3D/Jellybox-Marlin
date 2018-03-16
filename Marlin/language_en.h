@@ -732,6 +732,9 @@
 #ifndef MSG_FILAMENTLOAD
   #define MSG_FILAMENTLOAD                    _UxGT("Load filament")
 #endif
+#ifndef MSG_FILAMENTEJECT
+  #define MSG_FILAMENTEJECT                    _UxGT("Eject filament")
+#endif
 #ifndef MSG_FILAMENTUNLOAD
   #define MSG_FILAMENTUNLOAD                  _UxGT("Unload filament")
 #endif
