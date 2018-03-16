@@ -70,6 +70,9 @@
 #ifndef MSG_HOME_RELEASE
   #define MSG_HOME_RELEASE                    _UxGT("Home & Release")
 #endif 
+#ifndef MSG_SETTINGS
+  #define MSG_SETTINGS                        _UxGT("Settings")
+#endif 
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")
 #endif

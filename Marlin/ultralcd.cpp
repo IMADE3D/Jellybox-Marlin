@@ -184,6 +184,7 @@ uint16_t max_display_update_time = 0;
   void lcd_control_motion_menu();
   void lcd_print_adjustments_menu();
   void lcd_preheat_menu();
+  void lcd_settings_menu();
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
@@ -1079,6 +1080,11 @@ void kill_screen(const char* lcd_msg) {
     //Preheat Menu
     //
     MENU_ITEM(submenu, MSG_PREHEAT, lcd_preheat_menu);
+
+    //
+    //Settings Menu
+    //
+    MENU_ITEM(submenu, MSG_SETTINGS, lcd_settings_menu);
 
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
@@ -5872,6 +5878,17 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     #endif // FAN_COUNT > 0
 
     END_MENU();
+   }
+
+   void lcd_settings_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      END_MENU();
    }
 
 #endif // ULTRA_LCD
