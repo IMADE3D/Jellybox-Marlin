@@ -849,6 +849,9 @@
 #ifndef MSG_ZPROBE_ZOFFSET
   #define MSG_ZPROBE_ZOFFSET                  _UxGT("Live adjust Z")
 #endif
+#ifndef MSG_ZPROBE_ZOFFSET_HEIGHT
+  #define MSG_ZPROBE_ZOFFSET_HEIGHT           _UxGT("Live adjust Z height")
+#endif
 #ifndef MSG_BABYSTEP_X
   #define MSG_BABYSTEP_X                      _UxGT("Babystep X")
 #endif

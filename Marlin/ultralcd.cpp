@@ -5821,7 +5821,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     //
     // Adjust Z Probe Offset
     // 
-    MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+    MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET_HEIGHT, lcd_babystep_zoffset);
     }
 
     //
