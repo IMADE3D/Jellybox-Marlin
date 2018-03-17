@@ -1062,6 +1062,11 @@ void kill_screen(const char* lcd_msg) {
       //
   
       MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+
+      //
+      // Print Adjustments Menu
+      //
+      MENU_ITEM(submenu, MSG_PRINT_ADJUSTMENTS, lcd_print_adjustments_menu);
       
     }
     else {
@@ -1069,7 +1074,7 @@ void kill_screen(const char* lcd_msg) {
 
     MENU_ITEM(gcode, MSG_HOME_RELEASE, PSTR("G28\nM84")); // Home all 3 axes and disable steppers
     
-    }
+    
     MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
 
     //
@@ -1096,6 +1101,8 @@ void kill_screen(const char* lcd_msg) {
     //Settings Menu
     //
     MENU_ITEM(submenu, MSG_SETTINGS, lcd_settings_menu);
+
+    }
 
     //
     //Support Menu
@@ -5810,10 +5817,12 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     //
     MENU_BACK(MSG_BACK);
 
+    if (!IS_SD_PRINTING){
     //
     // Adjust Z Probe Offset
     // 
     MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+    }
 
     //
     // Flow:
@@ -5893,6 +5902,10 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
         #endif
       #endif
     #endif // FAN_COUNT > 0
+
+    if (IS_SD_PRINTING){
+      MENU_ITEM(gcode, MSG_FILAMENTCHANGE, PSTR("M600 B0"));
+    }
 
     END_MENU();
    }
