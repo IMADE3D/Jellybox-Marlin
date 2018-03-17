@@ -187,6 +187,7 @@ uint16_t max_display_update_time = 0;
   void lcd_settings_menu();
   void lcd_danger_menu();
   void lcd_support_menu();
+  void lcd_babystep_zoffset();
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
@@ -1047,13 +1048,21 @@ void kill_screen(const char* lcd_msg) {
     #endif
 
     if (IS_SD_PRINTING) {
+      /*
       MENU_ITEM(submenu, MSG_TUNE,
         #if ENABLED(ENABLE_LEVELING_FADE_HEIGHT)
           _lcd_goto_tune_menu
         #else
           lcd_tune_menu
         #endif
-      );
+      );*/
+
+      //
+      //Live Adjust Z
+      //
+  
+      MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+      
     }
     else {
     MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
