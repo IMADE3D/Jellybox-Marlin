@@ -185,6 +185,7 @@ uint16_t max_display_update_time = 0;
   void lcd_print_adjustments_menu();
   void lcd_preheat_menu();
   void lcd_settings_menu();
+  void lcd_danger_menu();
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
@@ -3615,7 +3616,7 @@ void kill_screen(const char* lcd_msg) {
     // M203 / M205 Velocity options
     void lcd_control_motion_velocity_menu() {
       START_MENU();
-      MENU_BACK(MSG_MOTION);
+      MENU_BACK(MSG_BACK);
 
       // M203 Max Feedrate
       MENU_ITEM_EDIT_CALLBACK(float3, MSG_VMAX MSG_A, &planner.max_feedrate_mm_s[A_AXIS], 1, 999, lcd_store_settings);
@@ -3651,7 +3652,7 @@ void kill_screen(const char* lcd_msg) {
     // M201 / M204 Accelerations
     void lcd_control_motion_acceleration_menu() {
       START_MENU();
-      MENU_BACK(MSG_MOTION);
+      MENU_BACK(MSG_BACK);
 
       // M204 P Acceleration
       MENU_ITEM_EDIT_CALLBACK(float5, MSG_ACC, &planner.acceleration, 10, 99000, lcd_store_settings);
@@ -3690,7 +3691,7 @@ void kill_screen(const char* lcd_msg) {
     // M205 Jerk
     void lcd_control_motion_jerk_menu() {
       START_MENU();
-      MENU_BACK(MSG_MOTION);
+      MENU_BACK(MSG_BACK);
 
       MENU_ITEM_EDIT_CALLBACK(float3, MSG_VA_JERK, &planner.max_jerk[A_AXIS], 1, 990, lcd_store_settings);
       MENU_ITEM_EDIT_CALLBACK(float3, MSG_VB_JERK, &planner.max_jerk[B_AXIS], 1, 990, lcd_store_settings);
@@ -3707,7 +3708,7 @@ void kill_screen(const char* lcd_msg) {
     // M92 Steps-per-mm
     void lcd_control_motion_steps_per_mm_menu() {
       START_MENU();
-      MENU_BACK(MSG_MOTION);
+      MENU_BACK(MSG_BACK);
 
       MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_ASTEPS, &planner.axis_steps_per_mm[A_AXIS], 5, 9999, _planner_refresh_positioning);
       MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float62, MSG_BSTEPS, &planner.axis_steps_per_mm[B_AXIS], 5, 9999, _planner_refresh_positioning);
@@ -3743,7 +3744,7 @@ void kill_screen(const char* lcd_msg) {
 
   void lcd_control_motion_menu() {
     START_MENU();
-    MENU_BACK(MSG_CONTROL);
+    MENU_BACK(MSG_BACK);
 
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
       MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
@@ -6083,6 +6084,129 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
       END_MENU();
    }
+     
+     /**
+      * 
+      * Factor Reset sucess screen
+      * 
+      */
+     void lcd_factory_reset_sucess(){
+      
+       START_MENU();
+       STATIC_ITEM("Success! All settings           ");
+       STATIC_ITEM("have been reset to              ");
+       STATIC_ITEM("their factory                   ");
+       STATIC_ITEM("defaults.                       ");
+       END_MENU();
+
+       if (lcd_clicked){
+         lcd_goto_screen(lcd_danger_menu);
+       }
+     }
+
+    /**
+      * 
+      * Function for holding button; holdTime = approximate number of seconds to hold button before function is run
+      * 
+      */
+
+     float NewClickTime;
+      float OldClickTime;
+      float TimeBetweenClick;
+      int clicks = 0;
+           
+      void buttonHold(int holdTime){
+        
+        if (use_click()){
+
+          NewClickTime = millis();
+          TimeBetweenClick = NewClickTime - OldClickTime;
+          OldClickTime = NewClickTime;
+
+          if (TimeBetweenClick < 600){
+            clicks = clicks +1;
+            //buzzer.tone(1,1);
+          }
+          else{
+            clicks = 0;
+          }
+        }    
+        
+        if (clicks==(1.4*holdTime)){
+           buzzer.tone(100,1000);
+           enqueue_and_echo_commands_P(PSTR("M502\nM500"));
+           lcd_goto_screen(lcd_factory_reset_sucess);
+           clicks = 0;
+         }
+         
+      }
+   
+   /**
+    * 
+    * Factor Reset Screen
+    * 
+    */
+
+    void lcd_factory_reset(){
+
+      START_MENU();
+      
+      //
+      // ^ Set
+      //
+      MENU_ITEM(back, MSG_BACK, lcd_danger_zone);
+
+      //
+      // Display Text to entice user to scroll off the go back line
+      //
+     // MENU_ITEM(gcode, "Reset! (click & hold)", PSTR(""));
+      
+      //
+      //Factory Reset
+      //
+      STATIC_ITEM("-- ? -- Press the        ");
+      STATIC_ITEM("'Reset!' button and      ");
+      STATIC_ITEM("hold for 5 seconds to    ");
+      STATIC_ITEM("reset your JellyBOX.     ");
+      STATIC_ITEM("Factory reset wipes      ");
+      STATIC_ITEM("the internal settings    ");
+      STATIC_ITEM("memory (EEPROM).         ");
+      STATIC_ITEM("Nothing will happen      ");
+      STATIC_ITEM("to your files on the     ");
+      STATIC_ITEM("SD card, but all         ");
+      STATIC_ITEM("settings, like PID or    ");
+      STATIC_ITEM("E-steps, will be         ");
+      STATIC_ITEM("reset to default         ");
+      STATIC_ITEM("values.                  ");
+      
+      END_MENU();
+
+     buttonHold(5);
+
+    }
+
+   /**
+    * 
+    * Danger Menu
+    * 
+    */
+
+    void lcd_danger_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      //Factory Reset
+      //
+      MENU_ITEM(submenu, MSG_FACTORY_RESET, lcd_factory_reset);
+
+      
+      END_MENU();
+    }
 
    /**
     * 
@@ -6107,6 +6231,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // ^ Main
       //
       MENU_ITEM(submenu, MSG_MOTION, lcd_control_motion_menu);
+
+      //
+      // ^ Main
+      //
+      MENU_ITEM(submenu, MSG_DANGER, lcd_danger_menu);
 
       END_MENU();
     }

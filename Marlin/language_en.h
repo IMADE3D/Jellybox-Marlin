@@ -90,7 +90,13 @@
 #endif 
 #ifndef  MSG_HOTEND_PID_AUTOTUNE
   #define   MSG_HOTEND_PID_AUTOTUNE           _UxGT("Hotend PID autotune")
-#endif 
+#endif
+#ifndef MSG_FACTORY_RESET
+  #define MSG_FACTORY_RESET                   _UxGT("Factory reset (!)")
+#endif
+#ifndef MSG_DANGER
+  #define MSG_DANGER                          _UxGT("Danger zone")
+#endif
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")
 #endif
