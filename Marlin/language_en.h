@@ -97,6 +97,21 @@
 #ifndef MSG_DANGER
   #define MSG_DANGER                          _UxGT("Danger zone")
 #endif
+#ifndef MSG_ABOUT_JELLYBOX
+  #define MSG_ABOUT_JELLYBOX                  _UxGT("About this JellyBOX")
+#endif
+#ifndef MSG_DOCS_LINK
+  #define MSG_DOCS_LINK                       _UxGT("docs.imade3d.com                ")
+#endif
+#ifndef MSG_FORMUM_LINK
+  #define MSG_FORMUM_LINK                     _UxGT("forum.imade3d.com               ")
+#endif
+#ifndef MSG_IMADE3D_LINK
+  #define MSG_IMADE3D_LINK                    _UxGT("imade3d.com/support             ")
+#endif 
+#ifndef MSG_SUPPORT_MENU
+  #define MSG_SUPPORT_MENU                    _UxGT("Support")
+#endif
 #ifndef MSG_DEBUG_MENU
   #define MSG_DEBUG_MENU                      _UxGT("Debug Menu")
 #endif

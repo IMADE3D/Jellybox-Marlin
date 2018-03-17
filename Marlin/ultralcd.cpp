@@ -186,6 +186,7 @@ uint16_t max_display_update_time = 0;
   void lcd_preheat_menu();
   void lcd_settings_menu();
   void lcd_danger_menu();
+  void lcd_support_menu();
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
@@ -1087,6 +1088,14 @@ void kill_screen(const char* lcd_msg) {
     //
     MENU_ITEM(submenu, MSG_SETTINGS, lcd_settings_menu);
 
+    //
+    //Support Menu
+    //
+
+    #if ENABLED(LCD_INFO_MENU)
+      MENU_ITEM(submenu, MSG_SUPPORT_MENU, lcd_support_menu);
+    #endif
+
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
         if (card.isFileOpen()) {
@@ -1110,10 +1119,6 @@ void kill_screen(const char* lcd_msg) {
         #endif
       }
     #endif // SDSUPPORT
-
-    #if ENABLED(LCD_INFO_MENU)
-    //  MENU_ITEM(submenu, MSG_INFO_MENU, lcd_info_menu);
-    #endif
 
     #if ENABLED(LED_CONTROL_MENU)
       MENU_ITEM(submenu, MSG_LED_CONTROL, lcd_led_menu);
@@ -4138,10 +4143,10 @@ void kill_screen(const char* lcd_msg) {
      */
     void lcd_info_menu() {
       START_MENU();
-      MENU_BACK(MSG_MAIN);
+      MENU_BACK(MSG_BACK);
       MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, lcd_info_printer_menu);        // Printer Info >
       MENU_ITEM(submenu, MSG_INFO_BOARD_MENU, lcd_info_board_menu);            // Board Info >
-      MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, lcd_info_thermistors_menu); // Thermistors >
+      //MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, lcd_info_thermistors_menu); // Thermistors >
       #if ENABLED(PRINTCOUNTER)
         MENU_ITEM(submenu, MSG_INFO_STATS_MENU, lcd_info_stats_menu);          // Printer Statistics >
       #endif
@@ -6237,6 +6242,30 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       MENU_ITEM(submenu, MSG_DANGER, lcd_danger_menu);
 
+      END_MENU();
+    }
+
+    void lcd_support_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // About this JellyBox
+      //
+      MENU_ITEM(submenu, MSG_ABOUT_JELLYBOX, lcd_info_menu);
+
+      //
+      //Support Links
+      //
+
+      STATIC_ITEM(MSG_DOCS_LINK);
+      STATIC_ITEM(MSG_FORMUM_LINK);
+      STATIC_ITEM(MSG_IMADE3D_LINK);
+      
       END_MENU();
     }
 
