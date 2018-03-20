@@ -42,11 +42,11 @@
  * the bleeding-edge source code, but sometimes this is not enough. This check
  * forces a minimum config file revision. Otherwise Marlin will not build.
  */
-#if ! defined(CONFIGURATION_H_VERSION) || CONFIGURATION_H_VERSION < REQUIRED_CONFIGURATION_H_VERSION
+#if !defined(CONFIGURATION_H_VERSION) || CONFIGURATION_H_VERSION < REQUIRED_CONFIGURATION_H_VERSION
   #error "You are using an old Configuration.h file, update it before building Marlin."
 #endif
 
-#if ! defined(CONFIGURATION_ADV_H_VERSION) || CONFIGURATION_ADV_H_VERSION < REQUIRED_CONFIGURATION_ADV_H_VERSION
+#if !defined(CONFIGURATION_ADV_H_VERSION) || CONFIGURATION_ADV_H_VERSION < REQUIRED_CONFIGURATION_ADV_H_VERSION
   #error "You are using an old Configuration_adv.h file, update it before building Marlin."
 #endif
 
@@ -78,7 +78,9 @@
 #elif defined(SDEXTRASLOW)
   #error "SDEXTRASLOW deprecated. Set SPI_SPEED to SPI_QUARTER_SPEED instead."
 #elif defined(FILAMENT_SENSOR)
-  #error "FILAMENT_SENSOR is deprecated. Use FILAMENT_WIDTH_SENSOR instead."
+  #error "FILAMENT_SENSOR is now FILAMENT_WIDTH_SENSOR. Please update your configuration."
+#elif defined(ENDSTOPPULLUP_FIL_RUNOUT)
+  #error "ENDSTOPPULLUP_FIL_RUNOUT is now FIL_RUNOUT_PULLUP. Please update your configuration."
 #elif defined(DISABLE_MAX_ENDSTOPS) || defined(DISABLE_MIN_ENDSTOPS)
   #error "DISABLE_MAX_ENDSTOPS and DISABLE_MIN_ENDSTOPS deprecated. Use individual USE_*_PLUG options instead."
 #elif defined(LANGUAGE_INCLUDE)
@@ -147,18 +149,6 @@
   #error "ABS_PREHEAT_HPB_TEMP is now PREHEAT_2_TEMP_BED. Please update your configuration."
 #elif defined(ABS_PREHEAT_FAN_SPEED)
   #error "ABS_PREHEAT_FAN_SPEED is now PREHEAT_2_FAN_SPEED. Please update your configuration."
-#elif defined(PET_PREHEAT_HOTEND_TEMP)
-  #error "PET_PREHEAT_HOTEND_TEMP is now PREHEAT_3_TEMP_HOTEND. Please update your configuration."
-#elif defined(PET_PREHEAT_HPB_TEMP)
-  #error "PET_PREHEAT_HPB_TEMP is now PREHEAT_3_TEMP_BED. Please update your configuration."
-#elif defined(PET_PREHEAT_FAN_SPEED)
-  #error "PET_PREHEAT_FAN_SPEED is now PREHEAT_3_FAN_SPEED. Please update your configuration."
-#elif defined(FLEX_PREHEAT_HOTEND_TEMP)
-  #error "FLEX_PREHEAT_HOTEND_TEMP is now PREHEAT_4_TEMP_HOTEND. Please update your configuration."
-#elif defined(FLEX_PREHEAT_HPB_TEMP)
-  #error "FLEX_PREHEAT_HPB_TEMP is now PREHEAT_4_TEMP_BED. Please update your configuration."
-#elif defined(FLEX_PREHEAT_FAN_SPEED)
-  #error "FLEX_PREHEAT_FAN_SPEED is now PREHEAT_4_FAN_SPEED. Please update your configuration."
 #elif defined(ENDSTOPS_ONLY_FOR_HOMING)
   #error "ENDSTOPS_ONLY_FOR_HOMING is deprecated. Use (disable) ENDSTOPS_ALWAYS_ON_DEFAULT instead."
 #elif defined(HOMING_FEEDRATE)
@@ -233,6 +223,8 @@
   #error "MIN_RETRACT is now MIN_AUTORETRACT and MAX_AUTORETRACT. Please update your Configuration_adv.h."
 #elif defined(ADVANCE)
   #error "ADVANCE was removed in Marlin 1.1.6. Please use LIN_ADVANCE."
+#elif defined(LIN_ADVANCE_E_D_RATIO)
+  #error "LIN_ADVANCE (1.5) no longer uses LIN_ADVANCE_E_D_RATIO. Check your configuration."
 #elif defined(NEOPIXEL_RGBW_LED)
   #error "NEOPIXEL_RGBW_LED is now NEOPIXEL_LED. Please update your configuration."
 #elif defined(UBL_MESH_INSET)
@@ -251,6 +243,8 @@
   #error "PROBE_DOUBLE_TOUCH is now MULTIPLE_PROBING. Please update your configuration."
 #elif defined(ANET_KEYPAD_LCD)
   #error "ANET_KEYPAD_LCD is now ZONESTAR_LCD. Please update your configuration."
+#elif defined(LCD_I2C_SAINSMART_YWROBOT)
+  #error "LCD_I2C_SAINSMART_YWROBOT is now LCD_SAINSMART_I2C_(1602|2004). Please update your configuration."
 #elif defined(MEASURED_LOWER_LIMIT) || defined(MEASURED_UPPER_LIMIT)
   #error "MEASURED_(UPPER|LOWER)_LIMIT is now FILWIDTH_ERROR_MARGIN. Please update your configuration."
 #elif defined(AUTOMATIC_CURRENT_CONTROL)
@@ -288,9 +282,15 @@
     #error "RX_BUFFER_SIZE must be a power of 2 greater than 1."
   #elif TX_BUFFER_SIZE && (TX_BUFFER_SIZE < 2 || TX_BUFFER_SIZE > 256 || !IS_POWER_OF_2(TX_BUFFER_SIZE))
     #error "TX_BUFFER_SIZE must be 0, a power of 2 greater than 1, and no greater than 256."
+  #elif ENABLED(BLUETOOTH)
+    #error "BLUETOOTH is only supported with AT90USB."
   #endif
 #elif ENABLED(SERIAL_XON_XOFF) || ENABLED(SERIAL_STATS_MAX_RX_QUEUED) || ENABLED(SERIAL_STATS_DROPPED_RX)
   #error "SERIAL_XON_XOFF and SERIAL_STATS_* features not supported on USB-native AVR devices."
+#endif
+
+#if SERIAL_PORT > 7
+  #error "Set SERIAL_PORT to the port on your board. Usually this is 0."
 #endif
 
 /**
@@ -335,8 +335,8 @@ static_assert(X_MAX_LENGTH >= X_BED_SIZE && Y_MAX_LENGTH >= Y_BED_SIZE,
  * Progress Bar
  */
 #if ENABLED(LCD_PROGRESS_BAR)
-  #if DISABLED(SDSUPPORT)
-    #error "LCD_PROGRESS_BAR requires SDSUPPORT."
+  #if DISABLED(SDSUPPORT) && DISABLED(LCD_SET_PROGRESS_MANUALLY)
+    #error "LCD_PROGRESS_BAR requires SDSUPPORT or LCD_SET_PROGRESS_MANUALLY."
   #elif DISABLED(ULTRA_LCD)
     #error "LCD_PROGRESS_BAR requires a character LCD."
   #elif ENABLED(DOGLCD)
@@ -346,6 +346,13 @@ static_assert(X_MAX_LENGTH >= X_BED_SIZE && Y_MAX_LENGTH >= Y_BED_SIZE,
   #endif
 #elif ENABLED(LCD_SET_PROGRESS_MANUALLY) && DISABLED(DOGLCD)
   #error "LCD_SET_PROGRESS_MANUALLY requires LCD_PROGRESS_BAR or Graphical LCD."
+#endif
+
+/**
+ * Custom Boot and Status screens
+ */
+#if DISABLED(DOGLCD) && (ENABLED(SHOW_CUSTOM_BOOTSCREEN) || ENABLED(CUSTOM_STATUS_SCREEN_IMAGE))
+  #error "Graphical LCD is required for SHOW_CUSTOM_BOOTSCREEN and CUSTOM_STATUS_SCREEN_IMAGE."
 #endif
 
 /**
@@ -379,8 +386,8 @@ static_assert(X_MAX_LENGTH >= X_BED_SIZE && Y_MAX_LENGTH >= Y_BED_SIZE,
  * I2C Position Encoders
  */
 #if ENABLED(I2C_POSITION_ENCODERS)
-  #if DISABLED(BABYSTEPPING)
-    #error "I2C_POSITION_ENCODERS requires BABYSTEPPING."
+  #if DISABLED(BABYSTEPPING) || DISABLED(BABYSTEP_XY)
+    #error "I2C_POSITION_ENCODERS requires BABYSTEPPING and BABYSTEP_XY."
   #elif !WITHIN(I2CPE_ENCODER_CNT, 1, 5)
     #error "I2CPE_ENCODER_CNT must be between 1 and 5."
   #endif
@@ -406,11 +413,21 @@ static_assert(X_MAX_LENGTH >= X_BED_SIZE && Y_MAX_LENGTH >= Y_BED_SIZE,
 #endif
 
 /**
- * Filament Runout needs a pin and either SD Support or Auto print start detection
+ * Filament Runout needs one or more pins and either SD Support or Auto print start detection
  */
 #if ENABLED(FILAMENT_RUNOUT_SENSOR)
-  #if !HAS_FIL_RUNOUT
+  #if !PIN_EXISTS(FIL_RUNOUT)
     #error "FILAMENT_RUNOUT_SENSOR requires FIL_RUNOUT_PIN."
+  #elif NUM_RUNOUT_SENSORS > E_STEPPERS
+    #error "NUM_RUNOUT_SENSORS cannot exceed the number of E steppers."
+  #elif NUM_RUNOUT_SENSORS > 1 && !PIN_EXISTS(FIL_RUNOUT2)
+    #error "FILAMENT_RUNOUT_SENSOR with NUM_RUNOUT_SENSORS > 1 requires FIL_RUNOUT2_PIN."
+  #elif NUM_RUNOUT_SENSORS > 2 && !PIN_EXISTS(FIL_RUNOUT3)
+    #error "FILAMENT_RUNOUT_SENSOR with NUM_RUNOUT_SENSORS > 2 requires FIL_RUNOUT3_PIN."
+  #elif NUM_RUNOUT_SENSORS > 3 && !PIN_EXISTS(FIL_RUNOUT4)
+    #error "FILAMENT_RUNOUT_SENSOR with NUM_RUNOUT_SENSORS > 3 requires FIL_RUNOUT4_PIN."
+  #elif NUM_RUNOUT_SENSORS > 4 && !PIN_EXISTS(FIL_RUNOUT5)
+    #error "FILAMENT_RUNOUT_SENSOR with NUM_RUNOUT_SENSORS > 4 requires FIL_RUNOUT5_PIN."
   #elif DISABLED(SDSUPPORT) && DISABLED(PRINTJOB_TIMER_AUTOSTART)
     #error "FILAMENT_RUNOUT_SENSOR requires SDSUPPORT or PRINTJOB_TIMER_AUTOSTART."
   #elif DISABLED(ADVANCED_PAUSE_FEATURE)
@@ -517,8 +534,14 @@ static_assert(X_MAX_LENGTH >= X_BED_SIZE && Y_MAX_LENGTH >= Y_BED_SIZE,
   #endif
 #endif
 
-#if ENABLED(LIN_ADVANCE) && !IS_CARTESIAN
-  #error "Sorry! LIN_ADVANCE is only compatible with Cartesian."
+/**
+ * Linear Advance 1.5 - Check K value range
+ */
+#if ENABLED(LIN_ADVANCE)
+  static_assert(
+    WITHIN(LIN_ADVANCE_K, 0, 10),
+    "LIN_ADVANCE_K must be a value from 0 to 10 (Changed in LIN_ADVANCE v1.5, Marlin 1.1.9)."
+  );
 #endif
 
 /**
@@ -629,9 +652,7 @@ static_assert(1 >= 0
  * Delta requirements
  */
 #if ENABLED(DELTA)
-  #if HAS_BED_PROBE && ENABLED(Z_MIN_PROBE_ENDSTOP)
-    #error "Delta probably shouldn't use Z_MIN_PROBE_ENDSTOP. Comment out this line to continue."
-  #elif DISABLED(USE_XMAX_PLUG) && DISABLED(USE_YMAX_PLUG) && DISABLED(USE_ZMAX_PLUG)
+  #if DISABLED(USE_XMAX_PLUG) && DISABLED(USE_YMAX_PLUG) && DISABLED(USE_ZMAX_PLUG)
     #error "You probably want to use Max Endstops for DELTA!"
   #elif ENABLED(ENABLE_LEVELING_FADE_HEIGHT) && DISABLED(AUTO_BED_LEVELING_BILINEAR) && !UBL_SEGMENTED
     #error "ENABLE_LEVELING_FADE_HEIGHT on DELTA requires AUTO_BED_LEVELING_BILINEAR or AUTO_BED_LEVELING_UBL."
@@ -803,6 +824,8 @@ static_assert(1 >= 0
     #error "AUTO_BED_LEVELING_UBL requires EEPROM_SETTINGS. Please update your configuration."
   #elif !WITHIN(GRID_MAX_POINTS_X, 3, 15) || !WITHIN(GRID_MAX_POINTS_Y, 3, 15)
     #error "GRID_MAX_POINTS_[XY] must be a whole number between 3 and 15."
+  #elif DISABLED(RESTORE_LEVELING_AFTER_G28)
+    #error "AUTO_BED_LEVELING_UBL (<=1.1.8) always has RESTORE_LEVELING_AFTER_G28 enabled. To keep this behavior, #define RESTORE_LEVELING_AFTER_G28. To keep it disabled comment out this line in SanityCheck.h."
   #else
     static_assert(WITHIN(UBL_PROBE_PT_1_X, MIN_PROBE_X, MAX_PROBE_X), "UBL_PROBE_PT_1_X can't be reached by the Z probe.");
     static_assert(WITHIN(UBL_PROBE_PT_2_X, MIN_PROBE_X, MAX_PROBE_X), "UBL_PROBE_PT_2_X can't be reached by the Z probe.");
@@ -896,28 +919,34 @@ static_assert(1 >= 0
 #endif
 
 /**
- * Homing Bump
+ * Homing
  */
 #if X_HOME_BUMP_MM < 0 || Y_HOME_BUMP_MM < 0 || Z_HOME_BUMP_MM < 0
   #error "[XYZ]_HOME_BUMP_MM must be greater than or equal to 0."
+#endif
+
+#if ENABLED(CODEPENDENT_XY_HOMING)
+  #if ENABLED(QUICK_HOME)
+    #error "QUICK_HOME is incompatible with CODEPENDENT_XY_HOMING."
+  #elif IS_KINEMATIC
+    #error "CODEPENDENT_XY_HOMING requires a Cartesian setup."
+  #endif
 #endif
 
 /**
  * Make sure Z_SAFE_HOMING point is reachable
  */
 #if ENABLED(Z_SAFE_HOMING)
-  #if !WITHIN(Z_SAFE_HOMING_X_POINT, MIN_PROBE_X, MAX_PROBE_X)
-    #if HAS_BED_PROBE
+  #if HAS_BED_PROBE
+    #if !WITHIN(Z_SAFE_HOMING_X_POINT, MIN_PROBE_X, MAX_PROBE_X)
       #error "Z_SAFE_HOMING_X_POINT can't be reached by the Z probe."
-    #else
-      #error "Z_SAFE_HOMING_X_POINT can't be reached by the nozzle."
-    #endif
-  #elif !WITHIN(Z_SAFE_HOMING_Y_POINT, MIN_PROBE_Y, MAX_PROBE_Y)
-    #if HAS_BED_PROBE
+    #elif !WITHIN(Z_SAFE_HOMING_Y_POINT, MIN_PROBE_Y, MAX_PROBE_Y)
       #error "Z_SAFE_HOMING_Y_POINT can't be reached by the Z probe."
-    #else
-      #error "Z_SAFE_HOMING_Y_POINT can't be reached by the nozzle."
     #endif
+  #elif !WITHIN(Z_SAFE_HOMING_X_POINT, X_MIN_POS, X_MAX_POS)
+    #error "Z_SAFE_HOMING_X_POINT can't be reached by the nozzle."
+  #elif !WITHIN(Z_SAFE_HOMING_Y_POINT, Y_MIN_POS, Y_MAX_POS)
+    #error "Z_SAFE_HOMING_Y_POINT can't be reached by the nozzle."
   #endif
 #endif // Z_SAFE_HOMING
 
@@ -926,7 +955,7 @@ static_assert(1 >= 0
  */
 #if ENABLED(DISABLE_X) || ENABLED(DISABLE_Y) || ENABLED(DISABLE_Z)
   #if ENABLED(HOME_AFTER_DEACTIVATE) || ENABLED(Z_SAFE_HOMING)
-    #error "DISABLE_[XYZ] not compatible with HOME_AFTER_DEACTIVATE or Z_SAFE_HOMING."
+    #error "DISABLE_[XYZ] is not compatible with HOME_AFTER_DEACTIVATE or Z_SAFE_HOMING."
   #endif
 #endif // DISABLE_[XYZ]
 
@@ -1028,7 +1057,9 @@ static_assert(1 >= 0
   #error "HEATER_0_PIN not defined for this board."
 #elif !PIN_EXISTS(TEMP_0) && !(defined(MAX6675_SS) && MAX6675_SS >= 0)
   #error "TEMP_0_PIN not defined for this board."
-#elif !PIN_EXISTS(E0_STEP) || !PIN_EXISTS(E0_DIR) || !PIN_EXISTS(E0_ENABLE)
+#elif ((defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)) && (!PIN_EXISTS(E0_STEP) || !PIN_EXISTS(E0_DIR)))
+  #error "E0_STEP_PIN or E0_DIR_PIN not defined for this board."
+#elif ( !(defined(__AVR_ATmega644P__) || defined(__AVR_ATmega1284P__)) && (!PIN_EXISTS(E0_STEP) || !PIN_EXISTS(E0_DIR) || !PIN_EXISTS(E0_ENABLE)))
   #error "E0_STEP_PIN, E0_DIR_PIN, or E0_ENABLE_PIN not defined for this board."
 #elif TEMP_SENSOR_0 == 0
   #error "TEMP_SENSOR_0 is required."
@@ -1403,7 +1434,10 @@ static_assert(1 >= 0
   #if ENABLED(RA_CONTROL_PANEL)
     + 1
   #endif
-  #if ENABLED(LCD_I2C_SAINSMART_YWROBOT)
+  #if ENABLED(LCD_SAINSMART_I2C_1602)
+    + 1
+  #endif
+  #if ENABLED(LCD_SAINSMART_I2C_2004)
     + 1
   #endif
   #if ENABLED(LCM1602)
@@ -1433,14 +1467,17 @@ static_assert(1 >= 0
   #if ENABLED(ZONESTAR_LCD)
     + 1
   #endif
+  #if ENABLED(ULTI_CONTROLLER)
+    + 1
+  #endif
   , "Please select no more than one LCD controller option."
 );
 
 /**
  * Make sure HAVE_TMCDRIVER is warranted
  */
-#if ENABLED(HAVE_TMCDRIVER)
-  #if !( ENABLED(  X_IS_TMC ) \
+#if ENABLED(HAVE_TMCDRIVER) && !( \
+         ENABLED(  X_IS_TMC ) \
       || ENABLED( X2_IS_TMC ) \
       || ENABLED(  Y_IS_TMC ) \
       || ENABLED( Y2_IS_TMC ) \
@@ -1451,8 +1488,28 @@ static_assert(1 >= 0
       || ENABLED( E2_IS_TMC ) \
       || ENABLED( E3_IS_TMC ) \
       || ENABLED( E4_IS_TMC ) \
-    )
-    #error "HAVE_TMCDRIVER requires at least one TMC stepper to be set."
+  )
+  #error "HAVE_TMCDRIVER requires at least one TMC stepper to be set."
+#endif
+
+/**
+ * Make sure HAVE_TMC2130 is warranted
+ */
+#if ENABLED(HAVE_TMC2130)
+  #if !( ENABLED(  X_IS_TMC2130 ) \
+      || ENABLED( X2_IS_TMC2130 ) \
+      || ENABLED(  Y_IS_TMC2130 ) \
+      || ENABLED( Y2_IS_TMC2130 ) \
+      || ENABLED(  Z_IS_TMC2130 ) \
+      || ENABLED( Z2_IS_TMC2130 ) \
+      || ENABLED( E0_IS_TMC2130 ) \
+      || ENABLED( E1_IS_TMC2130 ) \
+      || ENABLED( E2_IS_TMC2130 ) \
+      || ENABLED( E3_IS_TMC2130 ) \
+      || ENABLED( E4_IS_TMC2130 ) )
+    #error "HAVE_TMC2130 requires at least one TMC2130 stepper to be set."
+  #elif ENABLED(HYBRID_THRESHOLD) && DISABLED(STEALTHCHOP)
+    #error "Enable STEALTHCHOP to use HYBRID_THRESHOLD."
   #endif
 
   #if ENABLED(X_IS_TMC2130) && !PIN_EXISTS(X_CS)
@@ -1479,26 +1536,27 @@ static_assert(1 >= 0
     #error "E4_CS_PIN is required for E4_IS_TMC2130. Define E4_CS_PIN in Configuration_adv.h."
   #endif
 
-#endif
+  // Require STEALTHCHOP for SENSORLESS_HOMING on DELTA as the transition from spreadCycle to stealthChop
+  // is necessary in order to reset the stallGuard indication between the initial movement of all three
+  // towers to +Z and the individual homing of each tower. This restriction can be removed once a means of
+  // clearing the stallGuard activated status is found.
+  #if ENABLED(SENSORLESS_HOMING) && ENABLED(DELTA) && !ENABLED(STEALTHCHOP)
+    #error "SENSORLESS_HOMING on DELTA currently requires STEALTHCHOP."
+  #endif
 
-/**
- * Make sure HAVE_TMC2130 is warranted
- */
-#if ENABLED(HAVE_TMC2130) && !( \
-       ENABLED(  X_IS_TMC2130 ) \
-    || ENABLED( X2_IS_TMC2130 ) \
-    || ENABLED(  Y_IS_TMC2130 ) \
-    || ENABLED( Y2_IS_TMC2130 ) \
-    || ENABLED(  Z_IS_TMC2130 ) \
-    || ENABLED( Z2_IS_TMC2130 ) \
-    || ENABLED( E0_IS_TMC2130 ) \
-    || ENABLED( E1_IS_TMC2130 ) \
-    || ENABLED( E2_IS_TMC2130 ) \
-    || ENABLED( E3_IS_TMC2130 ) \
-    || ENABLED( E4_IS_TMC2130 ) )
-  #error "HAVE_TMC2130 requires at least one TMC2130 stepper to be set."
-#elif ENABLED(SENSORLESS_HOMING) && DISABLED(HAVE_TMC2130)
-  #error "Enable HAVE_TMC2130 to use SENSORLESS_HOMING."
+  // Sensorless homing is required for both combined steppers in an H-bot
+  #if CORE_IS_XY && X_SENSORLESS != Y_SENSORLESS
+    #error "CoreXY requires both X and Y to use sensorless homing if either does."
+  #elif CORE_IS_XZ && X_SENSORLESS != Z_SENSORLESS
+    #error "CoreXZ requires both X and Z to use sensorless homing if either does."
+  #elif CORE_IS_YZ && Y_SENSORLESS != Z_SENSORLESS
+    #error "CoreYZ requires both Y and Z to use sensorless homing if either does."
+  #endif
+
+#elif ENABLED(SENSORLESS_HOMING)
+
+  #error "SENSORLESS_HOMING requires TMC2130 stepper drivers."
+
 #endif
 
 /**

@@ -30,6 +30,7 @@
 #include "ultralcd.h"
 #include "planner.h"
 #include "language.h"
+#include "printcounter.h"
 
 #if ENABLED(HEATER_0_USES_MAX6675)
   #include "MarlinSPI.h"
@@ -61,9 +62,14 @@ Temperature thermalManager;
 
 float Temperature::current_temperature[HOTENDS] = { 0.0 },
       Temperature::current_temperature_bed = 0.0;
+
 int16_t Temperature::current_temperature_raw[HOTENDS] = { 0 },
         Temperature::target_temperature[HOTENDS] = { 0 },
         Temperature::current_temperature_bed_raw = 0;
+
+#if ENABLED(AUTO_POWER_E_FANS)
+  int16_t Temperature::autofan_speed[HOTENDS] = { 0 };
+#endif
 
 #if HAS_HEATER_BED
   int16_t Temperature::target_temperature_bed = 0;
@@ -208,7 +214,7 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
   uint32_t Temperature::current_ADCKey_raw = 0;
   uint8_t Temperature::ADCKey_count = 0;
 #endif
-  //  int cycles = 0;
+
 #if HAS_PID_HEATING
 
   /**
@@ -395,48 +401,6 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
             #else
               soft_pwm_amount_bed = (bias + d) >> 1;
             #endif
-            //char msg42[50];
-           // char buffer[10];
-           // string msg42;
-           //char msg42[8] = {'a', 'r', 'd', 'u', 'i', 'n', 'o', '\0'};
-            //char msg42 = "alsdjf";
-           // sprintf_P(msg42, PSTR("%i out of 8"), cycles);
-            //strcpy(msg42, msg42);
-                    //sprintf_P(buffer, PSTR("%ld.%im"), long(stats.filamentUsed / 1000), int16_t(stats.filamentUsed / 100) % 10);
-        //STATIC_ITEM(MSG_INFO_PRINT_FILAMENT ": ", false, false);                                       // Extruded total:
-        //STATIC_ITEM("", false, false, buffer);
-            //lcd_setstatusPGM(PSTR(ftostr52sign(cycles)), -1);
-            //lcd_setstatusPGM(PSTR("%s out of 8" msg42), -1);
-            //lcd_setstatusPGM(PSTR("I have no clue what I am doing"), -1);
-            switch (cycles) {
-             case 1:
-              lcd_setstatusPGM(PSTR("1 / 5 cycles complete"), -1);
-             break;
-             case 2:
-               lcd_setstatusPGM(PSTR("2 / 5 cycles complete"), -1);
-             break;
-             case 3:
-               lcd_setstatusPGM(PSTR("3 / 5 cycles complete"), -1);
-             break;
-             case 4:
-               lcd_setstatusPGM(PSTR("4 / 5 cycles complete"), -1);
-             break;
-             case 5:
-               lcd_setstatusPGM(PSTR("5 / 5 cycles complete"), -1);
-             break;
-             case 6:
-               lcd_setstatusPGM(PSTR("6 of 8 cycles complete"), -1);
-             break;
-             case 7:
-               lcd_setstatusPGM(PSTR("7 of 8 cycles complete"), -1);
-             break;
-             case 8:
-               lcd_setstatusPGM(PSTR("8 of 8 cycles complete"), -1);
-             break;
-             default: 
-               lcd_setstatusPGM(PSTR(MSG_PID_AUTOTUNE_RUNNING), -1);
-             break;
-            }
             cycles++;
             min = target;
           }
@@ -452,7 +416,7 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
 
       // Report heater states every 2 seconds
       if (ELAPSED(ms, next_temp_ms)) {
-        #if HAS_TEMP_HOTEND || HAS_TEMP_BED
+        #if HAS_TEMP_SENSOR
           print_heaterstates();
           SERIAL_EOL();
         #endif
@@ -470,7 +434,9 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
               _temp_error(hotend, PSTR(MSG_T_HEATING_FAILED), PSTR(MSG_HEATING_FAILED_LCD));
           }
           else if (current < target - (MAX_OVERSHOOT_PID_AUTOTUNE)) // Heated, then temperature fell too far?
-            _temp_error(hotend, PSTR(MSG_T_THERMAL_RUNAWAY), PSTR(MSG_THERMAL_RUNAWAY));
+            _temp_error(hotend, PSTR(MSG_T_THERMAL_RUNAWAY),
+              hotend >= 0 ? PSTR(MSG_THERMAL_RUNAWAY) : PSTR(MSG_THERMAL_RUNAWAY_BED)
+            );
         #endif
       } // every 2 seconds
 
@@ -482,8 +448,7 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
 
       if (cycles > ncycles) {
         SERIAL_PROTOCOLLNPGM(MSG_PID_AUTOTUNE_FINISHED);
-        lcd_setstatusPGM(PSTR("PID autotune complete!"), -1);
-        
+
         #if HAS_PID_FOR_BOTH
           const char* estring = hotend < 0 ? "bed" : "";
           SERIAL_PROTOCOLPAIR("#define  DEFAULT_", estring); SERIAL_PROTOCOLPAIR("Kp ", workKp); SERIAL_EOL();
@@ -503,7 +468,7 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
           bedKp = workKp; \
           bedKi = scalePID_i(workKi); \
           bedKd = scalePID_d(workKd); \
-          }while(0)
+        }while(0)
 
         #define _SET_EXTRUDER_PID() do { \
           PID_PARAM(Kp, hotend) = workKp; \
@@ -527,7 +492,6 @@ uint8_t Temperature::soft_pwm_amount[HOTENDS],
         return;
       }
       lcd_update();
-     
     }
     disable_all_heaters();
   }
@@ -547,7 +511,7 @@ int Temperature::getHeaterPower(int heater) {
 #if HAS_AUTO_FAN
 
   void Temperature::checkExtruderAutoFans() {
-    static const int8_t fanPin[] PROGMEM = { E0_AUTO_FAN_PIN, E1_AUTO_FAN_PIN, E2_AUTO_FAN_PIN, E3_AUTO_FAN_PIN, E4_AUTO_FAN_PIN };
+    static const pin_t fanPin[] PROGMEM = { E0_AUTO_FAN_PIN, E1_AUTO_FAN_PIN, E2_AUTO_FAN_PIN, E3_AUTO_FAN_PIN, E4_AUTO_FAN_PIN };
     static const uint8_t fanBit[] PROGMEM = {
                     0,
       AUTO_1_IS_0 ? 0 :               1,
@@ -563,10 +527,13 @@ int Temperature::getHeaterPower(int heater) {
 
     uint8_t fanDone = 0;
     for (uint8_t f = 0; f < COUNT(fanPin); f++) {
-      int8_t pin = pgm_read_byte(&fanPin[f]);
+      pin_t pin = pgm_read_byte(&fanPin[f]);
       const uint8_t bit = pgm_read_byte(&fanBit[f]);
       if (pin >= 0 && !TEST(fanDone, bit)) {
         uint8_t newFanSpeed = TEST(fanState, bit) ? EXTRUDER_AUTO_FAN_SPEED : 0;
+        #if ENABLED(AUTO_POWER_E_FANS)
+          autofan_speed[f] = newFanSpeed;
+        #endif
         // this idiom allows both digital and PWM fan outputs (see M42 handling).
         digitalWrite(pin, newFanSpeed);
         analogWrite(pin, newFanSpeed);
@@ -774,6 +741,14 @@ float Temperature::get_pid_output(const int8_t e) {
  */
 void Temperature::manage_heater() {
 
+  #if ENABLED(PROBING_HEATERS_OFF) && ENABLED(BED_LIMIT_SWITCHING)
+    static bool last_pause_state;
+  #endif
+
+  #if ENABLED(EMERGENCY_PARSER)
+    if (killed_by_M112) kill(PSTR(MSG_KILLED));
+  #endif
+
   if (!temp_meas_ready) return;
 
   updateTemperaturesFromRawValues(); // also resets the watchdog
@@ -850,8 +825,15 @@ void Temperature::manage_heater() {
   #endif // WATCH_THE_BED
 
   #if DISABLED(PIDTEMPBED)
-    if (PENDING(ms, next_bed_check_ms)) return;
+    if (PENDING(ms, next_bed_check_ms)
+      #if ENABLED(PROBING_HEATERS_OFF) && ENABLED(BED_LIMIT_SWITCHING)
+        && paused == last_pause_state
+      #endif
+    ) return;
     next_bed_check_ms = ms + BED_CHECK_INTERVAL;
+    #if ENABLED(PROBING_HEATERS_OFF) && ENABLED(BED_LIMIT_SWITCHING)
+      last_pause_state = paused;
+    #endif
   #endif
 
   #if HAS_TEMP_BED
@@ -1292,6 +1274,45 @@ void Temperature::init() {
   #endif
 }
 
+#if ENABLED(FAST_PWM_FAN)
+
+  void Temperature::setPwmFrequency(const pin_t pin, int val) {
+    val &= 0x07;
+    switch (digitalPinToTimer(pin)) {
+      #ifdef TCCR0A
+        #if !AVR_AT90USB1286_FAMILY
+          case TIMER0A:
+        #endif
+        case TIMER0B:                           //_SET_CS(0, val);
+                                                  break;
+      #endif
+      #ifdef TCCR1A
+        case TIMER1A: case TIMER1B:             //_SET_CS(1, val);
+                                                  break;
+      #endif
+      #if defined(TCCR2) || defined(TCCR2A)
+        #ifdef TCCR2
+          case TIMER2:
+        #endif
+        #ifdef TCCR2A
+          case TIMER2A: case TIMER2B:
+        #endif
+                                                  _SET_CS(2, val); break;
+      #endif
+      #ifdef TCCR3A
+        case TIMER3A: case TIMER3B: case TIMER3C: _SET_CS(3, val); break;
+      #endif
+      #ifdef TCCR4A
+        case TIMER4A: case TIMER4B: case TIMER4C: _SET_CS(4, val); break;
+      #endif
+      #ifdef TCCR5A
+        case TIMER5A: case TIMER5B: case TIMER5C: _SET_CS(5, val); break;
+      #endif
+    }
+  }
+
+#endif // FAST_PWM_FAN
+
 #if WATCH_HOTENDS
   /**
    * Start Heating Sanity Check for hotends that are below
@@ -1396,7 +1417,9 @@ void Temperature::init() {
         else if (PENDING(millis(), *timer)) break;
         *state = TRRunaway;
       case TRRunaway:
-        _temp_error(heater_id, PSTR(MSG_T_THERMAL_RUNAWAY), PSTR(MSG_THERMAL_RUNAWAY));
+        _temp_error(heater_id, PSTR(MSG_T_THERMAL_RUNAWAY),
+          heater_id >= 0 ? PSTR(MSG_THERMAL_RUNAWAY) : PSTR(MSG_THERMAL_RUNAWAY_BED)
+        );
     }
   }
 
@@ -2212,7 +2235,7 @@ void Temperature::isr() {
   SBI(TIMSK0, OCIE0B); //re-enable Temperature ISR
 }
 
-#if HAS_TEMP_HOTEND || HAS_TEMP_BED
+#if HAS_TEMP_SENSOR
 
   void print_heater_state(const float &c, const float &t,
     #if ENABLED(SHOW_TEMP_ADC_VALUES)
@@ -2303,4 +2326,4 @@ void Temperature::isr() {
 
   #endif // AUTO_REPORT_TEMPERATURES
 
-#endif // HAS_TEMP_HOTEND || HAS_TEMP_BED
+#endif // HAS_TEMP_SENSOR
