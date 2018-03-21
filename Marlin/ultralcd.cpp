@@ -1120,7 +1120,7 @@ void kill_screen(const char* lcd_msg) {
         MENU_ITEM(submenu, MSG_PREHEAT_BED, lcd_preheat_bed_menu);
       #endif 
       
-      MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+      //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
       #if ENABLED(DELTA_CALIBRATION_MENU)
         MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
       #endif
@@ -1259,8 +1259,13 @@ void kill_screen(const char* lcd_msg) {
 
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
 
+      void lcd_babystep_zoffset_and_save(){
+        lcd_babystep_zoffset();
+        settings.save();
+      }
+
       void lcd_babystep_zoffset() {
-        if (use_click()) { return lcd_goto_previous_menu_no_defer(); }
+        if (use_click()) { return lcd_goto_previous_menu_no_defer(); settings.save(); }
         defer_return_to_status = true;
         ENCODER_DIRECTION_NORMAL();
         if (encoderPosition) {
@@ -1444,7 +1449,7 @@ void kill_screen(const char* lcd_msg) {
         MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
       #endif
       #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-        MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_babystep_zoffset);
+        MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_babystep_zoffset_and_save);
       #else
         MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
       #endif
@@ -4125,6 +4130,7 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
     #endif // FAN_COUNT > 0
 
     MENU_ITEM(submenu, MSG_PID_TUNING, lcd_pid_tuning);
+   /*
     //
     // Autotemp, Min, Max, Fact
     //
@@ -4135,7 +4141,7 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
       MENU_ITEM_EDIT(float32, MSG_FACTOR, &planner.autotemp_factor, 0.0, 1.0);
     #endif
 
-    
+    */
 
     //
     // Preheat Material 1 conf
@@ -4676,7 +4682,7 @@ static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int 
     #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
       //MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
 //      MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(float3, MSG_ZPROBE_OFFSET, &zprobe_zoffset[X_AXIS], Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX,lcd_babystep_zoffset);
-      MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_babystep_zoffset);
+      MENU_ITEM_EDIT_CALLBACK(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX, lcd_babystep_zoffset_and_save);
     #elif HAS_BED_PROBE
       MENU_ITEM_EDIT(float32, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
     #endif
