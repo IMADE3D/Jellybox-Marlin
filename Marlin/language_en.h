@@ -36,6 +36,10 @@
 #endif
 #undef en
 
+#ifndef CHARSIZE
+  #define CHARSIZE 1
+#endif
+
 #ifndef WELCOME_MSG
   #define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
 #endif
@@ -252,7 +256,6 @@
 #ifndef MSG_USER_MENU
   #define MSG_USER_MENU                       _UxGT("Custom Commands")
 #endif
-
 #ifndef MSG_UBL_DOING_G29
   #define MSG_UBL_DOING_G29                   _UxGT("Doing G29")
 #endif
@@ -453,31 +456,31 @@
   #define MSG_LED_PRESETS                     _UxGT("Light Presets")
 #endif
 #ifndef MSG_SET_LEDS_RED
-  #define MSG_SET_LEDS_RED                    _UxGT("Lights Red")
+  #define MSG_SET_LEDS_RED                    _UxGT("Red")
 #endif
 #ifndef MSG_SET_LEDS_ORANGE
-  #define MSG_SET_LEDS_ORANGE                 _UxGT("Lights Orange")
+  #define MSG_SET_LEDS_ORANGE                 _UxGT("Orange")
 #endif
 #ifndef MSG_SET_LEDS_YELLOW
-  #define MSG_SET_LEDS_YELLOW                 _UxGT("Lights Yellow")
+  #define MSG_SET_LEDS_YELLOW                 _UxGT("Yellow")
 #endif
 #ifndef MSG_SET_LEDS_GREEN
-  #define MSG_SET_LEDS_GREEN                  _UxGT("Lights Green")
+  #define MSG_SET_LEDS_GREEN                  _UxGT("Green")
 #endif
 #ifndef MSG_SET_LEDS_BLUE
-  #define MSG_SET_LEDS_BLUE                   _UxGT("Lights Blue")
+  #define MSG_SET_LEDS_BLUE                   _UxGT("Blue")
 #endif
 #ifndef MSG_SET_LEDS_INDIGO
-  #define MSG_SET_LEDS_INDIGO                 _UxGT("Lights Indigo")
+  #define MSG_SET_LEDS_INDIGO                 _UxGT("Indigo")
 #endif
 #ifndef MSG_SET_LEDS_VIOLET
-  #define MSG_SET_LEDS_VIOLET                 _UxGT("Lights Violet")
+  #define MSG_SET_LEDS_VIOLET                 _UxGT("Violet")
 #endif
 #ifndef MSG_SET_LEDS_WHITE
-  #define MSG_SET_LEDS_WHITE                  _UxGT("Lights White")
+  #define MSG_SET_LEDS_WHITE                  _UxGT("White")
 #endif
 #ifndef MSG_SET_LEDS_DEFAULT
-  #define MSG_SET_LEDS_DEFAULT                _UxGT("Lights Default")
+  #define MSG_SET_LEDS_DEFAULT                _UxGT("Default")
 #endif
 #ifndef MSG_CUSTOM_LEDS
   #define MSG_CUSTOM_LEDS                     _UxGT("Custom Lights")
@@ -930,6 +933,9 @@
 #ifndef MSG_THERMAL_RUNAWAY
   #define MSG_THERMAL_RUNAWAY                 _UxGT("THERMAL RUNAWAY")
 #endif
+#ifndef MSG_THERMAL_RUNAWAY_BED
+  #define MSG_THERMAL_RUNAWAY_BED             _UxGT("BED THERMAL RUNAWAY")
+#endif
 #ifndef MSG_ERR_MAXTEMP
   #define MSG_ERR_MAXTEMP                     _UxGT("Err: MAXTEMP")
 #endif
@@ -961,7 +967,7 @@
   #define MSG_SHORT_MINUTE                    _UxGT("m") // One character only
 #endif
 #ifndef MSG_HEATING
-  #define MSG_HEATING                         _UxGT("Heating up...")
+  #define MSG_HEATING                         _UxGT("Heating...")
 #endif
 #ifndef MSG_HEATING_COMPLETE
   #define MSG_HEATING_COMPLETE                _UxGT("Heating done.")
@@ -1083,7 +1089,6 @@
     #define MSG_INFO_PRINT_FILAMENT           _UxGT("Extruded")
   #endif
 #endif
-
 #ifndef MSG_INFO_MIN_TEMP
   #define MSG_INFO_MIN_TEMP                   _UxGT("Min Temp")
 #endif
@@ -1091,7 +1096,7 @@
   #define MSG_INFO_MAX_TEMP                   _UxGT("Max Temp")
 #endif
 #ifndef MSG_INFO_PSU
-  #define MSG_INFO_PSU                        _UxGT("Power Supply")
+  #define MSG_INFO_PSU                        _UxGT("PSU")
 #endif
 #ifndef MSG_DRIVE_STRENGTH
   #define MSG_DRIVE_STRENGTH                  _UxGT("Drive Strength")
@@ -1138,6 +1143,7 @@
 #ifndef MSG_M600_TOO_COLD
   #define MSG_M600_TOO_COLD                   _UxGT("M600: Too cold")
 #endif
+
 //
 // Filament Change screens show up to 3 lines on a 4-line display
 //                        ...or up to 2 lines on a 3-line display

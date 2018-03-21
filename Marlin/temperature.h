@@ -31,6 +31,10 @@
 
 #include "MarlinConfig.h"
 
+#if ENABLED(AUTO_POWER_CONTROL)
+  #include "power.h"
+#endif
+
 #if ENABLED(PID_EXTRUSION_SCALING)
   #include "stepper.h"
 #endif
@@ -52,7 +56,7 @@
 /**
  * States for ADC reading in the ISR
  */
-enum ADCSensorState {
+enum ADCSensorState : char {
   #if HAS_TEMP_0
     PrepareTemp_0,
     MeasureTemp_0,
@@ -120,6 +124,10 @@ class Temperature {
     static int16_t current_temperature_raw[HOTENDS],
                    target_temperature[HOTENDS],
                    current_temperature_bed_raw;
+
+    #if ENABLED(AUTO_POWER_E_FANS)
+      static int16_t autofan_speed[HOTENDS];
+    #endif
 
     #if HAS_HEATER_BED
       static int16_t target_temperature_bed;
@@ -401,6 +409,9 @@ class Temperature {
         else if (target_temperature[HOTEND_INDEX] == 0)
           start_preheat_time(HOTEND_INDEX);
       #endif
+      #if ENABLED(AUTO_POWER_CONTROL)
+        powerManager.power_on();
+      #endif
       target_temperature[HOTEND_INDEX] = celsius;
       #if WATCH_HOTENDS
         start_watching_heater(HOTEND_INDEX);
@@ -409,6 +420,9 @@ class Temperature {
 
     static void setTargetBed(const int16_t celsius) {
       #if HAS_HEATER_BED
+        #if ENABLED(AUTO_POWER_CONTROL)
+          powerManager.power_on();
+        #endif
         target_temperature_bed =
           #ifdef BED_MAXTEMP
             min(celsius, BED_MAXTEMP)
@@ -557,7 +571,7 @@ class Temperature {
 
     #endif // HEATER_IDLE_HANDLER
 
-    #if HAS_TEMP_HOTEND || HAS_TEMP_BED
+    #if HAS_TEMP_SENSOR
       static void print_heaterstates();
       #if ENABLED(AUTO_REPORT_TEMPERATURES)
         static uint8_t auto_report_temp_interval;
@@ -572,6 +586,10 @@ class Temperature {
     #endif
 
   private:
+
+    #if ENABLED(FAST_PWM_FAN)
+      static void setPwmFrequency(const pin_t pin, int val);
+    #endif
 
     static void set_current_temp_raw();
 
@@ -595,7 +613,7 @@ class Temperature {
 
     #if ENABLED(THERMAL_PROTECTION_HOTENDS) || HAS_THERMALLY_PROTECTED_BED
 
-      typedef enum TRState { TRInactive, TRFirstHeating, TRStable, TRRunaway } TRstate;
+      enum TRState : char { TRInactive, TRFirstHeating, TRStable, TRRunaway };
 
       static void thermal_runaway_protection(TRState * const state, millis_t * const timer, const float &current, const float &target, const int8_t heater_id, const uint16_t period_seconds, const uint16_t hysteresis_degc);
 

@@ -221,8 +221,12 @@
 
   // MS1 MS2 Stepper Driver Microstepping mode table
   #define MICROSTEP1 LOW,LOW
-  #define MICROSTEP2 HIGH,LOW
-  #define MICROSTEP4 LOW,HIGH
+  #if ENABLED(HEROIC_STEPPER_DRIVERS)
+    #define MICROSTEP128 LOW,HIGH
+  #else
+    #define MICROSTEP2 HIGH,LOW
+    #define MICROSTEP4 LOW,HIGH
+  #endif
   #define MICROSTEP8 HIGH,HIGH
   #define MICROSTEP16 HIGH,HIGH
 
@@ -649,6 +653,16 @@
   #define E3_IS_TRINAMIC (ENABLED(E3_IS_TMC2130) || ENABLED(E3_IS_TMC2208))
   #define E4_IS_TRINAMIC (ENABLED(E4_IS_TMC2130) || ENABLED(E4_IS_TMC2208))
 
+  // Disable Z axis sensorless homing if a probe is used to home the Z axis
+  #if ENABLED(SENSORLESS_HOMING)
+    #define X_SENSORLESS (ENABLED(X_IS_TMC2130) && defined(X_HOMING_SENSITIVITY))
+    #define Y_SENSORLESS (ENABLED(Y_IS_TMC2130) && defined(Y_HOMING_SENSITIVITY))
+    #define Z_SENSORLESS (ENABLED(Z_IS_TMC2130) && defined(Z_HOMING_SENSITIVITY))
+    #if HOMING_Z_WITH_PROBE
+      #undef Z_HOMING_SENSITIVITY
+    #endif
+  #endif
+
   // Endstops and bed probe
   #define HAS_X_MIN (PIN_EXISTS(X_MIN) && !IS_X2_ENDSTOP(X,MIN) && !IS_Y2_ENDSTOP(X,MIN) && !IS_Z2_OR_PROBE(X,MIN))
   #define HAS_X_MAX (PIN_EXISTS(X_MAX) && !IS_X2_ENDSTOP(X,MAX) && !IS_Y2_ENDSTOP(X,MAX) && !IS_Z2_OR_PROBE(X,MAX))
@@ -672,6 +686,7 @@
   #define HAS_TEMP_4 (PIN_EXISTS(TEMP_4) && TEMP_SENSOR_4 != 0 && TEMP_SENSOR_4 > -2)
   #define HAS_TEMP_HOTEND (HAS_TEMP_0 || ENABLED(HEATER_0_USES_MAX6675))
   #define HAS_TEMP_BED (PIN_EXISTS(TEMP_BED) && TEMP_SENSOR_BED != 0 && TEMP_SENSOR_BED > -2)
+  #define HAS_TEMP_SENSOR (HAS_TEMP_HOTEND || HAS_TEMP_BED)
 
   // Heaters
   #define HAS_HEATER_0 (PIN_EXISTS(HEATER_0))
@@ -719,7 +734,6 @@
 
   // Sensors
   #define HAS_FILAMENT_WIDTH_SENSOR (PIN_EXISTS(FILWIDTH))
-  #define HAS_FIL_RUNOUT (PIN_EXISTS(FIL_RUNOUT))
 
   // User Interface
   #define HAS_HOME (PIN_EXISTS(HOME))
@@ -734,6 +748,12 @@
   #define HAS_STEPPER_RESET (PIN_EXISTS(STEPPER_RESET))
   #define HAS_DIGIPOTSS (PIN_EXISTS(DIGIPOTSS))
   #define HAS_MOTOR_CURRENT_PWM (PIN_EXISTS(MOTOR_CURRENT_PWM_XY) || PIN_EXISTS(MOTOR_CURRENT_PWM_Z) || PIN_EXISTS(MOTOR_CURRENT_PWM_E))
+
+  #if !HAS_TEMP_SENSOR
+    #undef AUTO_REPORT_TEMPERATURES
+  #endif
+
+  #define HAS_AUTO_REPORTING (ENABLED(AUTO_REPORT_TEMPERATURES) || ENABLED(AUTO_REPORT_SD_STATUS))
 
   /**
    * This setting is also used by M109 when trying to calculate
@@ -803,15 +823,6 @@
   #endif
   #define WRITE_FAN_N(n, v) WRITE_FAN##n(v)
 
-
-  /**
-   * Heater & Fan Pausing
-   */
-  #if ENABLED(PROBING_FANS_OFF) && FAN_COUNT == 0
-    #undef PROBING_FANS_OFF
-  #endif
-  #define QUIET_PROBING (ENABLED(PROBING_HEATERS_OFF) || ENABLED(PROBING_FANS_OFF))
-
   /**
    * Part Cooling fan multipliexer
    */
@@ -852,11 +863,6 @@
       #else
         #define XY_PROBE_SPEED 4000
       #endif
-    #endif
-    #if Z_CLEARANCE_BETWEEN_PROBES > Z_CLEARANCE_DEPLOY_PROBE
-      #define _Z_CLEARANCE_DEPLOY_PROBE Z_CLEARANCE_BETWEEN_PROBES
-    #else
-      #define _Z_CLEARANCE_DEPLOY_PROBE Z_CLEARANCE_DEPLOY_PROBE
     #endif
   #else
     #undef X_PROBE_OFFSET_FROM_EXTRUDER
@@ -956,7 +962,7 @@
   /**
    * Set granular options based on the specific type of leveling
    */
-  #define UBL_SEGMENTED  (ENABLED(AUTO_BED_LEVELING_UBL) && (ENABLED(DELTA) || ENABLED(SEGMENT_LEVELED_MOVES)))
+  #define UBL_SEGMENTED  (ENABLED(AUTO_BED_LEVELING_UBL) && (ENABLED(DELTA)))
   #define ABL_PLANAR     (ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_3POINT))
   #define ABL_GRID       (ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_BILINEAR))
   #define OLDSCHOOL_ABL  (ABL_PLANAR || ABL_GRID)
@@ -1081,9 +1087,9 @@
   #endif
 
   /**
-   * VIKI2, miniVIKI, and AZSMZ_12864 require DOGLCD_SCK and DOGLCD_MOSI to be defined.
+   * VIKI2, miniVIKI, AZSMZ_12864, and MKS_12864OLED_SSD1306 require DOGLCD_SCK and DOGLCD_MOSI to be defined.
    */
-  #if ENABLED(VIKI2) || ENABLED(miniVIKI) || ENABLED(AZSMZ_12864)
+  #if ENABLED(VIKI2) || ENABLED(miniVIKI) || ENABLED(AZSMZ_12864) || ENABLED(MKS_12864OLED_SSD1306)
     #ifndef DOGLCD_SCK
       #define DOGLCD_SCK  SCK_PIN
     #endif
@@ -1129,7 +1135,7 @@
 
   // LCD timeout to status screen default is 15s
   #ifndef LCD_TIMEOUT_TO_STATUS
-    #define LCD_TIMEOUT_TO_STATUS 45000
+    #define LCD_TIMEOUT_TO_STATUS 15000
   #endif
 
   // Shorthand
