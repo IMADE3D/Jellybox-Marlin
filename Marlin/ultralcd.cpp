@@ -6703,6 +6703,22 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       }
 
     }
+
+   /**
+    * 
+    * Test Bed Heater 
+    * 
+    */
+    void lcd_test_bed_menu(){
+
+      enqueue_and_echo_commands_P(PSTR("M140 S40"));
+
+      if (thermalManager.degBed()>39){
+      enqueue_and_echo_commands_P(PSTR("M140 S50"));
+      }
+
+    }
+
    /**
     * 
     * Preflight Check Menu
@@ -6740,6 +6756,12 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // Test nozzle heater
       //
       MENU_ITEM(function, MSG_TEST_NOZZLE, lcd_test_nozzle_menu);
+
+      //
+      // Test bed heater
+      //
+      MENU_ITEM(function, MSG_TEST_BED, lcd_test_bed_menu);
+
       END_MENU();
     }
 
