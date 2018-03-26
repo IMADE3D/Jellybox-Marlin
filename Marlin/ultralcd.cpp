@@ -6303,6 +6303,21 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       END_MENU();
     }
 
+   /**
+    * 
+    * Preflight Check Menu
+    * 
+    */
+    void lcd_preflight_check_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      END_MENU();
+    }
 
    /**
     * 
@@ -6359,6 +6374,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //Tweak the 1st layer
       //
       MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_tweak_first_layer_menu);
+
+      //
+      //Preflight Check
+      //
+      MENU_ITEM(submenu, MSG_PREFLIGHT_CHECK, lcd_preflight_check_menu);
 
       END_MENU();
     }

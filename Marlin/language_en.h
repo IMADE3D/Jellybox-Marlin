@@ -79,6 +79,9 @@
 #ifndef MSG_TWEAK_FIRST_LAYER
   #define MSG_TWEAK_FIRST_LAYER               _UxGT("Tweak the 1st layer")
 #endif 
+#ifndef MSG_PREFLIGHT_CHECK
+  #define MSG_PREFLIGHT_CHECK                 _UxGT("Preflight Check")
+#endif 
 #ifndef MSG_HOTEND_PID
   #define MSG_HOTEND_PID                      _UxGT("Hotend PID")
 #endif 
