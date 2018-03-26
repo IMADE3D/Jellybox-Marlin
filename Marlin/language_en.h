@@ -73,6 +73,9 @@
 #ifndef MSG_SETTINGS
   #define MSG_SETTINGS                        _UxGT("Settings")
 #endif 
+#ifndef MSG_CALIBRATION
+  #define MSG_CALIBRATION                     _UxGT("Calibration")
+#endif 
 #ifndef MSG_HOTEND_PID
   #define MSG_HOTEND_PID                      _UxGT("Hotend PID")
 #endif 

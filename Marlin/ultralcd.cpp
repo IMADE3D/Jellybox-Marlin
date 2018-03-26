@@ -188,6 +188,7 @@ uint16_t max_display_update_time = 0;
   void lcd_danger_menu();
   void lcd_support_menu();
   void lcd_babystep_zoffset();
+  void lcd_calibration_menu();
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
@@ -1096,6 +1097,11 @@ void kill_screen(const char* lcd_msg) {
     //Preheat Menu
     //
     MENU_ITEM(submenu, MSG_PREHEAT, lcd_preheat_menu);
+
+    //
+    //Calibration Menu
+    //
+    MENU_ITEM(submenu, MSG_CALIBRATION, lcd_calibration_menu);
 
     //
     //Settings Menu
@@ -6266,7 +6272,13 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
       END_MENU();
     }
-
+    
+   /**
+    * 
+    * Support Menu
+    * 
+    */
+    
     void lcd_support_menu(){
       START_MENU();
 
@@ -6288,6 +6300,24 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       STATIC_ITEM(MSG_FORMUM_LINK);
       STATIC_ITEM(MSG_IMADE3D_LINK);
       
+      END_MENU();
+    }
+
+    
+   /**
+    * 
+    * Calibration Menu
+    * 
+    */
+    
+    void lcd_calibration_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
       END_MENU();
     }
 
