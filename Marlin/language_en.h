@@ -76,6 +76,9 @@
 #ifndef MSG_CALIBRATION
   #define MSG_CALIBRATION                     _UxGT("Calibration")
 #endif 
+#ifndef MSG_TWEAK_FIRST_LAYER
+  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Tweak the 1st layer")
+#endif 
 #ifndef MSG_HOTEND_PID
   #define MSG_HOTEND_PID                      _UxGT("Hotend PID")
 #endif 
@@ -193,6 +196,15 @@
 #ifndef MSG_PREHEAT_2_SETTINGS
   #define MSG_PREHEAT_2_SETTINGS              MSG_PREHEAT_2 _UxGT(" conf")
 #endif
+#ifndef MSG_PLA
+  #define MSG_PLA                             _UxGT("PLA")
+#endif
+#ifndef MSG_PETG
+  #define MSG_PETG                            _UxGT("PETG")
+#endif
+#ifndef MSG_FLEX
+  #define MSG_FLEX                            _UxGT("FLEX")
+#endif
 #ifndef MSG_COOLDOWN_BOTH
   #define MSG_COOLDOWN_BOTH                   _UxGT("Cooldown -  0/0 "LCD_STR_DEGREE"C")
 #endif
@@ -217,11 +229,14 @@
 #ifndef MSG_PREHEAT_FLEX
   #define MSG_PREHEAT_FLEX                    _UxGT("FLEX - 230 "LCD_STR_DEGREE"C")
 #endif
-#ifndef MSG_CUSTOM
-  #define MSG_CUSTOM                          _UxGT("Custom - ? "LCD_STR_DEGREE"C")
+#ifndef MSG_CUSTOM_TEMP
+  #define MSG_CUSTOM_TEMP                     _UxGT("Custom - ? "LCD_STR_DEGREE"C")
 #endif
 #ifndef MSG_CUSTOM_BOTH
   #define MSG_CUSTOM_BOTH                     _UxGT("Custom - ?/? "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_CUSTOM
+  #define MSG_CUSTOM                          _UxGT("Custom")
 #endif
 #ifndef MSG_PREHEAT
   #define MSG_PREHEAT                         _UxGT("Preheat")

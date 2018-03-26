@@ -5791,7 +5791,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_ITEM(function, MSG_PREHEAT_PLA, lcd_preheat_pla);
       MENU_ITEM(function, MSG_PREHEAT_PET, lcd_preheat_pet);
       MENU_ITEM(function, MSG_PREHEAT_FLEX, lcd_preheat_flex);
-      MENU_ITEM(submenu, MSG_CUSTOM, lcd_preheat_custom);
+      MENU_ITEM(submenu, MSG_CUSTOM_TEMP, lcd_preheat_custom);
 
      #endif
 
@@ -6303,6 +6303,43 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       END_MENU();
     }
 
+
+   /**
+    * 
+    * Tweak First Layer Menu
+    * 
+    */
+    void lcd_tweak_first_layer_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      //PLA
+      //
+      MENU_ITEM(gcode, MSG_PLA, PSTR(""));
+
+      //
+      //PETG
+      //
+      MENU_ITEM(gcode, MSG_PETG, PSTR(""));
+
+      //
+      //FLEX
+      //
+      MENU_ITEM(gcode, MSG_FLEX, PSTR(""));
+
+      //
+      //Custom
+      //
+      MENU_ITEM(gcode, MSG_CUSTOM, PSTR(""));
+
+
+      END_MENU();
+    }
     
    /**
     * 
@@ -6317,6 +6354,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // ^ Main
       //
       MENU_BACK(MSG_BACK);
+
+      //
+      //Tweak the 1st layer
+      //
+      MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_tweak_first_layer_menu);
 
       END_MENU();
     }
