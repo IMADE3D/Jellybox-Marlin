@@ -550,7 +550,31 @@
   #define MSG_MOVE_Z                          _UxGT("Move Z")
 #endif
 #ifndef MSG_MOVE_E
-  #define MSG_MOVE_E                          _UxGT("Extruder")
+  #define MSG_MOVE_E                          _UxGT("Extrude")
+#endif
+#ifndef MSG_EXTRUDE_ONE
+  #define MSG_EXTRUDE_ONE                     _UxGT("1 mm")
+#endif
+#ifndef MSG_EXTRUDE_FIVE
+  #define MSG_EXTRUDE_FIVE                    _UxGT("5 mm")
+#endif
+#ifndef MSG_EXTRUDE_TEN
+  #define MSG_EXTRUDE_TEN                     _UxGT("10 mm")
+#endif
+#ifndef MSG_EXTRUDE_FIFTY
+  #define MSG_EXTRUDE_FIFTY                   _UxGT("50 mm")
+#endif
+#ifndef MSG_EXTRUDE_HUNDRED
+  #define MSG_EXTRUDE_HUNDRED                 _UxGT("100 mm")
+#endif
+#ifndef MSG_CUSTOM_EXTRUDE
+  #define MSG_CUSTOM_EXTRUDE                  _UxGT("Custom length (mm)")
+#endif
+#ifndef MSG_ABORT_EXTRUSION
+  #define MSG_ABORT_EXTRUSION                  _UxGT("Abort extrusion")
+#endif
+#ifndef MSG_ABORT
+  #define MSG_ABORT                           _UxGT("Abort")
 #endif
 #ifndef MSG_MOVE_01MM
   #define MSG_MOVE_01MM                       _UxGT("Move 0.1mm")

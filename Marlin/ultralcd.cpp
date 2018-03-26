@@ -190,6 +190,8 @@ uint16_t max_display_update_time = 0;
   void lcd_babystep_zoffset();
   void lcd_calibration_menu();
 
+  bool longActionRunning = false;
+
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_control_temperature_preheat_material1_settings_menu();
     void lcd_control_temperature_preheat_material2_settings_menu();
@@ -6363,6 +6365,20 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       }
     } 
 
+    /**
+     *
+     * "Move _lcd_move_e_bt
+     *
+     */
+    static void _lcd_move_e_bt(const char* name, AxisEnum axis, float elength) {
+        current_position[E_AXIS] += float(elength);
+        line_to_current_bt(E_AXIS);   //used by _lcd_move_e_bt
+        lcdDrawUpdate = 1;
+        
+        if (LCD_CLICKED) lcd_goto_previous_menu();
+    
+    }
+
     static void lcd_move_x_1mm() {
       move_menu_scale = 1.0;
       _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
@@ -6375,8 +6391,94 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     
     static void lcd_move_z_1mm() {
       move_menu_scale = 1.0;
-      //longActionRunning = true;
+      longActionRunning = true;
       _lcd_move(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
+    }
+    
+    static void lcd_move_e_1mm() {
+      move_menu_scale = .5;
+      longActionRunning = true;
+      _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, 0, 200);
+    }
+    
+    static void lcd_move_e_1mm_bt() {
+      _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 1);
+    }
+    
+    static void lcd_move_e_5mm_bt() {
+      _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 5);
+    }
+    
+    static void lcd_move_e_10mm_bt() {
+      longActionRunning = true;
+      _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 10);
+    }
+    
+    static void lcd_move_e_50mm_bt() {
+      longActionRunning = true;
+      _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 50);
+    }
+    
+    static void lcd_move_e_100mm_bt() {
+      longActionRunning = true;
+      _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 100);
+    }
+
+    void lcd_abort_action(){
+     clear_command_queue();
+     quickstop_stepper();
+     longActionRunning = false;
+   }
+
+   /**
+    * 
+    * Extrude Menu
+    * 
+    */
+    
+    void lcd_extrude_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Cold Nozzle Warning
+      //
+
+      if (thermalManager.degHotend(active_extruder) < thermalManager.extrude_min_temp) {
+        STATIC_ITEM("The nozzle is too              ");
+        STATIC_ITEM("cold. Please heat it           ");
+        STATIC_ITEM("up to at least 170"LCD_STR_DEGREE"C.           ");
+        STATIC_ITEM("-- ? -- Forcing                ");
+        STATIC_ITEM("filament into a cold           ");
+        STATIC_ITEM("nozzle will only lead          ");
+        STATIC_ITEM("to jamming and                 ");
+        STATIC_ITEM("grinding. Your                 ");
+        STATIC_ITEM("JellyBOX is forbidden          ");
+        STATIC_ITEM("from even trying; for          ");
+        STATIC_ITEM("its own sake.                  ");
+      }
+      else{
+
+      //
+      //Extrude Options
+      //
+        
+      //if (longActionRunning && planner.movesplanned()){
+        MENU_ITEM(function , MSG_ABORT_EXTRUSION , lcd_abort_action);
+      //}
+        MENU_ITEM(function, MSG_EXTRUDE_ONE,     lcd_move_e_1mm_bt);
+        MENU_ITEM(function, MSG_EXTRUDE_FIVE,    lcd_move_e_5mm_bt);
+        MENU_ITEM(function, MSG_EXTRUDE_TEN,     lcd_move_e_10mm_bt);
+        MENU_ITEM(function, MSG_EXTRUDE_FIFTY,   lcd_move_e_50mm_bt);
+        MENU_ITEM(function, MSG_EXTRUDE_HUNDRED, lcd_move_e_100mm_bt);
+        MENU_ITEM(submenu,  MSG_CUSTOM_EXTRUDE,  lcd_move_e_1mm);
+      }
+      
+      END_MENU();
     }
 
    /**
@@ -6391,6 +6493,13 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // ^ Main
       //
       MENU_BACK(MSG_BACK);
+
+      //
+      // Abort if long action
+      //
+      if (longActionRunning && planner.movesplanned()){
+        MENU_ITEM(function , MSG_ABORT , lcd_abort_action);
+      }
 
       
       //
@@ -6533,6 +6642,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //Move Axes
       //
       MENU_ITEM(submenu, MSG_MOVE_AXES, lcd_move_axes_menu);
+
+      //
+      //Extrude
+      //
+      MENU_ITEM(submenu, MSG_EXTRUDE, lcd_extrude_menu);
 
       END_MENU();
     }
