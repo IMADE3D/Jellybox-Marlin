@@ -268,6 +268,9 @@
 #ifndef MSG_MOVE_AXIS
   #define MSG_MOVE_AXIS                       _UxGT("Move axis")
 #endif
+#ifndef MSG_MOVE_AXES
+  #define MSG_MOVE_AXES                       _UxGT("Move axes")
+#endif
 #ifndef MSG_BED_LEVELING
   #define MSG_BED_LEVELING                    _UxGT("Bed Leveling")
 #endif

@@ -6303,6 +6303,114 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       END_MENU();
     }
 
+    /**
+     *
+     * "Move _lcd_move
+     *
+     */
+     float move_menu_scale_bt;
+    
+     inline void line_to_current_bt(AxisEnum axis) {
+        planner.buffer_line(current_position[X_AXIS], current_position[Y_AXIS], current_position[Z_AXIS], current_position[E_AXIS], manual_feedrate_mm_m[axis]/60, active_extruder);
+    }
+    
+    static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
+      if (encoderPosition != 0) {
+        refresh_cmd_timeout();
+    
+        /*if (axis == E_AXIS){
+          int between = min;
+          min = -1*max;
+          max = between;
+        }*/
+        
+        if (axis == E_AXIS){
+          (current_position[axis] -= float((int)encoderPosition)) * move_menu_scale;
+        }
+        else{
+          (current_position[axis] += float((int)encoderPosition)) * move_menu_scale;
+        }
+        
+        if (current_position[axis] < min){
+          #if (ENABLED(MIN_SOFTWARE_ENDSTOPS))
+            current_position[axis] = min;
+          #endif
+        }
+          
+        if (current_position[axis] > max) {
+          #if (ENABLED(MAX_SOFTWARE_ENDSTOPS))
+            current_position[axis] = max;
+          #endif
+        }
+    
+        if (current_position[axis] < 0 && axis == E_AXIS){
+          current_position[axis] = 0;
+        }
+        encoderPosition = 0;
+        line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+        lcdDrawUpdate = 1;
+      }
+      
+        if (axis == E_AXIS){
+          if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]*-1));
+        }
+        else{
+          if (lcdDrawUpdate) lcd_implementation_drawedit(name, ftostr52sign(current_position[axis]));
+        }
+      if (lcd_clicked) {
+        encoderTopLine = 0;
+        lcd_goto_previous_menu();
+      }
+    } 
+
+    static void lcd_move_x_1mm() {
+      move_menu_scale = 1.0;
+      _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
+    }
+    
+    static void lcd_move_y_1mm() {
+      move_menu_scale = 1.0;
+      _lcd_move(PSTR(MSG_MOVE_Y), Y_AXIS, Y_MIN_POS, Y_MAX_POS);
+    }
+    
+    static void lcd_move_z_1mm() {
+      move_menu_scale = 1.0;
+      //longActionRunning = true;
+      _lcd_move(PSTR(MSG_MOVE_Z), Z_AXIS, Z_MIN_POS, Z_MAX_POS);
+    }
+
+   /**
+    * 
+    * Move axes Menu
+    * 
+    */
+    void lcd_move_axes_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      
+      //
+      // Move X
+      //
+      MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
+      
+      //
+      // Move Y
+      //
+      MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
+      
+      //
+      // Move Z
+      //
+      MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
+
+      END_MENU();
+    }
+
    /**
     * 
     * Home Menu
@@ -6420,6 +6528,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //Release Motors
       //
       MENU_ITEM(gcode, MSG_RELEASE_MOTORS, PSTR("M84"));
+      
+      //
+      //Move Axes
+      //
+      MENU_ITEM(submenu, MSG_MOVE_AXES, lcd_move_axes_menu);
 
       END_MENU();
     }
