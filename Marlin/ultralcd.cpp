@@ -6604,6 +6604,64 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
    /**
     * 
+    * Test Z Endstop Menu
+    * 
+    */
+    void lcd_test_z_endstop(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Warning
+      //
+      STATIC_ITEM("Warning! Z probe must          ");
+      STATIC_ITEM("be adjusted first              ");
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_TEST_Z_ENDSTOP, PSTR("G28 Z"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Test Endstops Menu
+    * 
+    */
+    void lcd_test_endstops_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Home X
+      //
+      MENU_ITEM(gcode, MSG_TEST_X_ENDSTOP, PSTR("G28 X"));
+
+      //
+      // Home Y
+      //
+      MENU_ITEM(gcode, MSG_TEST_Y_ENDSTOP, PSTR("G28 Y"));
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(submenu, MSG_TEST_Z_ENDSTOP, lcd_test_z_endstop);
+
+      END_MENU();
+    }
+
+   /**
+    * 
     * Preflight Check Menu
     * 
     */
@@ -6625,6 +6683,10 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
 
+      //
+      // Test endstops
+      //
+      MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
       END_MENU();
     }
 

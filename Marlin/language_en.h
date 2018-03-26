@@ -549,6 +549,18 @@
 #ifndef MSG_CHECK_ENDSTOPS
   #define MSG_CHECK_ENDSTOPS                  _UxGT("Check endstops")
 #endif 
+#ifndef MSG_TEST_ENDSTOPS
+  #define MSG_TEST_ENDSTOPS                   _UxGT("Test endstops")
+#endif 
+#ifndef MSG_TEST_X_ENDSTOP
+  #define MSG_TEST_X_ENDSTOP                  _UxGT("Test X endstop")
+#endif 
+#ifndef MSG_TEST_Y_ENDSTOP
+  #define MSG_TEST_Y_ENDSTOP                  _UxGT("Test Y endstop")
+#endif
+#ifndef MSG_TEST_Z_ENDSTOP
+  #define MSG_TEST_Z_ENDSTOP                  _UxGT("Test Z probe")
+#endif
 #ifndef MSG_TEST_MOTORS
   #define MSG_TEST_MOTORS                     _UxGT("Test motors")
 #endif
