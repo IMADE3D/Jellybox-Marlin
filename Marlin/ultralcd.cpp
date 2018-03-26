@@ -6305,6 +6305,37 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
    /**
     * 
+    * Home Menu
+    * 
+    */
+    void lcd_home_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Home X
+      //
+      MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
+
+      //
+      // Home Y
+      //
+      MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_HOME_XYZ, PSTR("G28 X Y Z"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
     * Preflight Check Menu
     * 
     */
@@ -6379,6 +6410,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //Preflight Check
       //
       MENU_ITEM(submenu, MSG_PREFLIGHT_CHECK, lcd_preflight_check_menu);
+
+      //
+      //Home Menu
+      //
+      MENU_ITEM(submenu, MSG_HOME, lcd_home_menu);
 
       END_MENU();
     }

@@ -130,6 +130,9 @@
 #ifndef MSG_AUTO_HOME
   #define MSG_AUTO_HOME                       _UxGT("Auto home")
 #endif
+#ifndef MSG_HOME
+  #define MSG_HOME                            _UxGT("Home")
+#endif
 #ifndef MSG_AUTO_HOME_X
   #define MSG_AUTO_HOME_X                     _UxGT("Home X")
 #endif
@@ -141,6 +144,9 @@
 #endif
 #ifndef MSG_LEVEL_BED_HOMING
   #define MSG_LEVEL_BED_HOMING                _UxGT("Homing XYZ")
+#endif
+#ifndef MSG_HOME_XYZ
+  #define MSG_HOME_XYZ                        _UxGT("Home XYZ")
 #endif
 #ifndef MSG_LEVEL_BED_WAITING
   #define MSG_LEVEL_BED_WAITING               _UxGT("Click to Begin")
