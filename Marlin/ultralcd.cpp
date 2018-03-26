@@ -6416,6 +6416,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       MENU_ITEM(submenu, MSG_HOME, lcd_home_menu);
 
+      //
+      //Release Motors
+      //
+      MENU_ITEM(gcode, MSG_RELEASE_MOTORS, PSTR("M84"));
+
       END_MENU();
     }
 

@@ -148,6 +148,9 @@
 #ifndef MSG_HOME_XYZ
   #define MSG_HOME_XYZ                        _UxGT("Home XYZ")
 #endif
+#ifndef MSG_RELEASE_MOTORS
+  #define MSG_RELEASE_MOTORS                  _UxGT("Release motors")
+#endif
 #ifndef MSG_LEVEL_BED_WAITING
   #define MSG_LEVEL_BED_WAITING               _UxGT("Click to Begin")
 #endif
