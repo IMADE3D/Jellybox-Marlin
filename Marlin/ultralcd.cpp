@@ -6691,6 +6691,20 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
    /**
     * 
+    * Test Nozzle Heater
+    * 
+    */
+    void lcd_test_nozzle_menu(){
+
+      enqueue_and_echo_commands_P(PSTR("M104 S40"));
+
+      if (thermalManager.degHotend(active_extruder)>39){
+      enqueue_and_echo_commands_P(PSTR("M104 S50"));
+      }
+
+    }
+   /**
+    * 
     * Preflight Check Menu
     * 
     */
@@ -6722,6 +6736,10 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       MENU_ITEM(submenu, MSG_TUNE_HOME_OFFSETS, lcd_tune_home_offsets_menu);
 
+      //
+      // Test nozzle heater
+      //
+      MENU_ITEM(function, MSG_TEST_NOZZLE, lcd_test_nozzle_menu);
       END_MENU();
     }
 

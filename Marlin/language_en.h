@@ -82,6 +82,9 @@
 #ifndef MSG_PREFLIGHT_CHECK
   #define MSG_PREFLIGHT_CHECK                 _UxGT("Preflight Check")
 #endif 
+#ifndef MSG_TEST_NOZZLE
+  #define MSG_TEST_NOZZLE                     _UxGT("Test nozzle heater")
+#endif 
 #ifndef MSG_HOTEND_PID
   #define MSG_HOTEND_PID                      _UxGT("Hotend PID")
 #endif 
