@@ -6662,6 +6662,35 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
    /**
     * 
+    * Tune Home offsets Menu
+    * 
+    */
+    void lcd_tune_home_offsets_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Message
+      //
+      STATIC_ITEM("Move bed and nozzle              ");
+      STATIC_ITEM("in desired position              ");
+      STATIC_ITEM("and hit Set Home                 ");
+      STATIC_ITEM("offsets                          ");
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
     * Preflight Check Menu
     * 
     */
@@ -6687,6 +6716,12 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // Test endstops
       //
       MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
+
+      //
+      // Tune home offsets
+      //
+      MENU_ITEM(submenu, MSG_TUNE_HOME_OFFSETS, lcd_tune_home_offsets_menu);
+
       END_MENU();
     }
 

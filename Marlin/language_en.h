@@ -561,6 +561,12 @@
 #ifndef MSG_TEST_Z_ENDSTOP
   #define MSG_TEST_Z_ENDSTOP                  _UxGT("Test Z probe")
 #endif
+#ifndef MSG_TUNE_HOME_OFFSETS
+  #define MSG_TUNE_HOME_OFFSETS               _UxGT("Tune home offsets")
+#endif
+#ifndef MSG_SET_HOME_OFFSETS
+  #define MSG_SET_HOME_OFFSETS               _UxGT("Set home offsets")
+#endif
 #ifndef MSG_TEST_MOTORS
   #define MSG_TEST_MOTORS                     _UxGT("Test motors")
 #endif
