@@ -88,6 +88,9 @@
 #ifndef MSG_TEST_BED
   #define MSG_TEST_BED                        _UxGT("Test bed heater")
 #endif 
+#ifndef MSG_TEST_FILAMENT_FANS
+  #define MSG_TEST_FILAMENT_FANS              _UxGT("Test filament fans")
+#endif
 #ifndef MSG_HOTEND_PID
   #define MSG_HOTEND_PID                      _UxGT("Hotend PID")
 #endif 

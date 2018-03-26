@@ -6762,6 +6762,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       MENU_ITEM(function, MSG_TEST_BED, lcd_test_bed_menu);
 
+      //
+      // Test Filament Fans
+      //
+      MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S100"));
+
       END_MENU();
     }
 
