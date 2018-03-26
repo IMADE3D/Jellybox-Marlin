@@ -6588,6 +6588,22 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
    /**
     * 
+    * Check Endstops Menu
+    * 
+    */
+    void lcd_check_endstops_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      END_MENU();
+    }
+
+   /**
+    * 
     * Preflight Check Menu
     * 
     */
@@ -6603,6 +6619,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // Test Motors
       //
       MENU_ITEM(submenu, MSG_TEST_MOTORS, lcd_test_motors_menu);
+
+      //
+      // Check endstops
+      //
+      MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
 
       END_MENU();
     }

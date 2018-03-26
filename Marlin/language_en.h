@@ -545,7 +545,10 @@
 #endif
 #ifndef MSG_MOVE_Y
   #define MSG_MOVE_Y                          _UxGT("Move Y")
-#endif
+#endif 
+#ifndef MSG_CHECK_ENDSTOPS
+  #define MSG_CHECK_ENDSTOPS                  _UxGT("Check endstops")
+#endif 
 #ifndef MSG_TEST_MOTORS
   #define MSG_TEST_MOTORS                     _UxGT("Test motors")
 #endif
