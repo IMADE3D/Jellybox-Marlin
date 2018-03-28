@@ -1,4 +1,4 @@
-﻿#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2.0"
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2.0"
 #define JELLYBOX_VARIANT_LINE2 "heated bed, two fans"
 /**
  * Marlin 3D Printer Firmware
