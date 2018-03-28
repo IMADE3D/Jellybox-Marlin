@@ -554,6 +554,18 @@
 //#define DISTINCT_E_FACTORS
 
 /**
+ * Default Axis Offsets
+ * 
+ *                                  
+ */
+//#define CUSTOM_DEFAULT_OFFSETS
+#if ENABLED(CUSTOM_DEFAULT_OFFSETS)
+  #define CUSTOM_DEFAULT_X_OFFSET 0
+  #define CUSTOM_DEFAULT_Y_OFFSET 0
+  #define CUSTOM_DEFAULT_Z_OFFSET 0
+#endif
+
+/**
  * Default Axis Steps Per Unit (steps/mm)
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2[, E3[, E4]]]]
