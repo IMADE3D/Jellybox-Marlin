@@ -815,16 +815,14 @@
 // The size of the print bed
 #define X_BED_SIZE 170
 #define Y_BED_SIZE 160
-// Safe values are 145 for JellyBOX 1.3... FG fill in the rest later
-#define Z_HEIGHT_SIZE 145
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS -20
 #define Y_MIN_POS -2
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE + 5
-#define Y_MAX_POS Y_BED_SIZE + 5
-#define Z_MAX_POS Z_HEIGHT_SIZE
+#define X_MAX_POS X_BED_SIZE + 6
+#define Y_MAX_POS Y_BED_SIZE + 6
+#define Z_MAX_POS 146
 
 /**
  * Software Endstops
