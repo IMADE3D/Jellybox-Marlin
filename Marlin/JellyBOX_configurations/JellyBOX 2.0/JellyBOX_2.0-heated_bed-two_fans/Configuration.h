@@ -373,24 +373,24 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // Ultimaker
-  // #define  DEFAULT_Kp 22.2
-  // #define  DEFAULT_Ki 1.08
-  // #define  DEFAULT_Kd 114
+  //#define DEFAULT_Kp 22.2
+  //#define DEFAULT_Ki 1.08
+  //#define DEFAULT_Kd 114
 
   // MakerGear
-  //#define  DEFAULT_Kp 7.0
-  //#define  DEFAULT_Ki 0.1
-  //#define  DEFAULT_Kd 12
+  //#define DEFAULT_Kp 7.0
+  //#define DEFAULT_Ki 0.1
+  //#define DEFAULT_Kd 12
 
   // Mendel Parts V9 on 12V
-  //#define  DEFAULT_Kp 63.0
-  //#define  DEFAULT_Ki 2.25
-  //#define  DEFAULT_Kd 440
+  //#define DEFAULT_Kp 63.0
+  //#define DEFAULT_Ki 2.25
+  //#define DEFAULT_Kd 440
 
   // JellyBOX
-  #define  DEFAULT_Kp 25
-  #define  DEFAULT_Ki 1.3
-  #define  DEFAULT_Kd 122
+  #define DEFAULT_Kp 25
+  #define DEFAULT_Ki 1.3
+  #define DEFAULT_Kd 122
 
 #endif // PIDTEMP
 
@@ -408,7 +408,7 @@
 // If this is enabled, find your own PID constants below.
 #define PIDTEMPBED
 
-// #define BED_LIMIT_SWITCHING
+//#define BED_LIMIT_SWITCHING
 
 // This sets the max power delivered to the bed, and replaces the HEATER_BED_DUTY_CYCLE_DIVIDER option.
 // all forms of bed control obey this (PID, bang-bang, bang-bang with hysteresis)
@@ -423,21 +423,21 @@
   // JellyBOX 2.0 prototype bed with plate and PEI. 
   // M303 E-1 S65 C8 U
   // M304 P356.36 I52.41 D605.77
-  #define  DEFAULT_bedKp 356.36
-  #define  DEFAULT_bedKi 52.41
-  #define  DEFAULT_bedKd 605.77
+  #define DEFAULT_bedKp 356.36
+  #define DEFAULT_bedKi 52.41
+  #define DEFAULT_bedKd 605.77
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from FOPDT model - kp=.39 Tp=405 Tdead=66, Tc set to 79.2, aggressive factor of .15 (vs .1, 1, 10)
-  //#define  DEFAULT_bedKp 10.00
-  //#define  DEFAULT_bedKi .023
-  //#define  DEFAULT_bedKd 305.4
+  //#define DEFAULT_bedKp 10.00
+  //#define DEFAULT_bedKi .023
+  //#define DEFAULT_bedKd 305.4
 
   //120V 250W silicone heater into 4mm borosilicate (MendelMax 1.5+)
   //from pidautotune
-  //#define  DEFAULT_bedKp 97.1
-  //#define  DEFAULT_bedKi 1.41
-  //#define  DEFAULT_bedKd 1675.16
+  //#define DEFAULT_bedKp 97.1
+  //#define DEFAULT_bedKi 1.41
+  //#define DEFAULT_bedKd 1675.16
 
   // FIND YOUR OWN: "M303 E-1 C8 S90" to run autotune on the bed at 90 degreesC for 8 cycles.
 #endif // PIDTEMPBED
@@ -508,7 +508,7 @@
 //#define USE_ZMAX_PLUG
 
 // Enable pullup for all endstops to prevent a floating state
-// #define ENDSTOPPULLUPS
+//#define ENDSTOPPULLUPS
 #if DISABLED(ENDSTOPPULLUPS)
   // Disable ENDSTOPPULLUPS to set pullups individually
   //#define ENDSTOPPULLUP_XMAX
@@ -711,7 +711,9 @@
  *   X and Y offsets must be integers.
  *
  *   In the following example the X and Y offsets are both positive:
- *   #define X_PROBE_OFFSET_FROM_EXTRUDER 25 *   #define Y_PROBE_OFFSET_FROM_EXTRUDER 25 *
+ *   #define X_PROBE_OFFSET_FROM_EXTRUDER 10
+ *   #define Y_PROBE_OFFSET_FROM_EXTRUDER 10
+ *
  *      +-- BACK ---+
  *      |           |
  *    L |    (+) P  | R <-- probe (20,20)
@@ -723,9 +725,12 @@
  *      O-- FRONT --+
  *    (0,0)
  */
-#define X_PROBE_OFFSET_FROM_EXTRUDER 22 // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 2 // Y offset: -front +behind [the nozzle]
-#define Z_PROBE_OFFSET_FROM_EXTRUDER 0 // Z offset: -below +above  [the nozzle]
+#define X_PROBE_OFFSET_FROM_EXTRUDER 22  // X offset: -left  +right  [of the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 2  // Y offset: -front +behind [the nozzle]
+#define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
+
+// Certain types of probes need to stay away from edges
+#define MIN_PROBE_EDGE 10
 
 // X and Y axis travel speed (mm/m) between probes
 #define XY_PROBE_SPEED 130*60
@@ -757,10 +762,11 @@
  */
 #define Z_CLEARANCE_DEPLOY_PROBE   5 // Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES  4 // Z Clearance between probe points
+#define Z_AFTER_PROBING           10 // Z position after probing is done
 
 // For M851 give a range for adjusting the Z probe offset
 #define Z_PROBE_OFFSET_RANGE_MIN -20
-#define Z_PROBE_OFFSET_RANGE_MAX 0
+#define Z_PROBE_OFFSET_RANGE_MAX 20
 
 // Enable the M48 repeatability test to test probe accuracy
 #define Z_MIN_PROBE_REPEATABILITY_TEST
@@ -944,12 +950,12 @@
   /**
    * Enable the G26 Mesh Validation Pattern tool.
    */
-  #define G26_MESH_VALIDATION   // Enable G26 mesh validation
+  //#define G26_MESH_VALIDATION
   #if ENABLED(G26_MESH_VALIDATION)
-    #define MESH_TEST_NOZZLE_SIZE     0.4   // (mm) Diameter of primary nozzle.
-    #define MESH_TEST_LAYER_HEIGHT    0.2   // (mm) Default layer height for the G26 Mesh Validation Tool.
-    #define MESH_TEST_HOTEND_TEMP   205.0   // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
-    #define MESH_TEST_BED_TEMP       60.0   // (°C) Default bed temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_NOZZLE_SIZE    0.4  // (mm) Diameter of primary nozzle.
+    #define MESH_TEST_LAYER_HEIGHT   0.2  // (mm) Default layer height for the G26 Mesh Validation Tool.
+    #define MESH_TEST_HOTEND_TEMP  205.0  // (°C) Default nozzle temperature for the G26 Mesh Validation Tool.
+    #define MESH_TEST_BED_TEMP      60.0  // (°C) Default bed temperature for the G26 Mesh Validation Tool.
   #endif
 
 #endif
@@ -957,18 +963,14 @@
 #if ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 2
+  #define GRID_MAX_POINTS_X 3
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  // in our case, the left probe position is the same as safe homing position,
-  // as then there's no redundant movements between g28 and g29
-  #define LEFT_PROBE_BED_POSITION 10
-  #define RIGHT_PROBE_BED_POSITION 155  #define FRONT_PROBE_BED_POSITION 23
-  #define BACK_PROBE_BED_POSITION 140
-
-  // The Z probe minimum outer margin (to validate G29 parameters).
-  #define MIN_PROBE_EDGE 5
+  //#define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE
+  //#define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE)
+  //#define FRONT_PROBE_BED_POSITION MIN_PROBE_EDGE
+  //#define BACK_PROBE_BED_POSITION (Y_BED_SIZE - MIN_PROBE_EDGE)
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
@@ -991,17 +993,6 @@
 
   #endif
 
-#elif ENABLED(AUTO_BED_LEVELING_3POINT)
-
-  // 3 arbitrary points to probe.
-  // A simple cross-product is used to estimate the plane of the bed.
-  #define ABL_PROBE_PT_1_X 15
-  #define ABL_PROBE_PT_1_Y 180
-  #define ABL_PROBE_PT_2_X 15
-  #define ABL_PROBE_PT_2_Y 20
-  #define ABL_PROBE_PT_3_X 170
-  #define ABL_PROBE_PT_3_Y 20
-
 #elif ENABLED(AUTO_BED_LEVELING_UBL)
 
   //===========================================================================
@@ -1010,19 +1001,15 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define UBL_MESH_INSET 1          // Mesh inset margin on print area
-  #define GRID_MAX_POINTS_X 3       // Don't use more than 15 points per axis, implementation limited.
+  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
+  #define GRID_MAX_POINTS_X 3      // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-
-  #define UBL_PROBE_PT_1_X 39       // Probing points for 3-Point leveling of the mesh
-  #define UBL_PROBE_PT_1_Y 180
-  #define UBL_PROBE_PT_2_X 39
-  #define UBL_PROBE_PT_2_Y 20
-  #define UBL_PROBE_PT_3_X 180
-  #define UBL_PROBE_PT_3_Y 20
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
   #define UBL_SAVE_ACTIVE_ON_M500   // Save the currently active mesh in the current slot on M500
+
+  //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
+                                          // as the Z-Height correction value.
 
 #elif ENABLED(MESH_BED_LEVELING)
 
@@ -1030,13 +1017,26 @@
   //=================================== Mesh ==================================
   //===========================================================================
 
-  #define MESH_INSET 10          // Mesh inset margin on print area
+  #define MESH_INSET 10          // Set Mesh bounds as an inset region of the bed
   #define GRID_MAX_POINTS_X 3    // Don't use more than 7 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
 
 #endif // BED_LEVELING
+
+/**
+ * Points to probe for all 3-point Leveling procedures.
+ * Override if the automatically selected points are inadequate.
+ */
+#if ENABLED(AUTO_BED_LEVELING_3POINT) || ENABLED(AUTO_BED_LEVELING_UBL)
+  //#define PROBE_PT_1_X 15
+  //#define PROBE_PT_1_Y 180
+  //#define PROBE_PT_2_X 15
+  //#define PROBE_PT_2_Y 20
+  //#define PROBE_PT_3_X 170
+  //#define PROBE_PT_3_Y 20
+#endif
 
 /**
  * Use the LCD controller for bed leveling
@@ -1079,7 +1079,7 @@
 // - Move the Z probe (or nozzle) to a defined XY point before Z Homing when homing all axes (G28).
 // - Prevent Z homing when the Z probe is outside bed area.
 //
-//#define Z_SAFE_HOMING
+#define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
   #define Z_SAFE_HOMING_X_POINT (10) // ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axes (G28).
@@ -1194,11 +1194,11 @@
 
 // Preheat Constants
 #define PREHEAT_1_TEMP_HOTEND 210
-#define PREHEAT_1_TEMP_BED     30
+#define PREHEAT_1_TEMP_BED     60
 #define PREHEAT_1_FAN_SPEED     0 // Value from 0 to 255
 
-#define PREHEAT_2_TEMP_HOTEND 220
-#define PREHEAT_2_TEMP_BED     50
+#define PREHEAT_2_TEMP_HOTEND 235
+#define PREHEAT_2_TEMP_BED    70
 #define PREHEAT_2_FAN_SPEED     0 // Value from 0 to 255
 
 /**
