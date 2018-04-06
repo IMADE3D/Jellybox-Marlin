@@ -6748,10 +6748,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     */
     void lcd_test_nozzle_menu(){
 
-      enqueue_and_echo_commands_P(PSTR("M104 S40"));
-
-      if (thermalManager.degHotend(active_extruder)>39){
       enqueue_and_echo_commands_P(PSTR("M104 S50"));
+       lcd_goto_previous_menu();
+
+      if (thermalManager.degHotend(active_extruder)>50){
+      enqueue_and_echo_commands_P(PSTR("M104 S0"));
       }
 
     }
@@ -6763,10 +6764,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     */
     void lcd_test_bed_menu(){
 
-      enqueue_and_echo_commands_P(PSTR("M140 S40"));
-
-      if (thermalManager.degBed()>39){
       enqueue_and_echo_commands_P(PSTR("M140 S50"));
+       lcd_goto_previous_menu();
+
+      if (thermalManager.degBed()>50){
+      enqueue_and_echo_commands_P(PSTR("M140 S0"));
       }
 
     }
