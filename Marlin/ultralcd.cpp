@@ -6840,22 +6840,22 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //PLA
       //
-      MENU_ITEM(gcode, MSG_PLA, PSTR(""));
+      MENU_ITEM(gcode, MSG_PLA, PSTR("M104 S210\nM140 S55"));
 
       //
       //PETG
       //
-      MENU_ITEM(gcode, MSG_PETG, PSTR(""));
+      MENU_ITEM(gcode, MSG_PETG, PSTR("M104 S235\nM140 S65"));
 
       //
       //FLEX
       //
-      MENU_ITEM(gcode, MSG_FLEX, PSTR(""));
+      MENU_ITEM(gcode, MSG_FLEX, PSTR("M104 S230\nM140 S50"));
 
       //
       //Custom
       //
-      MENU_ITEM(gcode, MSG_CUSTOM, PSTR(""));
+      MENU_ITEM(submenu, MSG_CUSTOM, lcd_preheat_custom);
 
 
       END_MENU();
