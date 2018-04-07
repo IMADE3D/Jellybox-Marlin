@@ -5989,6 +5989,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_ITEM(gcode, MSG_HOTEND_PID_AUTOTUNE, PSTR("M303 C8 E0 S225 U"));
 
       //
+      // Hotend PID Autotune Temp
+      //
+     // MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3,  MSG_PID_AUTOTUNE_TEMP , &autotune_temp[1], 150, heater_maxtemp[1] - 15, lcd_autotune_callback_E , 1);
+       
+      //
       //Edit PID Values
       //
       MENU_ITEM(submenu, MSG_EDIT_PID_VALUES, lcd_edit_hotend_pid_values);
@@ -6001,7 +6006,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //Current PID Values Display
       //
-      MENU_ITEM(gcode, "P:00.0 I:0.0 D:000.0", PSTR(""));
+      STATIC_ITEM("P:" , false, false, ftostr52sign(PID_PARAM(Kp,0))); 
+      STATIC_ITEM("I:" , false, false, ftostr52sign(raw_Ki)); 
+      STATIC_ITEM("D:" , false, false, ftostr52sign(raw_Kd)); 
 
       END_MENU();
 

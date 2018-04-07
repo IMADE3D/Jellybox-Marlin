@@ -76,6 +76,9 @@
 #ifndef MSG_CALIBRATION
   #define MSG_CALIBRATION                     _UxGT("Calibration")
 #endif 
+#ifndef MSG_PID_AUTOTUNE_TEMP
+  #define MSG_PID_AUTOTUNE_TEMP               _UxGT("Custom temp autotune")
+#endif 
 #ifndef MSG_TEST_AUTO_BED_LEVEL
   #define MSG_TEST_AUTO_BED_LEVEL             _UxGT("Test auto bed level")
 #endif 
