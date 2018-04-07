@@ -6566,22 +6566,24 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Move X
       //
-      MENU_ITEM(gcode, MSG_MOVE_X, PSTR(""));
-
+      MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
+      
       //
       // Move Y
       //
-      MENU_ITEM(gcode, MSG_MOVE_Y, PSTR(""));
-
+      MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
+      
       //
       // Move Z
       //
-      MENU_ITEM(gcode, MSG_MOVE_Z, PSTR(""));
+      enqueue_and_echo_commands_P(PSTR("M302 P1"));
+      MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
 
       //
       // Move E
       //
-      MENU_ITEM(gcode, MSG_MOVE_E, PSTR(""));
+      
+      MENU_ITEM(submenu,  MSG_MOVE_E,  lcd_move_e_1mm);
 
       END_MENU();
     }

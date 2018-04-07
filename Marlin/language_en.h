@@ -583,7 +583,7 @@
   #define MSG_MOVE_Z                          _UxGT("Move Z")
 #endif
 #ifndef MSG_MOVE_E
-  #define MSG_MOVE_E                          _UxGT("Extrude")
+  #define MSG_MOVE_E                          _UxGT("Move E")
 #endif
 #ifndef MSG_EXTRUDE_ONE
   #define MSG_EXTRUDE_ONE                     _UxGT("1 mm")
