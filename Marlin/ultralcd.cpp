@@ -1076,12 +1076,12 @@ void kill_screen(const char* lcd_msg) {
       
     }
     else {
-    MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+    //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
 
     MENU_ITEM(gcode, MSG_HOME_RELEASE, PSTR("G28\nM84")); // Home all 3 axes and disable steppers
     
     
-    MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
+   // MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
 
     //
     // Print Adjustments Menu
@@ -6941,11 +6941,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Message
       //
-      STATIC_ITEM("This command is in                    ");
-      STATIC_ITEM("in Beta testing.                      ");
-      STATIC_ITEM("Please launch it from                 ");
-      STATIC_ITEM("the 'Utilities' folder                ");
-      STATIC_ITEM("on your SD card.                      ");
+      STATIC_ITEM("This command is in                       ");
+      STATIC_ITEM("Beta testing. Please                     ");
+      STATIC_ITEM("launch it from the                       ");
+      STATIC_ITEM("'Utilities' folder                       ");
+      STATIC_ITEM("on your SD card.                         ");
 
 
       END_MENU();
@@ -6969,9 +6969,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // Message
       //
       STATIC_ITEM("This command is in                       ");
-      STATIC_ITEM("Beta testing. Please                        ");
-      STATIC_ITEM("launch it from the                   ");
-      STATIC_ITEM("'Utilities' folder                   ");
+      STATIC_ITEM("Beta testing. Please                     ");
+      STATIC_ITEM("launch it from the                       ");
+      STATIC_ITEM("'Utilities' folder                       ");
       STATIC_ITEM("on your SD card.                         ");
 
 
