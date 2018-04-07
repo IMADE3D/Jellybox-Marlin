@@ -616,7 +616,8 @@ uint16_t max_display_update_time = 0;
   void lcd_save_previous_screen() {
     if (screen_history_depth < COUNT(screen_history)) {
       screen_history[screen_history_depth].menu_function = currentScreen;
-      screen_history[screen_history_depth].encoder_position = encoderPosition;
+      //screen_history[screen_history_depth].encoder_position = encoderPosition;
+      encoderPosition = encoderTopLine;
       ++screen_history_depth;
     }
   }
