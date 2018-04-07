@@ -4898,7 +4898,7 @@ void kill_screen(const char* lcd_msg) {
    */
   void _menu_action_back() { lcd_goto_previous_menu(); }
   void menu_action_submenu(screenFunc_t func) { lcd_save_previous_screen(); lcd_goto_screen(func); }
-  void menu_action_gcode(const char* pgcode) { enqueue_and_echo_commands_P(pgcode); }
+  void menu_action_gcode(const char* pgcode) { enqueue_and_echo_commands_P(pgcode); lcd_return_to_status();}
   void menu_action_function(screenFunc_t func) { (*func)(); }
 
   #if ENABLED(SDSUPPORT)
