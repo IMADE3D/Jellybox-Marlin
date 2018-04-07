@@ -6733,15 +6733,44 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Message
       //
-      STATIC_ITEM("Move bed and nozzle              ");
-      STATIC_ITEM("in desired position              ");
-      STATIC_ITEM("and hit Set Home                 ");
-      STATIC_ITEM("offsets                          ");
+      STATIC_ITEM("Move bed and nozzle               ");
+      STATIC_ITEM("in desired position               ");
+      STATIC_ITEM("and hit 'Set Home                 ");
+      STATIC_ITEM("offsets'                          ");
 
       //
       // Home XYZ
       //
       MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Test auto bed level menu
+    * 
+    */
+    void lcd_test_auto_bed_level_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Message
+      //
+      STATIC_ITEM("Move bed and nozzle                ");
+      STATIC_ITEM("in desired position                ");
+      STATIC_ITEM("and hit 'Test auto                 ");
+      STATIC_ITEM("bed level'                         ");
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_TEST_AUTO_BED_LEVEL, PSTR("G28\nG29"));
 
       END_MENU();
     }
@@ -6805,6 +6834,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // Test endstops
       //
       MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
+
+      //
+      // Test auto bed level
+      //
+      MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level_menu);
 
       //
       // Tune home offsets

@@ -76,6 +76,9 @@
 #ifndef MSG_CALIBRATION
   #define MSG_CALIBRATION                     _UxGT("Calibration")
 #endif 
+#ifndef MSG_TEST_AUTO_BED_LEVEL
+  #define MSG_TEST_AUTO_BED_LEVEL             _UxGT("Test auto bed level")
+#endif 
 #ifndef MSG_TWEAK_FIRST_LAYER
   #define MSG_TWEAK_FIRST_LAYER               _UxGT("Tweak the 1st layer")
 #endif 
