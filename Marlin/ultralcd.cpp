@@ -189,6 +189,8 @@ uint16_t max_display_update_time = 0;
   void lcd_support_menu();
   void lcd_babystep_zoffset();
   void lcd_calibration_menu();
+  void lcd_load_filament_menu();
+  void lcd_eject_filament_menu();
 
   bool longActionRunning = false;
 
@@ -1089,12 +1091,12 @@ void kill_screen(const char* lcd_msg) {
     //
     // Load Filament
     //
-    MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(""));
+    MENU_ITEM(submenu, MSG_FILAMENTLOAD, lcd_load_filament_menu);
 
     //
     // Eject Filament
     //
-    MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(""));
+    MENU_ITEM(submenu, MSG_FILAMENTEJECT, lcd_eject_filament_menu);
 
     //
     //Preheat Menu
@@ -6820,6 +6822,16 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_ITEM(function, MSG_TEST_BED, lcd_test_bed_menu);
 
       //
+      // Load Filament
+      //
+      MENU_ITEM(submenu, MSG_FILAMENTLOAD, lcd_load_filament_menu);
+  
+      //
+      // Eject Filament
+      //
+      MENU_ITEM(submenu, MSG_FILAMENTEJECT, lcd_eject_filament_menu);
+
+      //
       // Test Filament Fans
       //
       MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S100"));
@@ -6908,6 +6920,60 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //Extrude
       //
       MENU_ITEM(submenu, MSG_EXTRUDE, lcd_extrude_menu);
+
+      END_MENU();
+    }
+    
+   /**
+    * 
+    * Load Filament Menu
+    * 
+    */
+    
+    void lcd_load_filament_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+      
+      //
+      // Message
+      //
+      STATIC_ITEM("This command is in                    ");
+      STATIC_ITEM("in Beta testing.                      ");
+      STATIC_ITEM("Please launch it from                 ");
+      STATIC_ITEM("the 'Utilities' folder                ");
+      STATIC_ITEM("on your SD card.                      ");
+
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Eject Filament Menu
+    * 
+    */
+    
+    void lcd_eject_filament_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+      
+      //
+      // Message
+      //
+      STATIC_ITEM("This command is in                       ");
+      STATIC_ITEM("Beta testing. Please                        ");
+      STATIC_ITEM("launch it from the                   ");
+      STATIC_ITEM("'Utilities' folder                   ");
+      STATIC_ITEM("on your SD card.                         ");
+
 
       END_MENU();
     }

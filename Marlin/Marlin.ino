@@ -20,7 +20,7 @@ Before diving in, we recommend the following essential links:
 Marlin Firmware Official Website
 
   - http://marlinfw.org/
-    The official Marlin Firmware website contains the most up-to-date
+    The official Marlin Firmware website contains the most up-to-datelc
     documentation. Contributions are always welcome!
 
 Configuration
