@@ -6607,16 +6607,16 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //Display X endstop status
       //
-      
+      STATIC_ITEM("Endstop Status             ");
      #if HAS_X_MIN
        SERIAL_PROTOCOLPGM(MSG_X_MIN);
        SERIAL_PROTOCOLLN(((READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
 
        if (READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING){
-          STATIC_ITEM("X Endstop: Triggered          ");
+          STATIC_ITEM("X : Triggered          ");
        }
        else{
-          STATIC_ITEM("X Endstop: Not Triggered      ");
+          STATIC_ITEM("X : Not Triggered      ");
        }
        
      #endif
@@ -6630,10 +6630,10 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
        SERIAL_PROTOCOLLN(((READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
 
        if (READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING){
-          STATIC_ITEM("Y Endstop: Triggered          ");
+          STATIC_ITEM("Y : Triggered          ");
        }
        else{
-          STATIC_ITEM("Y Endstop: Not Triggered      ");
+          STATIC_ITEM("Y : Not Triggered      ");
        }
        
      #endif
@@ -6648,10 +6648,10 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
        //if (READ(Z_MIN_PIN)^Z_MIN_ENDSTOP_INVERTING){
        if (READ(Z_MIN_PIN) != Z_MIN_ENDSTOP_INVERTING) { 
-          STATIC_ITEM("Z Endstop: Triggered          ");
+          STATIC_ITEM("Z : Triggered          ");
        }
        else{
-          STATIC_ITEM("Z Endstop: Not Triggered      ");
+          STATIC_ITEM("Z : Not Triggered      ");
        }
        
      #endif
