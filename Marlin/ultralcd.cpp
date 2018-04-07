@@ -6006,9 +6006,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //Current PID Values Display
       //
-      STATIC_ITEM("P:" , false, false, ftostr52sign(PID_PARAM(Kp,0))); 
-      STATIC_ITEM("I:" , false, false, ftostr52sign(raw_Ki)); 
-      STATIC_ITEM("D:" , false, false, ftostr52sign(raw_Kd)); 
+      STATIC_ITEM("P:" , false, false, ftostr52sign(thermalManager.bedKp)); 
+      STATIC_ITEM("I:" , false, false, ftostr52sign(thermalManager.bedKi)); 
+      STATIC_ITEM("D:" , false, false, ftostr52sign(thermalManager.bedKd)); 
 
       END_MENU();
 
@@ -6045,7 +6045,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //Current PID Values Display
       //
-      MENU_ITEM(gcode, "P:00.0 I:0.0 D:000.0", PSTR(""));
+      STATIC_ITEM("P:" , false, false, ftostr52sign(PID_PARAM(Kp,0))); 
+      STATIC_ITEM("I:" , false, false, ftostr52sign(raw_Ki)); 
+      STATIC_ITEM("D:" , false, false, ftostr52sign(raw_Kd));
 
       END_MENU();
    }
