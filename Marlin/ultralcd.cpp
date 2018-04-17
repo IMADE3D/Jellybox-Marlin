@@ -986,7 +986,7 @@ void kill_screen(const char* lcd_msg) {
     else {
 
       //
-      // Home XYZ
+      // Home & Release
       //
       MENU_ITEM(function, MSG_HOME_RELEASE, lcd_home_xyz); // Home all 3 axes and disable steppers
       
