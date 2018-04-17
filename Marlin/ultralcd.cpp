@@ -988,7 +988,7 @@ void kill_screen(const char* lcd_msg) {
       //
       // Home XYZ
       //
-      MENU_ITEM(function, MSG_RETURN_AND_HOME, lcd_home_xyz);
+      MENU_ITEM(function, MSG_HOME_RELEASE, lcd_home_xyz); // Home all 3 axes and disable steppers
       
       //
       // Disable Steppers
@@ -4425,7 +4425,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
      }
 
      void lcd_home_xyz(){
-       enqueue_and_echo_commands_P(PSTR("G28"));
+       enqueue_and_echo_commands_P(PSTR("G28\nM84"));
        lcd_return_to_status();
      }
     /**

@@ -1076,4 +1076,9 @@
   #define MSG_SOURCE_URL           _UxGT("SOURCE URL:")
 #endif
 
+// JellyBOX Specific
+#ifndef MSG_HOME_RELEASE
+  #define MSG_HOME_RELEASE                    _UxGT("Home & Release")
+#endif 
+
 #endif // LANGUAGE_EN_H
