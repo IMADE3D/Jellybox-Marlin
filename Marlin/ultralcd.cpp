@@ -146,6 +146,8 @@ uint16_t max_display_update_time = 0;
   void homeafterabort();
   void lcd_disable_steppers();
   void lcd_home_xyz();
+  void imade3d_load_filament_script_function();
+  void imade3d_eject_filament_script_function();
 
   int fanSpeed100;
   int fanSpeed;
@@ -1007,12 +1009,12 @@ void kill_screen(const char* lcd_msg) {
       //
       // Load Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(imade3d_load_filament_script));
+      MENU_ITEM(function, MSG_FILAMENTLOAD, imade3d_load_filament_script_function);
 
       //
       // Eject Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(imade3d_eject_filament_script));
+      MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_eject_filament_script_function);
 
       //
       //Preheat Nozzle Menu
@@ -4440,13 +4442,29 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
        enqueue_and_echo_commands_P(PSTR("G28\nM84"));
        lcd_return_to_status();
      }
-    /**
+     
+     /**
+     * 
+     * imade3d Eject and load LCD menu
+     * 
+     */
+     void imade3d_load_filament_script_function(){
+       enqueue_and_echo_commands_P(PSTR(imade3d_load_filament_script));
+       lcd_return_to_status();
+     }
+     
+     void imade3d_eject_filament_script_function(){
+       enqueue_and_echo_commands_P(PSTR(imade3d_eject_filament_script));
+       lcd_return_to_status();
+     }
+     
+     /**
      * 
      * control_im3d Menu
      * 
      */
-    void lcd_control_im3d_menu(){
-      START_MENU();
+     void lcd_control_im3d_menu(){
+     START_MENU();
 
       //
       // ^ Main
