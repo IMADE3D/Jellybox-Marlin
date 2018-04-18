@@ -1080,5 +1080,12 @@
 #ifndef MSG_HOME_RELEASE
   #define MSG_HOME_RELEASE                    _UxGT("Home & Release")
 #endif 
+#ifndef MSG_FILAMENTLOAD
+  #define MSG_FILAMENTLOAD                    _UxGT("Load filament")
+#endif
+#ifndef MSG_FILAMENTEJECT
+  #define MSG_FILAMENTEJECT                    _UxGT("Eject filament")
+#endif
+
 
 #endif // LANGUAGE_EN_H

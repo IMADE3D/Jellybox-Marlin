@@ -1001,7 +1001,17 @@ void kill_screen(const char* lcd_msg) {
       // Adjustments menu
       //
       MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
-      
+
+      //
+      // Load Filament
+      //
+      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(""));
+
+      //
+      // Eject Filament
+      //
+      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(""));
+
       //
       //Preheat Nozzle Menu
       //
