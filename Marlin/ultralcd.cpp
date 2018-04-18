@@ -1007,12 +1007,12 @@ void kill_screen(const char* lcd_msg) {
       //
       // Load Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(imade3d_load_filament_script));
+      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(imade3d_test_script));
 
       //
       // Eject Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(imade3d_eject_filament_script));
+      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(imade3d_test_script));
 
       //
       //Preheat Nozzle Menu
