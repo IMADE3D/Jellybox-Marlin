@@ -49,6 +49,8 @@
   bool ubl_lcd_map_control = false;
 #endif
 
+#include "imade3d_scripts.h"
+
 int16_t lcd_preheat_hotend_temp[2], lcd_preheat_bed_temp[2], lcd_preheat_fan_speed[2];
 
 #if ENABLED(FILAMENT_LCD_DISPLAY) && ENABLED(SDSUPPORT)
@@ -1005,12 +1007,12 @@ void kill_screen(const char* lcd_msg) {
       //
       // Load Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(""));
+      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(imade3d_load_filament_script));
 
       //
       // Eject Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(""));
+      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(imade3d_eject_filament_script));
 
       //
       //Preheat Nozzle Menu
