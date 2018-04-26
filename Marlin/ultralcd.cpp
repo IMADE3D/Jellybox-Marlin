@@ -1042,9 +1042,9 @@ void kill_screen(const char* lcd_msg) {
     //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
     
     //
-    //Maintenence Menu
+    //Maintenence / Control Menu
     //
-    MENU_ITEM(submenu, MSG_CONTROL_IM3D, lcd_control_im3d_menu);
+    //MENU_ITEM(submenu, MSG_CONTROL_IM3D, lcd_control_im3d_menu);
 
     //
     //Settings Menu
