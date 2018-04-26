@@ -6628,12 +6628,12 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Load Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(imade3d_load_filament_script));
+      MENU_ITEM(function, MSG_FILAMENTLOAD, imade3d_load_filament_script_function);
   
       //
       // Eject Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(imade3d_eject_filament_script));
+      MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_load_filament_script_function);
 
       //
       // Test Filament Fans
