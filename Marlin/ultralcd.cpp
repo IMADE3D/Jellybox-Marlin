@@ -6445,11 +6445,12 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Warning
       //
-      STATIC_ITEM("Warning! Z probe must          ");
-      STATIC_ITEM("be adjusted first              ");
+      STATIC_ITEM("!  Prerequisites  !     ");
+      STATIC_ITEM("-Setup Z probe height   " );
+      STATIC_ITEM("-Test X and test Y      ");
 
       //
-      // Home XYZ
+      // Home Z
       //
       MENU_ITEM(gcode, MSG_TEST_Z_ENDSTOP, PSTR("G28 Z"));
 
