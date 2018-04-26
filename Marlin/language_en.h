@@ -857,7 +857,7 @@
   #define MSG_TWEAK_FIRST_LAYER               _UxGT("Live adjust Z height")
 #endif
 #ifndef MSG_CALIBRATE_FIRST_LAYER
-  #define MSG_CALIBRATE_FIRST_LAYER           _UxGT("Calibrate the 1st layer")
+  #define MSG_CALIBRATE_FIRST_LAYER           _UxGT("Calibrate 1st layer")
 #endif
 #ifndef MSG_ZPROBE_ZOFFSET
   #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z offset")
