@@ -73,7 +73,7 @@
   #define MSG_HOME_XYZ                        _UxGT("Home XYZ")
 #endif
 #ifndef MSG_CHECK_ENDSTOPS
-  #define MSG_CHECK_ENDSTOPS                  _UxGT("Check endstops")
+  #define MSG_CHECK_ENDSTOPS                  _UxGT("Check endstop status")
 #endif 
 #ifndef MSG_TEST_ENDSTOPS
   #define MSG_TEST_ENDSTOPS                   _UxGT("Test endstops")
