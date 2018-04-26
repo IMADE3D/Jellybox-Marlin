@@ -148,6 +148,7 @@ uint16_t max_display_update_time = 0;
   void lcd_home_xyz();
   void imade3d_load_filament_script_function();
   void imade3d_eject_filament_script_function();
+  void lcd_calibration_menu();
 
   int fanSpeed100;
   int fanSpeed;
@@ -997,9 +998,9 @@ void kill_screen(const char* lcd_msg) {
       //
       // Disable Steppers
       //
-      if (printer_paused == false){
-      MENU_ITEM(function, MSG_RETURN_AND_DISABLE_STEPPERS, lcd_disable_steppers);
-      }
+      // if (printer_paused == false){
+      // MENU_ITEM(function, MSG_RETURN_AND_DISABLE_STEPPERS, lcd_disable_steppers);
+      // }
       
       //
       // Adjustments menu
@@ -1027,6 +1028,11 @@ void kill_screen(const char* lcd_msg) {
         //
         MENU_ITEM(submenu, MSG_PREHEAT_BED, lcd_preheat_bed_menu);
       #endif 
+
+      //
+      //Calibration Menu
+      //
+      MENU_ITEM(submenu, MSG_CALIBRATION, lcd_calibration_menu);
       
       //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
       #if ENABLED(DELTA_CALIBRATION_MENU)
@@ -6246,5 +6252,488 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     return 0;
   }
 #endif
+    
+
+   /**
+    * 
+    * Move axes Menu
+    * 
+    */
+    void lcd_move_axes_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Abort if long action
+      //
+      if (longActionRunning && planner.movesplanned()){
+        MENU_ITEM(function , MSG_ABORT , lcd_abort_action);
+      }
+
+      //
+      // Move X
+      //
+      MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
+      
+      //
+      // Move Y
+      //
+      MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
+      
+      //
+      // Move Z
+      //
+      MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Home Menu
+    * 
+    */
+    void lcd_home_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Home X
+      //
+      MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
+
+      //
+      // Home Y
+      //
+      MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_HOME_XYZ, PSTR("G28 X Y Z"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Test Motors Menu
+    * 
+    */
+    void lcd_test_motors_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Move X
+      //
+      MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
+      
+      //
+      // Move Y
+      //
+      MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
+      
+      //
+      // Move Z
+      //
+      enqueue_and_echo_commands_P(PSTR("M302 P1"));
+      MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
+
+      //
+      // Move E
+      //
+      
+      MENU_ITEM(submenu,  MSG_MOVE_E,  lcd_move_e_1mm);
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Check Endstops Menu
+    * 
+    */
+    void lcd_check_endstops_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      //Display X endstop status
+      //
+      STATIC_ITEM("Endstop Status             ");
+     #if HAS_X_MIN
+       SERIAL_PROTOCOLPGM(MSG_X_MIN);
+       SERIAL_PROTOCOLLN(((READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
+
+       if (READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING){
+          STATIC_ITEM("X : Triggered          ");
+       }
+       else{
+          STATIC_ITEM("X : Not Triggered      ");
+       }
+       
+     #endif
+
+      //
+      //Display Y endstop status
+      //
+      
+     #if HAS_Y_MIN
+       SERIAL_PROTOCOLPGM(MSG_Y_MIN);
+       SERIAL_PROTOCOLLN(((READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
+
+       if (READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING){
+          STATIC_ITEM("Y : Triggered          ");
+       }
+       else{
+          STATIC_ITEM("Y : Not Triggered      ");
+       }
+       
+     #endif
+
+      //
+      //Display Z endstop status
+      //
+      //READ(Z_MIN_PROBE_PIN) != Z_MIN_PROBE_ENDSTOP_INVERTING)
+     #if HAS_Z_MIN
+       SERIAL_PROTOCOLPGM(MSG_Z_MIN);
+       SERIAL_PROTOCOLLN(((READ(Z_MIN_PIN)^Z_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
+
+       //if (READ(Z_MIN_PIN)^Z_MIN_ENDSTOP_INVERTING){
+       if (READ(Z_MIN_PIN) != Z_MIN_ENDSTOP_INVERTING) { 
+          STATIC_ITEM("Z : Triggered          ");
+       }
+       else{
+          STATIC_ITEM("Z : Not Triggered      ");
+       }
+       
+     #endif
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Test Z Endstop Menu
+    * 
+    */
+    void lcd_test_z_endstop(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Warning
+      //
+      STATIC_ITEM("Warning! Z probe must          ");
+      STATIC_ITEM("be adjusted first              ");
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_TEST_Z_ENDSTOP, PSTR("G28 Z"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Test Endstops Menu
+    * 
+    */
+    void lcd_test_endstops_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Home X
+      //
+      MENU_ITEM(gcode, MSG_TEST_X_ENDSTOP, PSTR("G28 X"));
+
+      //
+      // Home Y
+      //
+      MENU_ITEM(gcode, MSG_TEST_Y_ENDSTOP, PSTR("G28 Y"));
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(submenu, MSG_TEST_Z_ENDSTOP, lcd_test_z_endstop);
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Tune Home offsets Menu
+    * 
+    */
+    void lcd_tune_home_offsets_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Message
+      //
+      STATIC_ITEM("Move bed and nozzle               ");
+      STATIC_ITEM("in desired position               ");
+      STATIC_ITEM("and hit 'Set Home                 ");
+      STATIC_ITEM("offsets'                          ");
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Test auto bed level menu
+    * 
+    */
+    void lcd_test_auto_bed_level_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Message
+      //
+      STATIC_ITEM("Move bed and nozzle                ");
+      STATIC_ITEM("in desired position                ");
+      STATIC_ITEM("and hit 'Test auto                 ");
+      STATIC_ITEM("bed level'                         ");
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_TEST_AUTO_BED_LEVEL, PSTR("G28\nG29"));
+
+      END_MENU();
+    }
+
+   /**
+    * 
+    * Test Nozzle Heater
+    * 
+    */
+    void lcd_test_nozzle_menu(){
+
+      enqueue_and_echo_commands_P(PSTR("M104 S50"));
+       lcd_goto_previous_menu();
+
+      if (thermalManager.degHotend(active_extruder)>50){
+      enqueue_and_echo_commands_P(PSTR("M104 S0"));
+      }
+
+    }
+
+   /**
+    * 
+    * Test Bed Heater 
+    * 
+    */
+    void lcd_test_bed_menu(){
+
+      enqueue_and_echo_commands_P(PSTR("M140 S50"));
+       lcd_goto_previous_menu();
+
+      if (thermalManager.degBed()>50){
+      enqueue_and_echo_commands_P(PSTR("M140 S0"));
+      }
+
+    }
+
+   /**
+    * 
+    * Preflight Check Menu
+    * 
+    */
+    void lcd_preflight_check_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      // Test Motors
+      //
+      MENU_ITEM(submenu, MSG_TEST_MOTORS, lcd_test_motors_menu);
+
+      //
+      // Check endstops
+      //
+      MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
+
+      //
+      // Test endstops
+      //
+      MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
+
+      //
+      // Test auto bed level
+      //
+      MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level_menu);
+
+      //
+      // Tune home offsets
+      //
+      MENU_ITEM(submenu, MSG_TUNE_HOME_OFFSETS, lcd_tune_home_offsets_menu);
+
+      //
+      // Test nozzle heater
+      //
+      MENU_ITEM(function, MSG_TEST_NOZZLE, lcd_test_nozzle_menu);
+
+      //
+      // Test bed heater
+      //
+      MENU_ITEM(function, MSG_TEST_BED, lcd_test_bed_menu);
+
+      //
+      // Load Filament
+      //
+      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(imade3d_load_filament_script));
+  
+      //
+      // Eject Filament
+      //
+      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(imade3d_eject_filament_script));
+
+      //
+      // Test Filament Fans
+      //
+      MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S100"));
+
+      END_MENU();
+    }
+
+    /**
+     * Preheat Custom Nozzle 
+     */
+    static void lcd_preheat_custom() {
+        _lcd_adjust_nozzle_temp(PSTR(MSG_NOZZLE), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
+     }
+
+   /**
+    * 
+    * Tweak First Layer Menu
+    * 
+    */
+    void lcd_tweak_first_layer_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      //PLA
+      //
+      MENU_ITEM(gcode, MSG_PLA, PSTR("M104 S210\nM140 S55"));
+
+      //
+      //PETG
+      //
+      MENU_ITEM(gcode, MSG_PETG, PSTR("M104 S235\nM140 S65"));
+
+      //
+      //FLEX
+      //
+      MENU_ITEM(gcode, MSG_FLEX, PSTR("M104 S230\nM140 S50"));
+
+      //
+      //Custom
+      //
+      MENU_ITEM(submenu, MSG_CUSTOM, lcd_preheat_custom);
+
+
+      END_MENU();
+    }
+    
+   /**
+    * 
+    * Calibration Menu
+    * 
+    */
+    
+    void lcd_calibration_menu(){
+      START_MENU();
+
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
+
+      //
+      //Tweak the 1st layer
+      //
+      MENU_ITEM(submenu, MSG_CALIBRATE_FIRST_LAYER, lcd_tweak_first_layer_menu);
+
+
+      //
+      //Preflight Check
+      //
+      MENU_ITEM(submenu, MSG_PREFLIGHT_CHECK, lcd_preflight_check_menu);
+
+      //
+      //Home Menu
+      //
+      MENU_ITEM(submenu, MSG_HOME, lcd_home_menu);
+
+      //
+      //Release Motors
+      //
+      MENU_ITEM(gcode, MSG_RELEASE_MOTORS, PSTR("M84"));
+      
+      //
+      //Move Axes
+      //
+      MENU_ITEM(submenu, MSG_MOVE_AXES, lcd_move_axes_menu);
+
+      //
+      //Extrude
+      //
+      MENU_ITEM(submenu, MSG_EXTRUDE, lcd_extrude_menu);
+
+      END_MENU();
+    }
+    
 
 #endif // ULTRA_LCD

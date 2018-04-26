@@ -33,6 +33,66 @@
 #ifndef WELCOME_MSG
   #define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
 #endif
+#ifndef MSG_CALIBRATION
+  #define MSG_CALIBRATION                     _UxGT("Calibration")
+#endif 
+#ifndef MSG_ABORT
+  #define MSG_ABORT                           _UxGT("Abort")
+#endif
+#ifndef MSG_MOVE_AXES
+  #define MSG_MOVE_AXES                       _UxGT("Move axes")
+#endif
+#ifndef MSG_RELEASE_MOTORS
+  #define MSG_RELEASE_MOTORS                  _UxGT("Release motors")
+#endif
+#ifndef MSG_PREFLIGHT_CHECK
+  #define MSG_PREFLIGHT_CHECK                 _UxGT("Preflight Check")
+#endif 
+#ifndef MSG_TEST_NOZZLE
+  #define MSG_TEST_NOZZLE                     _UxGT("Test nozzle heater")
+#endif 
+#ifndef MSG_TEST_BED
+  #define MSG_TEST_BED                        _UxGT("Test bed heater")
+#endif 
+#ifndef MSG_TEST_FILAMENT_FANS
+  #define MSG_TEST_FILAMENT_FANS              _UxGT("Test filament fans")
+#endif
+#ifndef MSG_CUSTOM
+  #define MSG_CUSTOM                          _UxGT("Custom")
+#endif
+#ifndef MSG_PLA
+  #define MSG_PLA                             _UxGT("PLA")
+#endif
+#ifndef MSG_PETG
+  #define MSG_PETG                            _UxGT("PETG")
+#endif
+#ifndef MSG_FLEX
+  #define MSG_FLEX                            _UxGT("FLEX")
+#endif
+#ifndef MSG_HOME_XYZ
+  #define MSG_HOME_XYZ                        _UxGT("Home XYZ")
+#endif
+#ifndef MSG_CHECK_ENDSTOPS
+  #define MSG_CHECK_ENDSTOPS                  _UxGT("Check endstop status")
+#endif 
+#ifndef MSG_TEST_ENDSTOPS
+  #define MSG_TEST_ENDSTOPS                   _UxGT("Test endstops")
+#endif 
+#ifndef MSG_TEST_X_ENDSTOP
+  #define MSG_TEST_X_ENDSTOP                  _UxGT("Test X endstop")
+#endif 
+#ifndef MSG_TEST_Y_ENDSTOP
+  #define MSG_TEST_Y_ENDSTOP                  _UxGT("Test Y endstop")
+#endif
+#ifndef MSG_TEST_Z_ENDSTOP
+  #define MSG_TEST_Z_ENDSTOP                  _UxGT("Test Z probe")
+#endif
+#ifndef MSG_TEST_MOTORS
+  #define MSG_TEST_MOTORS                     _UxGT("Test motors")
+#endif
+#ifndef MSG_TUNE_HOME_OFFSETS
+  #define MSG_TUNE_HOME_OFFSETS               _UxGT("Tune home offsets")
+#endif
 #ifndef MSG_BACK
   #define MSG_BACK                            _UxGT("Go Back")
 #endif
@@ -795,6 +855,9 @@
 #endif
 #ifndef MSG_TWEAK_FIRST_LAYER
   #define MSG_TWEAK_FIRST_LAYER               _UxGT("Live adjust Z height")
+#endif
+#ifndef MSG_CALIBRATE_FIRST_LAYER
+  #define MSG_CALIBRATE_FIRST_LAYER           _UxGT("Calibrate the 1st layer")
 #endif
 #ifndef MSG_ZPROBE_ZOFFSET
   #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z offset")
