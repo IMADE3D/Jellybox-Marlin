@@ -6533,10 +6533,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Message
       //
-      STATIC_ITEM("Move bed and nozzle                ");
-      STATIC_ITEM("in desired position                ");
-      STATIC_ITEM("and hit 'Test auto                 ");
-      STATIC_ITEM("bed level'                         ");
+      STATIC_ITEM("Make sure to insert   ");
+      STATIC_ITEM("the removable         ");
+      STATIC_ITEM("build plate           ");
 
       //
       // Home XYZ
