@@ -6655,7 +6655,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     * Tweak First Layer Menu
     * 
     */
-    void lcd_tweak_first_layer_menu(){
+    void lcd_calibrate_first_layer_menu(){
       START_MENU();
 
       //
@@ -6666,22 +6666,23 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //PLA
       //
-      MENU_ITEM(gcode, MSG_PLA, PSTR("M104 S210\nM140 S55"));
+      MENU_ITEM(gcode, MSG_PLA, PSTR(imade3d_calibrate_pla_1st_layer_script));
 
       //
       //PETG
       //
-      MENU_ITEM(gcode, MSG_PETG, PSTR("M104 S235\nM140 S65"));
+      MENU_ITEM(gcode, MSG_PETG, PSTR(imade3d_calibrate_petg_1st_layer_script));
 
       //
       //FLEX
       //
-      MENU_ITEM(gcode, MSG_FLEX, PSTR("M104 S230\nM140 S50"));
+      MENU_ITEM(gcode, MSG_FLEX, PSTR(imade3d_calibrate_flex_1st_layer_script));
 
       //
       //Custom
       //
-      MENU_ITEM(submenu, MSG_CUSTOM, lcd_preheat_custom);
+      //MENU_ITEM(submenu, MSG_CUSTOM, lcd_preheat_custom);
+      MENU_ITEM(gcode, MSG_CUSTOM, PSTR(imade3d_calibrate_custom_1st_layer_script));
 
 
       END_MENU();
@@ -6704,7 +6705,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //Tweak the 1st layer
       //
-      MENU_ITEM(submenu, MSG_CALIBRATE_FIRST_LAYER, lcd_tweak_first_layer_menu);
+      MENU_ITEM(submenu, MSG_CALIBRATE_FIRST_LAYER, lcd_calibrate_first_layer_menu);
 
 
       //
