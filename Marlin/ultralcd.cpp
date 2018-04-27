@@ -119,6 +119,7 @@ uint16_t max_display_update_time = 0;
   void lcd_adjustments_menu();
   void lcd_preheat_nozzle_menu();
   void lcd_preheat_bed_menu();
+  void lcd_preheat_menu();
   void lcd_prepare_menu();
   void lcd_move_menu();
   void lcd_control_menu();
@@ -1018,16 +1019,9 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_eject_filament_script_function);
 
       //
-      //Preheat Nozzle Menu
+      //Preheat Menu
       //
-      MENU_ITEM(submenu, MSG_PREHEAT_NOZZLE, lcd_preheat_nozzle_menu);
-      
-      #if HAS_TEMP_BED
-        //
-        //Preheat Nozzle and Bed
-        //
-        MENU_ITEM(submenu, MSG_PREHEAT_BED, lcd_preheat_bed_menu);
-      #endif 
+      MENU_ITEM(submenu, MSG_PREHEAT, lcd_preheat_menu);
 
       //
       //Calibration Menu
@@ -2909,7 +2903,7 @@ void kill_screen(const char* lcd_msg) {
     enqueue_and_echo_commands_P(PSTR("M104 S230"));
     lcd_return_to_status();
    }
-
+/*
 static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, int max) {
   if (encoderPosition != 0) {
     refresh_cmd_timeout();
@@ -2959,7 +2953,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    * Preheat CUSTOM > Preheat Nozzle and Bed
    *
    */
-   void lcd_preheat_custom_bed(){
+  /* void lcd_preheat_custom_bed(){
     START_MENU();
     
     //
@@ -2970,7 +2964,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     MENU_MULTIPLIER_ITEM_EDIT_CALLBACK(int3, MSG_CUSTOM_BED_TEMP, &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15, watch_temp_callback_bed);
     #endif
     END_MENU();
-   }
+   }*/
   /**
    *
    *"Preheat Nozzle" submenu
@@ -3010,7 +3004,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     //Preheat Custom
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM, lcd_preheat_custom_nozzle);
+//    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM, lcd_preheat_custom_nozzle);
 
     END_MENU();
   }
@@ -3054,7 +3048,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     //Preheat Custom
     //
-    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM_BED, lcd_preheat_custom_bed);
+//    MENU_ITEM(submenu, MSG_PREHEAT_CUSTOM_BED, lcd_preheat_custom_bed);
         
     END_MENU();
   }
@@ -6643,6 +6637,77 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       END_MENU();
     }
 
+
+
+    
+         /**
+     * 
+     * Update Bed Temp Function 
+     * 
+     */
+        static void _lcd_adjust_bed_temp(const char* name, int targetTemp, int min, int max) {
+      if (encoderPosition != 0) {
+        refresh_cmd_timeout();
+        (thermalManager.target_temperature_bed += float((int)encoderPosition));
+        
+        if (thermalManager.target_temperature_bed < min){
+            thermalManager.target_temperature_bed = min;
+        }
+          
+        if (thermalManager.target_temperature_bed > max) {
+            thermalManager.target_temperature_bed = max;
+        }
+        encoderPosition = 0;
+        //line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+        lcdDrawUpdate = 1;
+      }
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, i8tostr3(thermalManager.target_temperature_bed));
+      if (lcd_clicked) {
+          lcd_return_to_status();
+      }
+    } 
+
+            /**
+     * Preheat Custom Bed 
+     */
+    static void lcd_preheat_custom_bed() {
+      #if HAS_TEMP_BED
+        _lcd_adjust_bed_temp(PSTR(MSG_BED), &thermalManager.target_temperature_bed, 0, BED_MAXTEMP - 15);
+      #endif
+     }
+
+
+         /**
+     * 
+     * Update Nozzle Temp Function 
+     * 
+     */
+    static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, int max) {
+      if (encoderPosition != 0) {
+        refresh_cmd_timeout();
+        (thermalManager.target_temperature[0] += float((int)encoderPosition));
+        
+        if (thermalManager.target_temperature[0] < min){
+            thermalManager.target_temperature[0] = min;
+        }
+          
+        if (thermalManager.target_temperature[0] > max) {
+            thermalManager.target_temperature[0] = max;
+        }
+        encoderPosition = 0;
+        //line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
+        lcdDrawUpdate = 1;
+      }
+      if (lcdDrawUpdate) lcd_implementation_drawedit(name, i8tostr3(thermalManager.target_temperature[0]));
+      if (lcd_clicked) {
+          #if HAS_TEMP_BED
+            lcd_goto_screen(lcd_preheat_custom_bed);
+           #else
+            lcd_return_to_status();
+          #endif
+      }
+    } 
+
     /**
      * Preheat Custom Nozzle 
      */
@@ -6735,6 +6800,87 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
       END_MENU();
     }
+
+
+
+   /**
+    * Lcd Cooldown
+    */
+   static void lcd_preheat_cooldown(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S0\nM140 S0"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S0")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+    /**
+    * Lcd Preheat PLA
+    */
+   static void lcd_preheat_pla(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S210\nM140 S55"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S210")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+   /**
+    * Lcd Preheat PLA
+    */
+   static void lcd_preheat_pet(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S235\nM140 S65"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S235")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+   /**
+    * Lcd Preheat FLEX
+    */
+   static void lcd_preheat_flex(){
+    #if HAS_TEMP_BED
+      enqueue_and_echo_commands_P(PSTR("M104 S230\nM140 S50"));  
+    #else
+      enqueue_and_echo_commands_P(PSTR("M104 S230")); 
+    #endif
+      lcd_return_to_status();
+   }
+
+   /**
+   * 
+   * Preheat Menu
+   * 
+   */
+   void lcd_preheat_menu(){
+      START_MENU();
+
+     //
+     // ^ Main
+     //
+     MENU_BACK(MSG_BACK);
+     
+     #if HAS_TEMP_BED
+      MENU_ITEM(function, MSG_COOLDOWN_BOTH, lcd_preheat_cooldown);
+      MENU_ITEM(function, MSG_PREHEAT_PLA_BOTH, lcd_preheat_pla);
+      MENU_ITEM(function, MSG_PREHEAT_PET_BOTH, lcd_preheat_pet);
+      MENU_ITEM(function, MSG_PREHEAT_FLEX_BOTH, lcd_preheat_flex);
+      MENU_ITEM(submenu, MSG_CUSTOM_BOTH, lcd_preheat_custom);
+     #else
+      MENU_ITEM(function, MSG_COOLDOWN, lcd_preheat_cooldown);
+      MENU_ITEM(function, MSG_PREHEAT_PLA, lcd_preheat_pla);
+      MENU_ITEM(function, MSG_PREHEAT_PET, lcd_preheat_pet);
+      MENU_ITEM(function, MSG_PREHEAT_FLEX, lcd_preheat_flex);
+      MENU_ITEM(submenu, MSG_CUSTOM_TEMP, lcd_preheat_custom);
+
+     #endif
+
+      END_MENU();
+   }
     
 
 #endif // ULTRA_LCD
