@@ -6747,7 +6747,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //Custom
       //
       //MENU_ITEM(submenu, MSG_CUSTOM, lcd_preheat_custom);
-      MENU_ITEM(gcode, MSG_CUSTOM, PSTR(imade3d_calibrate_custom_1st_layer_script));
+      //MENU_ITEM(gcode, MSG_CUSTOM, PSTR(imade3d_calibrate_custom_1st_layer_script));
 
 
       END_MENU();
