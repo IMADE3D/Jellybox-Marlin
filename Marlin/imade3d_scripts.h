@@ -5,6 +5,26 @@
 #define imade3d_test_script "G28 X\nG28 Y"
 
 //
+//Calibrate PLA 1st Layer Script 
+//
+#define imade3d_calibrate_pla_1st_layer_script "G29" 
+
+//
+//Calibrate PETG 1st Layer Script 
+//
+#define imade3d_calibrate_petg_1st_layer_script "G29" 
+
+//
+//Calibrate FLEX 1st Layer Script 
+//
+#define imade3d_calibrate_flex_1st_layer_script "G29" 
+
+//
+//Calibrate CUSTOM 1st Layer Script 
+//
+#define imade3d_calibrate_custom_1st_layer_script "G29" 
+
+//
 // Load Filament Script
 //
 #define imade3d_load_filament_script "M109 S235 \nM84 E\nM300 S440 P500\nG4 P500\nM300 S440 P500\nM0 Insert filament now\nM117 Loading filament...\nG92 E0 \nG91\nM117 Loading 80mm...\nG1 F300 E5\nM400\nM117 Loading 75mm...\nG1 F300 E5\nM400\nM117 Loading 70mm...\nG1 F300 E5\nM400\nM117 Loading 65mm...\nG1 F300 E5\nM400\nM117 Loading 60mm...\nG1 F300 E5\nM400\nM117 Loading 55mm...\nG1 F300 E5\nM400\nM117 Loading 50mm...\nG1 F300 E5\nM400\nM117 Loading 45mm...\nG1 F300 E5\nM400\nM117 Loading 40mm...\nG1 F300 E5\nM400\nM117 Loading 35mm...\nG1 F275 E5\nM400\nM117 Loading 30mm...\nG1 F250 E5\nM400\nM117 Loading 25mm...\nG1 F225 E5\nM400\nM117 Loading 20mm...\nG1 F200 E5\nM400\nM117 Loading 15mm...\nG1 F200 E5\nM400\nM117 Loading 10mm...\nG1 F200 E5\nM400\nM117 Loading 5mm...\nG1 F200 E5\nM400\nG1 E-30 F2500 \nG90 \nG92 E0\nM84 E \nM104 S0\nM0 Filament loaded!"

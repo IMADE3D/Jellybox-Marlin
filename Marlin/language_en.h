@@ -69,6 +69,42 @@
 #ifndef MSG_FLEX
   #define MSG_FLEX                            _UxGT("FLEX")
 #endif
+#ifndef MSG_COOLDOWN_BOTH
+  #define MSG_COOLDOWN_BOTH                   _UxGT("Cooldown -  0/0 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_PLA_BOTH
+  #define MSG_PREHEAT_PLA_BOTH                _UxGT("PLA -  210/55 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_PET_BOTH
+  #define MSG_PREHEAT_PET_BOTH                _UxGT("PET -  235/65 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_FLEX_BOTH
+  #define MSG_PREHEAT_FLEX_BOTH               _UxGT("FLEX - 230/50 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_COOLDOWN
+  #define MSG_COOLDOWN                        _UxGT("Cooldown -  0 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_PLA
+  #define MSG_PREHEAT_PLA                     _UxGT("PLA -  210 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_PET
+  #define MSG_PREHEAT_PET                     _UxGT("PET -  235 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_PREHEAT_FLEX
+  #define MSG_PREHEAT_FLEX                    _UxGT("FLEX - 230 "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_CUSTOM_TEMP
+  #define MSG_CUSTOM_TEMP                     _UxGT("Custom - ? "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_CUSTOM_BOTH
+  #define MSG_CUSTOM_BOTH                     _UxGT("Custom - ?/? "LCD_STR_DEGREE"C")
+#endif
+#ifndef MSG_CUSTOM
+  #define MSG_CUSTOM                          _UxGT("Custom")
+#endif
+#ifndef MSG_PREHEAT
+  #define MSG_PREHEAT                         _UxGT("Preheat")
+#endif
 #ifndef MSG_HOME_XYZ
   #define MSG_HOME_XYZ                        _UxGT("Home XYZ")
 #endif
