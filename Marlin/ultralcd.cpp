@@ -6439,11 +6439,12 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Warning
       //
-      STATIC_ITEM("Warning! Z probe must          ");
-      STATIC_ITEM("be adjusted first              ");
+      STATIC_ITEM("!  Prerequisites  !     ");
+      STATIC_ITEM("-Setup Z probe height   " );
+      STATIC_ITEM("-Test X and test Y      ");
 
       //
-      // Home XYZ
+      // Home Z
       //
       MENU_ITEM(gcode, MSG_TEST_Z_ENDSTOP, PSTR("G28 Z"));
 
@@ -6526,10 +6527,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Message
       //
-      STATIC_ITEM("Move bed and nozzle                ");
-      STATIC_ITEM("in desired position                ");
-      STATIC_ITEM("and hit 'Test auto                 ");
-      STATIC_ITEM("bed level'                         ");
+      STATIC_ITEM("Make sure to insert   ");
+      STATIC_ITEM("the removable         ");
+      STATIC_ITEM("build plate           ");
 
       //
       // Home XYZ
@@ -6622,17 +6622,17 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Load Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTLOAD, PSTR(imade3d_load_filament_script));
+      MENU_ITEM(function, MSG_FILAMENTLOAD, imade3d_load_filament_script_function);
   
       //
       // Eject Filament
       //
-      MENU_ITEM(gcode, MSG_FILAMENTEJECT, PSTR(imade3d_eject_filament_script));
+      MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_load_filament_script_function);
 
       //
       // Test Filament Fans
       //
-      MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S100"));
+      MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S255\nG4 S2\nM106 S155\nG4 S2\nM106 S0"));
 
       END_MENU();
     }
