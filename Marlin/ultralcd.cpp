@@ -6371,7 +6371,8 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //Display X endstop status
       //
-      STATIC_ITEM("Endstop Status             ");
+      //STATIC_ITEM("Endstop Status             ");
+      STATIC_ITEM("Scroll to Update             ");
      #if HAS_X_MIN
        SERIAL_PROTOCOLPGM(MSG_X_MIN);
        SERIAL_PROTOCOLLN(((READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
