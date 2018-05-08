@@ -6553,6 +6553,8 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       enqueue_and_echo_commands_P(PSTR("M104 S0"));
       }
 
+      lcd_return_to_status();
+
     }
 
    /**
@@ -6568,6 +6570,8 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       if (thermalManager.degBed()>50){
       enqueue_and_echo_commands_P(PSTR("M140 S0"));
       }
+
+      lcd_return_to_status();
 
     }
 
