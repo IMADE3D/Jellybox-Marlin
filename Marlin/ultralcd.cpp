@@ -4506,7 +4506,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
      void lcd_offset_saved(){
       START_MENU();
     
-      STATIC_ITEM("Home offsets saved!        ");
+      STATIC_ITEM("X-origin set!        ");
     
       if(lcd_clicked){
         lcd_goto_screen(lcd_tune_home_offsets_menu);
@@ -6507,9 +6507,12 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     void lcd_change_x_home_offset_msg1_menu(){
         START_MENU();
 
-        STATIC_ITEM("Position nozzle                ");
-        STATIC_ITEM("on edge of bed                 ");
-        STATIC_ITEM("bed plate                      ");
+        STATIC_ITEM("You need to position  ");
+        STATIC_ITEM("the nozzle over the   ");
+        STATIC_ITEM("left edge of the      ");
+        STATIC_ITEM("build plate.          ");
+        STATIC_ITEM("   Click to continue  ");
+        
 
         if(lcd_clicked) {
           lcd_goto_screen(lcd_move_x_1mm);
@@ -6541,20 +6544,19 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // ^ Main
       //
       MENU_BACK(MSG_BACK);
-
-      //
-      // Message
-      //
-      STATIC_ITEM("Move bed and nozzle               ");
-      STATIC_ITEM("in desired position               ");
-      STATIC_ITEM("and hit 'Change X                 ");
-      STATIC_ITEM("home offset'                      ");
-
+      
       //
       // Home XYZ
       //
       MENU_ITEM(function, MSG_CHANGE_X_HOME_OFFSET, change_x_home_offset);
       //MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
+
+      //
+      // Message
+      //
+      STATIC_ITEM("? This procedure will     ");
+      STATIC_ITEM("ensure you can use the  ");
+      STATIC_ITEM("whole build plate.       ");
 
       END_MENU();
     }
