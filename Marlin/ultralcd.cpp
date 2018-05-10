@@ -156,6 +156,7 @@ uint16_t max_display_update_time = 0;
 
   bool longActionRunning = false;
   bool printer_paused = false;
+  bool changing_home_offsets = false;
 
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
@@ -4501,7 +4502,18 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       END_MENU();
     }
 
- 
+     void lcd_offset_saved(){
+      START_MENU();
+    
+      STATIC_ITEM("Home offsets saved!        ");
+    
+      if(lcd_clicked){
+        lcd_goto_screen(lcd_tune_home_offsets_menu);
+      }
+    
+      END_MENU();
+    
+     }
 
   /**
  *
@@ -4559,7 +4571,15 @@ static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
     }
   if (lcd_clicked) {
     encoderTopLine = 0;
-    lcd_goto_previous_menu();
+      if (changing_home_offsets){
+        enqueue_and_echo_commands_P(PSTR("M428\nM500"));
+        lcd_goto_screen(lcd_offset_saved);
+        changing_home_offsets = false;
+
+      }
+      else{
+        lcd_goto_previous_menu();
+      }
   }
 } 
 
@@ -6483,6 +6503,31 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       END_MENU();
     }
 
+    void lcd_change_x_home_offset_msg1_menu(){
+        START_MENU();
+
+        STATIC_ITEM("Position nozzle                ");
+        STATIC_ITEM("on edge of bed                 ");
+        STATIC_ITEM("bed plate                      ");
+
+        if(lcd_clicked) {
+          lcd_goto_screen(lcd_move_x_1mm);
+        }
+
+        END_MENU();
+
+    }
+     
+    void change_x_home_offset(){
+
+      enqueue_and_echo_commands_P(PSTR("G28"));
+      enqueue_and_echo_commands_P(PSTR("G0 Z0 Y0"));
+      changing_home_offsets = true;
+      lcd_goto_screen(lcd_change_x_home_offset_msg1_menu);
+      
+
+    }
+
    /**
     * 
     * Tune Home offsets Menu
@@ -6501,13 +6546,14 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       STATIC_ITEM("Move bed and nozzle               ");
       STATIC_ITEM("in desired position               ");
-      STATIC_ITEM("and hit 'Set Home                 ");
-      STATIC_ITEM("offsets'                          ");
+      STATIC_ITEM("and hit 'Change X                 ");
+      STATIC_ITEM("home offset'                      ");
 
       //
       // Home XYZ
       //
-      MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
+      MENU_ITEM(function, MSG_CHANGE_X_HOME_OFFSET, change_x_home_offset);
+      //MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
 
       END_MENU();
     }
