@@ -150,12 +150,15 @@ uint16_t max_display_update_time = 0;
   void imade3d_load_filament_script_function();
   void imade3d_eject_filament_script_function();
   void lcd_calibration_menu();
+  void lcd_preflight_check_menu();
 
   int fanSpeed100;
   int fanSpeed;
 
   bool longActionRunning = false;
   bool printer_paused = false;
+
+  bool testing_heaters = false;
 
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
@@ -638,7 +641,15 @@ void lcd_status_screen() {
           false
         #endif
       );
-      lcd_goto_screen(lcd_main_menu);
+      if (testing_heaters) {
+         lcd_goto_screen(lcd_preflight_check_menu);
+         testing_heaters = false;
+         lcd_setstatusPGM(PSTR("JellyBOX is ready"), -1);
+      }
+      else{
+        lcd_goto_screen(lcd_main_menu);
+      }
+
       return;
     }
 
@@ -6545,15 +6556,13 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     * Test Nozzle Heater
     * 
     */
+    void lcd_preflight_check_menu();
+    
     void lcd_test_nozzle_menu(){
 
       enqueue_and_echo_commands_P(PSTR("M104 S50"));
-       lcd_goto_previous_menu();
-
-      if (thermalManager.degHotend(active_extruder)>50){
-      enqueue_and_echo_commands_P(PSTR("M104 S0"));
-      }
-
+      testing_heaters = true;
+      lcd_setstatusPGM(PSTR("click to stop heating and continue"), -1);
       lcd_return_to_status();
 
     }
@@ -6565,13 +6574,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     */
     void lcd_test_bed_menu(){
 
-      enqueue_and_echo_commands_P(PSTR("M140 S50"));
-       lcd_goto_previous_menu();
-
-      if (thermalManager.degBed()>50){
-      enqueue_and_echo_commands_P(PSTR("M140 S0"));
-      }
-
+      enqueue_and_echo_commands_P(PSTR("M140 S40"));
+      testing_heaters = true;
+      lcd_setstatusPGM(PSTR("click to stop heating and continue"), -1);
       lcd_return_to_status();
 
     }
