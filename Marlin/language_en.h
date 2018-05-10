@@ -39,6 +39,9 @@
 #ifndef MSG_ABORT
   #define MSG_ABORT                           _UxGT("Abort")
 #endif
+#ifndef MSG_CHANGE_X_HOME_OFFSET
+  #define MSG_CHANGE_X_HOME_OFFSET            _UxGT("Change x home offset")
+#endif
 #ifndef MSG_MOVE_AXES
   #define MSG_MOVE_AXES                       _UxGT("Move axes")
 #endif
