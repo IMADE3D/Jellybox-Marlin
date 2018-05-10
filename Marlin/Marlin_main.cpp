@@ -9251,6 +9251,8 @@ void quickstop_stepper() {
   inline void gcode_M428() {
     bool err = false;
     LOOP_XYZ(i) {
+      if (i != 2){     //Prevent this gcode from modifying the z home offset
+        if (i != 1) {  //Prevent this gcode from modifying the y home offset
       if (axis_homed[i]) {
         const float base = (current_position[i] > (soft_endstop_min[i] + soft_endstop_max[i]) * 0.5) ? base_home_pos((AxisEnum)i) : 0,
                     diff = base - RAW_POSITION(current_position[i], i);
@@ -9265,6 +9267,8 @@ void quickstop_stepper() {
           err = true;
           break;
         }
+      }
+      }
       }
     }
 
