@@ -150,6 +150,7 @@ uint16_t max_display_update_time = 0;
   void imade3d_load_filament_script_function();
   void imade3d_eject_filament_script_function();
   void lcd_calibration_menu();
+  void lcd_tune_home_offsets_menu();
 
   int fanSpeed100;
   int fanSpeed;
