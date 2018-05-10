@@ -159,6 +159,7 @@ uint16_t max_display_update_time = 0;
   bool printer_paused = false;
 
   bool testing_heaters = false;
+  bool testing_motors = false;
 
   #if ENABLED(LCD_INFO_MENU)
     #if ENABLED(PRINTCOUNTER)
@@ -4553,10 +4554,14 @@ static void _lcd_move(const char* name, AxisEnum axis, int min, int max) {
         current_position[axis] = max;
       #endif
     }
-
+if (!testing_motors){
     if (current_position[axis] < 0 && axis == E_AXIS){
       current_position[axis] = 0;
     }
+}
+else{
+  testing_motors = false;
+}
     encoderPosition = 0;
     line_to_current_bt(axis);  //used by _lcd_move_bt and _lcd_move_z_bt and _lcd_move_e_bt
     lcdDrawUpdate = 1;
@@ -4610,7 +4615,14 @@ static void lcd_move_z_1mm() {
 static void lcd_move_e_1mm() {
   move_menu_scale = .5;
   longActionRunning = true;
-  _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, 0, 200);
+  testing_motors = true;
+  if (testing_motors){
+  _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, -200, 200);
+  }
+  else{
+      _lcd_move(PSTR(MSG_CUSTOM_EXTRUDE), E_AXIS, 0, 200);
+  }
+    
 }
 static void lcd_move_e_05mm_bt() {
   _lcd_move_e_bt(PSTR(MSG_MOVE_E), E_AXIS, 0.5);
@@ -6360,7 +6372,6 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Move E
       //
-      
       MENU_ITEM(submenu,  MSG_MOVE_E,  lcd_move_e_1mm);
 
       END_MENU();
