@@ -646,6 +646,10 @@ void lcd_status_screen() {
          lcd_goto_screen(lcd_preflight_check_menu);
          testing_heaters = false;
          lcd_setstatusPGM(PSTR("JellyBOX is ready"), -1);
+         enqueue_and_echo_commands_P(PSTR("M104 S0"));
+         enqueue_and_echo_commands_P(PSTR("M140 S0"));
+         encoderPosition = encoderPosition+6;
+         
       }
       else{
         lcd_goto_screen(lcd_main_menu);
