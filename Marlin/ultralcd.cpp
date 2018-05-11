@@ -3015,7 +3015,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
     //
     //Preheat FLEX
     //
-    MENU_ITEM(function, MSG_PREHEAT_FLEX, preheat_flex_nozzle);
+    MENU_ITEM(function, MSG_PREHEAT_UNIVERSAL, preheat_flex_nozzle);
 
     //
     //Preheat Custom
@@ -6866,13 +6866,13 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
    }
 
    /**
-    * Lcd Preheat FLEX
+    * Lcd Preheat UNIVERSAL
     */
-   static void lcd_preheat_flex(){
+   static void lcd_preheat_universal(){
     #if HAS_TEMP_BED
-      enqueue_and_echo_commands_P(PSTR("M104 S230\nM140 S50"));  
+      enqueue_and_echo_commands_P(PSTR("M104 S180\nM140 S45"));  
     #else
-      enqueue_and_echo_commands_P(PSTR("M104 S230")); 
+      enqueue_and_echo_commands_P(PSTR("M104 S180")); 
     #endif
       lcd_return_to_status();
    }
@@ -6892,16 +6892,16 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
      
      #if HAS_TEMP_BED
       MENU_ITEM(function, MSG_COOLDOWN_BOTH, lcd_preheat_cooldown);
+      MENU_ITEM(submenu, MSG_CUSTOM_BOTH, lcd_preheat_custom);
+      MENU_ITEM(function, MSG_PREHEAT_UNIVERSAL_BOTH, lcd_preheat_universal);
       MENU_ITEM(function, MSG_PREHEAT_PLA_BOTH, lcd_preheat_pla);
       MENU_ITEM(function, MSG_PREHEAT_PET_BOTH, lcd_preheat_pet);
-      MENU_ITEM(function, MSG_PREHEAT_FLEX_BOTH, lcd_preheat_flex);
-      MENU_ITEM(submenu, MSG_CUSTOM_BOTH, lcd_preheat_custom);
      #else
       MENU_ITEM(function, MSG_COOLDOWN, lcd_preheat_cooldown);
+      MENU_ITEM(submenu, MSG_CUSTOM_TEMP, lcd_preheat_custom);
+      MENU_ITEM(function, MSG_PREHEAT_UNIVERSAL, lcd_preheat_universal);
       MENU_ITEM(function, MSG_PREHEAT_PLA, lcd_preheat_pla);
       MENU_ITEM(function, MSG_PREHEAT_PET, lcd_preheat_pet);
-      MENU_ITEM(function, MSG_PREHEAT_FLEX, lcd_preheat_flex);
-      MENU_ITEM(submenu, MSG_CUSTOM_TEMP, lcd_preheat_custom);
 
      #endif
 
