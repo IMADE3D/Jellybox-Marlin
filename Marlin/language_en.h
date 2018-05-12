@@ -33,8 +33,8 @@
 #ifndef WELCOME_MSG
   #define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
 #endif
-#ifndef MSG_CALIBRATION
-  #define MSG_CALIBRATION                     _UxGT("Calibration")
+#ifndef MSG_MAINTENANCE
+  #define MSG_MAINTENANCE                     _UxGT("Maintenance")
 #endif 
 #ifndef MSG_MATERIAL
   #define MSG_MATERIAL                        _UxGT("Material")

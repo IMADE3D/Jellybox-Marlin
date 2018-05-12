@@ -149,7 +149,7 @@ uint16_t max_display_update_time = 0;
   void lcd_home_xyz();
   void imade3d_load_filament_script_function();
   void imade3d_eject_filament_script_function();
-  void lcd_calibration_menu();
+  void lcd_maintenance_menu();
   void lcd_preflight_check_menu();
   void lcd_material_menu();
 
@@ -1055,7 +1055,7 @@ void kill_screen(const char* lcd_msg) {
       //
       //Calibration Menu
       //
-      MENU_ITEM(submenu, MSG_CALIBRATION, lcd_calibration_menu);
+      MENU_ITEM(submenu, MSG_MAINTENANCE, lcd_maintenance_menu);
       
       //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
       #if ENABLED(DELTA_CALIBRATION_MENU)
@@ -6794,11 +6794,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     
    /**
     * 
-    * Calibration Menu
+    * Maintenance Menu
     * 
     */
     
-    void lcd_calibration_menu(){
+    void lcd_maintenance_menu(){
       START_MENU();
 
       //
