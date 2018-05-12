@@ -129,9 +129,6 @@
 #ifndef MSG_TEST_MOTORS
   #define MSG_TEST_MOTORS                     _UxGT("Test motors")
 #endif
-#ifndef MSG_TUNE_HOME_OFFSETS
-  #define MSG_TUNE_HOME_OFFSETS               _UxGT("Tune home offsets")
-#endif
 #ifndef MSG_BACK
   #define MSG_BACK                            _UxGT("Go Back")
 #endif
@@ -1187,6 +1184,12 @@
 #endif
 #ifndef MSG_FILAMENTEJECT
   #define MSG_FILAMENTEJECT                    _UxGT("Eject filament")
+#endif
+#ifndef MSG_CHANGE_X_HOME_OFFSET
+  #define MSG_CHANGE_X_HOME_OFFSET            _UxGT("Set X-origin")
+#endif
+#ifndef MSG_SET_ORIGIN
+  #define MSG_SET_ORIGIN                      _UxGT("Set origin")
 #endif
 
 

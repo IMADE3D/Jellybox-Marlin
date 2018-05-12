@@ -152,12 +152,14 @@ uint16_t max_display_update_time = 0;
   void lcd_maintenance_menu();
   void lcd_preflight_check_menu();
   void lcd_material_menu();
+  void lcd_set_origin_menu();
 
   int fanSpeed100;
   int fanSpeed;
 
   bool longActionRunning = false;
   bool printer_paused = false;
+  bool changing_home_offsets = false;
 
   bool testing_nozzle = false;
   bool testing_bed_heater = false; 
@@ -4530,7 +4532,18 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       END_MENU();
     }
 
- 
+     void lcd_offset_saved(){
+      START_MENU();
+    
+      STATIC_ITEM("X-origin set!        ");
+    
+      if(lcd_clicked){
+        lcd_goto_screen(lcd_set_origin_menu);
+      }
+    
+      END_MENU();
+    
+     }
 
   /**
  *
@@ -4592,7 +4605,15 @@ else{
     }
   if (lcd_clicked) {
     encoderTopLine = 0;
-    lcd_goto_previous_menu();
+      if (changing_home_offsets){
+        enqueue_and_echo_commands_P(PSTR("M428\nM500"));
+        lcd_goto_screen(lcd_offset_saved);
+        changing_home_offsets = false;
+
+      }
+      else{
+        lcd_goto_previous_menu();
+      }
   }
 } 
 
@@ -6523,31 +6544,59 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       END_MENU();
     }
 
+    void lcd_change_x_home_offset_msg1_menu(){
+        START_MENU();
+
+        STATIC_ITEM("Position the ");
+        STATIC_ITEM("nozzle over  ");
+        STATIC_ITEM("the left edge of    ");
+        STATIC_ITEM("the build plate.    ");
+        STATIC_ITEM("   Click to continue  ");
+        
+
+        if(lcd_clicked) {
+          lcd_goto_screen(lcd_move_x_1mm);
+        }
+
+        END_MENU();
+
+    }
+     
+    void change_x_home_offset(){
+
+      enqueue_and_echo_commands_P(PSTR("G28"));
+      enqueue_and_echo_commands_P(PSTR("G0 Z0 Y0 X0"));
+      changing_home_offsets = true;
+      lcd_goto_screen(lcd_change_x_home_offset_msg1_menu);
+      
+
+    }
+
    /**
     * 
-    * Tune Home offsets Menu
+    * Set Origin Menu
     * 
     */
-    void lcd_tune_home_offsets_menu(){
+    void lcd_set_origin_menu(){
       START_MENU();
 
       //
       // ^ Main
       //
       MENU_BACK(MSG_BACK);
+      
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(function, MSG_CHANGE_X_HOME_OFFSET, change_x_home_offset);
+      //MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
 
       //
       // Message
       //
-      STATIC_ITEM("Move bed and nozzle               ");
-      STATIC_ITEM("in desired position               ");
-      STATIC_ITEM("and hit 'Set Home                 ");
-      STATIC_ITEM("offsets'                          ");
-
-      //
-      // Home XYZ
-      //
-      MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
+      STATIC_ITEM("? This procedure will     ");
+      STATIC_ITEM("ensure you can use the  ");
+      STATIC_ITEM("whole build plate.       ");
 
       END_MENU();
     }
@@ -6644,9 +6693,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level_menu);
 
       //
-      // Tune home offsets
+      // Set origin
       //
-      MENU_ITEM(submenu, MSG_TUNE_HOME_OFFSETS, lcd_tune_home_offsets_menu);
+      MENU_ITEM(submenu, MSG_SET_ORIGIN, lcd_set_origin_menu);
 
       //
       // Test nozzle heater
