@@ -6525,7 +6525,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     void change_x_home_offset(){
 
       enqueue_and_echo_commands_P(PSTR("G28"));
-      enqueue_and_echo_commands_P(PSTR("G0 Z0 Y0"));
+      enqueue_and_echo_commands_P(PSTR("G0 Z0 Y0 X0"));
       changing_home_offsets = true;
       lcd_goto_screen(lcd_change_x_home_offset_msg1_menu);
       
