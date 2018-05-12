@@ -6876,12 +6876,6 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_BACK(MSG_BACK);
 
       //
-      //Tweak the 1st layer
-      //
-      MENU_ITEM(submenu, MSG_CALIBRATE_FIRST_LAYER, lcd_calibrate_first_layer_menu);
-
-
-      //
       //Preflight Check
       //
       MENU_ITEM(submenu, MSG_PREFLIGHT_CHECK, lcd_preflight_check_menu);
@@ -7013,6 +7007,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // Eject Filament
       //
       MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_eject_filament_script_function);
+      
+      //
+      //Calibrate the 1st layer
+      //
+      MENU_ITEM(submenu, MSG_CALIBRATE_FIRST_LAYER, lcd_calibrate_first_layer_menu);
 
       //
       //Preheat Menu
