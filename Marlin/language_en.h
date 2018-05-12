@@ -36,6 +36,9 @@
 #ifndef MSG_CALIBRATION
   #define MSG_CALIBRATION                     _UxGT("Calibration")
 #endif 
+#ifndef MSG_MATERIAL
+  #define MSG_MATERIAL                        _UxGT("Material")
+#endif 
 #ifndef MSG_ABORT
   #define MSG_ABORT                           _UxGT("Abort")
 #endif

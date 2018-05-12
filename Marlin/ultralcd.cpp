@@ -151,6 +151,7 @@ uint16_t max_display_update_time = 0;
   void imade3d_eject_filament_script_function();
   void lcd_calibration_menu();
   void lcd_preflight_check_menu();
+  void lcd_material_menu();
 
   int fanSpeed100;
   int fanSpeed;
@@ -1032,19 +1033,24 @@ void kill_screen(const char* lcd_msg) {
       MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
 
       //
+      //Material Menu
+      //
+      MENU_ITEM(submenu, MSG_MATERIAL, lcd_material_menu);
+
+      //
       // Load Filament
       //
-      MENU_ITEM(function, MSG_FILAMENTLOAD, imade3d_load_filament_script_function);
+     // MENU_ITEM(function, MSG_FILAMENTLOAD, imade3d_load_filament_script_function);
 
       //
       // Eject Filament
       //
-      MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_eject_filament_script_function);
+     // MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_eject_filament_script_function);
 
       //
       //Preheat Menu
       //
-      MENU_ITEM(submenu, MSG_PREHEAT, lcd_preheat_menu);
+     // MENU_ITEM(submenu, MSG_PREHEAT, lcd_preheat_menu);
 
       //
       //Calibration Menu
@@ -6914,6 +6920,38 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
       END_MENU();
    }
+
+   /**
+    * 
+    * Material Menu
+    * 
+    */
+
+    void lcd_material_menu(){
+      START_MENU();
+
+       //
+       // ^ Main
+       //
+       MENU_BACK(MSG_BACK);
+
+      //
+      // Load Filament
+      //
+      MENU_ITEM(function, MSG_FILAMENTLOAD, imade3d_load_filament_script_function);
+
+      //
+      // Eject Filament
+      //
+      MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_eject_filament_script_function);
+
+      //
+      //Preheat Menu
+      //
+      MENU_ITEM(submenu, MSG_PREHEAT, lcd_preheat_menu);
+
+      END_MENU();
+    }
     
 
 #endif // ULTRA_LCD
