@@ -6740,7 +6740,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // Test Filament Fans
       //
-      MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S255\nG4 S2\nM106 S155\nG4 S2\nM106 S0"));
+      MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S255\nG4 S1\nM106 S130\nG4 S1\nM106 S0"));
 
       END_MENU();
     }
