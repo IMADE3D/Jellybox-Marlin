@@ -3287,9 +3287,36 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    * "Prepare" > "Move Axis" submenu
    *
    */
+     
+  // subfunction for x origin setting in pre-flight
+  
+   void lcd_offset_saved(){
+    START_MENU();
 
+    STATIC_ITEM("X-origin set!        ");
+
+    if(lcd_clicked){
+      lcd_goto_screen(lcd_set_origin_menu);
+    }
+
+    END_MENU();
+
+   }
+     
   void _lcd_move_xyz(const char* name, AxisEnum axis) {
-    if (lcd_clicked) { return lcd_goto_previous_menu(); }
+    // start of offset saving script
+    if (lcd_clicked) {
+        encoderTopLine = 0;
+          if (changing_home_offsets){
+            enqueue_and_echo_commands_P(PSTR("M428\nM500"));
+            lcd_goto_screen(lcd_offset_saved);
+            changing_home_offsets = false;
+          }
+          else{
+            lcd_goto_previous_menu();
+          }
+      }
+      // end of offset saving script
     ENCODER_DIRECTION_NORMAL();
     if (encoderPosition) {
       refresh_cmd_timeout();
@@ -4503,18 +4530,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       END_MENU();
     }
 
-     void lcd_offset_saved(){
-      START_MENU();
-    
-      STATIC_ITEM("X-origin set!        ");
-    
-      if(lcd_clicked){
-        lcd_goto_screen(lcd_set_origin_menu);
-      }
-    
-      END_MENU();
-    
-     }
+     
 
   /**
  *
