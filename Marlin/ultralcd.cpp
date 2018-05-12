@@ -158,7 +158,8 @@ uint16_t max_display_update_time = 0;
   bool longActionRunning = false;
   bool printer_paused = false;
 
-  bool testing_heaters = false;
+  bool testing_nozzle = false;
+  bool testing_bed_heater = false; 
   bool testing_motors = false;
 
   #if ENABLED(LCD_INFO_MENU)
@@ -642,15 +643,21 @@ void lcd_status_screen() {
           false
         #endif
       );
-      if (testing_heaters) {
+      if (testing_nozzle ||  testing_bed_heater) {
          lcd_goto_screen(lcd_preflight_check_menu);
-         testing_heaters = false;
          lcd_setstatusPGM(PSTR("JellyBOX is ready"), -1);
          enqueue_and_echo_commands_P(PSTR("M104 S0"));
          enqueue_and_echo_commands_P(PSTR("M140 S0"));
-         encoderPosition = encoderPosition+6;
-         
-      }
+         if (testing_nozzle){
+          encoderPosition = encoderPosition+6;
+          testing_nozzle = false;
+         }
+          else if (testing_bed_heater){
+            encoderPosition = encoderPosition +7;
+            testing_bed_heater = false;
+          }
+         }
+      
       else{
         lcd_goto_screen(lcd_main_menu);
       }
@@ -6577,7 +6584,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     void lcd_test_nozzle_menu(){
 
       enqueue_and_echo_commands_P(PSTR("M104 S50"));
-      testing_heaters = true;
+      testing_nozzle = true;
       lcd_setstatusPGM(PSTR("click to stop heating and continue"), -1);
       lcd_return_to_status();
 
@@ -6591,7 +6598,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     void lcd_test_bed_menu(){
 
       enqueue_and_echo_commands_P(PSTR("M140 S40"));
-      testing_heaters = true;
+      testing_bed_heater = true;
       lcd_setstatusPGM(PSTR("click to stop heating and continue"), -1);
       lcd_return_to_status();
 

@@ -7057,13 +7057,13 @@ inline void gcode_M104() {
        */
       if (parser.value_celsius() <= (EXTRUDE_MINTEMP) / 2) {
         print_job_timer.stop();
-        LCD_MESSAGEPGM(WELCOME_MSG);
+        //LCD_MESSAGEPGM(WELCOME_MSG);
       }
     #endif
-
+/*
     if (parser.value_celsius() > thermalManager.degHotend(target_extruder))
       lcd_status_printf_P(0, PSTR("%s"), MSG_HEATING);
-      //lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);
+      //lcd_status_printf_P(0, PSTR("E%i %s"), target_extruder + 1, MSG_HEATING);*/
   }
 
   #if ENABLED(AUTOTEMP)
