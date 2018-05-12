@@ -51,15 +51,6 @@
 #ifndef MSG_PREFLIGHT_CHECK
   #define MSG_PREFLIGHT_CHECK                 _UxGT("Preflight Check")
 #endif 
-#ifndef MSG_TEST_NOZZLE
-  #define MSG_TEST_NOZZLE                     _UxGT("Test nozzle heater")
-#endif 
-#ifndef MSG_TEST_BED
-  #define MSG_TEST_BED                        _UxGT("Test bed heater")
-#endif 
-#ifndef MSG_TEST_FILAMENT_FANS
-  #define MSG_TEST_FILAMENT_FANS              _UxGT("Test filament fans")
-#endif
 #ifndef MSG_CUSTOM
   #define MSG_CUSTOM                          _UxGT("Custom")
 #endif
@@ -111,12 +102,6 @@
 #ifndef MSG_HOME_XYZ
   #define MSG_HOME_XYZ                        _UxGT("Home XYZ")
 #endif
-#ifndef MSG_CHECK_ENDSTOPS
-  #define MSG_CHECK_ENDSTOPS                  _UxGT("Check endstop status")
-#endif 
-#ifndef MSG_TEST_ENDSTOPS
-  #define MSG_TEST_ENDSTOPS                   _UxGT("Test endstops")
-#endif 
 #ifndef MSG_TEST_X_ENDSTOP
   #define MSG_TEST_X_ENDSTOP                  _UxGT("Test X endstop")
 #endif 
@@ -125,9 +110,6 @@
 #endif
 #ifndef MSG_TEST_Z_ENDSTOP
   #define MSG_TEST_Z_ENDSTOP                  _UxGT("Test Z probe")
-#endif
-#ifndef MSG_TEST_MOTORS
-  #define MSG_TEST_MOTORS                     _UxGT("Test motors")
 #endif
 #ifndef MSG_BACK
   #define MSG_BACK                            _UxGT("Go Back")
@@ -639,9 +621,6 @@
 #endif
 #ifndef MSG_CONTROL
   #define MSG_CONTROL                         _UxGT("Control")
-#endif
-#ifndef MSG_TEST_AUTO_BED_LEVEL
-  #define MSG_TEST_AUTO_BED_LEVEL             _UxGT("Test auto bed level")
 #endif
 #ifndef MSG_MIN
   #define MSG_MIN                             _UxGT(" ") LCD_STR_THERMOMETER _UxGT(" Min")
@@ -1161,6 +1140,10 @@
   #endif
 #endif // LCD_HEIGHT < 4
 
+///////////////////////
+// JellyBOX Specific //
+///////////////////////
+
 // About Printer Menu Annotations
 #ifndef MSG_FIRMWARE_VERSION
   #define MSG_FIRMWARE_VERSION            _UxGT("FIRMWARE VERSION:")
@@ -1172,25 +1155,56 @@
   #define MSG_DISTRIBUTION_DATE           _UxGT("DISTRIBUTION DATE:")
 #endif
 #ifndef MSG_SOURCE_URL
-  #define MSG_SOURCE_URL           _UxGT("SOURCE URL:")
+  #define MSG_SOURCE_URL                 _UxGT("SOURCE URL:")
 #endif
 
-// JellyBOX Specific
+// Misc
 #ifndef MSG_HOME_RELEASE
   #define MSG_HOME_RELEASE                    _UxGT("Home & Release")
 #endif 
 #ifndef MSG_FILAMENTLOAD
   #define MSG_FILAMENTLOAD                    _UxGT("Load filament")
 #endif
-#ifndef MSG_FILAMENTEJECT
+#ifndef MSG_FILAMENTEJECT 
   #define MSG_FILAMENTEJECT                    _UxGT("Eject filament")
+#endif
+
+// Preflight menu
+#ifndef MSG_TEST_MOTORS
+  #define MSG_TEST_MOTORS                     _UxGT("1. Test motors")
+#endif
+#ifndef MSG_CHECK_ENDSTOPS
+  #define MSG_CHECK_ENDSTOPS                  _UxGT("2. Endstop status")
+#endif 
+#ifndef MSG_TEST_ENDSTOPS
+  #define MSG_TEST_ENDSTOPS                   _UxGT("3. Test endstops")
+#endif 
+#ifndef MSG_SET_ORIGIN_PREFLIGHT
+  #define MSG_SET_ORIGIN_PREFLIGHT            _UxGT("4. Set origin")
 #endif
 #ifndef MSG_CHANGE_X_HOME_OFFSET
   #define MSG_CHANGE_X_HOME_OFFSET            _UxGT("Set X-origin")
 #endif
-#ifndef MSG_SET_ORIGIN
-  #define MSG_SET_ORIGIN                      _UxGT("Set origin")
+#ifndef MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT
+  #define MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT   _UxGT("5. Test bed leveling")
 #endif
-
+#ifndef MSG_TEST_AUTO_BED_LEVEL
+  #define MSG_TEST_AUTO_BED_LEVEL              _UxGT("Test bed leveling")
+#endif
+#ifndef MSG_TEST_NOZZLE
+  #define MSG_TEST_NOZZLE                      _UxGT("6. Test nozzle heater")
+#endif 
+#ifndef MSG_TEST_BED
+  #define MSG_TEST_BED                         _UxGT("7. Test bed heater")
+#endif 
+#ifndef MSG_TEST_FILAMENT_FANS
+  #define MSG_TEST_FILAMENT_FANS              _UxGT("8. Test filament fans")
+#endif
+#ifndef MSG_FILAMENTLOAD_PREFLIGHT
+  #define MSG_FILAMENTLOAD_PREFLIGHT          _UxGT("9.  Load filament")
+#endif
+#ifndef MSG_FILAMENTEJECT_PREFLIGHT
+  #define MSG_FILAMENTEJECT_PREFLIGHT         _UxGT("10. Eject filament")
+#endif
 
 #endif // LANGUAGE_EN_H
