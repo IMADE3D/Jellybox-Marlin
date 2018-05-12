@@ -3316,9 +3316,36 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
    * "Prepare" > "Move Axis" submenu
    *
    */
+     
+  // subfunction for x origin setting in pre-flight
+  
+   void lcd_offset_saved(){
+    START_MENU();
 
+    STATIC_ITEM("X-origin set!        ");
+
+    if(lcd_clicked){
+      lcd_goto_screen(lcd_set_origin_menu);
+    }
+
+    END_MENU();
+
+   }
+     
   void _lcd_move_xyz(const char* name, AxisEnum axis) {
-    if (lcd_clicked) { return lcd_goto_previous_menu(); }
+    // start of offset saving script
+    if (lcd_clicked) {
+        encoderTopLine = 0;
+          if (changing_home_offsets){
+            enqueue_and_echo_commands_P(PSTR("M428\nM500"));
+            lcd_goto_screen(lcd_offset_saved);
+            changing_home_offsets = false;
+          }
+          else{
+            lcd_goto_previous_menu();
+          }
+      }
+      // end of offset saving script
     ENCODER_DIRECTION_NORMAL();
     if (encoderPosition) {
       refresh_cmd_timeout();
@@ -4532,18 +4559,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       END_MENU();
     }
 
-     void lcd_offset_saved(){
-      START_MENU();
-    
-      STATIC_ITEM("X-origin set!        ");
-    
-      if(lcd_clicked){
-        lcd_goto_screen(lcd_set_origin_menu);
-      }
-    
-      END_MENU();
-    
-     }
+     
 
   /**
  *
@@ -4640,6 +4656,10 @@ static void _lcd_move_e_bt(const char* name, AxisEnum axis, float elength) {
 static void lcd_move_x_1mm() {
   move_menu_scale = 1.0;
   _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
+}
+static void lcd_move_x_01mm() {
+  move_menu_scale = 0.1;
+  lcd_move_x();
 }
 static void lcd_move_y_1mm() {
   move_menu_scale = 1.0;
@@ -6547,15 +6567,15 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     void lcd_change_x_home_offset_msg1_menu(){
         START_MENU();
 
-        STATIC_ITEM("Position the ");
-        STATIC_ITEM("nozzle over  ");
-        STATIC_ITEM("the left edge of    ");
-        STATIC_ITEM("the build plate.    ");
-        STATIC_ITEM("   Click to continue  ");
+        STATIC_ITEM("Position the          ");
+        STATIC_ITEM("nozzle over           ");
+        STATIC_ITEM("the left edge of      ");
+        STATIC_ITEM("the build plate.      ");
+        STATIC_ITEM(" - Click to continue -");
         
 
         if(lcd_clicked) {
-          lcd_goto_screen(lcd_move_x_1mm);
+          lcd_goto_screen(lcd_move_x_01mm);
         }
 
         END_MENU();
