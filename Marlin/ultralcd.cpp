@@ -6635,16 +6635,16 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_BACK(MSG_BACK);
 
       //
-      // Message
-      //
-      STATIC_ITEM("Make sure to insert   ");
-      STATIC_ITEM("the removable         ");
-      STATIC_ITEM("build plate           ");
-
-      //
       // Home XYZ
       //
       MENU_ITEM(gcode, MSG_TEST_AUTO_BED_LEVEL, PSTR("G28\nG29"));
+      
+      //
+      // Message
+      //
+      STATIC_ITEM("! Make sure to insert   ");
+      STATIC_ITEM("the removable         ");
+      STATIC_ITEM("build plate.           ");
 
       END_MENU();
     }
@@ -6693,54 +6693,54 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_BACK(MSG_BACK);
 
       //
-      // Test Motors
+      // 1 Test Motors
       //
       MENU_ITEM(submenu, MSG_TEST_MOTORS, lcd_test_motors_menu);
 
       //
-      // Check endstops
+      // 2 Endstop status
       //
       MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
 
       //
-      // Test endstops
+      // 3 Test endstops
       //
       MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
 
       //
-      // Test auto bed level
+      // 4 Set origin
       //
-      MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level_menu);
+      MENU_ITEM(submenu, MSG_SET_ORIGIN_PREFLIGHT, lcd_set_origin_menu);
+      
+      //
+      // 5 Test auto bed level
+      //
+      MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT, lcd_test_auto_bed_level_menu);
 
       //
-      // Set origin
-      //
-      MENU_ITEM(submenu, MSG_SET_ORIGIN, lcd_set_origin_menu);
-
-      //
-      // Test nozzle heater
+      // 6 Test nozzle heater
       //
       MENU_ITEM(function, MSG_TEST_NOZZLE, lcd_test_nozzle_menu);
 
       //
-      // Test bed heater
+      // 7 Test bed heater
       //
       MENU_ITEM(function, MSG_TEST_BED, lcd_test_bed_menu);
 
       //
-      // Load Filament
-      //
-      MENU_ITEM(function, MSG_FILAMENTLOAD, imade3d_load_filament_script_function);
-  
-      //
-      // Eject Filament
-      //
-      MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_load_filament_script_function);
-
-      //
-      // Test Filament Fans
+      // 8 Test Filament Fans
       //
       MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S255\nG4 S1\nM106 S130\nG4 S1\nM106 S0"));
+      
+      //
+      // 9 Load Filament
+      //
+      MENU_ITEM(function, MSG_FILAMENTLOAD_PREFLIGHT, imade3d_load_filament_script_function);
+  
+      //
+      // 10 Eject Filament
+      //
+      MENU_ITEM(function, MSG_FILAMENTEJECT_PREFLIGHT, imade3d_load_filament_script_function);
 
       END_MENU();
     }
@@ -6876,12 +6876,6 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_BACK(MSG_BACK);
 
       //
-      //Tweak the 1st layer
-      //
-      MENU_ITEM(submenu, MSG_CALIBRATE_FIRST_LAYER, lcd_calibrate_first_layer_menu);
-
-
-      //
       //Preflight Check
       //
       MENU_ITEM(submenu, MSG_PREFLIGHT_CHECK, lcd_preflight_check_menu);
@@ -7013,6 +7007,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       // Eject Filament
       //
       MENU_ITEM(function, MSG_FILAMENTEJECT, imade3d_eject_filament_script_function);
+      
+      //
+      //Calibrate the 1st layer
+      //
+      MENU_ITEM(submenu, MSG_CALIBRATE_FIRST_LAYER, lcd_calibrate_first_layer_menu);
 
       //
       //Preheat Menu
