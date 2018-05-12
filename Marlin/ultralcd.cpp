@@ -4608,8 +4608,12 @@ static void lcd_move_x_1mm() {
   move_menu_scale = 1.0;
   _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
 }
+static void lcd_move_x_01mm() {
+  move_menu_scale = 0.1;
+  _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
+}
 static void lcd_move_x_05mm() {
-  move_menu_scale = .5;
+  move_menu_scale = 0.5;
   _lcd_move(PSTR(MSG_MOVE_X), X_AXIS, X_MIN_POS, X_MAX_POS);
 }
 static void lcd_move_y_1mm() {
@@ -6519,7 +6523,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
         
 
         if(lcd_clicked) {
-          lcd_goto_screen(lcd_move_x_05mm);
+          lcd_goto_screen(lcd_move_x_1mm);
         }
 
         END_MENU();
