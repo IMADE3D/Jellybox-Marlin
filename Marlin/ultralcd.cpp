@@ -6698,7 +6698,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_ITEM(submenu, MSG_TEST_MOTORS, lcd_test_motors_menu);
 
       //
-      // Check endstops
+      // Endstop status
       //
       MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
 
