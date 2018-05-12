@@ -6511,11 +6511,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
     void lcd_change_x_home_offset_msg1_menu(){
         START_MENU();
 
-        STATIC_ITEM("Position the ");
-        STATIC_ITEM("nozzle over  ");
-        STATIC_ITEM("the left edge of    ");
-        STATIC_ITEM("the build plate.    ");
-        STATIC_ITEM("   Click to continue  ");
+        STATIC_ITEM("Position the          ");
+        STATIC_ITEM("nozzle over           ");
+        STATIC_ITEM("the left edge of      ");
+        STATIC_ITEM("the build plate.      ");
+        STATIC_ITEM(" - Click to continue -");
         
 
         if(lcd_clicked) {
