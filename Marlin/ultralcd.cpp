@@ -6635,16 +6635,16 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_BACK(MSG_BACK);
 
       //
-      // Message
-      //
-      STATIC_ITEM("Make sure to insert   ");
-      STATIC_ITEM("the removable         ");
-      STATIC_ITEM("build plate           ");
-
-      //
       // Home XYZ
       //
       MENU_ITEM(gcode, MSG_TEST_AUTO_BED_LEVEL, PSTR("G28\nG29"));
+      
+      //
+      // Message
+      //
+      STATIC_ITEM("! Make sure to insert   ");
+      STATIC_ITEM("the removable         ");
+      STATIC_ITEM("build plate.           ");
 
       END_MENU();
     }
