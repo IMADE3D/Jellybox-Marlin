@@ -1185,8 +1185,8 @@
 #ifndef MSG_CHANGE_X_HOME_OFFSET
   #define MSG_CHANGE_X_HOME_OFFSET            _UxGT("Set X-origin")
 #endif
-#ifndef MSG_TUNE_HOME_OFFSETS
-  #define MSG_TUNE_HOME_OFFSETS               _UxGT("Set origin")
+#ifndef MSG_SET_ORIGIN
+  #define MSG_SET_ORIGIN                      _UxGT("Set origin")
 #endif
 
 

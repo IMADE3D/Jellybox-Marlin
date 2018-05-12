@@ -150,7 +150,7 @@ uint16_t max_display_update_time = 0;
   void imade3d_load_filament_script_function();
   void imade3d_eject_filament_script_function();
   void lcd_calibration_menu();
-  void lcd_tune_home_offsets_menu();
+  void lcd_set_origin_menu();
 
   int fanSpeed100;
   int fanSpeed;
@@ -4509,7 +4509,7 @@ static void _lcd_adjust_nozzle_temp(const char* name, int targetTemp, int min, i
       STATIC_ITEM("X-origin set!        ");
     
       if(lcd_clicked){
-        lcd_goto_screen(lcd_tune_home_offsets_menu);
+        lcd_goto_screen(lcd_set_origin_menu);
       }
     
       END_MENU();
@@ -6534,10 +6534,10 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
    /**
     * 
-    * Tune Home offsets Menu
+    * Set Origin Menu
     * 
     */
-    void lcd_tune_home_offsets_menu(){
+    void lcd_set_origin_menu(){
       START_MENU();
 
       //
@@ -6659,9 +6659,9 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL, lcd_test_auto_bed_level_menu);
 
       //
-      // Tune home offsets
+      // Set origin
       //
-      MENU_ITEM(submenu, MSG_TUNE_HOME_OFFSETS, lcd_tune_home_offsets_menu);
+      MENU_ITEM(submenu, MSG_SET_ORIGIN, lcd_set_origin_menu);
 
       //
       // Test nozzle heater
