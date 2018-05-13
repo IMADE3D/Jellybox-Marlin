@@ -6740,7 +6740,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       // 10 Eject Filament
       //
-      MENU_ITEM(function, MSG_FILAMENTEJECT_PREFLIGHT, imade3d_load_filament_script_function);
+      MENU_ITEM(function, MSG_FILAMENTEJECT_PREFLIGHT, imade3d_eject_filament_script_function);
 
       END_MENU();
     }
