@@ -6823,6 +6823,23 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
         _lcd_adjust_nozzle_temp(PSTR(MSG_NOZZLE), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
      }
 
+
+     void imade3d_calibrate_pla_1st_layer_script_function(){
+       enqueue_and_echo_commands_P(PSTR(imade3d_calibrate_pla_1st_layer_script));
+       lcd_return_to_status();
+     }
+     
+     void imade3d_calibrate_petg_1st_layer_script_function(){
+       enqueue_and_echo_commands_P(PSTR(imade3d_calibrate_petg_1st_layer_script));
+       lcd_return_to_status();
+     }
+     
+     void imade3d_calibrate_flex_1st_layer_script_function(){
+       enqueue_and_echo_commands_P(PSTR(imade3d_calibrate_flex_1st_layer_script));
+       lcd_return_to_status();
+     }
+
+
    /**
     * 
     * Tweak First Layer Menu
@@ -6839,17 +6856,17 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //PLA
       //
-      MENU_ITEM(gcode, MSG_PLA, PSTR(imade3d_calibrate_pla_1st_layer_script));
+      MENU_ITEM(function, MSG_PLA, imade3d_calibrate_pla_1st_layer_script_function);
 
       //
       //PETG
       //
-      MENU_ITEM(gcode, MSG_PETG, PSTR(imade3d_calibrate_petg_1st_layer_script));
+      MENU_ITEM(function, MSG_PETG, imade3d_calibrate_petg_1st_layer_script_function);
 
       //
       //FLEX
       //
-      MENU_ITEM(gcode, MSG_FLEX, PSTR(imade3d_calibrate_flex_1st_layer_script));
+      MENU_ITEM(function, MSG_FLEX, imade3d_calibrate_flex_1st_layer_script_function);
 
       //
       //Custom
