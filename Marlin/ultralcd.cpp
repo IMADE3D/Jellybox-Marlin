@@ -6830,11 +6830,11 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
         //
         // ^ Main
         //
-        MENU_BACK(MSG_BACK);
-
-        STATIC_ITEM("In beta testing.");
-        STATIC_ITEM("launch from SD card");
-
+        MENU_BACK(MSG_BACK);    
+        STATIC_ITEM("Please launch from");
+        STATIC_ITEM("'Scripts'");
+        STATIC_ITEM("on your SD card");
+        STATIC_ITEM("while in beta testing.");
         END_MENU();
      }
 
@@ -6864,7 +6864,7 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //FLEX
       //
-      MENU_ITEM(submenu, MSG_FLEX, beta_testing_menu);
+      //MENU_ITEM(submenu, MSG_FLEX, beta_testing_menu);
 
       //
       //Custom
