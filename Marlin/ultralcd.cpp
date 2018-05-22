@@ -4622,7 +4622,8 @@ else{
   if (lcd_clicked) {
     encoderTopLine = 0;
       if (changing_home_offsets){
-        enqueue_and_echo_commands_P(PSTR("M428\nM500"));
+        //enqueue_and_echo_commands_P(PSTR("M428\nM500"));
+        enqueue_and_echo_commands_P(PSTR("M428"));
         lcd_goto_screen(lcd_offset_saved);
         changing_home_offsets = false;
 
