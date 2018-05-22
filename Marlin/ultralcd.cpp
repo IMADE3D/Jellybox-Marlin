@@ -6824,6 +6824,20 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
         _lcd_adjust_nozzle_temp(PSTR(MSG_NOZZLE), &thermalManager.target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
      }
 
+     static void beta_testing_menu(){
+        START_MENU();
+
+        //
+        // ^ Main
+        //
+        MENU_BACK(MSG_BACK);
+
+        STATIC_ITEM("In beta testing.");
+        STATIC_ITEM("launch from SD card");
+
+        END_MENU();
+     }
+
    /**
     * 
     * Tweak First Layer Menu
@@ -6840,17 +6854,17 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
       //
       //PLA
       //
-      MENU_ITEM(gcode, MSG_PLA, PSTR(imade3d_calibrate_pla_1st_layer_script));
+      MENU_ITEM(submenu, MSG_PLA, beta_testing_menu);
 
       //
       //PETG
       //
-      MENU_ITEM(gcode, MSG_PETG, PSTR(imade3d_calibrate_petg_1st_layer_script));
+      MENU_ITEM(submenu, MSG_PETG, beta_testing_menu);
 
       //
       //FLEX
       //
-      MENU_ITEM(gcode, MSG_FLEX, PSTR(imade3d_calibrate_flex_1st_layer_script));
+      MENU_ITEM(submenu, MSG_FLEX, beta_testing_menu);
 
       //
       //Custom
