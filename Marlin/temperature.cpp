@@ -586,14 +586,14 @@ void Temperature::max_temp_error(const int8_t e) {
   #endif
 }
 void Temperature::min_temp_error(const int8_t e) {
-  #if HAS_TEMP_BED
+ /* #if HAS_TEMP_BED
     _temp_error(e, PSTR(MSG_T_MINTEMP), e >= 0 ? PSTR(MSG_ERR_MINTEMP) : PSTR(MSG_ERR_MINTEMP_BED));
   #else
     _temp_error(HOTEND_INDEX, PSTR(MSG_T_MINTEMP), PSTR(MSG_ERR_MINTEMP));
     #if HOTENDS == 1
       UNUSED(e);
     #endif
-  #endif
+  #endif*/
 }
 
 float Temperature::get_pid_output(const int8_t e) {

@@ -6825,12 +6825,25 @@ void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
 
      void imade3d_calibrate_pla_1st_layer_script_function(){
-       enqueue_and_echo_commands_P(PSTR(imade3d_calibrate_pla_1st_layer_script));
+       //enqueue_and_echo_commands_P(PSTR(imade3d_calibrate_pla_1st_layer_script));
+
+        char delim[] = "\n"; 
+        char* ptr = strtok(imade3d_calibrate_pla_1st_layer_script, delim);
+        //char test[4] = "G28";
+        
+        while(ptr != NULL) {
+         //char* temp = null;
+         //strcpy(temp, ptr);
+         //strcpy(temp, ptr);
+         enqueue_and_echo_command(ptr); 
+         ptr = strtok(NULL, delim);
+        }
+       
        lcd_return_to_status();
      }
      
      void imade3d_calibrate_petg_1st_layer_script_function(){
-       enqueue_and_echo_commands_P(PSTR(imade3d_calibrate_petg_1st_layer_script));
+       enqueue_and_echo_commands_P(PSTR(imade3d_test_script));
        lcd_return_to_status();
      }
      
