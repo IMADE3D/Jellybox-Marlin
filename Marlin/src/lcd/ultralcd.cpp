@@ -401,8 +401,16 @@ millis_t next_lcd_update_ms;
     SCREEN_OR_MENU_LOOP()
 
   #define START_MENU() \
-    scroll_screen(1, true); \
+    /*scroll_screen(1, true); \
     bool _skipStatic = true; \
+    */
+    START_SCREEN_OR_MENU(1); \
+    screen_changed = false; \
+    NOMORE(encoderTopLine, encoderLine); \
+    if (encoderLine >= encoderTopLine + LCD_HEIGHT - (TALL_FONT_CORRECTION)) { \
+      encoderTopLine = encoderLine - (LCD_HEIGHT - (TALL_FONT_CORRECTION) - 1); \
+    } \
+    bool _skipStatic = true; \  
     SCREEN_OR_MENU_LOOP()
 
   #define END_SCREEN() \
@@ -1138,6 +1146,13 @@ void lcd_quick_feedback(const bool clear_buttons) {
       #if defined(USER_DESC_5) && defined(USER_GCODE_5)
         MENU_ITEM(function, USER_DESC_5, lcd_user_gcode_5);
       #endif
+      //for other menu items ----------Bailey---------
+      #if defined(USER_DESC_6) && defined(USER_GCODE_6)
+        MENU_ITEM(function, USER_DESC_6, lcd_user_gcode_6);
+      #endif
+      #if defined(USER_DESC_7) && defined(USER_GCODE_7)
+        MENU_ITEM(function, USER_DESC_7, lcd_user_gcode_7);
+      #endif
       END_MENU();
     }
 
@@ -1157,7 +1172,121 @@ void lcd_quick_feedback(const bool clear_buttons) {
 
   void lcd_main_menu() {
     START_MENU();
-    MENU_BACK(MSG_WATCH);
+    ///----------Beginning of my Menus---------
+    //
+    // ^ Status Screen
+    //
+    MENU_ITEM(back, MSG_BACK , lcd_status_screen);
+
+    #if ENABLED(CUSTOM_USER_MENUS)
+      MENU_ITEM(submenu, MSG_USER_MENU, _lcd_user_menu);
+    #endif
+
+    //
+    // Debug Menu when certain options are enabled
+    //
+    #if HAS_DEBUG_MENU
+      MENU_ITEM(submenu, MSG_DEBUG_MENU, lcd_debug_menu);
+    #endif
+
+    //
+    // Set Case light on/off/brightness
+    //
+    #if ENABLED(MENU_ITEM_CASE_LIGHT)
+      if (USEABLE_HARDWARE_PWM(CASE_LIGHT_PIN)) {
+        MENU_ITEM(submenu, MSG_CASE_LIGHT, case_light_menu);
+      }
+      else
+        MENU_ITEM_EDIT_CALLBACK(bool, MSG_CASE_LIGHT, (bool*)&case_light_on, update_case_light);
+    #endif
+
+    if (planner.movesplanned() || IS_SD_PRINTING) {
+      //MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
+      //
+      // Live Adjustments menu
+      //
+      MENU_ITEM(submenu, MSG_LIVE_ADJUSTMENTS, lcd_tune_menu);
+    }
+    else {
+
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(function, MSG_RETURN_AND_HOME, lcd_home_xyz);
+      
+      //
+      // Disable Steppers
+      //
+      if (printer_paused == false){
+      MENU_ITEM(function, MSG_RETURN_AND_DISABLE_STEPPERS, lcd_disable_steppers);
+      }
+      
+      //
+      // Adjustments menu
+      //
+      MENU_ITEM(submenu, MSG_ADJUSTMENTS, lcd_adjustments_menu);
+      
+      //
+      //Preheat Nozzle Menu
+      //
+      MENU_ITEM(submenu, MSG_PREHEAT_NOZZLE, lcd_preheat_nozzle_menu);
+      
+      #if HAS_TEMP_BED
+        //
+        //Preheat Nozzle and Bed
+        //
+        MENU_ITEM(submenu, MSG_PREHEAT_BED, lcd_preheat_bed_menu);
+      #endif 
+      
+      //MENU_ITEM(submenu, MSG_PREPARE, lcd_prepare_menu);
+      #if ENABLED(DELTA_CALIBRATION_MENU)
+        MENU_ITEM(submenu, MSG_DELTA_CALIBRATE, lcd_delta_calibrate_menu);
+      #endif
+    }
+    //MENU_ITEM(submenu, MSG_CONTROL, lcd_control_menu);
+    
+    //
+    //Maintenence Menu
+    //
+    MENU_ITEM(submenu, MSG_CONTROL_IM3D, lcd_control_im3d_menu);
+
+    //
+    //Settings Menu
+    //
+    MENU_ITEM(submenu, MSG_SETTINGS, lcd_settings_menu);
+
+    //
+    // Support Menu
+    //
+    MENU_ITEM(submenu, MSG_SUPPORT, lcd_support_menu);
+    
+    #if ENABLED(SDSUPPORT)
+      if (card.cardOK) {
+        if (card.isFileOpen()) {
+          if (card.sdprinting)
+            MENU_ITEM(function, MSG_PAUSE_PRINT, lcd_sdcard_pause);
+          else
+            MENU_ITEM(function, MSG_RESUME_PRINT, lcd_sdcard_resume);
+            MENU_ITEM(function, MSG_STOP_PRINT, lcd_sdcard_stop);
+            //MENU_ITEM(function, MSG_STOP_PRINT, abortPrint);
+        }
+        else {
+          MENU_ITEM(submenu, MSG_CARD_MENU, lcd_sdcard_menu);
+          #if !PIN_EXISTS(SD_DETECT)
+            MENU_ITEM(gcode, MSG_CNG_SDCARD, PSTR("M21"));  // SD-card changed by user
+          #endif
+        }
+      }
+      else {
+        STATIC_ITEM("No SD card                ");
+        #if !PIN_EXISTS(SD_DETECT)
+          MENU_ITEM(gcode, MSG_INIT_SDCARD, PSTR("M21")); // Manually initialize the SD-card via user interface
+        #endif
+      }
+    #endif // SDSUPPORT
+
+    ////////////////////--------3.0---------/////////////////////
+    /*MENU_BACK(MSG_WATCH);
 
     #if ENABLED(SDSUPPORT)
       if (card.cardOK) {
@@ -1233,6 +1362,8 @@ void lcd_quick_feedback(const bool clear_buttons) {
       if (!busy)
         MENU_ITEM(function, MSG_AUTOSTART, lcd_autostart_sd);
     #endif
+    */
+    ///////////////--------END----------///////////////
 
     END_MENU();
   }
