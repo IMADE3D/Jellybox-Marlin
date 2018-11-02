@@ -337,3 +337,5 @@
 #endif
 
 #endif // __LANGUAGE_H
+
+#include "../lcd/language/language_en_imade3d.h"
