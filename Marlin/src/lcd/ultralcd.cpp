@@ -190,6 +190,8 @@ millis_t next_lcd_update_ms;
   void lcd_configuration_menu();
   void lcd_temperature_menu();
   void lcd_advanced_settings_menu();
+  void lcd_material_menu_imade3d();
+
 
   #if DISABLED(SLIM_LCD_MENUS)
     void lcd_configuration_temperature_preheat_material1_settings_menu();
@@ -1188,6 +1190,11 @@ void lcd_quick_feedback(const bool clear_buttons) {
     //
     MENU_ITEM(gcode, MSG_BEEP, PSTR("M300 S660 P400"));
 
+    //
+    // Material, IMADE3D
+    //
+    MENU_ITEM(submenu, MSG_MATERIAL, lcd_material_menu_imade3d);
+
     const bool busy = printer_busy();
     if (busy)
       MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
@@ -1241,6 +1248,27 @@ void lcd_quick_feedback(const bool clear_buttons) {
 
     END_MENU();
   }
+
+  /**
+  *
+  * "Material" submenu, IMADE3D
+  *
+  */
+   void lcd_material_menu_imade3d() {
+   START_MENU();
+
+   //
+   // ^ Main
+   //
+   MENU_BACK(MSG_MAIN);
+
+   //
+   // Beep Test Menu Item, IMADE3D
+   //
+   MENU_ITEM(gcode, MSG_BEEP, PSTR("M300 S660 P400"));
+
+   END_MENU();
+   }
 
   /**
    *
