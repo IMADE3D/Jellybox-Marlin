@@ -1382,14 +1382,14 @@
 // @section temperature
 
 // Preheat Constants
-#define PREHEAT_1_LABEL       "Universal Preheat"
+#define PREHEAT_1_LABEL       "Level"
 #define PREHEAT_1_TEMP_HOTEND 180
 #define PREHEAT_1_TEMP_BED    20
 #define PREHEAT_1_FAN_SPEED   0 // Value from 0 to 255
 
-#define PREHEAT_2_LABEL       "Swap Filament"
-#define PREHEAT_2_TEMP_HOTEND 235
-#define PREHEAT_2_TEMP_BED    0
+#define PREHEAT_2_LABEL       "PLA"
+#define PREHEAT_2_TEMP_HOTEND 210
+#define PREHEAT_2_TEMP_BED    60
 #define PREHEAT_2_FAN_SPEED   0 // Value from 0 to 255
 
 /**
