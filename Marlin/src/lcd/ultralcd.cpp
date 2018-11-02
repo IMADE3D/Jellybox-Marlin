@@ -1183,6 +1183,11 @@ void lcd_quick_feedback(const bool clear_buttons) {
       }
     #endif // SDSUPPORT
 
+    //
+    // Beep Test Menu Item, IMADE3D
+    //
+    MENU_ITEM(gcode, MSG_BEEP, PSTR("M300 S660 P400"));
+
     const bool busy = printer_busy();
     if (busy)
       MENU_ITEM(submenu, MSG_TUNE, lcd_tune_menu);
