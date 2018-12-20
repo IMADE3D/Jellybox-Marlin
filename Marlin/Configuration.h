@@ -112,15 +112,15 @@
 //============================= PID > Bed Temperature Control ===============
 //===========================================================================
 
-#define PIDTEMPBED
+// #define PIDTEMPBED
 
-// #define BED_LIMIT_SWITCHING
+#define BED_LIMIT_SWITCHING
 
 // This sets the max power delivered to the bed, and replaces the HEATER_BED_DUTY_CYCLE_DIVIDER option.
 // all forms of bed control obey this (PID, bang-bang, bang-bang with hysteresis)
 // setting this to anything other than 255 enables a form of PWM to the bed just like HEATER_BED_DUTY_CYCLE_DIVIDER did,
 // so you shouldn't use it unless you are OK with PWM on your bed.  (see the comment on enabling PIDTEMPBED)
-#define MAX_BED_POWER 127 // limits duty cycle to bed; 255=full current
+#define MAX_BED_POWER 180 // limits duty cycle to bed; 255=full current
 
 #if ENABLED(PIDTEMPBED)
 
