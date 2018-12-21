@@ -1,5 +1,5 @@
 #define JELLYBOX_VARIANT_LINE1 "JellyBOX 2.0"
-#define JELLYBOX_VARIANT_LINE2 "heated bed"
+#define JELLYBOX_VARIANT_LINE2 "cold bed"
 
 /**
  * Marlin 3D Printer Firmware
@@ -337,7 +337,7 @@
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_4 0
 #define TEMP_SENSOR_5 0
-#define TEMP_SENSOR_BED 1 //heated bed switch
+#define TEMP_SENSOR_BED 0
 #define TEMP_SENSOR_CHAMBER 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
