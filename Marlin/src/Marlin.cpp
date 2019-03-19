@@ -1112,14 +1112,13 @@ void setup() {
    * Activate Bed Leveling on startup. Works only if there is a mesh stored in EEPROM. 
    *  This can be used in conjuction with 'G29 O' to skip bed leveling only if it's active. 
    */
-  // Mar 14, 2019 disable because a bug in Astroprint disconnects when this command is had!
-  // #if HAS_LEVELING
-  //   if (leveling_is_valid()) {
-  //   enqueue_and_echo_commands_P(PSTR("M420 S1"));
-  //   enqueue_and_echo_commands_P(PSTR("M117 Bed leveling enabled. Yay."));
-  //   enqueue_and_echo_commands_P(PSTR("M118 JellyBOX is awake. Bed leveling enabled. Yay."));
-  //   }
-  // #endif
+   #if HAS_LEVELING
+     if (leveling_is_valid()) {
+     enqueue_and_echo_commands_P(PSTR("M420 S1"));
+     enqueue_and_echo_commands_P(PSTR("M117 Bed leveling enabled. Yay."));
+     enqueue_and_echo_commands_P(PSTR("M118 JellyBOX is awake. Bed leveling enabled. Yay."));
+     }
+   #endif
 }
 
 /**
