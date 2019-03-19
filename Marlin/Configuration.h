@@ -883,7 +883,7 @@
 //#define MIN_PROBE_EDGE 5
 
 // X and Y axis travel speed (mm/m) between probes
-#define XY_PROBE_SPEED 120*60
+#define XY_PROBE_SPEED 150*60
 
 // Feedrate (mm/m) for the first approach when double-probing (MULTIPLE_PROBING == 2)
 #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
@@ -912,7 +912,7 @@
  */
 #define Z_CLEARANCE_DEPLOY_PROBE   5 // Z Clearance for Deploy/Stow
 #define Z_CLEARANCE_BETWEEN_PROBES  3 // Z Clearance between probe points
-#define Z_CLEARANCE_MULTI_PROBE     3 // Z Clearance between multiple probes
+#define Z_CLEARANCE_MULTI_PROBE     1 // Z Clearance between multiple probes
 //#define Z_AFTER_PROBING           5 // Z position after probing is done
 
 #define Z_PROBE_LOW_POINT          -2 // Farthest distance below the trigger-point to go before stopping
@@ -1156,7 +1156,7 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 3
+  #define GRID_MAX_POINTS_X 4
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
@@ -1181,7 +1181,7 @@
     #define ABL_BILINEAR_SUBDIVISION
     #if ENABLED(ABL_BILINEAR_SUBDIVISION)
       // Number of subdivisions between probe points
-      #define BILINEAR_SUBDIVISIONS 2
+      #define BILINEAR_SUBDIVISIONS 3
     #endif
 
   #endif
@@ -1191,7 +1191,7 @@
   //===========================================================================
   //========================= Unified Bed Leveling ============================
   //===========================================================================
-
+  /* HIDE UBL
   #define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
   #define MESH_INSET 0              // Set Mesh bounds as an inset region of the bed
@@ -1203,9 +1203,9 @@
 
   //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
                                           // as the Z-Height correction value.
-
+  */
 #elif ENABLED(MESH_BED_LEVELING)
-
+  /* HIDE ALL MESH
   //===========================================================================
   //=================================== Mesh ==================================
   //===========================================================================
@@ -1215,8 +1215,9 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   //#define MESH_G28_REST_ORIGIN // After homing all axes ('G28' or 'G28 XYZ') rest Z at Z_MIN_POS
-
+  */
 #endif // BED_LEVELING
+
 
 /**
  * Points to probe for all 3-point Leveling procedures.
@@ -1257,7 +1258,7 @@
  * Commands to execute at the end of G29 probing.
  * Useful to retract or move the Z probe out of the way.
  */
-#define Z_PROBE_END_SCRIPT "G0 Z10 X-5 Y20 F6000"
+#define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
 
 
 // @section homing
@@ -1289,7 +1290,7 @@
 
 // Homing speeds (mm/m)
 #define HOMING_FEEDRATE_XY (50*60)
-#define HOMING_FEEDRATE_Z  (6*60) 
+#define HOMING_FEEDRATE_Z  (8*60) 
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
