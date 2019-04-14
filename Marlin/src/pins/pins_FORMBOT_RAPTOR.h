@@ -124,7 +124,7 @@
 //
 // Augmentation for auto-assigning RAMPS plugs
 //
-#if DISABLED(IS_RAMPS_EEB) && DISABLED(IS_RAMPS_EEF) && DISABLED(IS_RAMPS_EFB) && DISABLED(IS_RAMPS_EFF) && DISABLED(IS_RAMPS_SF) && !PIN_EXISTS(MOSFET_D)
+#if DISABLED(IS_RAMPS_EEB, IS_RAMPS_EEF, IS_RAMPS_EFB, IS_RAMPS_EFF, IS_RAMPS_SF) && !PIN_EXISTS(MOSFET_D)
   #if HOTENDS > 1
     #if TEMP_SENSOR_BED
       #define IS_RAMPS_EEB
@@ -149,6 +149,10 @@
   #define FAN_PIN           9
 #endif
 
+#ifndef FIL_RUNOUT_PIN
+  #define FIL_RUNOUT_PIN   57
+#endif
+
 #if !HAS_FILAMENT_SENSOR
   #define FAN1_PIN          4
 #endif
@@ -168,6 +172,8 @@
 #ifndef PS_ON_PIN
   #define PS_ON_PIN        12
 #endif
+
+#define CASE_LIGHT_PIN      5
 
 //
 // LCD / Controller

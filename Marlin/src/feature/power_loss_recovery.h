@@ -76,6 +76,9 @@ typedef struct {
     #endif
   #endif
 
+  // Relative mode
+  bool relative_mode, relative_modes_e;
+
   // Command queue
   uint8_t commands_in_queue, cmd_queue_index_r;
   char command_queue[BUFSIZE][MAX_CMD_SIZE];
@@ -122,9 +125,11 @@ class PrintJobRecovery {
 
   static inline bool valid() { return info.valid_head && info.valid_head == info.valid_foot; }
 
-    #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
-      static void debug(PGM_P const prefix);
-    #endif
+  #if ENABLED(DEBUG_POWER_LOSS_RECOVERY)
+    static void debug(PGM_P const prefix);
+  #else
+    static inline void debug(PGM_P const prefix) { UNUSED(prefix); }
+  #endif
 
   private:
     static void write();

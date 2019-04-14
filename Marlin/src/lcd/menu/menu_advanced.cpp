@@ -37,9 +37,11 @@
 
 #if HAS_BED_PROBE
   #include "../../module/probe.h"
-  #if ENABLED(BLTOUCH)
-    #include "../../module/endstops.h"
-  #endif
+#endif
+
+#if ENABLED(BLTOUCH)
+  #include "../../module/endstops.h"
+  #include "../../feature/bltouch.h"
 #endif
 
 #if ENABLED(PIDTEMP)
@@ -47,6 +49,7 @@
 #endif
 
 void menu_tmc();
+void menu_backlash();
 
 #if ENABLED(DAC_STEPPER_CURRENT)
 
@@ -321,7 +324,7 @@ void menu_tmc();
   #endif // PID_PARAMS_PER_HOTEND
 #endif // HOTENDS
 
-#define SHOW_MENU_ADVANCED_TEMPERATURE ((ENABLED(AUTOTEMP) && HAS_TEMP_HOTEND) || ENABLED(PID_AUTOTUNE_MENU) || ENABLED(PID_EDIT_MENU))
+#define SHOW_MENU_ADVANCED_TEMPERATURE ((ENABLED(AUTOTEMP) && HAS_TEMP_HOTEND) || EITHER(PID_AUTOTUNE_MENU, PID_EDIT_MENU))
 
 //
 // Advanced Settings > Temperature
@@ -645,6 +648,10 @@ void menu_advanced_settings() {
     }
   #endif // !SLIM_LCD_MENUS
 
+  #if ENABLED(BACKLASH_GCODE)
+    MENU_ITEM(submenu, MSG_BACKLASH, menu_backlash);
+  #endif
+
   #if ENABLED(DAC_STEPPER_CURRENT)
     MENU_ITEM(submenu, MSG_DRIVE_STRENGTH, menu_dac);
   #endif
@@ -694,7 +701,7 @@ void menu_advanced_settings() {
   //
   #if ENABLED(BLTOUCH)
     MENU_ITEM(gcode, MSG_BLTOUCH_SELFTEST, PSTR("M280 P" STRINGIFY(Z_PROBE_SERVO_NR) " S" STRINGIFY(BLTOUCH_SELFTEST)));
-    if (!endstops.z_probe_enabled && TEST_BLTOUCH())
+    if (!endstops.z_probe_enabled && bltouch.triggered())
       MENU_ITEM(gcode, MSG_BLTOUCH_RESET, PSTR("M280 P" STRINGIFY(Z_PROBE_SERVO_NR) " S" STRINGIFY(BLTOUCH_RESET)));
   #endif
 
