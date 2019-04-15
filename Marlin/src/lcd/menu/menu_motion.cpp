@@ -424,24 +424,24 @@ void menu_motion() {
   //
   MENU_BACK(MSG_MAIN);
   
-  //
-  // Live Adjustment Babystepping
-  //
-  // Babystep X:
-  // Babystep Y:
-  // Babystep Z:
-  //
-  #if ENABLED(BABYSTEPPING)
-    #if ENABLED(BABYSTEP_XY)
-      MENU_ITEM(submenu, MSG_BABYSTEP_X, lcd_babystep_x);
-      MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
-    #endif
-    #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-      MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_babystep_zoffset);
-    #else
-      MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
-    #endif
-  #endif
+  ////
+  //// Live Adjustment Babystepping
+  ////
+  //// Babystep X:
+  //// Babystep Y:
+  //// Babystep Z:
+  ////
+  //#if ENABLED(BABYSTEPPING)
+  //  #if ENABLED(BABYSTEP_XY)
+  //    MENU_ITEM(submenu, MSG_BABYSTEP_X, lcd_babystep_x);
+  //    MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
+  //  #endif
+  //  #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
+  //    MENU_ITEM(submenu, MSG_TWEAK_FIRST_LAYER, lcd_babystep_zoffset);
+  //  #else
+  //    MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
+  //  #endif
+  //#endif
   
   //
   // Move Axis
