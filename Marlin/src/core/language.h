@@ -379,6 +379,7 @@
 #endif
 
 #include "../lcd/language/language_en.h"
+#include "../lcd/language/language_en_imade3d.h"
 
 #ifdef CUSTOM_USER_MENU_TITLE
   #undef MSG_USER_MENU

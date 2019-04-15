@@ -1,0 +1,119 @@
+/**
+ * Marlin 3D Printer Firmware
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ *
+ * Based on Sprinter and grbl.
+ * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+#pragma once
+
+/**
+ * English : IMADE3D ADDITIONS/ MODIFICATIONS
+ *
+ * LCD Menu Messages
+ * See also http://marlinfw.org/docs/development/lcd_language.html
+ *
+ */
+#define LANGUAGE_EN_IMADE3D_H
+
+#ifndef CHARSIZE
+  #define CHARSIZE 1
+#endif
+
+#ifndef MSG_MATERIAL
+  #define MSG_MATERIAL                        _UxGT("Material")
+#endif 
+//#ifndef MSG_DISABLE_STEPPERS
+#define MSG_DISABLE_STEPPERS                _UxGT("Release motors")
+//#endif 
+#ifndef MSG_BEEP
+  #define MSG_BEEP                             _UxGT("Beep")
+#endif 
+// #ifndef MSG_RESTORE_FAILSAFE
+#define MSG_RESTORE_FAILSAFE                _UxGT("Factory Reset (!)")
+#ifndef MSG_TWEAK_FIRST_LAYER
+  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Live adjust Z height")
+#endif
+
+///////////////////////
+// JellyBOX Specific //
+///////////////////////
+
+// About Printer Menu Annotations
+#ifndef MSG_FIRMWARE_VERSION
+  #define MSG_FIRMWARE_VERSION            _UxGT("FIRMWARE VERSION:")
+#endif
+#ifndef MSG_JELLYBOX_VARIANT
+  #define MSG_JELLYBOX_VARIANT           _UxGT("JELLYBOX VARIANT:")
+#endif
+#ifndef MSG_DISTRIBUTION_DATE
+  #define MSG_DISTRIBUTION_DATE           _UxGT("DISTRIBUTION DATE:")
+#endif
+#ifndef MSG_SOURCE_URL
+  #define MSG_SOURCE_URL                 _UxGT("SOURCE URL:")
+#endif
+
+// Misc
+#ifndef MSG_HOME_RELEASE
+  #define MSG_HOME_RELEASE                    _UxGT("Home & Release")
+#endif 
+#ifndef MSG_FILAMENTLOAD
+  #define MSG_FILAMENTLOAD                    _UxGT("Load filament")
+#endif
+#ifndef MSG_FILAMENTEJECT 
+  #define MSG_FILAMENTEJECT                    _UxGT("Eject filament")
+#endif
+
+// Preflight menu
+#ifndef MSG_TEST_MOTORS
+  #define MSG_TEST_MOTORS                     _UxGT("1. Test motors")
+#endif
+#ifndef MSG_CHECK_ENDSTOPS
+  #define MSG_CHECK_ENDSTOPS                  _UxGT("2. Endstop status")
+#endif 
+#ifndef MSG_TEST_ENDSTOPS
+  #define MSG_TEST_ENDSTOPS                   _UxGT("3. Test endstops")
+#endif 
+#ifndef MSG_SET_ORIGIN_PREFLIGHT
+  #define MSG_SET_ORIGIN_PREFLIGHT            _UxGT("4. Set origin")
+#endif
+#ifndef MSG_CHANGE_X_HOME_OFFSET
+  #define MSG_CHANGE_X_HOME_OFFSET            _UxGT("Set X-origin")
+#endif
+#ifndef MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT
+  #define MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT   _UxGT("5. Test bed leveling")
+#endif
+#ifndef MSG_TEST_AUTO_BED_LEVEL
+  #define MSG_TEST_AUTO_BED_LEVEL              _UxGT("Test bed leveling")
+#endif
+#ifndef MSG_TEST_NOZZLE
+  #define MSG_TEST_NOZZLE                      _UxGT("6. Test nozzle heater")
+#endif 
+#ifndef MSG_TEST_BED
+  #define MSG_TEST_BED                         _UxGT("7. Test bed heater")
+#endif 
+#ifndef MSG_TEST_FILAMENT_FANS
+  #define MSG_TEST_FILAMENT_FANS              _UxGT("8. Test filament fans")
+#endif
+#ifndef MSG_FILAMENTLOAD_PREFLIGHT
+  #define MSG_FILAMENTLOAD_PREFLIGHT          _UxGT("9.  Load filament")
+#endif
+#ifndef MSG_FILAMENTEJECT_PREFLIGHT
+  #define MSG_FILAMENTEJECT_PREFLIGHT         _UxGT("10. Eject filament")
+#endif
+
+// #endif // LANGUAGE_EN_IMADE3D_H
