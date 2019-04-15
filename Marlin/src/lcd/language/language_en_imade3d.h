@@ -34,24 +34,31 @@
   #define CHARSIZE 1
 #endif
 
-#ifndef MSG_MATERIAL
-  #define MSG_MATERIAL                        _UxGT("Material")
-#endif 
+///////////////////////
+///// Overwrites///////
+///////////////////////
+
+//#ifndef MSG_ZPROBE_ZOFFSET
+  #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z Height")
+//#endif 
 //#ifndef MSG_DISABLE_STEPPERS
 #define MSG_DISABLE_STEPPERS                _UxGT("Release motors")
 //#endif 
-#ifndef MSG_BEEP
-  #define MSG_BEEP                             _UxGT("Beep")
-#endif 
 // #ifndef MSG_RESTORE_FAILSAFE
 #define MSG_RESTORE_FAILSAFE                _UxGT("Factory Reset (!)")
-#ifndef MSG_TWEAK_FIRST_LAYER
-  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Live adjust Z height")
-#endif
 
 ///////////////////////
 // JellyBOX Specific //
 ///////////////////////
+#ifndef MSG_MATERIAL
+  #define MSG_MATERIAL                        _UxGT("Material")
+#endif
+#ifndef MSG_BEEP
+  #define MSG_BEEP                             _UxGT("Beep")
+#endif 
+#ifndef MSG_TWEAK_FIRST_LAYER
+  #define MSG_TWEAK_FIRST_LAYER               _UxGT("Live adj. Z height")
+#endif
 
 // About Printer Menu Annotations
 #ifndef MSG_FIRMWARE_VERSION
@@ -65,6 +72,12 @@
 #endif
 #ifndef MSG_SOURCE_URL
   #define MSG_SOURCE_URL                 _UxGT("SOURCE URL:")
+#endif
+#ifndef MSG_WEBSITE_URL
+  #define MSG_WEBSITE_URL                 _UxGT("HOMEPAGE URL:")
+#endif
+#ifndef MSG_LEVELING_METHOD
+  #define MSG_LEVELING_METHOD                 _UxGT("LEVELING METHOD:")
 #endif
 
 // Misc
