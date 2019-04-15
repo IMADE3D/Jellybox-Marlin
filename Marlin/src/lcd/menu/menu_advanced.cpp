@@ -630,7 +630,7 @@ void menu_advanced_settings() {
       //
       // Set Home Offsets
       //
-      MENU_ITEM(function, MSG_SET_HOME_OFFSETS, _lcd_set_home_offsets);
+      //MENU_ITEM(function, MSG_SET_HOME_OFFSETS, _lcd_set_home_offsets);
     #endif
 
     // M203 / M205 - Feedrate items
