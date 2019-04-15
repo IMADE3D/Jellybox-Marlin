@@ -339,7 +339,7 @@ void menu_configuration() {
   #endif
 
   #if HAS_FILAMENT_SENSOR
-    MENU_ITEM_EDIT_CALLBACK(bool, MSG_RUNOUT_SENSOR, &runout.enabled, runout.reset);
+    //MENU_ITEM_EDIT_CALLBACK(bool, MSG_RUNOUT_SENSOR, &runout.enabled, runout.reset);
   #endif
 
   #if ENABLED(POWER_LOSS_RECOVERY)
