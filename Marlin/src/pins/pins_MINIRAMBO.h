@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,17 +21,17 @@
  */
 
 /**
- * Mini-Rambo pin assignments
+ * Mini-RAMBo pin assignments
  */
 
 #ifndef __AVR_ATmega2560__
-  #error "Oops!  Make sure you have 'Rambo' selected from the 'Tools -> Boards' menu."
+  #error "Oops! Select 'RAMBo' in 'Tools > Board.'"
 #endif
 
 #if MB(MINIRAMBO_10A)
-  #define BOARD_NAME "Mini Rambo 1.0a"
+  #define BOARD_NAME "Mini RAMBo 1.0a"
 #else
-  #define BOARD_NAME "Mini Rambo"
+  #define BOARD_NAME "Mini RAMBo"
 #endif
 
 //
@@ -125,7 +125,7 @@
 //
 // use P1 connector for spindle pins
 #define SPINDLE_LASER_PWM_PIN     9   // MUST BE HARDWARE PWM
-#define SPINDLE_LASER_ENABLE_PIN 18   // Pin should have a pullup!
+#define SPINDLE_LASER_ENA_PIN    18   // Pin should have a pullup!
 #define SPINDLE_DIR_PIN          19
 
 //

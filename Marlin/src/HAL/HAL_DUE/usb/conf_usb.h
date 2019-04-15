@@ -47,8 +47,10 @@
 #ifndef _CONF_USB_H_
 #define _CONF_USB_H_
 
-#include "../../../core/macros.h"       /* For ENABLED, DISABLED, MIN, MAX */
-#include "../../../../Configuration.h"  /* For SDSUPPORT and CUSTOM_MACHINE_NAME definition - We just need the name, no C++ allowed! */
+#undef UNUSED                           /* To avoid a macro clash as macros.h already defines it */
+#include "../../../core/macros.h"       /* For ENABLED()/DISABLED() */
+#include "../../../core/boards.h"       /* For MB() */
+#include "../../../../Configuration.h"  /* For CUSTOM_MACHINE_NAME definition - We just need the name, no C++ allowed! */
 #include "compiler.h"
 
 /**
@@ -87,7 +89,11 @@
 //#define  USB_DEVICE_LOW_SPEED
 
 //! To define a Full speed device
-//#define  USB_DEVICE_FULL_SPEED
+//#define USB_DEVICE_FULL_SPEED
+
+#if MB(ARCHIM1)
+  #define USB_DEVICE_FULL_SPEED
+#endif
 
 //! To authorize the High speed
 #ifndef USB_DEVICE_FULL_SPEED

@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
@@ -28,11 +28,11 @@
  */
 
 #ifndef __SAM3X8E__
-  #error "Oops!  Make sure you have 'Arduino Due' selected from the 'Tools -> Boards' menu."
+  #error "Oops! Select 'Arduino Due' in 'Tools > Board.'"
 #endif
 
 #ifndef BOARD_NAME
-  #define BOARD_NAME       "RAMPS-FD"
+  #define BOARD_NAME "RAMPS-FD v1"
 #endif
 
 #define INVERTED_HEATER_PINS
@@ -112,9 +112,9 @@
 
 // SPI for Max6675 or Max31855 Thermocouple
 #if DISABLED(SDSUPPORT)
-  #define MAX6675_SS       53
+  #define MAX6675_SS_PIN   53
 #else
-  #define MAX6675_SS       49
+  #define MAX6675_SS_PIN   49
 #endif
 
 //
@@ -161,7 +161,7 @@
     #define DOGLCD_A0      27
   #endif
 
-  #if ENABLED(VIKI2) || ENABLED(miniVIKI)
+  #if ANY(VIKI2, miniVIKI)
     #define DOGLCD_A0           16
     #define KILL_PIN            51
     #define STAT_LED_BLUE_PIN   29
@@ -198,9 +198,9 @@
 //
 // M3/M4/M5 - Spindle/Laser Control
 //
-#if ENABLED(SPINDLE_LASER_ENABLE) && !PIN_EXISTS(SPINDLE_LASER_ENABLE)
+#if ENABLED(SPINDLE_LASER_ENABLE) && !PIN_EXISTS(SPINDLE_LASER_ENA)
   #if HOTENDS < 3
-    #define SPINDLE_LASER_ENABLE_PIN  45   // Use E2 ENA
+    #define SPINDLE_LASER_ENA_PIN     45   // Use E2 ENA
     #define SPINDLE_LASER_PWM_PIN     12   // MUST BE HARDWARE PWM
     #define SPINDLE_DIR_PIN           47   // Use E2 DIR
   #endif

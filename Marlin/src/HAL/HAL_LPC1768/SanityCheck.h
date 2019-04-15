@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2016, 2017 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
@@ -25,8 +25,8 @@
  */
 
 #if ENABLED(SPINDLE_LASER_ENABLE)
-  #if !PIN_EXISTS(SPINDLE_LASER_ENABLE)
-    #error "SPINDLE_LASER_ENABLE requires SPINDLE_LASER_ENABLE_PIN."
+  #if !PIN_EXISTS(SPINDLE_LASER_ENA)
+    #error "SPINDLE_LASER_ENABLE requires SPINDLE_LASER_ENA_PIN."
   #elif SPINDLE_DIR_CHANGE && !PIN_EXISTS(SPINDLE_DIR)
     #error "SPINDLE_DIR_PIN not defined."
   #elif ENABLED(SPINDLE_LASER_PWM) && PIN_EXISTS(SPINDLE_LASER_PWM)
@@ -73,4 +73,12 @@
     ||  MB(RAMPS_14_RE_ARM_EEF) \
     ||  MB(RAMPS_14_RE_ARM_SF))
   #error "Re-ARM with REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER and TMC2130 require TMC_USE_SW_SPI"
+#endif
+
+#if 1 < (ENABLED(LPC_SD_CUSTOM_CABLE) + ENABLED(LPC_SD_LCD) + ENABLED(LPC_SD_ONBOARD))
+  #error "Enable only one of LPC_SD_CUSTOM_CABLE, LPC_SD_LCD, or LPC_SD_ONBOARD."
+#endif
+
+#if 1 < (ENABLED(USB_SD_DISABLED) + ENABLED(USB_SD_ONBOARD))
+  #error "Enable only one of USB_SD_DISABLED or USB_SD_ONBOARD."
 #endif

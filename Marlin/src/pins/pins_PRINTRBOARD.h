@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2017 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
@@ -31,7 +31,7 @@
  *  and with the mainstream Marlin software.
  *
  *  Teensyduino - http://www.pjrc.com/teensy/teensyduino.html
- *    Select Teensy++ 2.0 in Arduino IDE from the 'Tools -> Boards' menu
+ *    Select Teensy++ 2.0 in Arduino IDE from the 'Tools > Board' menu
  *
  *    Installation instructions are at the above URL.  Don't bother loading the
  *    libraries - they are not used with the Marlin software.
@@ -46,7 +46,7 @@
  *          hardware directory in Arduino.  The Arduino hardware directory will probably
  *          be located in a path similar to this: C:\Program Files (x86)\Arduino\hardware.
  *       3. Restart Arduino.
- *       4. Select "Printrboard" from the 'Tools -> Boards' menu.
+ *       4. Select "Printrboard" from the 'Tools > Board' menu.
  *
  *  Teensyduino is the most popular option. Printrboard is used if your board doesn't have
  *  the Teensyduino bootloader on it.
@@ -62,10 +62,10 @@
  */
 
 #ifndef __AVR_AT90USB1286__
-  #error "Oops!  Make sure you have 'Teensy++ 2.0' or 'Printrboard' selected from the 'Tools -> Boards' menu."
+  #error "Oops! Select 'Teensy++ 2.0' or 'Printrboard' in 'Tools > Board.'"
 #endif
 
-#define BOARD_NAME         "Printrboard"
+#define BOARD_NAME "Printrboard"
 
 // Disable JTAG pins so they can be used for the Extrudrboard
 #define DISABLE_JTAG
@@ -123,7 +123,7 @@
 //
 // LCD / Controller
 //
-#if ENABLED(ULTRA_LCD) && ENABLED(NEWPANEL)
+#if BOTH(ULTRA_LCD, NEWPANEL)
 
   #define LCD_PINS_RS       9   // E1       JP11-11
   #define LCD_PINS_ENABLE   8   // E0       JP11-10
@@ -132,7 +132,7 @@
   #define LCD_PINS_D6       5   // D5       JP11-6
   #define LCD_PINS_D7       4   // D4       JP11-5
 
-  #if ENABLED(VIKI2) || ENABLED(miniVIKI)
+  #if ANY(VIKI2, miniVIKI)
     #define BEEPER_PIN      8   // E0       JP11-10
 
     #define DOGLCD_A0      40   // F2       JP2-2

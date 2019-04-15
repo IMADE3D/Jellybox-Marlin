@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
@@ -38,12 +38,10 @@
  */
 
 #if !defined(__AVR_ATmega1280__) && !defined(__AVR_ATmega2560__)
- #error "Oops!  Make sure you have 'Arduino Mega' selected from the 'Tools -> Boards' menu."
+ #error "Oops! Select 'Arduino/Genuino Mega or Mega 2560' in 'Tools > Board.'"
 #endif
 
-#ifndef BOARD_NAME
- #define BOARD_NAME "RAMPS 1.4 Plus"
-#endif
+#define BOARD_NAME "RAMPS 1.4 Plus"
 
 #define RAMPS_D8_PIN  10
 #define RAMPS_D10_PIN  8
@@ -75,7 +73,7 @@
 #undef E0_CS_PIN
 #undef E1_CS_PIN
 
-#if ENABLED(ULTRA_LCD) && DISABLED(REPRAPWORLD_GRAPHICAL_LCD) && (DISABLED(NEWPANEL) || DISABLED(PANEL_ONE)) && DISABLED(CR10_STOCKDISPLAY)
+#if ENABLED(ULTRA_LCD, REPRAPWORLD_GRAPHICAL_LCD, CR10_STOCKDISPLAY) && !BOTH(NEWPANEL, PANEL_ONE)
   #if DISABLED(MKS_12864OLED) || ENABLED(MKS_12864OLED_SSD1306)
     #undef LCD_PINS_RS
     #define LCD_PINS_RS     42   // 3DYMY boards pin 16 -> 42

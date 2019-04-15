@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  * Copyright (c) 2016 Bob Cousins bobcousins42@googlemail.com
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,9 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-#ifndef _HAL_AVR_H_
-#define _HAL_AVR_H_
+#pragma once
 
 // --------------------------------------------------------------------------
 // Includes
@@ -79,16 +77,32 @@ typedef int8_t pin_t;
 
 //extern uint8_t MCUSR;
 
-#define NUM_SERIAL 1
-
+// Serial ports
 #ifdef USBCON
   #if ENABLED(BLUETOOTH)
     #define MYSERIAL0 bluetoothSerial
   #else
     #define MYSERIAL0 Serial
   #endif
+  #define NUM_SERIAL 1
 #else
-  #define MYSERIAL0 customizedSerial
+  #if !WITHIN(SERIAL_PORT, -1, 3)
+    #error "SERIAL_PORT must be from -1 to 3"
+  #endif
+
+  #define MYSERIAL0 customizedSerial1
+
+  #ifdef SERIAL_PORT_2
+    #if !WITHIN(SERIAL_PORT_2, -1, 3)
+      #error "SERIAL_PORT_2 must be from -1 to 3"
+    #elif SERIAL_PORT_2 == SERIAL_PORT
+      #error "SERIAL_PORT_2 must be different than SERIAL_PORT"
+    #endif
+    #define NUM_SERIAL 2
+    #define MYSERIAL1 customizedSerial2
+  #else
+    #define NUM_SERIAL 1
+  #endif
 #endif
 
 // --------------------------------------------------------------------------
@@ -168,7 +182,7 @@ FORCE_INLINE void HAL_timer_start(const uint8_t timer_num, const uint32_t freque
 #define TIMER_OCR_0             OCR0A
 #define TIMER_COUNTER_0         TCNT0
 
-#define _CAT(a, ...) a ## __VA_ARGS__
+#define _CAT(a,V...) a##V
 #define HAL_timer_set_compare(timer, compare) (_CAT(TIMER_OCR_, timer) = compare)
 #define HAL_timer_get_compare(timer) _CAT(TIMER_OCR_, timer)
 #define HAL_timer_get_count(timer) _CAT(TIMER_COUNTER_, timer)
@@ -183,7 +197,7 @@ FORCE_INLINE void HAL_timer_start(const uint8_t timer_num, const uint32_t freque
 #define HAL_timer_isr_epilogue(TIMER_NUM)
 
 /* 18 cycles maximum latency */
-#define HAL_STEP_TIMER_ISR \
+#define HAL_STEP_TIMER_ISR() \
 extern "C" void TIMER1_COMPA_vect (void) __attribute__ ((signal, naked, used, externally_visible)); \
 extern "C" void TIMER1_COMPA_vect_bottom (void) asm ("TIMER1_COMPA_vect_bottom") __attribute__ ((used, externally_visible, noinline)); \
 void TIMER1_COMPA_vect (void) { \
@@ -256,7 +270,7 @@ void TIMER1_COMPA_vect (void) { \
 void TIMER1_COMPA_vect_bottom(void)
 
 /* 14 cycles maximum latency */
-#define HAL_TEMP_TIMER_ISR \
+#define HAL_TEMP_TIMER_ISR() \
 extern "C" void TIMER0_COMPB_vect (void) __attribute__ ((signal, naked, used, externally_visible)); \
 extern "C" void TIMER0_COMPB_vect_bottom(void)  asm ("TIMER0_COMPB_vect_bottom") __attribute__ ((used, externally_visible, noinline)); \
 void TIMER0_COMPB_vect (void) { \
@@ -359,4 +373,21 @@ inline void HAL_adc_init(void) {
 // AVR compatibility
 #define strtof strtod
 
-#endif // _HAL_AVR_H_
+/**
+ *  set_pwm_frequency
+ *  Sets the frequency of the timer corresponding to the provided pin
+ *  as close as possible to the provided desired frequency. Internally
+ *  calculates the required waveform generation mode, prescaler and
+ *  resolution values required and sets the timer registers accordingly.
+ *  NOTE that the frequency is applied to all pins on the timer (Ex OC3A, OC3B and OC3B)
+ *  NOTE that there are limitations, particularly if using TIMER2. (see Configuration_adv.h -> FAST FAN PWM Settings)
+ */
+void set_pwm_frequency(const pin_t pin, int f_desired);
+
+/**
+ * set_pwm_duty
+ *  Sets the PWM duty cycle of the provided pin to the provided value
+ *  Optionally allows inverting the duty cycle [default = false]
+ *  Optionally allows changing the maximum size of the provided value to enable finer PWM duty control [default = 255]
+ */
+void set_pwm_duty(const pin_t pin, const uint16_t v, const uint16_t v_size=255, const bool invert=false);

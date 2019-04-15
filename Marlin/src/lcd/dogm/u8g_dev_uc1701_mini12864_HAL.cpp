@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2016, 2017, 2018 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
@@ -20,46 +20,42 @@
  *
  */
 
-
-/*
-
-  based on u8g_dev_uc1701_mini12864_HAL.c (dealextreme)
-
-  Universal 8bit Graphics Library
-
-  Copyright (c) 2011, olikraus@gmail.com
-  All rights reserved.
-
-  Redistribution and use in source and binary forms, with or without modification,
-  are permitted provided that the following conditions are met:
-
-  * Redistributions of source code must retain the above copyright notice, this list
-    of conditions and the following disclaimer.
-
-  * Redistributions in binary form must reproduce the above copyright notice, this
-    list of conditions and the following disclaimer in the documentation and/or other
-    materials provided with the distribution.
-
-  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
-  CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-  MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
-  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-  NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-  CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-  STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
-*/
+/**
+ * Based on u8g_dev_uc1701_mini12864.c (dealextreme)
+ *
+ * Universal 8bit Graphics Library
+ *
+ * Copyright (c) 2011, olikraus@gmail.com
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ *  * Redistributions of source code must retain the above copyright notice, this list
+ *    of conditions and the following disclaimer.
+ *
+ *  * Redistributions in binary form must reproduce the above copyright notice, this
+ *    list of conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND
+ * CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+ * NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+ * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+ * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "../../inc/MarlinConfigPre.h"
 
-#if ENABLED(DOGLCD)
+#if HAS_GRAPHICAL_LCD
 
 #include <U8glib.h>
 
@@ -109,24 +105,23 @@ static const uint8_t u8g_dev_uc1701_mini12864_HAL_data_start[] PROGMEM = {
 };
 
 uint8_t u8g_dev_uc1701_mini12864_HAL_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg) {
-  switch(msg) {
+  switch (msg) {
     case U8G_DEV_MSG_INIT:
       u8g_InitCom(u8g, dev, U8G_SPI_CLK_CYCLE_300NS);
       u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_init_seq);
       break;
-    case U8G_DEV_MSG_STOP:
-      break;
-    case U8G_DEV_MSG_PAGE_NEXT:
-      {
-        u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
-        u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_data_start);
-        u8g_WriteByte(u8g, dev, 0x0B0 | pb->p.page); /* select current page */
-        u8g_SetAddress(u8g, dev, 1);           /* data mode */
-        if ( u8g_pb_WriteBuffer(pb, u8g, dev) == 0 )
-          return 0;
-        u8g_SetChipSelect(u8g, dev, 0);
-      }
-      break;
+
+    case U8G_DEV_MSG_STOP: break;
+
+    case U8G_DEV_MSG_PAGE_NEXT: {
+      u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
+      u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_data_start);
+      u8g_WriteByte(u8g, dev, 0x0B0 | pb->p.page); /* select current page */
+      u8g_SetAddress(u8g, dev, 1);           /* data mode */
+      if (!u8g_pb_WriteBuffer(pb, u8g, dev)) return 0;
+      u8g_SetChipSelect(u8g, dev, 0);
+    } break;
+
     case U8G_DEV_MSG_CONTRAST:
       u8g_SetChipSelect(u8g, dev, 1);
       u8g_SetAddress(u8g, dev, 0);          /* instruction mode */
@@ -139,30 +134,30 @@ uint8_t u8g_dev_uc1701_mini12864_HAL_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg,
 }
 
 uint8_t u8g_dev_uc1701_mini12864_HAL_2x_fn(u8g_t *u8g, u8g_dev_t *dev, uint8_t msg, void *arg) {
-  switch(msg) {
+  switch (msg) {
     case U8G_DEV_MSG_INIT:
       u8g_InitCom(u8g, dev, U8G_SPI_CLK_CYCLE_300NS);
       u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_init_seq);
       break;
-    case U8G_DEV_MSG_STOP:
-      break;
-    case U8G_DEV_MSG_PAGE_NEXT:
-      {
-        u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
 
-        u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_data_start);
-        u8g_WriteByte(u8g, dev, 0x0B0 | (2*pb->p.page)); /* select current page */
-        u8g_SetAddress(u8g, dev, 1);           /* data mode */
-  u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *)pb->buf);
-        u8g_SetChipSelect(u8g, dev, 0);
+    case U8G_DEV_MSG_STOP: break;
 
-        u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_data_start);
-        u8g_WriteByte(u8g, dev, 0x0B0 | (2*pb->p.page+1)); /* select current page */
-        u8g_SetAddress(u8g, dev, 1);           /* data mode */
-  u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *)(pb->buf)+pb->width);
-        u8g_SetChipSelect(u8g, dev, 0);
-      }
-      break;
+    case U8G_DEV_MSG_PAGE_NEXT: {
+      u8g_pb_t *pb = (u8g_pb_t *)(dev->dev_mem);
+
+      u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_data_start);
+      u8g_WriteByte(u8g, dev, 0x0B0 | (2*pb->p.page)); /* select current page */
+      u8g_SetAddress(u8g, dev, 1);           /* data mode */
+      u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *)pb->buf);
+      u8g_SetChipSelect(u8g, dev, 0);
+
+      u8g_WriteEscSeqP(u8g, dev, u8g_dev_uc1701_mini12864_HAL_data_start);
+      u8g_WriteByte(u8g, dev, 0x0B0 | (2*pb->p.page+1)); /* select current page */
+      u8g_SetAddress(u8g, dev, 1);           /* data mode */
+      u8g_WriteSequence(u8g, dev, pb->width, (uint8_t *)(pb->buf)+pb->width);
+      u8g_SetChipSelect(u8g, dev, 0);
+    } break;
+
     case U8G_DEV_MSG_CONTRAST:
       u8g_SetChipSelect(u8g, dev, 1);
       u8g_SetAddress(u8g, dev, 0);          /* instruction mode */
@@ -182,4 +177,4 @@ u8g_pb_t u8g_dev_uc1701_mini12864_HAL_2x_pb = { {16, HEIGHT, 0, 0, 0},  WIDTH, u
 u8g_dev_t u8g_dev_uc1701_mini12864_HAL_2x_sw_spi = { u8g_dev_uc1701_mini12864_HAL_2x_fn, &u8g_dev_uc1701_mini12864_HAL_2x_pb, U8G_COM_HAL_SW_SPI_FN };
 u8g_dev_t u8g_dev_uc1701_mini12864_HAL_2x_hw_spi = { u8g_dev_uc1701_mini12864_HAL_2x_fn, &u8g_dev_uc1701_mini12864_HAL_2x_pb, U8G_COM_HAL_HW_SPI_FN };
 
-#endif // DOGLCD
+#endif // HAS_GRAPHICAL_LCD

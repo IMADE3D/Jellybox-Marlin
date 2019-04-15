@@ -1,6 +1,6 @@
 /**
  * Marlin 3D Printer Firmware
- * Copyright (C) 2016 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
+ * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
  *
  * Based on Sprinter and grbl.
  * Copyright (C) 2011 Camiel Gubbels / Erik van der Zalm
@@ -21,7 +21,7 @@
  */
 
 #if !defined(__STM32F1__) && !defined(__STM32F4__)
-  #error "Oops!  Make sure you have an STM32F1/4 board selected from the 'Tools -> Boards' menu."
+  #error "Oops! Select an STM32F1/4 board in 'Tools > Board.'"
 #endif
 
 /**
@@ -125,7 +125,7 @@
     #define LCD_PINS_RS         49   // CS chip select /SS chip slave select
     #define LCD_PINS_ENABLE     51   // SID (MOSI)
     #define LCD_PINS_D4         52   // SCK (CLK) clock
-  #elif ENABLED(NEWPANEL) && ENABLED(PANEL_ONE)
+  #elif BOTH(NEWPANEL, PANEL_ONE)
     #define LCD_PINS_RS         PB8
     #define LCD_PINS_ENABLE     PD2
     #define LCD_PINS_D4         PB12
@@ -192,7 +192,7 @@
       #define LCD_SDSS          53
       #define SD_DETECT_PIN     49
 
-    #elif ENABLED(VIKI2) || ENABLED(miniVIKI)
+    #elif ANY(VIKI2, miniVIKI)
 
       #define BEEPER_PIN        33
 
@@ -236,7 +236,6 @@
 
       #define KILL_PIN          64
       // GLCD features
-      //#define LCD_CONTRAST   190
       // Uncomment screen orientation
       //#define LCD_SCREEN_ROT_90
       //#define LCD_SCREEN_ROT_180
@@ -286,4 +285,3 @@
 #define U_MIN_PIN          -1
 #define V_MIN_PIN          -1
 #define W_MIN_PIN          -1
-
