@@ -126,7 +126,24 @@
 void menu_tune() {
   START_MENU();
   MENU_BACK(MSG_MAIN);
-
+  
+  //
+  // Babystep X:
+  // Babystep Y:
+  // Babystep Z:
+  //
+  #if ENABLED(BABYSTEPPING)
+    #if ENABLED(BABYSTEP_XY)
+      MENU_ITEM(submenu, MSG_BABYSTEP_X, lcd_babystep_x);
+      MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
+    #endif
+    #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
+      MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+    #else
+      MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
+    #endif
+  #endif
+  
   //
   // Speed:
   //
@@ -222,23 +239,6 @@ void menu_tune() {
       #endif // EXTRUDERS > 3
     #endif // EXTRUDERS > 2
   #endif // EXTRUDERS
-
-  //
-  // Babystep X:
-  // Babystep Y:
-  // Babystep Z:
-  //
-  #if ENABLED(BABYSTEPPING)
-    #if ENABLED(BABYSTEP_XY)
-      MENU_ITEM(submenu, MSG_BABYSTEP_X, lcd_babystep_x);
-      MENU_ITEM(submenu, MSG_BABYSTEP_Y, lcd_babystep_y);
-    #endif
-    #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-      MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
-    #else
-      MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
-    #endif
-  #endif
 
   END_MENU();
 }
