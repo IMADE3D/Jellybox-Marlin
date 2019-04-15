@@ -38,7 +38,7 @@
 ///// Overwrites///////
 ///////////////////////
 
-#define MSG_ZPROBE_ZOFFSET                  _UxGT("Z Height")
+#define MSG_ZPROBE_ZOFFSET                  _UxGT("Live Adj. Z Height")
 #define MSG_DISABLE_STEPPERS                _UxGT("Release motors")
 #define MSG_RESTORE_FAILSAFE                _UxGT("Factory Reset (!)")
 #define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
