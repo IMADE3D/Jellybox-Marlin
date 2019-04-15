@@ -82,6 +82,8 @@
    * Marlin repository.
    */
   #define SOURCE_CODE_URL "https://github.com/imade3d"
+  #define SOURCE_CODE_URL_LINE1 "http://github.com/"
+  #define SOURCE_CODE_URL_LINE2 "IMADE3D/Marlin"
 
   /**
    * Default generic printer UUID.
