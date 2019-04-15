@@ -38,18 +38,15 @@
 ///// Overwrites///////
 ///////////////////////
 
-//#ifndef MSG_ZPROBE_ZOFFSET
-  #define MSG_ZPROBE_ZOFFSET                  _UxGT("Z Height")
-//#endif 
-//#ifndef MSG_DISABLE_STEPPERS
+#define MSG_ZPROBE_ZOFFSET                  _UxGT("Z Height")
 #define MSG_DISABLE_STEPPERS                _UxGT("Release motors")
-//#endif 
-// #ifndef MSG_RESTORE_FAILSAFE
 #define MSG_RESTORE_FAILSAFE                _UxGT("Factory Reset (!)")
+#define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
 
 ///////////////////////
 // JellyBOX Specific //
 ///////////////////////
+
 #ifndef MSG_MATERIAL
   #define MSG_MATERIAL                        _UxGT("Material")
 #endif
