@@ -1142,16 +1142,12 @@
   // Set the number of grid points per dimension.
   #define GRID_MAX_POINTS_X 4
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-
-  //IMADE3D JELLYBOX specific variables for setting probe from right side and back of bed
-  #define X_PROBE_BED_CORRECTION 10
-  #define Y_PROBE_BED_CORRECTION 5
-
+  
  // Set the boundaries for probing (where the probe can reach).
   #define LEFT_PROBE_BED_POSITION X_MIN_POS + X_PROBE_OFFSET_FROM_EXTRUDER
-  #define RIGHT_PROBE_BED_POSITION X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER + X_PROBE_BED_CORRECTION
+  #define RIGHT_PROBE_BED_POSITION X_BED_SIZE - X_PROBE_OFFSET_FROM_EXTRUDER
   #define FRONT_PROBE_BED_POSITION Y_MIN_POS + Y_PROBE_OFFSET_FROM_EXTRUDER
-  #define BACK_PROBE_BED_POSITION Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER + Y_PROBE_BED_CORRECTION
+  #define BACK_PROBE_BED_POSITION Y_BED_SIZE - Y_PROBE_OFFSET_FROM_EXTRUDER
 
   // Probe along the Y axis, advancing X after each column
   //#define PROBE_Y_FIRST
