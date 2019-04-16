@@ -789,6 +789,11 @@ private:
   #if ENABLED(GCODE_MACROS)
     static void M810_819();
   #endif
+  
+  #if ENABLED(IMADE3D_BYPASS_BED_HEATING)
+    static void M820();
+    static void M821();
+  #endif
 
   #if HAS_BED_PROBE
     static void M851();

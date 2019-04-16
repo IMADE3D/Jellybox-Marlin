@@ -674,7 +674,12 @@ void GcodeSuite::process_parsed_command(
         case 815: case 816: case 817: case 818: case 819:
         M810_819(); break;                                        // M810-M819: Define/execute G-code macro
       #endif
-
+      
+      #if ENABLED(IMADE3D_BYPASS_BED_HEATING)
+        case 820: M820(); break; // M820: enable bypass (= cold bed)
+        case 821: M821(); break; // M821: disable bypass (= heated bed)
+      #endif
+      
       #if ENABLED(LIN_ADVANCE)
         case 900: M900(); break;                                  // M900: Set advance K factor.
       #endif
