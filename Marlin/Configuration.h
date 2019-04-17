@@ -1,6 +1,7 @@
 #define JELLYBOX_VARIANT_LINE1 "JellyBOX 2.0"
 #define JELLYBOX_VARIANT_LINE2 "heated bed"
 #define IMADE3D_BYPASS_BED_HEATING true // M820 M821
+#define IMADE3D_CALIBRATE_1ST_LAYER // M822 M823
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]

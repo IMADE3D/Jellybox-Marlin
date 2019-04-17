@@ -794,6 +794,13 @@ private:
     static void M820();
     static void M821();
   #endif
+  
+  #if ENABLED(IMADE3D_CALIBRATE_1ST_LAYER)
+    static void M822();
+    static void M823();
+    static void M824();
+    static void M825();
+  #endif
 
   #if HAS_BED_PROBE
     static void M851();

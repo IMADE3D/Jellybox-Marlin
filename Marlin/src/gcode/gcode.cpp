@@ -680,6 +680,13 @@ void GcodeSuite::process_parsed_command(
         case 821: M821(); break; // M821: disable bypass (= heated bed)
       #endif
       
+      #if ENABLED(IMADE3D_CALIBRATE_1ST_LAYER)
+        case 822: M822(); break; // 
+        case 823: M823(); break; // 
+        case 824: M824(); break; // 
+        case 825: M825(); break; // 
+      #endif
+      
       #if ENABLED(LIN_ADVANCE)
         case 900: M900(); break;                                  // M900: Set advance K factor.
       #endif
