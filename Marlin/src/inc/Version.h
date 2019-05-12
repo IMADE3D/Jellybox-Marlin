@@ -38,7 +38,7 @@
   /**
    * Marlin release version identifier
    */
-  #define SHORT_BUILD_VERSION "jb-3.0.x-dev.4-eeprom"
+  #define SHORT_BUILD_VERSION "jb-3.0.x-dev.4"
 
   /**
    * Verbose version identifier which should contain a reference to the location
