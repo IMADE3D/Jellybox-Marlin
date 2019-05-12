@@ -87,7 +87,6 @@ void GcodeSuite::M820() {
     disable_heatbed_enabled = true;
     SERIAL_ECHO_START();
     SERIAL_ECHOPGM("Heated bed disabled.");
-    serialprintln_onoff(disable_heatbed_enabled);
 }
 
 /**
@@ -97,7 +96,6 @@ void GcodeSuite::M821() {
     disable_heatbed_enabled = false;
     SERIAL_ECHO_START();
     SERIAL_ECHOPGM("Heated bed enabled.");
-    serialprintln_onoff(disable_heatbed_enabled);
 }
 
 #endif // HAS_HEATED_BED
