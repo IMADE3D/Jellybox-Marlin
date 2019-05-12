@@ -675,9 +675,9 @@ void GcodeSuite::process_parsed_command(
         M810_819(); break;                                        // M810-M819: Define/execute G-code macro
       #endif
       
-      #if ENABLED(IMADE3D_BYPASS_BED_HEATING)
-        case 820: M820(); break; // M820: enable bypass (= cold bed)
-        case 821: M821(); break; // M821: disable bypass (= heated bed)
+      #if ENABLED(DISABLE_HEATBED)
+        case 820: M820(); break; // M820: Disable heated bed (= use cold bed)
+        case 821: M821(); break; // M821: Enable heated bed (= use heated bed)
       #endif
       
       #if ENABLED(IMADE3D_CALIBRATE_1ST_LAYER)

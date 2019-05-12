@@ -39,8 +39,8 @@
 
 #include "../../Marlin.h" // for wait_for_heatup and idle()
 
-#if ENABLED(IMADE3D_BYPASS_BED_HEATING)
-  bool bypass_heated_bed_enabled = true;
+#if ENABLED(DISABLE_HEATBED)
+  bool disable_heatbed_enabled = true;
 #endif
 
 /**
@@ -48,8 +48,8 @@
  */
 void GcodeSuite::M140() {
     if (DEBUGGING(DRYRUN)) return;
-    if (bypass_heated_bed_enabled) {
-      SERIAL_ECHOPGM("M140 command disregarded\n");
+    if (disable_heatbed_enabled) {
+      SERIAL_ECHOPGM("M140 Command disregarded; heatbed disabled.\n");
       return;
     } // do nothing on purpose
     if (parser.seenval('S')) thermalManager.setTargetBed(parser.value_celsius());
@@ -61,8 +61,8 @@ void GcodeSuite::M140() {
  */
 void GcodeSuite::M190() {
   if (DEBUGGING(DRYRUN)) return;
-  if (bypass_heated_bed_enabled) {
-    SERIAL_ECHOPGM("M190 command disregarded\n");
+  if (disable_heatbed_enabled) {
+    SERIAL_ECHOPGM("M190 Command disregarded; heatbed disabled\n");
     return;
   } // do nothing on purpose
   const bool no_wait_for_cooling = parser.seenval('S');
@@ -81,23 +81,23 @@ void GcodeSuite::M190() {
 }
 
 /**
- * M820: Enable the hb bypass (disable heated bed)
+ * M820: Disable heated bed
  */
 void GcodeSuite::M820() {
-    bypass_heated_bed_enabled = true;
+    disable_heatbed_enabled = true;
     SERIAL_ECHO_START();
-    SERIAL_ECHOPGM("Disregard the heated bed: ");
-    serialprintln_onoff(bypass_heated_bed_enabled);
+    SERIAL_ECHOPGM("Heated bed disabled.");
+    serialprintln_onoff(disable_heatbed_enabled);
 }
 
 /**
- * M821: Disable the hb bypass (enable heated bed)
+ * M821: Enable heated bed
  */
 void GcodeSuite::M821() {
-    bypass_heated_bed_enabled = false;
+    disable_heatbed_enabled = false;
     SERIAL_ECHO_START();
-    SERIAL_ECHOPGM("Disregard the heated bed: ");
-    serialprintln_onoff(bypass_heated_bed_enabled);
+    SERIAL_ECHOPGM("Heated bed enabled.");
+    serialprintln_onoff(disable_heatbed_enabled);
 }
 
 #endif // HAS_HEATED_BED

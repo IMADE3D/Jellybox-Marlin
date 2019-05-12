@@ -790,7 +790,7 @@ private:
     static void M810_819();
   #endif
   
-  #if ENABLED(IMADE3D_BYPASS_BED_HEATING)
+  #if ENABLED(DISABLE_HEATBED)
     static void M820();
     static void M821();
   #endif
