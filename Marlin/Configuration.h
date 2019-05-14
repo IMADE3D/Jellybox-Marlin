@@ -988,7 +988,7 @@
 // The size of the print bed
 // X should be set to 177 in cura on most older JellyBOX 2s' for precision
 #define X_BED_SIZE 177
-#define Y_BED_SIZE 160
+#define Y_BED_SIZE 162
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS -10
