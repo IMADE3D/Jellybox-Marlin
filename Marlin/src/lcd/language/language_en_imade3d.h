@@ -56,6 +56,15 @@
 #ifndef MSG_TWEAK_FIRST_LAYER
   #define MSG_TWEAK_FIRST_LAYER               _UxGT("Live adj. Z height")
 #endif
+#ifndef MSG_DISABLE_HEATBED
+  #define MSG_DISABLE_HEATBED                 _UxGT("Disable heated bed")
+#endif
+#ifndef MSG_ENABLE_HEATBED
+  #define MSG_ENABLE_HEATBED                  _UxGT("Enable heated bed")
+#endif
+#ifndef MSG_DISABLE_HEATBED_MENU
+  #define MSG_DISABLE_HEATBED_MENU            _UxGT("Heatbed On/Off")
+#endif
 
 // About Printer Menu Annotations
 #ifndef MSG_FIRMWARE_VERSION
