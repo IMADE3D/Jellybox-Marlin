@@ -40,7 +40,7 @@
 #include "../../Marlin.h" // for wait_for_heatup and idle()
 
 #if ENABLED(DISABLE_HEATBED)
-  bool disable_heatbed_enabled = true;
+  bool disable_heatbed_enabled = false;
 #endif
 
 /**
