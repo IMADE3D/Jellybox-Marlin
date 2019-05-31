@@ -193,21 +193,3 @@ then
     rm ../Marlin.arduino.avr.mega.elf
     echo $l \\n${jb_version}' HEX exported, yo!'\\n$l\\n\\n\\n
 fi
-
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3, one fan"
-#define JELLYBOX_VARIANT_LINE2 "cold bed, green probe"
-
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3, one fan"
-#define JELLYBOX_VARIANT_LINE2 "cold bed, yellow probe"
-
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3"
-#define JELLYBOX_VARIANT_LINE2 "cold bed, two fans"
-
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3, one fan"
-#define JELLYBOX_VARIANT_LINE2 "hot bed, green probe"
-
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3, one fan"
-#define JELLYBOX_VARIANT_LINE2 "hot bed, yellow probe"
-
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3"
-#define JELLYBOX_VARIANT_LINE2 "hot bed, two fans"
