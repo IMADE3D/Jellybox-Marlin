@@ -46,8 +46,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
@@ -66,8 +66,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
@@ -86,8 +86,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
@@ -106,8 +106,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
@@ -126,8 +126,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
@@ -146,8 +146,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
@@ -166,8 +166,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
@@ -186,8 +186,8 @@ then
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
-    #arduino-cli compile --fqbn arduino:avr:mega Marlin
-    echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
+    arduino-cli compile --fqbn arduino:avr:mega Marlin
+    #echo 'it werks' >Marlin/Marlin.arduino.avr.mega.hex
     cd $hex_dir
     mv -v ../Marlin.arduino.avr.mega.hex ${hex_name}.hex
     rm ../Marlin.arduino.avr.mega.elf
