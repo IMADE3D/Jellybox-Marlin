@@ -17,9 +17,9 @@ jellybox_original_heated_bed_two_fans="1"
 ### MODIFY THESE FOLDERS IF NEEDED
 root_dir="/Users/filipgoc/Documents/OneDrive/imade3d-onedrive/GITHUB/Marlin-githubapp/Marlin-JB-4"
 marlin_dir=${root_dir}"/Marlin"
-conf_dir="/Users/filipgoc/Documents/OneDrive/imade3d-onedrive/GITHUB/Marlin-githubapp/Marlin-JB-4/Marlin/jellybox-configs"
+config_dir="/Users/filipgoc/Documents/OneDrive/imade3d-onedrive/GITHUB/Marlin-githubapp/Marlin-JB-4/Marlin/jellybox-configs"
 hex_dir="/Users/filipgoc/Documents/OneDrive/imade3d-onedrive/GITHUB/Marlin-githubapp/Marlin-JB-4/Marlin/hex-files"
-echo $l \\nRoot: $root_dir \\nMarlin: $marlin_dir \\nConfigs: $conf_dir \\nHex: $hex_dir
+echo $l \\nRoot: $root_dir \\nMarlin: $marlin_dir \\nConfigs: $config_dir \\nHex: $hex_dir
 
 ### INIT
 clear
@@ -42,7 +42,7 @@ then
     jb_version="jellybox_2_cold_bed"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
@@ -62,7 +62,7 @@ then
     jb_version="jellybox_2_heated_bed"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
@@ -82,7 +82,7 @@ then
     jb_version="jellybox_original_cold_bed_one_fan_green_probe"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
@@ -102,7 +102,7 @@ then
     jb_version="jellybox_original_cold_bed_one_fan_yellow_probe"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
@@ -122,7 +122,7 @@ then
     jb_version="jellybox_original_cold_bed_two_fans"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
@@ -142,7 +142,7 @@ then
     jb_version="jellybox_original_heated_bed_one_fan_green_probe"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
@@ -162,7 +162,7 @@ then
     jb_version="jellybox_original_heated_bed_one_fan_yellow_probe"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
@@ -182,7 +182,7 @@ then
     jb_version="jellybox_original_heated_bed_two_fans"
     echo "==== NOW COMPILING: "$jb_version" ===="\\n
     hex_name=$marlin_version'-'$jb_version
-    cd $conf_dir
+    cd $config_dir
     cp -v -f ${jb_version}.h ../Configuration.h
     echo $l \\n'Loaded the new config'\\n$l
     cd $root_dir
