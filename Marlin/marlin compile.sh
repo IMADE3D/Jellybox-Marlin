@@ -1,7 +1,7 @@
 #This scripts compiles all the JellyBOX versions with Arduino-cli. Yay. 
 
 ### DEFINE MARLIN VERSION
-marlin_version="jb_marlin_3.0_dev2"
+marlin_version="jbm-3.0-dev4"
 
 ### WHICH JellyBOX VERSIONS TO COMPILE?
 
