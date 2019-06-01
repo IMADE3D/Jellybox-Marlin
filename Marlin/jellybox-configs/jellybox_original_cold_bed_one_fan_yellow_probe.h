@@ -28,7 +28,8 @@
 
 #define AUTO_BED_LEVELING_BILINEAR
 #define GRID_MAX_POINTS_X 4
-#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X  
+#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+//#define ABL_BILINEAR_SUBDIVISION  
 
 #define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
 
@@ -1195,7 +1196,7 @@
     // Experimental Subdivision of the grid by Catmull-Rom method.
     // Synthesizes intermediate points to produce a more detailed mesh.
     //
-    #define ABL_BILINEAR_SUBDIVISION
+    //#define ABL_BILINEAR_SUBDIVISION
     #if ENABLED(ABL_BILINEAR_SUBDIVISION)
       // Number of subdivisions between probe points
       #define BILINEAR_SUBDIVISIONS 3
