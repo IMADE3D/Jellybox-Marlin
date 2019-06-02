@@ -85,12 +85,43 @@ static void lcd_factory_settings() {
 
 #endif // LCD_PROGRESS_BAR_TEST
 
+void menu_return_twice(){
+ui.goto_previous_screen();
+ui.goto_previous_screen();
+}
+
+void menu_item_disable_heatbed(){
+      START_MENU();
+      if (ui.use_click()) return ui.return_to_status();
+      enqueue_and_echo_commands_P(PSTR("M140 S0"));
+      enqueue_and_echo_commands_P(PSTR("M820"));
+      enqueue_and_echo_commands_P(PSTR("M117 " MSG_HEATBED_DISABLED));
+      STATIC_ITEM(MSG_SPACE, true);
+      STATIC_ITEM(MSG_SPACE, true);
+      STATIC_ITEM(MSG_HEATBED_DISABLED, true);
+      END_MENU();
+    }
+
+void menu_item_enable_heatbed(){
+      START_MENU();
+      if (ui.use_click()) return ui.return_to_status();
+      enqueue_and_echo_commands_P(PSTR("M821"));
+      enqueue_and_echo_commands_P(PSTR("M117 " MSG_HEATBED_ENABLED));
+    
+      STATIC_ITEM(MSG_SPACE, true);
+      STATIC_ITEM(MSG_SPACE, true);
+      STATIC_ITEM(MSG_HEATBED_ENABLED, true);
+      END_MENU();
+    }
+
 #if ENABLED(DISABLE_HEATBED)
   void menu_disable_heatbed() {
     START_MENU();
     MENU_BACK(MSG_MAIN);
-    MENU_ITEM(gcode, MSG_DISABLE_HEATBED, PSTR("M820"));
-    MENU_ITEM(gcode, MSG_ENABLE_HEATBED, PSTR("M821"));
+    //MENU_ITEM(gcode, MSG_DISABLE_HEATBED, PSTR("M820"));
+    //MENU_ITEM(gcode, MSG_ENABLE_HEATBED, PSTR("M821"));
+    MENU_ITEM(submenu, MSG_DISABLE_HEATBED, menu_item_disable_heatbed);
+    MENU_ITEM(submenu, MSG_ENABLE_HEATBED, menu_item_enable_heatbed);
     END_MENU();
   }
 #endif
