@@ -44,6 +44,14 @@
 #define WELCOME_MSG                         MACHINE_NAME _UxGT(" is ready.")
 
 ///////////////////////
+///// Utilities //////
+//////////////////////
+
+#ifndef MSG_SPACE
+  #define MSG_SPACE                            _UxGT(" ")
+#endif
+
+///////////////////////
 // JellyBOX Specific //
 ///////////////////////
 
@@ -64,6 +72,12 @@
 #endif
 #ifndef MSG_DISABLE_HEATBED_MENU
   #define MSG_DISABLE_HEATBED_MENU            _UxGT("Heatbed On/Off")
+#endif
+#ifndef MSG_HEATBED_ENABLED
+  #define MSG_HEATBED_ENABLED                 _UxGT("Heated bed enabled")
+#endif
+#ifndef MSG_HEATBED_DISABLED
+  #define MSG_HEATBED_DISABLED                _UxGT("Heated bed disabled")
 #endif
 
 // About Printer Menu Annotations
