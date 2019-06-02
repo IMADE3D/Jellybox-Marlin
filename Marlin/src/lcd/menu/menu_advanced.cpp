@@ -100,9 +100,22 @@ void menu_backlash();
   //
   // Set the home offset based on the current_position
   //
-  void _lcd_set_home_offsets() {
-    enqueue_and_echo_commands_P(PSTR("M428"));
+  //void _lcd_set_home_offsets() {
+  //  enqueue_and_echo_commands_P(PSTR("M428"));
+  //  ui.return_to_status();
+  //}
+  //
+  // Set the X and Y offset based on the current_position
+  //
+  void lcd_set_x_origin() {
+    set_home_offset(X_AXIS, -current_position[X_AXIS]);
     ui.return_to_status();
+    enqueue_and_echo_commands_P(PSTR("M117 " MSG_X_ORIGIN_UPDATED));
+  }
+  void lcd_set_y_origin() {
+    set_home_offset(Y_AXIS, -current_position[Y_AXIS]);
+    ui.return_to_status();
+    enqueue_and_echo_commands_P(PSTR("M117" MSG_Y_ORIGIN_UPDATED));
   }
 #endif
 
@@ -630,7 +643,8 @@ void menu_advanced_settings() {
       //
       // Set Home Offsets
       //
-      //MENU_ITEM(function, MSG_SET_HOME_OFFSETS, _lcd_set_home_offsets);
+      MENU_ITEM(function, MSG_SET_X_ORIGIN, lcd_set_x_origin);
+      MENU_ITEM(function, MSG_SET_Y_ORIGIN, lcd_set_y_origin);
     #endif
 
     // M203 / M205 - Feedrate items

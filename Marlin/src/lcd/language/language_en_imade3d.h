@@ -55,6 +55,10 @@
 // JellyBOX Specific //
 ///////////////////////
 
+#define MSG_SET_X_ORIGIN                _UxGT("Set X Origin")
+#define MSG_SET_Y_ORIGIN                _UxGT("Set Y Origin")
+#define MSG_X_ORIGIN_UPDATED            _UxGT("X-Origin updated")
+#define MSG_Y_ORIGIN_UPDATED            _UxGT("Y-Origin updated")
 #ifndef MSG_MATERIAL
   #define MSG_MATERIAL                        _UxGT("Material")
 #endif
