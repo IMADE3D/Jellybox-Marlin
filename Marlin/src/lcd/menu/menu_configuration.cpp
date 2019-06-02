@@ -95,6 +95,7 @@ void menu_item_disable_heatbed(){
       if (ui.use_click()) return ui.return_to_status();
       enqueue_and_echo_commands_P(PSTR("M140 S0"));
       enqueue_and_echo_commands_P(PSTR("M820"));
+      enqueue_and_echo_commands_P(PSTR("M117 " MSG_HEATBED_DISABLED));
       STATIC_ITEM(MSG_SPACE, true);
       STATIC_ITEM(MSG_SPACE, true);
       STATIC_ITEM(MSG_HEATBED_DISABLED, true);
@@ -105,6 +106,8 @@ void menu_item_enable_heatbed(){
       START_MENU();
       if (ui.use_click()) return ui.return_to_status();
       enqueue_and_echo_commands_P(PSTR("M821"));
+      enqueue_and_echo_commands_P(PSTR("M117 " MSG_HEATBED_ENABLED));
+    
       STATIC_ITEM(MSG_SPACE, true);
       STATIC_ITEM(MSG_SPACE, true);
       STATIC_ITEM(MSG_HEATBED_ENABLED, true);
