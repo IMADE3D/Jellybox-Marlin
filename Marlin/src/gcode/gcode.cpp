@@ -674,7 +674,19 @@ void GcodeSuite::process_parsed_command(
         case 815: case 816: case 817: case 818: case 819:
         M810_819(); break;                                        // M810-M819: Define/execute G-code macro
       #endif
-
+      
+      #if ENABLED(DISABLE_HEATBED)
+        case 820: M820(); break; // M820: Disable heated bed (= use cold bed)
+        case 821: M821(); break; // M821: Enable heated bed (= use heated bed)
+      #endif
+      
+      #if ENABLED(IMADE3D_CALIBRATE_1ST_LAYER)
+        case 822: M822(); break; // 
+        case 823: M823(); break; // 
+        case 824: M824(); break; // 
+        case 825: M825(); break; // 
+      #endif
+      
       #if ENABLED(LIN_ADVANCE)
         case 900: M900(); break;                                  // M900: Set advance K factor.
       #endif

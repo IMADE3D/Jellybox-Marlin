@@ -85,6 +85,16 @@ static void lcd_factory_settings() {
 
 #endif // LCD_PROGRESS_BAR_TEST
 
+#if ENABLED(DISABLE_HEATBED)
+  void menu_disable_heatbed() {
+    START_MENU();
+    MENU_BACK(MSG_MAIN);
+    MENU_ITEM(gcode, MSG_DISABLE_HEATBED, PSTR("M820"));
+    MENU_ITEM(gcode, MSG_ENABLE_HEATBED, PSTR("M821"));
+    END_MENU();
+  }
+#endif
+
 #if HAS_DEBUG_MENU
 
   void menu_debug() {
@@ -290,6 +300,10 @@ void menu_configuration() {
     MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
   #elif HAS_BED_PROBE
     MENU_ITEM_EDIT(float52, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
+  #endif
+  
+  #if ENABLED(DISABLE_HEATBED)
+    MENU_ITEM(submenu, MSG_DISABLE_HEATBED_MENU, menu_disable_heatbed);
   #endif
 
   const bool busy = printer_busy();

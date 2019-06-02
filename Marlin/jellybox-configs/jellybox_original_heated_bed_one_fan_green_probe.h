@@ -1,7 +1,38 @@
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2.0"
-#define JELLYBOX_VARIANT_LINE2 "heated bed"
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 1.3, one fan"
+#define JELLYBOX_VARIANT_LINE2 "hot bed, green probe"
+
 #define DISABLE_HEATBED // M820 | M821
 #define IMADE3D_CALIBRATE_1ST_LAYER // M822-M825 under development
+
+#define TEMP_SENSOR_0 1
+#define TEMP_SENSOR_BED 1
+
+#define X_PROBE_OFFSET_FROM_EXTRUDER 30  // X offset: -left  +right  [of the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 0  // Y offset: -front +behind [the nozzle]
+#define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
+
+#define X_BED_SIZE 168
+#define Y_BED_SIZE 160
+
+#define X_MIN_POS -18
+#define Y_MIN_POS 0
+#define Z_MIN_POS 0
+#define X_MAX_POS X_BED_SIZE
+#define Y_MAX_POS Y_BED_SIZE + 5
+#define Z_MAX_POS 142
+
+#define HEATER_0_MINTEMP   0
+#define BED_MINTEMP        0
+#define HEATER_0_MAXTEMP 260
+#define BED_MAXTEMP 90
+
+#define AUTO_BED_LEVELING_BILINEAR
+#define GRID_MAX_POINTS_X 4
+#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+//#define ABL_BILINEAR_SUBDIVISION  
+
+#define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
+
 /**
  * Marlin 3D Printer Firmware
  * Copyright (C) 2019 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
@@ -387,14 +418,14 @@
  *
  * :{ '0': "Not used", '1':"100k / 4.7k - EPCOS", '2':"200k / 4.7k - ATC Semitec 204GT-2", '3':"Mendel-parts / 4.7k", '4':"10k !! do not use for a hotend. Bad resolution at high temp. !!", '5':"100K / 4.7k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '501':"100K Zonestar (Tronxy X3A)", '6':"100k / 4.7k EPCOS - Not as accurate as Table 1", '7':"100k / 4.7k Honeywell 135-104LAG-J01", '8':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT", '9':"100k / 4.7k GE Sensing AL03006-58.2K-97-G1", '10':"100k / 4.7k RS 198-961", '11':"100k / 4.7k beta 3950 1%", '12':"100k / 4.7k 0603 SMD Vishay NTCS0603E3104FXT (calibrated for Makibox hot bed)", '13':"100k Hisens 3950  1% up to 300°C for hotend 'Simple ONE ' & hotend 'All In ONE'", '20':"PT100 (Ultimainboard V2.x)", '51':"100k / 1k - EPCOS", '52':"200k / 1k - ATC Semitec 204GT-2", '55':"100k / 1k - ATC Semitec 104GT-2 (Used in ParCan & J-Head)", '60':"100k Maker's Tool Works Kapton Bed Thermistor beta=3950", '61':"100k Formbot / Vivedino 3950 350C thermistor 4.7k pullup", '66':"Dyze Design 4.7M High Temperature thermistor", '67':"Slice Engineering 450C High Temperature thermistor", '70':"the 100K thermistor found in the bq Hephestos 2", '71':"100k / 4.7k Honeywell 135-104LAF-J01", '147':"Pt100 / 4.7k", '1047':"Pt1000 / 4.7k", '110':"Pt100 / 1k (non-standard)", '1010':"Pt1000 / 1k (non standard)", '-4':"Thermocouple + AD8495", '-3':"Thermocouple + MAX31855 (only for sensor 0)", '-2':"Thermocouple + MAX6675 (only for sensor 0)", '-1':"Thermocouple + AD595",'998':"Dummy 1", '999':"Dummy 2" }
  */
-#define TEMP_SENSOR_0 1
-#define TEMP_SENSOR_1 0
-#define TEMP_SENSOR_2 0
-#define TEMP_SENSOR_3 0
-#define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_5 0
-#define TEMP_SENSOR_BED 1
-#define TEMP_SENSOR_CHAMBER 0
+//#define TEMP_SENSOR_0 1
+//#define TEMP_SENSOR_1 0
+//#define TEMP_SENSOR_2 0
+//#define TEMP_SENSOR_3 0
+//#define TEMP_SENSOR_4 0
+//#define TEMP_SENSOR_5 0
+//#define TEMP_SENSOR_BED 1
+//#define TEMP_SENSOR_CHAMBER 0
 
 // Dummy thermistor constant temperature readings, for use with 998 and 999
 #define DUMMY_THERMISTOR_998_VALUE 77
@@ -415,24 +446,24 @@
 
 // Below this temperature the heater will be switched off
 // because it probably indicates a broken thermistor wire.
-#define HEATER_0_MINTEMP   0
-#define HEATER_1_MINTEMP   0
-#define HEATER_2_MINTEMP   0
-#define HEATER_3_MINTEMP   0
-#define HEATER_4_MINTEMP   0
-#define HEATER_5_MINTEMP   0
-#define BED_MINTEMP        0
+//#define HEATER_0_MINTEMP   0
+//#define HEATER_1_MINTEMP   0
+//#define HEATER_2_MINTEMP   0
+//#define HEATER_3_MINTEMP   0
+//#define HEATER_4_MINTEMP   0
+//#define HEATER_5_MINTEMP   0
+//#define BED_MINTEMP        0
 
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 260
-#define HEATER_1_MAXTEMP 245
-#define HEATER_2_MAXTEMP 245
-#define HEATER_3_MAXTEMP 245
-#define HEATER_4_MAXTEMP 245
-#define HEATER_5_MAXTEMP 245
-#define BED_MAXTEMP 90
+//#define HEATER_0_MAXTEMP 260
+//#define HEATER_1_MAXTEMP 245
+//#define HEATER_2_MAXTEMP 245
+//#define HEATER_3_MAXTEMP 245
+//#define HEATER_4_MAXTEMP 245
+//#define HEATER_5_MAXTEMP 245
+//#define BED_MAXTEMP 90
 
 //===========================================================================
 //============================= PID Settings ================================
@@ -862,9 +893,9 @@
  *      O-- FRONT --+
  *    (0,0)
  */
-#define X_PROBE_OFFSET_FROM_EXTRUDER 22  // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER 25  // Y offset: -front +behind [the nozzle]
-#define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
+//#define X_PROBE_OFFSET_FROM_EXTRUDER 22  // X offset: -left  +right  [of the nozzle]
+//#define Y_PROBE_OFFSET_FROM_EXTRUDER 25  // Y offset: -front +behind [the nozzle]
+//#define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
 
 // Certain types of probes need to stay away from edges
 //#define MIN_PROBE_EDGE 0
@@ -986,16 +1017,16 @@
 
 // The size of the print bed
 // X should be set to 177 in cura on most older JellyBOX 2s' for precision
-#define X_BED_SIZE 177
-#define Y_BED_SIZE 162
+//#define X_BED_SIZE 177
+//#define Y_BED_SIZE 162
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
-#define X_MIN_POS -10
-#define Y_MIN_POS 0
-#define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
-#define Y_MAX_POS Y_BED_SIZE + 5
-#define Z_MAX_POS 142
+//#define X_MIN_POS -10
+//#define Y_MIN_POS 0
+//#define Z_MIN_POS 0
+//#define X_MAX_POS X_BED_SIZE
+//#define Y_MAX_POS Y_BED_SIZE + 5
+//#define Z_MAX_POS 142
 
 /**
  * Software Endstops
@@ -1097,7 +1128,7 @@
  */
 //#define AUTO_BED_LEVELING_3POINT
 //#define AUTO_BED_LEVELING_LINEAR
-#define AUTO_BED_LEVELING_BILINEAR
+//#define AUTO_BED_LEVELING_BILINEAR
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
@@ -1143,8 +1174,8 @@
 #if EITHER(AUTO_BED_LEVELING_LINEAR, AUTO_BED_LEVELING_BILINEAR)
 
   // Set the number of grid points per dimension.
-  #define GRID_MAX_POINTS_X 4
-  #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+  //#define GRID_MAX_POINTS_X 4
+  //#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
   
  // Set the boundaries for probing (where the probe can reach).
   #define LEFT_PROBE_BED_POSITION X_MIN_POS + X_PROBE_OFFSET_FROM_EXTRUDER
@@ -1165,7 +1196,7 @@
     // Experimental Subdivision of the grid by Catmull-Rom method.
     // Synthesizes intermediate points to produce a more detailed mesh.
     //
-    #define ABL_BILINEAR_SUBDIVISION
+    //#define ABL_BILINEAR_SUBDIVISION
     #if ENABLED(ABL_BILINEAR_SUBDIVISION)
       // Number of subdivisions between probe points
       #define BILINEAR_SUBDIVISIONS 3
@@ -1245,7 +1276,7 @@
  * Commands to execute at the end of G29 probing.
  * Useful to retract or move the Z probe out of the way.
  */
-#define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
+//#define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
 
 
 // @section homing
@@ -1387,7 +1418,7 @@
 // Preheat Constants
 #define PREHEAT_1_LABEL       "'Level'"
 #define PREHEAT_1_TEMP_HOTEND 180
-#define PREHEAT_1_TEMP_BED    20
+#define PREHEAT_1_TEMP_BED    60
 #define PREHEAT_1_FAN_SPEED   0 // Value from 0 to 255
 
 #define PREHEAT_2_LABEL       "'PLA'"
