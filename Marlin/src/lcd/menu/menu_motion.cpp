@@ -416,6 +416,15 @@ void menu_move() {
 void _lcd_ubl_level_bed();
 void menu_bed_leveling();
 
+void home_axes_submenu() {
+    START_MENU();
+    MENU_BACK(MSG_MAIN);
+      MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
+      MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
+      MENU_ITEM(gcode, MSG_AUTO_HOME_Z, PSTR("G28 Z"));
+    END_MENU();
+  }
+
 void menu_motion() {
   START_MENU();
 
@@ -444,6 +453,15 @@ void menu_motion() {
   //#endif
   
   //
+  // Live Adjustment Babystepping Z Offset
+  //
+  #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
+    MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
+  #elif HAS_BED_PROBE
+    MENU_ITEM_EDIT(float52, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
+  #endif
+
+  //
   // Move Axis
   //
   #if ENABLED(DELTA)
@@ -451,14 +469,22 @@ void menu_motion() {
   #endif
       MENU_ITEM(submenu, MSG_MOVE_AXIS, menu_move);
 
+  // //
+  // // Auto Home
+  // //
+  // MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
+  // #if ENABLED(INDIVIDUAL_AXIS_HOMING_MENU)
+  //   MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
+  //   MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
+  //   MENU_ITEM(gcode, MSG_AUTO_HOME_Z, PSTR("G28 Z"));
+  // #endif
+
   //
-  // Auto Home
+  // Auto Home Imade3d Version
   //
   MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
   #if ENABLED(INDIVIDUAL_AXIS_HOMING_MENU)
-    MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
-    MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
-    MENU_ITEM(gcode, MSG_AUTO_HOME_Z, PSTR("G28 Z"));
+    MENU_ITEM(submenu, MSG_HOME_AXES, home_axes_submenu);
   #endif
 
   //

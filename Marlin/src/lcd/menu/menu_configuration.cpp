@@ -327,12 +327,6 @@ void menu_configuration() {
 
   MENU_ITEM(submenu, MSG_ADVANCED_SETTINGS, menu_advanced_settings);
 
-  #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
-    MENU_ITEM(submenu, MSG_ZPROBE_ZOFFSET, lcd_babystep_zoffset);
-  #elif HAS_BED_PROBE
-    MENU_ITEM_EDIT(float52, MSG_ZPROBE_ZOFFSET, &zprobe_zoffset, Z_PROBE_OFFSET_RANGE_MIN, Z_PROBE_OFFSET_RANGE_MAX);
-  #endif
-  
   #if ENABLED(DISABLE_HEATBED)
     MENU_ITEM(submenu, MSG_DISABLE_HEATBED_MENU, menu_disable_heatbed);
   #endif
