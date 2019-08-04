@@ -247,18 +247,33 @@ void menu_info_printer_imade3d() {
   END_SCREEN();
 }
 
+// //
+// // "About Printer" submenu
+// //
+// void menu_info() {
+//   START_MENU();
+//   MENU_BACK(MSG_MAIN);
+//   MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, menu_info_printer_imade3d);        // Printer Info >
+//   MENU_ITEM(submenu, MSG_INFO_BOARD_MENU, menu_info_board);            // Board Info >
+//   // MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, menu_info_thermistors); // Thermistors >
+//   #if ENABLED(PRINTCOUNTER)
+//     MENU_ITEM(submenu, MSG_INFO_STATS_MENU, menu_info_stats);          // Printer Stats >
+//   #endif
+//   END_MENU();
+// }
+
 //
-// "About Printer" submenu
+// "About Printer" submenu imade3d version
 //
 void menu_info() {
   START_MENU();
   MENU_BACK(MSG_MAIN);
-  MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, menu_info_printer_imade3d);        // Printer Info >
-  MENU_ITEM(submenu, MSG_INFO_BOARD_MENU, menu_info_board);            // Board Info >
-  // MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, menu_info_thermistors); // Thermistors >
+  MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, menu_info_printer_imade3d); // Printer Info >
   #if ENABLED(PRINTCOUNTER)
-    MENU_ITEM(submenu, MSG_INFO_STATS_MENU, menu_info_stats);          // Printer Stats >
+    MENU_ITEM(submenu, MSG_INFO_STATS_MENU, menu_info_stats);           // Printer Stats >
   #endif
+  STATIC_ITEM("forum.imade3d.com");
+  STATIC_ITEM("imade3d.com/support");
   END_MENU();
 }
 
