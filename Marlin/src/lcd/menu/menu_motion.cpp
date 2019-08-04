@@ -416,6 +416,15 @@ void menu_move() {
 void _lcd_ubl_level_bed();
 void menu_bed_leveling();
 
+void home_axes_submenu() {
+    START_MENU();
+    MENU_BACK(MSG_MAIN);
+      MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
+      MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
+      MENU_ITEM(gcode, MSG_AUTO_HOME_Z, PSTR("G28 Z"));
+    END_MENU();
+  }
+
 void menu_motion() {
   START_MENU();
 
@@ -451,14 +460,22 @@ void menu_motion() {
   #endif
       MENU_ITEM(submenu, MSG_MOVE_AXIS, menu_move);
 
+  // //
+  // // Auto Home
+  // //
+  // MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
+  // #if ENABLED(INDIVIDUAL_AXIS_HOMING_MENU)
+  //   MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
+  //   MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
+  //   MENU_ITEM(gcode, MSG_AUTO_HOME_Z, PSTR("G28 Z"));
+  // #endif
+
   //
-  // Auto Home
+  // Auto Home Imade3d Version
   //
   MENU_ITEM(gcode, MSG_AUTO_HOME, PSTR("G28"));
   #if ENABLED(INDIVIDUAL_AXIS_HOMING_MENU)
-    MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
-    MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
-    MENU_ITEM(gcode, MSG_AUTO_HOME_Z, PSTR("G28 Z"));
+    MENU_ITEM(submenu, MSG_HOME_AXES, home_axes_submenu);
   #endif
 
   //

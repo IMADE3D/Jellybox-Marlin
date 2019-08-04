@@ -114,6 +114,9 @@
 #ifndef MSG_FILAMENTEJECT 
   #define MSG_FILAMENTEJECT                    _UxGT("Eject filament")
 #endif
+#ifndef MSG_HOME_AXES
+  #define MSG_HOME_AXES                       _UxGT("Home X, Y, or Z")
+#endif
 
 // Preflight menu
 #ifndef MSG_TEST_MOTORS
