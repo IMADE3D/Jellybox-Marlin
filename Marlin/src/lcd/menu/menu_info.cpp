@@ -186,11 +186,36 @@ void menu_info_board() {
 // About Printer > Printer Info
 //
 void menu_info_printer() {
+    if (ui.use_click()) return ui.goto_previous_screen();
+    START_SCREEN();
+    STATIC_ITEM(MSG_MARLIN, true, true);                             // Marlin
+    STATIC_ITEM(SHORT_BUILD_VERSION, true);                          // x.x.x-Branch
+    STATIC_ITEM(STRING_DISTRIBUTION_DATE, true);                     // YYYY-MM-DD HH:MM
+    STATIC_ITEM(MACHINE_NAME, true);                                 // My3DPrinter
+    STATIC_ITEM(WEBSITE_URL, true);                                  // www.my3dprinter.com
+    STATIC_ITEM(MSG_INFO_EXTRUDERS ": " STRINGIFY(EXTRUDERS), true); // Extruders: 2
+    #if ENABLED(AUTO_BED_LEVELING_3POINT)
+      STATIC_ITEM(MSG_3POINT_LEVELING, true);                        // 3-Point Leveling
+    #elif ENABLED(AUTO_BED_LEVELING_LINEAR)
+      STATIC_ITEM(MSG_LINEAR_LEVELING, true);                        // Linear Leveling
+    #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
+      STATIC_ITEM(MSG_BILINEAR_LEVELING, true);                      // Bi-linear Leveling
+    #elif ENABLED(AUTO_BED_LEVELING_UBL)
+      STATIC_ITEM(MSG_UBL_LEVELING, true);                           // Unified Bed Leveling
+    #elif ENABLED(MESH_BED_LEVELING)
+      STATIC_ITEM(MSG_MESH_LEVELING, true);                          // Mesh Leveling
+    #endif
+    END_SCREEN();
+  }
+
+//
+// About Printer > Printer Info Imade3d Version
+//
+void menu_info_printer_imade3d() {
   if (ui.use_click()) return ui.goto_previous_screen();
   START_SCREEN();
-  //STATIC_ITEM(MSG_MARLIN, true, true);                             // Marlin
-  STATIC_ITEM(MSG_FIRMWARE_VERSION, false);                       
-  STATIC_ITEM(SHORT_BUILD_VERSION, true);                          
+  STATIC_ITEM(MSG_FIRMWARE_VERSION, false);
+  STATIC_ITEM(SHORT_BUILD_VERSION, true);
   #ifdef JELLYBOX_VARIANT_LINE1
   STATIC_ITEM(MSG_JELLYBOX_VARIANT, false);
   STATIC_ITEM(JELLYBOX_VARIANT_LINE1, true);                       // JellyBOX_2.0-one_fan
@@ -228,9 +253,9 @@ void menu_info_printer() {
 void menu_info() {
   START_MENU();
   MENU_BACK(MSG_MAIN);
-  MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, menu_info_printer);        // Printer Info >
+  MENU_ITEM(submenu, MSG_INFO_PRINTER_MENU, menu_info_printer_imade3d);        // Printer Info >
   MENU_ITEM(submenu, MSG_INFO_BOARD_MENU, menu_info_board);            // Board Info >
-  MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, menu_info_thermistors); // Thermistors >
+  // MENU_ITEM(submenu, MSG_INFO_THERMISTOR_MENU, menu_info_thermistors); // Thermistors >
   #if ENABLED(PRINTCOUNTER)
     MENU_ITEM(submenu, MSG_INFO_STATS_MENU, menu_info_stats);          // Printer Stats >
   #endif
