@@ -354,8 +354,13 @@ void MarlinUI::completion_feedback(const bool good/*=true*/) {
 
   #include "../../feature/babystep.h"
 
+  void save_eeprom_goto_previous_screen_no_defer() {
+      settings.save();
+      ui.goto_previous_screen_no_defer();
+    }
+
   void lcd_babystep_zoffset() {
-    if (ui.use_click()) return ui.goto_previous_screen_no_defer();
+    if (ui.use_click()) return save_eeprom_goto_previous_screen_no_defer();
     ui.defer_status_screen();
     #if ENABLED(BABYSTEP_HOTEND_Z_OFFSET)
       const bool do_probe = (active_extruder == 0);
