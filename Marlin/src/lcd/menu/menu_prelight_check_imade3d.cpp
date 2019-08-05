@@ -37,19 +37,53 @@
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
+//
+// The MAIN PREFLIGHT SUBMENU BELOW
+//
+
 void menu_preflight_check() {
   START_MENU();
   MENU_BACK(MSG_MAIN);
 
-  //
-  // Change filament
-  //
-  MENU_ITEM(gcode, MSG_FILAMENTCHANGE, PSTR("M600 B0"));
+    //
+    // 1 Test Motors
+    //
+    MENU_ITEM(submenu, MSG_TEST_MOTORS, lcd_test_motors_menu);
 
-  //
-  // Speed:
-  //
-  MENU_ITEM_EDIT(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
+    //
+    // 2 Endstop status
+    //
+    MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
+
+    //
+    // 3 Test endstops
+    //
+    MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
+
+    //
+    // 4 Set (X) origin
+    //
+    MENU_ITEM(submenu, MSG_SET_ORIGIN_PREFLIGHT, lcd_set_origin_menu);
+
+    //
+    // 5 Test auto bed level
+    //
+    MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT, lcd_test_auto_bed_level_menu);
+
+    //
+    // 6 Test nozzle heater
+    //
+    MENU_ITEM(function, MSG_TEST_NOZZLE, lcd_test_nozzle_menu);
+
+    //
+    // 7 Test bed heater
+    //
+    MENU_ITEM(function, MSG_TEST_BED, lcd_test_bed_menu);
+
+    //
+    // 8 Test Filament Fans
+    //
+    MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S255\nG4 S1\nM106 S130\nG4 S1\nM106 S0"));
 
   END_MENU(); // menu_preflight_check
 }
