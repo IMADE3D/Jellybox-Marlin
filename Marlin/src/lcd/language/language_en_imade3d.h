@@ -119,6 +119,9 @@
 #endif
 
 // Preflight menu
+#ifndef MSG_PREFLIGHT_MENU
+  #define MSG_PREFLIGHT_MENU                   _UxGT("Preflight Check")
+#endif
 #ifndef MSG_TEST_MOTORS
   #define MSG_TEST_MOTORS                     _UxGT("1. Test motors")
 #endif
