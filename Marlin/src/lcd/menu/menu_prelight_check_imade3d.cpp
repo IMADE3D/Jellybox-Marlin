@@ -343,28 +343,24 @@ void lcd_return_to_status() {
     * 5 Test auto bed level menu
     *
     */
-    // void lcd_test_auto_bed_level_menu(){
-    //   START_MENU();
+    void lcd_test_auto_bed_level_menu(){
+      START_MENU();
+      MENU_BACK(MSG_BACK);
 
-    //   //
-    //   // ^ Main
-    //   //
-    //   MENU_BACK(MSG_BACK);
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(gcode, MSG_TEST_AUTO_BED_LEVEL, PSTR("G28\nG29 D"));
 
-    //   //
-    //   // Home XYZ
-    //   //
-    //   MENU_ITEM(gcode, MSG_TEST_AUTO_BED_LEVEL, PSTR("G28\nG29"));
+      //
+      // Message
+      //
+      STATIC_ITEM("! Make sure to insert   ");
+      STATIC_ITEM("the removable         ");
+      STATIC_ITEM("build plate.           ");
 
-    //   //
-    //   // Message
-    //   //
-    //   STATIC_ITEM("! Make sure to insert   ");
-    //   STATIC_ITEM("the removable         ");
-    //   STATIC_ITEM("build plate.           ");
-
-    //   END_MENU();
-    // }
+      END_MENU();
+    }
 
    /**
     *
@@ -438,7 +434,7 @@ void menu_preflight_check() {
     //
     // 5 Test auto bed level
     //
-    // MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT, lcd_test_auto_bed_level_menu);
+    MENU_ITEM(submenu, MSG_TEST_AUTO_BED_LEVEL_PREFLIGHT, lcd_test_auto_bed_level_menu);
 
     //
     // 6 Test nozzle heater
