@@ -413,8 +413,8 @@ void menu_preflight_check() {
   START_MENU();
   MENU_BACK(MSG_MAIN);
 
-  enqueue_and_echo_commands_P(PSTR("M104 S0")); // always disable nozzle heater when entering the Preflight as a safety feature
-  enqueue_and_echo_commands_P(PSTR("M140 S0")); // always disable bed heater when entering the Preflight as a safety feature
+  // always disable heaters when entering the Preflight as a safety feature
+  thermalManager.disable_all_heaters();
 
     //
     // 1 Test Motors
