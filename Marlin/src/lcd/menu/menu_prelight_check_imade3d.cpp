@@ -224,64 +224,56 @@ void lcd_return_to_status() {
   //     END_MENU();
   //   }
 
-  //  /**
-  //   *
-  //   * 3 Test Z Endstop Menu
-  //   *
-  //   */
-  //   void lcd_test_z_endstop(){
-  //     START_MENU();
+   /**
+    *
+    * 3A Test Z Endstop Menu
+    *
+    */
+    void lcd_test_z_endstop(){
+      START_MENU();
+      MENU_BACK(MSG_BACK);
 
-  //     //
-  //     // ^ Main
-  //     //
-  //     MENU_BACK(MSG_BACK);
+      //
+      // Home Z
+      //
+      MENU_ITEM(gcode, MSG_TEST_Z_ENDSTOP, PSTR("G28 Z"));
 
-  //     //
-  //     // Warning
-  //     //
-  //     STATIC_ITEM("!  Prerequisites  !     ");
-  //     STATIC_ITEM("-Setup Z probe height   " );
-  //     STATIC_ITEM("-Test X and test Y      ");
+      //
+      // Warning
+      //
+      STATIC_ITEM("- !  Prerequisites  ! - ");
+      STATIC_ITEM("1. Setup Z probe height " );
+      STATIC_ITEM("2. Test X and Test Y    ");
 
-  //     //
-  //     // Home Z
-  //     //
-  //     MENU_ITEM(gcode, MSG_TEST_Z_ENDSTOP, PSTR("G28 Z"));
-
-  //     END_MENU();
-  //   }
+      END_MENU();
+    }
 
    /**
     *
-    * 3 Test Endstops Menu
+    * 3B Test Endstops Menu
     *
     */
-    // void lcd_test_endstops_menu(){
-    //   START_MENU();
+    void lcd_test_endstops_menu(){
+      START_MENU();
+      MENU_BACK(MSG_BACK);
 
-    //   //
-    //   // ^ Main
-    //   //
-    //   MENU_BACK(MSG_BACK);
+      //
+      // Home X
+      //
+      MENU_ITEM(gcode, MSG_TEST_X_ENDSTOP, PSTR("G28 X"));
 
-    //   //
-    //   // Home X
-    //   //
-    //   MENU_ITEM(gcode, MSG_TEST_X_ENDSTOP, PSTR("G28 X"));
+      //
+      // Home Y
+      //
+      MENU_ITEM(gcode, MSG_TEST_Y_ENDSTOP, PSTR("G28 Y"));
 
-    //   //
-    //   // Home Y
-    //   //
-    //   MENU_ITEM(gcode, MSG_TEST_Y_ENDSTOP, PSTR("G28 Y"));
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(submenu, MSG_TEST_Z_ENDSTOP, lcd_test_z_endstop);
 
-    //   //
-    //   // Home XYZ
-    //   //
-    //   MENU_ITEM(submenu, MSG_TEST_Z_ENDSTOP, lcd_test_z_endstop);
-
-    //   END_MENU();
-    // }
+      END_MENU();
+    }
 
     // void lcd_change_x_home_offset_msg1_menu(){
     //     START_MENU();
@@ -419,7 +411,7 @@ void menu_preflight_check() {
     //
     // 3 Test endstops
     //
-    // MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
+    MENU_ITEM(submenu, MSG_TEST_ENDSTOPS, lcd_test_endstops_menu);
 
     //
     // 4 Set (X) origin

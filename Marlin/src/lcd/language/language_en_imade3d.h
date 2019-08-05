@@ -159,4 +159,13 @@
   #define MSG_FILAMENTEJECT_PREFLIGHT         _UxGT("10. Eject filament")
 #endif
 
+#ifndef MSG_TEST_X_ENDSTOP
+  #define MSG_TEST_X_ENDSTOP                   _UxGT("Test X endstop")
+#endif
+#ifndef MSG_TEST_Y_ENDSTOP
+  #define MSG_TEST_Y_ENDSTOP                   _UxGT("Test Y endstop")
+#endif
+#ifndef MSG_TEST_Z_ENDSTOP
+  #define MSG_TEST_Z_ENDSTOP                   _UxGT("Test Z endstop")
+#endif
 // #endif // LANGUAGE_EN_IMADE3D_H
