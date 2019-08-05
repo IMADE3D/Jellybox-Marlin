@@ -20,27 +20,10 @@
  *
  */
 
-#include "../../inc/MarlinConfig.h"
-
-#include "../../inc/MarlinConfigPre.h"
-
 #include "menu_preflight_check_imade3d.h"
 #include "../../lcd/menu/menu_preflight_check_imade3d.h"
 
-#include "../../lcd/menu/menu_motion.h"
-
-
 #if HAS_LCD_MENU
-
-#include "menu.h"
-#include "../../module/motion.h"
-#include "../../module/planner.h"
-#include "../../module/temperature.h"
-#include "../../Marlin.h"
-
-#if HAS_LEVELING
-  #include "../../feature/bedlevel/bedlevel.h"
-#endif
 
 //
 // Preflight functions below

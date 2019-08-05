@@ -22,28 +22,15 @@
 #pragma once
 
 #include "../../inc/MarlinConfigPre.h"
-#include "menu.h"
+#include "../../lcd/menu/menu.h"
 #include "../../module/motion.h"
 #include "../../module/planner.h"
 #include "../../module/temperature.h"
 #include "../../Marlin.h"
+#include "../../lcd/menu/menu_motion.h"
 
 #if HAS_LEVELING
   #include "../../feature/bedlevel/bedlevel.h"
 #endif
 
-//
-// Preflight variables below
-//
-
-// static bool longActionRunning;
-// static bool printer_paused;
-// static bool changing_home_offsets;
-
-// static bool testing_nozzle;
-// static bool testing_bed_heater = false;
-// static bool testing_motors;
-
 void menu_preflight_check();
-void menu_test_nozzle();
-void menu_test_bed();
