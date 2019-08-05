@@ -105,7 +105,7 @@ void menu_backlash();
   //  ui.return_to_status();
   //}
   //
-  // Set the X and Y offset based on the current_position
+  // Set the X and Y offset based on the current_position, imade3d version
   //
   void lcd_set_x_origin() {
     set_home_offset(X_AXIS, -current_position[X_AXIS]);
