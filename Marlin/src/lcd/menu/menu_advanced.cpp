@@ -109,11 +109,13 @@ void menu_backlash();
   //
   void lcd_set_x_origin() {
     set_home_offset(X_AXIS, -current_position[X_AXIS]);
+    lcd_store_settings();
     enqueue_and_echo_commands_P(PSTR("M117 " MSG_X_ORIGIN_SAVED));
     ui.return_to_status();
   }
   void lcd_set_y_origin() {
     set_home_offset(Y_AXIS, -current_position[Y_AXIS]);
+    lcd_store_settings();
     enqueue_and_echo_commands_P(PSTR("M117 " MSG_Y_ORIGIN_SAVED));
     ui.return_to_status();
   }
