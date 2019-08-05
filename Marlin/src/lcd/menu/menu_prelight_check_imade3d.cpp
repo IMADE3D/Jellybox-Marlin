@@ -316,10 +316,6 @@ void lcd_return_to_status() {
     */
     // void lcd_set_origin_menu(){
     //   START_MENU();
-
-    //   //
-    //   // ^ Main
-    //   //
     //   MENU_BACK(MSG_BACK);
 
     //   //
