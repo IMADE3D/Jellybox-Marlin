@@ -78,17 +78,11 @@ inline void manual_move_to_current(AxisEnum axis
 //
 
 static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
-  SERIAL_ECHOLNPAIR("crumb 3 ---> ", changing_x_offset);
   if (ui.use_click()) {
-  SERIAL_ECHOLNPAIR("crumb 4 ---> ", changing_x_offset);
-    // if (changing_x_offset == 1) {
     if (changing_x_offset) {
-            SERIAL_ECHOLNPAIR("crumb 5 ---> ", changing_x_offset);
             lcd_set_x_origin();
             // changing_x_offset = false;
-            SERIAL_ECHOLNPAIR("crumb 6 ---> ", changing_x_offset);
       }
-  SERIAL_ECHOLNPAIR("crumb 7 ---> ", changing_x_offset);
   return ui.goto_previous_screen_no_defer();
   }
   ui.encoder_direction_normal();
@@ -167,7 +161,6 @@ static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
   }
 }
 void lcd_move_x() {
-  SERIAL_ECHOLNPAIR("crumb 13 ---> ", changing_x_offset);
    _lcd_move_xyz(PSTR(MSG_MOVE_X), X_AXIS);
    }
 void lcd_move_y() { _lcd_move_xyz(PSTR(MSG_MOVE_Y), Y_AXIS); }

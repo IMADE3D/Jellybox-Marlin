@@ -43,9 +43,7 @@ bool changing_x_offset = false;
     //
     void lcd_move_x_1mm() {
       move_menu_scale = 1.0;
-      SERIAL_ECHOLNPAIR("crumb 11 ---> ", changing_x_offset);
       lcd_move_x();
-      SERIAL_ECHOLNPAIR("crumb 12 ---> ", changing_x_offset);
     }
     void lcd_move_y_1mm() {
       move_menu_scale = 1.0;
@@ -204,9 +202,7 @@ bool changing_x_offset = false;
         STATIC_ITEM("the build plate.      ");
         STATIC_ITEM(" - Click to continue -");
         if(ui.use_click()) {
-          SERIAL_ECHOLNPAIR("crumb 9 ---> ", changing_x_offset);
           ui.goto_screen(lcd_move_x_1mm);
-          SERIAL_ECHOLNPAIR("crumb 10 ---> ", changing_x_offset);
         }
         END_MENU();
     }
@@ -227,12 +223,9 @@ bool changing_x_offset = false;
     // }
 
     void change_x_home_offset(){
-
-      SERIAL_ECHOLNPAIR("crumb 1 ---> ", changing_x_offset);
       changing_x_offset = true;
       enqueue_and_echo_commands_P(PSTR("G28"));
       enqueue_and_echo_commands_P(PSTR("G0 Z0 Y0 X0"));
-      SERIAL_ECHOLNPAIR("crumb 2 ---> ", changing_x_offset);
       ui.goto_screen(lcd_change_x_home_offset_msg1_menu);
     }
 
@@ -334,7 +327,6 @@ bool changing_x_offset = false;
 
 void menu_preflight_check() {
   // bool changing_x_offset;
-  SERIAL_ECHOLNPAIR("crumb 8 ---> ", changing_x_offset);
   thermalManager.disable_all_heaters();   // always disable heaters when entering the Preflight as a safety feature
 
   START_MENU();
