@@ -410,11 +410,10 @@ void lcd_return_to_status() {
 */
 
 void menu_preflight_check() {
+  thermalManager.disable_all_heaters();   // always disable heaters when entering the Preflight as a safety feature
+
   START_MENU();
   MENU_BACK(MSG_MAIN);
-
-  // always disable heaters when entering the Preflight as a safety feature
-  thermalManager.disable_all_heaters();
 
     //
     // 1 Test Motors
