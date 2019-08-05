@@ -122,37 +122,37 @@ void lcd_return_to_status() {
   //   * 1 Test Motors Menu
   //   *
   //   */
-  //   void lcd_test_motors_menu(){
-  //     START_MENU();
+    void lcd_test_motors_menu(){
+      START_MENU();
 
-  //     //
-  //     // ^ Main
-  //     //
-  //     MENU_BACK(MSG_BACK);
+      //
+      // ^ Main
+      //
+      MENU_BACK(MSG_BACK);
 
-  //     //
-  //     // Move X
-  //     //
-  //     MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
+      //
+      // Move X
+      //
+      MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
 
-  //     //
-  //     // Move Y
-  //     //
-  //     MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
+      //
+      // Move Y
+      //
+      MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
 
-  //     //
-  //     // Move Z
-  //     //
-  //     enqueue_and_echo_commands_P(PSTR("M302 P1"));
-  //     MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
+      //
+      // Move Z
+      //
+      enqueue_and_echo_commands_P(PSTR("M302 P1"));
+      MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
 
-  //     //
-  //     // Move E
-  //     //
-  //     MENU_ITEM(submenu,  MSG_MOVE_E,  lcd_move_e_1mm);
+      //
+      // Move E
+      //
+      MENU_ITEM(submenu,  MSG_MOVE_E,  lcd_move_e_1mm);
 
-  //     END_MENU();
-  //   }
+      END_MENU();
+    }
 
    /**
     *
