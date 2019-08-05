@@ -394,6 +394,15 @@ void lcd_return_to_status() {
       lcd_return_to_status();
     }
 
+   /**
+    *
+    * 8 Test Filament Fans
+    *
+    */
+    void lcd_test_filament_fans(){
+      enqueue_and_echo_commands_P(PSTR("M106 S255\nG4 S1\nM106 S130\nG4 S1\nM106 S0"));
+    }
+
 /**
 *
 * The MAIN PREFLIGHT SUBMENU BELOW
@@ -445,7 +454,7 @@ void menu_preflight_check() {
     //
     // 8 Test Filament Fans
     //
-    MENU_ITEM(gcode, MSG_TEST_FILAMENT_FANS, PSTR("M106 S255\nG4 S1\nM106 S130\nG4 S1\nM106 S0"));
+    MENU_ITEM(function, MSG_TEST_FILAMENT_FANS, lcd_test_filament_fans);
 
   END_MENU(); // menu_preflight_check
 }
