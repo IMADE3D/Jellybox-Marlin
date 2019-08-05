@@ -145,6 +145,13 @@ void menu_tune() {
   #endif
   
   //
+  // Change filament
+  //
+  #if ENABLED(ADVANCED_PAUSE_FEATURE)
+  MENU_ITEM(gcode, MSG_FILAMENTCHANGE, PSTR("M600 B0"));
+  #endif
+
+  //
   // Speed:
   //
   MENU_ITEM_EDIT(int3, MSG_SPEED, &feedrate_percentage, 10, 999);
