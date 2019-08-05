@@ -27,6 +27,8 @@
 #include "menu_preflight_check_imade3d.h"
 #include "../../lcd/menu/menu_preflight_check_imade3d.h"
 
+#include "../../lcd/menu/menu_motion.h"
+
 
 #if HAS_LCD_MENU
 
@@ -44,112 +46,49 @@
 // Preflight functions below
 //
 
-void lcd_return_to_status() {
-   ui.return_to_status();
-}
+    //
+    // A simple legacy return to status
+    //
+    void lcd_return_to_status() {
+      ui.return_to_status();
+    }
 
-    /**
+    //
+    // Helper functions for testing the motors (modified Move Axis menu)
+    //
+    void lcd_move_x_1mm() {
+      move_menu_scale = 1.0;
+      lcd_move_x();
+    }
+    void lcd_move_y_1mm() {
+      move_menu_scale = 1.0;
+      lcd_move_y();
+    }
+    void lcd_move_z_1mm() {
+      move_menu_scale = 1.0;
+      lcd_move_z();
+    }
+    void lcd_move_e_1mm() {
+      move_menu_scale = 1.0;
+      lcd_move_e();
+    }
+
+   /**
     *
-    * Move axes Menu
+    * 1 Test Motors Menu
     *
     */
-  //   void lcd_move_axes_menu(){
-  //     START_MENU();
-
-  //     //
-  //     // ^ Main
-  //     //
-  //     MENU_BACK(MSG_BACK);
-
-  //     //
-  //     // Abort if long action
-  //     //
-  //     if (longActionRunning && planner.movesplanned()){
-  //       MENU_ITEM(function , MSG_ABORT , lcd_abort_action);
-  //     }
-
-  //     //
-  //     // Move X
-  //     //
-  //     MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
-
-  //     //
-  //     // Move Y
-  //     //
-  //     MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
-
-  //     //
-  //     // Move Z
-  //     //
-  //     MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
-
-  //     END_MENU();
-  //   }
-
-  //  /**
-  //   *
-  //   * Home Menu
-  //   *
-  //   */
-  //   void lcd_home_menu(){
-  //     START_MENU();
-
-  //     //
-  //     // ^ Main
-  //     //
-  //     MENU_BACK(MSG_BACK);
-
-  //     //
-  //     // Home X
-  //     //
-  //     MENU_ITEM(gcode, MSG_AUTO_HOME_X, PSTR("G28 X"));
-
-  //     //
-  //     // Home Y
-  //     //
-  //     MENU_ITEM(gcode, MSG_AUTO_HOME_Y, PSTR("G28 Y"));
-
-  //     //
-  //     // Home XYZ
-  //     //
-  //     MENU_ITEM(gcode, MSG_HOME_XYZ, PSTR("G28 X Y Z"));
-
-  //     END_MENU();
-  //   }
-
-  //  /**
-  //   *
-  //   * 1 Test Motors Menu
-  //   *
-  //   */
     void lcd_test_motors_menu(){
-      START_MENU();
+      thermalManager.allow_cold_extrude = true; //allow cold extrusion so we can test the extruder motor
+      soft_endstops_enabled = false; //disable software endstops so we can test the Z motors
 
-      //
-      // ^ Main
-      //
+      START_MENU();
       MENU_BACK(MSG_BACK);
 
-      //
-      // Move X
-      //
       MENU_ITEM(submenu, MSG_MOVE_X, lcd_move_x_1mm);
-
-      //
-      // Move Y
-      //
       MENU_ITEM(submenu, MSG_MOVE_Y, lcd_move_y_1mm);
-
-      //
-      // Move Z
-      //
-      enqueue_and_echo_commands_P(PSTR("M302 P1"));
       MENU_ITEM(submenu, MSG_MOVE_Z, lcd_move_z_1mm);
-
-      //
-      // Move E
-      //
-      MENU_ITEM(submenu,  MSG_MOVE_E,  lcd_move_e_1mm);
+      MENU_ITEM(submenu, MSG_MOVE_E, lcd_move_e_1mm);
 
       END_MENU();
     }
@@ -396,7 +335,7 @@ void menu_preflight_check() {
     //
     // 1 Test Motors
     //
-    // MENU_ITEM(submenu, MSG_TEST_MOTORS, lcd_test_motors_menu);
+    MENU_ITEM(submenu, MSG_TEST_MOTORS, lcd_test_motors_menu);
 
     //
     // 2 Endstop status
