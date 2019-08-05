@@ -26,10 +26,15 @@
 
 #include "../../inc/MarlinConfigPre.h"
 
+#include "menu_motion.h"
+
 #if HAS_LCD_MENU
 
 #include "menu.h"
 #include "../../module/motion.h"
+
+#include "../menu/menu_advanced.h"
+#include "menu_preflight_check_imade3d.h"
 
 #if ENABLED(DELTA)
   #include "../../module/delta.h"
@@ -73,7 +78,19 @@ inline void manual_move_to_current(AxisEnum axis
 //
 
 static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
-  if (ui.use_click()) return ui.goto_previous_screen_no_defer();
+  SERIAL_ECHOLNPAIR("crumb 3 ---> ", changing_x_offset);
+  if (ui.use_click()) {
+  SERIAL_ECHOLNPAIR("crumb 4 ---> ", changing_x_offset);
+    // if (changing_x_offset == 1) {
+    if (changing_x_offset) {
+            SERIAL_ECHOLNPAIR("crumb 5 ---> ", changing_x_offset);
+            lcd_set_x_origin();
+            // changing_x_offset = false;
+            SERIAL_ECHOLNPAIR("crumb 6 ---> ", changing_x_offset);
+      }
+  SERIAL_ECHOLNPAIR("crumb 7 ---> ", changing_x_offset);
+  return ui.goto_previous_screen_no_defer();
+  }
   ui.encoder_direction_normal();
   if (ui.encoderPosition && !ui.processing_manual_move) {
 
@@ -149,7 +166,10 @@ static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
     draw_edit_screen(name, move_menu_scale >= 0.1f ? ftostr41sign(pos) : ftostr43sign(pos));
   }
 }
-void lcd_move_x() { _lcd_move_xyz(PSTR(MSG_MOVE_X), X_AXIS); }
+void lcd_move_x() {
+  SERIAL_ECHOLNPAIR("crumb 13 ---> ", changing_x_offset);
+   _lcd_move_xyz(PSTR(MSG_MOVE_X), X_AXIS);
+   }
 void lcd_move_y() { _lcd_move_xyz(PSTR(MSG_MOVE_Y), Y_AXIS); }
 void lcd_move_z() { _lcd_move_xyz(PSTR(MSG_MOVE_Z), Z_AXIS); }
 static void _lcd_move_e(

@@ -22,6 +22,9 @@
 
 #pragma once
 
+
+#include "menu_preflight_check_imade3d.h"
+
 void lcd_move_x();
 void lcd_move_y();
 void lcd_move_z();

@@ -28,9 +28,10 @@
 #include "../../module/temperature.h"
 #include "../../Marlin.h"
 #include "../../lcd/menu/menu_motion.h"
+#include "../../lcd/menu/menu_advanced.h"
+#include "../../feature/bedlevel/bedlevel.h"
 
-#if HAS_LEVELING
-  #include "../../feature/bedlevel/bedlevel.h"
-#endif
+extern bool changing_x_offset;
+// extern bool changing_y_offset;
 
 void menu_preflight_check();

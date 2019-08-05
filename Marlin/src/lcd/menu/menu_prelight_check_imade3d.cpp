@@ -21,9 +21,11 @@
  */
 
 #include "menu_preflight_check_imade3d.h"
-#include "../../lcd/menu/menu_preflight_check_imade3d.h"
+// #include "../../lcd/menu/menu_preflight_check_imade3d.h"
 
 #if HAS_LCD_MENU
+
+bool changing_x_offset = false;
 
 //
 // Preflight functions below
@@ -41,7 +43,9 @@
     //
     void lcd_move_x_1mm() {
       move_menu_scale = 1.0;
+      SERIAL_ECHOLNPAIR("crumb 11 ---> ", changing_x_offset);
       lcd_move_x();
+      SERIAL_ECHOLNPAIR("crumb 12 ---> ", changing_x_offset);
     }
     void lcd_move_y_1mm() {
       move_menu_scale = 1.0;
@@ -192,8 +196,20 @@
       END_MENU();
     }
 
-    // void lcd_change_x_home_offset_msg1_menu(){
-    //     START_MENU();
+    void lcd_change_x_home_offset_msg1_menu(){
+        START_MENU();
+        STATIC_ITEM("Position the          ");
+        STATIC_ITEM("nozzle over           ");
+        STATIC_ITEM("the left edge of      ");
+        STATIC_ITEM("the build plate.      ");
+        STATIC_ITEM(" - Click to continue -");
+        if(ui.use_click()) {
+          SERIAL_ECHOLNPAIR("crumb 9 ---> ", changing_x_offset);
+          ui.goto_screen(lcd_move_x_1mm);
+          SERIAL_ECHOLNPAIR("crumb 10 ---> ", changing_x_offset);
+        }
+        END_MENU();
+    }
 
     //     STATIC_ITEM("Position the          ");
     //     STATIC_ITEM("nozzle over           ");
@@ -210,7 +226,15 @@
 
     // }
 
-    // void change_x_home_offset(){
+    void change_x_home_offset(){
+
+      SERIAL_ECHOLNPAIR("crumb 1 ---> ", changing_x_offset);
+      changing_x_offset = true;
+      enqueue_and_echo_commands_P(PSTR("G28"));
+      enqueue_and_echo_commands_P(PSTR("G0 Z0 Y0 X0"));
+      SERIAL_ECHOLNPAIR("crumb 2 ---> ", changing_x_offset);
+      ui.goto_screen(lcd_change_x_home_offset_msg1_menu);
+    }
 
     //   enqueue_and_echo_commands_P(PSTR("G28"));
     //   enqueue_and_echo_commands_P(PSTR("G0 Z0 Y0 X0"));
@@ -223,25 +247,24 @@
     * 4 Set Origin Menu
     *
     */
-    // void lcd_set_origin_menu(){
-    //   START_MENU();
-    //   MENU_BACK(MSG_BACK);
+    void lcd_set_origin_menu(){
+      START_MENU();
+      MENU_BACK(MSG_BACK);
 
-    //   //
-    //   // Home XYZ
-    //   //
-    //   MENU_ITEM(function, MSG_CHANGE_X_HOME_OFFSET, change_x_home_offset);
-    //   //MENU_ITEM(gcode, MSG_SET_HOME_OFFSETS, PSTR("M428"));
+      //
+      // Home XYZ
+      //
+      MENU_ITEM(function, MSG_CHANGE_X_HOME_OFFSET, change_x_home_offset);
 
-    //   //
-    //   // Message
-    //   //
-    //   STATIC_ITEM("? This procedure will     ");
-    //   STATIC_ITEM("ensure you can use the  ");
-    //   STATIC_ITEM("whole build plate.       ");
+      //
+      // Message
+      //
+      STATIC_ITEM("? This procedure will     ");
+      STATIC_ITEM("ensure you can use the  ");
+      STATIC_ITEM("whole build plate.       ");
 
-    //   END_MENU();
-    // }
+      END_MENU();
+    }
 
    /**
     *
@@ -310,6 +333,8 @@
 */
 
 void menu_preflight_check() {
+  // bool changing_x_offset;
+  SERIAL_ECHOLNPAIR("crumb 8 ---> ", changing_x_offset);
   thermalManager.disable_all_heaters();   // always disable heaters when entering the Preflight as a safety feature
 
   START_MENU();
@@ -333,7 +358,7 @@ void menu_preflight_check() {
     //
     // 4 Set (X) origin
     //
-    // MENU_ITEM(submenu, MSG_SET_ORIGIN_PREFLIGHT, lcd_set_origin_menu);
+    MENU_ITEM(submenu, MSG_SET_ORIGIN_PREFLIGHT, lcd_set_origin_menu);
 
     //
     // 5 Test auto bed level
