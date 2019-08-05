@@ -355,7 +355,7 @@ void MarlinUI::completion_feedback(const bool good/*=true*/) {
   #include "../../feature/babystep.h"
 
   void save_eeprom_goto_previous_screen_no_defer() {
-      settings.save();
+      settings.save(); //normally, we'd use lcd_store_settings(); but it's not declared yet
       ui.goto_previous_screen_no_defer();
     }
 
