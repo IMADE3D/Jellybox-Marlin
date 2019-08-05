@@ -154,75 +154,70 @@ void lcd_return_to_status() {
   //     END_MENU();
   //   }
 
-  //  /**
-  //   *
-  //   * 2 Check Endstops Menu
-  //   *
-  //   */
-  //   void lcd_check_endstops_menu(){
-  //     START_MENU();
+   /**
+    *
+    * 2 Check Endstops Menu
+    *
+    */
+    void lcd_check_endstops_menu(){
+      START_MENU();
+      MENU_BACK(MSG_BACK);
 
-  //     //
-  //     // ^ Main
-  //     //
-  //     MENU_BACK(MSG_BACK);
+      MENU_ITEM(gcode, "Click to Update" , PSTR(""));
 
-  //     //
-  //     //Display X endstop status
-  //     //
+      //
+      //Display X endstop status
+      //
+     #if HAS_X_MIN
+      //used to be SERIAL_PROTOCOPGM and SERIAL_PROTOCOLLN in old Marlin
+       serialprintPGM(MSG_X_MIN);
+       serialprintPGM(((READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
 
-  //     MENU_ITEM(gcode, "Click to Update" , PSTR(""));
+       if (READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING){
+          STATIC_ITEM("X : Triggered          ");
+       }
+       else{
+          STATIC_ITEM("X : Not Triggered      ");
+       }
 
-  //    #if HAS_X_MIN
-  //      SERIAL_PROTOCOLPGM(MSG_X_MIN);
-  //      SERIAL_PROTOCOLLN(((READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
+     #endif
 
-  //      if (READ(X_MIN_PIN)^X_MIN_ENDSTOP_INVERTING){
-  //         STATIC_ITEM("X : Triggered          ");
-  //      }
-  //      else{
-  //         STATIC_ITEM("X : Not Triggered      ");
-  //      }
+      //
+      // Display Y endstop status
+      //
+     #if HAS_Y_MIN
+       serialprintPGM(MSG_Y_MIN);
+       serialprintPGM(((READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
 
-  //    #endif
+       if (READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING){
+          STATIC_ITEM("Y : Triggered          ");
+       }
+       else{
+          STATIC_ITEM("Y : Not Triggered      ");
+       }
 
-  //     //
-  //     // Display Y endstop status
-  //     //
+     #endif
 
-  //    #if HAS_Y_MIN
-  //      SERIAL_PROTOCOLPGM(MSG_Y_MIN);
-  //      SERIAL_PROTOCOLLN(((READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
+      //
+      // Display Z endstop status
+      //
+      //READ(Z_MIN_PROBE_PIN) != Z_MIN_PROBE_ENDSTOP_INVERTING)
+     #if HAS_Z_MIN
+       serialprintPGM(MSG_Z_MIN);
+       serialprintPGM(((READ(Z_MIN_PIN)^Z_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
 
-  //      if (READ(Y_MIN_PIN)^Y_MIN_ENDSTOP_INVERTING){
-  //         STATIC_ITEM("Y : Triggered          ");
-  //      }
-  //      else{
-  //         STATIC_ITEM("Y : Not Triggered      ");
-  //      }
+       //if (READ(Z_MIN_PIN)^Z_MIN_ENDSTOP_INVERTING){
+       if (READ(Z_MIN_PIN) != Z_MIN_ENDSTOP_INVERTING) {
+          STATIC_ITEM("Z : Triggered          ");
+       }
+       else{
+          STATIC_ITEM("Z : Not Triggered      ");
+       }
 
-  //    #endif
+     #endif
 
-  //     //
-  //     // Display Z endstop status
-  //     //
-  //     //READ(Z_MIN_PROBE_PIN) != Z_MIN_PROBE_ENDSTOP_INVERTING)
-  //    #if HAS_Z_MIN
-  //      SERIAL_PROTOCOLPGM(MSG_Z_MIN);
-  //      SERIAL_PROTOCOLLN(((READ(Z_MIN_PIN)^Z_MIN_ENDSTOP_INVERTING) ? MSG_ENDSTOP_HIT : MSG_ENDSTOP_OPEN));
-
-  //      //if (READ(Z_MIN_PIN)^Z_MIN_ENDSTOP_INVERTING){
-  //      if (READ(Z_MIN_PIN) != Z_MIN_ENDSTOP_INVERTING) {
-  //         STATIC_ITEM("Z : Triggered          ");
-  //      }
-  //      else{
-  //         STATIC_ITEM("Z : Not Triggered      ");
-  //      }
-
-  //    #endif
-
-  //     END_MENU();
-  //   }
+      END_MENU();
+    }
 
    /**
     *
@@ -406,7 +401,7 @@ void menu_preflight_check() {
     //
     // 2 Endstop status
     //
-    // MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
+    MENU_ITEM(submenu, MSG_CHECK_ENDSTOPS, lcd_check_endstops_menu);
 
     //
     // 3 Test endstops
