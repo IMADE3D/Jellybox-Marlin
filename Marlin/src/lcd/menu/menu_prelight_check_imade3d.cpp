@@ -368,14 +368,13 @@ void lcd_return_to_status() {
     *
     */
 
-    // void lcd_test_nozzle_menu(){
+    void lcd_test_nozzle_menu(){
+      enqueue_and_echo_commands_P(PSTR("M104 S40"));
+      // testing_nozzle = true;
+      ui.set_status_P(PSTR("Nozzle heating up?"), -1);
+      lcd_return_to_status();
 
-    //   enqueue_and_echo_commands_P(PSTR("M104 S35"));
-    //   testing_nozzle = true;
-    //   lcd_setstatusPGM(PSTR(".Click to stop heating and go back to Preflight"), -1);
-    //   lcd_return_to_status();
-
-    // }
+    }
 
    /**
     *
@@ -383,10 +382,10 @@ void lcd_return_to_status() {
     *
     */
     void lcd_test_bed_menu(){
-      enqueue_and_echo_commands_P(PSTR("M140 S35"));
+      enqueue_and_echo_commands_P(PSTR("M140 S40"));
       // testing_bed_heater = true;
       // lcd_setstatusPGM(PSTR(".Click to stop heating and go back to Preflight"), -1);
-      ui.set_status_P(PSTR("Is the bed heating up?"), -1);
+      ui.set_status_P(PSTR("Bed heating up?"), -1);
       lcd_return_to_status();
     }
 
@@ -439,7 +438,7 @@ void menu_preflight_check() {
     //
     // 6 Test nozzle heater
     //
-    // MENU_ITEM(function, MSG_TEST_NOZZLE, lcd_test_nozzle_menu);
+    MENU_ITEM(function, MSG_TEST_NOZZLE, lcd_test_nozzle_menu);
 
     //
     // 7 Test bed heater
