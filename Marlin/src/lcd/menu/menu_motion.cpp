@@ -81,7 +81,7 @@ static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
   if (ui.use_click()) {
     if (changing_x_offset) {
             lcd_set_x_origin();
-            // changing_x_offset = false;
+            changing_x_offset = false;
       }
   return ui.goto_previous_screen_no_defer();
   }
@@ -445,7 +445,7 @@ void menu_motion() {
   // ^ Main
   //
   MENU_BACK(MSG_MAIN);
-  
+
   ////
   //// Live Adjustment Babystepping
   ////
@@ -464,7 +464,7 @@ void menu_motion() {
   //    MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
   //  #endif
   //#endif
-  
+
   //
   // Live Adjustment Babystepping Z Offset
   //
