@@ -38,7 +38,7 @@
   /**
    * Marlin release version identifier
    */
-  #define SHORT_BUILD_VERSION "jbm-3.0-alpha2"
+  #define SHORT_BUILD_VERSION "jbm-3.0-beta1"
 
   /**
    * Verbose version identifier which should contain a reference to the location
@@ -51,7 +51,7 @@
    * here we define this default string as the date where the latest release
    * version was tagged.
    */
-  #define STRING_DISTRIBUTION_DATE "2019-03-00"
+  #define STRING_DISTRIBUTION_DATE "Aug 6, 2019"
 
   /**
    * Required minimum Configuration.h and Configuration_adv.h file versions.
