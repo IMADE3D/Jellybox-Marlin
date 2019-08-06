@@ -647,6 +647,17 @@ void menu_backlash();
 
 #endif // !SLIM_LCD_MENUS
 
+//
+// Helper menu for setting the origins
+//
+void menu_set_origin(){
+    START_MENU();
+    MENU_BACK(MSG_BACK);
+    MENU_ITEM(function, MSG_SET_X_ORIGIN, change_x_home_offset);
+    MENU_ITEM(function, MSG_SET_Y_ORIGIN, change_y_home_offset);
+    END_MENU();
+}
+
 void menu_advanced_settings() {
   START_MENU();
   MENU_BACK(MSG_CONFIGURATION);
@@ -657,8 +668,7 @@ void menu_advanced_settings() {
       //
       // Set Home Offsets = origin
       //
-      MENU_ITEM(function, MSG_SET_X_ORIGIN, lcd_set_x_origin);
-      MENU_ITEM(function, MSG_SET_Y_ORIGIN, lcd_set_y_origin);
+      MENU_ITEM(submenu, MSG_SET_ORIGIN, menu_set_origin);
     #endif
 
     // M203 / M205 - Feedrate items

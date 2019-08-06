@@ -35,3 +35,5 @@ extern bool changing_x_offset;
 extern bool changing_y_offset;
 
 void menu_preflight_check();
+void change_x_home_offset();
+void change_y_home_offset();
