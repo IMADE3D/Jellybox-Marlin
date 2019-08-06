@@ -194,11 +194,11 @@ bool changing_y_offset = false;
       END_MENU();
     }
 
-    void lcd_change_x_home_offset_msg1_menu(){
+    void lcd_change_x_home_offset_msg_menu(){
         START_MENU();
         STATIC_ITEM("Position the          ");
         STATIC_ITEM("nozzle over           ");
-        STATIC_ITEM("the left edge of      ");
+        STATIC_ITEM("the LEFT edge of      ");
         STATIC_ITEM("the build plate.      ");
         STATIC_ITEM(" - Click to continue -");
         if(ui.use_click()) {
@@ -207,11 +207,11 @@ bool changing_y_offset = false;
         END_MENU();
     }
 
-    void lcd_change_y_home_offset_msg1_menu(){
+    void lcd_change_y_home_offset_msg_menu(){
         START_MENU();
         STATIC_ITEM("Position the          ");
         STATIC_ITEM("nozzle over           ");
-        STATIC_ITEM("the front edge of      ");
+        STATIC_ITEM("the FRONT edge of      ");
         STATIC_ITEM("the build AREA.      ");
         STATIC_ITEM(" - Click to continue -");
         if(ui.use_click()) {
@@ -223,13 +223,13 @@ bool changing_y_offset = false;
     void change_x_home_offset(){
       changing_x_offset = true;
       enqueue_and_echo_commands_P(PSTR("G28\nG0 Z0 Y0 X0"));
-      ui.goto_screen(lcd_change_x_home_offset_msg1_menu);
+      ui.goto_screen(lcd_change_x_home_offset_msg_menu);
     }
 
     void change_y_home_offset(){
       changing_y_offset = true;
       enqueue_and_echo_commands_P(PSTR("G28\nG0 Z0 Y0 X0"));
-      ui.goto_screen(lcd_change_y_home_offset_msg1_menu);
+      ui.goto_screen(lcd_change_y_home_offset_msg_menu);
     }
 
    /**
