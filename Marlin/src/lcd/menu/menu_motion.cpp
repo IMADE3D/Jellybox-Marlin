@@ -20,11 +20,20 @@
  *
  */
 
+
+//
+// Preflight check
+//
+#include "../menu/menu_advanced.h"
+#include "menu_preflight_check_imade3d.h"
+
 //
 // Motion Menu
 //
 
 #include "../../inc/MarlinConfigPre.h"
+
+#include "menu_motion.h"
 
 #if HAS_LCD_MENU
 
@@ -73,7 +82,19 @@ inline void manual_move_to_current(AxisEnum axis
 //
 
 static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
-  if (ui.use_click()) return ui.goto_previous_screen_no_defer();
+  if (ui.use_click()) {
+    // START update the x and y origins = home offsets
+    if (changing_x_offset) {
+            changing_x_offset = false;
+            lcd_set_x_origin();
+      }
+    if (changing_y_offset) {
+            changing_y_offset = false;
+            lcd_set_y_origin();
+      }
+    // END update the x and y origins = home offsets
+  return ui.goto_previous_screen_no_defer();
+  }
   ui.encoder_direction_normal();
   if (ui.encoderPosition && !ui.processing_manual_move) {
 
@@ -149,7 +170,9 @@ static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
     draw_edit_screen(name, move_menu_scale >= 0.1f ? ftostr41sign(pos) : ftostr43sign(pos));
   }
 }
-void lcd_move_x() { _lcd_move_xyz(PSTR(MSG_MOVE_X), X_AXIS); }
+void lcd_move_x() {
+   _lcd_move_xyz(PSTR(MSG_MOVE_X), X_AXIS);
+   }
 void lcd_move_y() { _lcd_move_xyz(PSTR(MSG_MOVE_Y), Y_AXIS); }
 void lcd_move_z() { _lcd_move_xyz(PSTR(MSG_MOVE_Z), Z_AXIS); }
 static void _lcd_move_e(
@@ -241,7 +264,7 @@ void _goto_manual_move(const float scale) {
 }
 void menu_move_10mm() { _goto_manual_move(10); }
 void menu_move_1mm()  { _goto_manual_move( 1); }
-void menu_move_01mm() { _goto_manual_move( 0.1f); }
+void menu_move_01mm() { _goto_manual_move( 0.1); }
 
 void _menu_move_distance(const AxisEnum axis, const screenFunc_t func, const int8_t eindex=-1) {
   _manual_move_func_ptr = func;
@@ -432,7 +455,7 @@ void menu_motion() {
   // ^ Main
   //
   MENU_BACK(MSG_MAIN);
-  
+
   ////
   //// Live Adjustment Babystepping
   ////
@@ -451,7 +474,7 @@ void menu_motion() {
   //    MENU_ITEM(submenu, MSG_BABYSTEP_Z, lcd_babystep_z);
   //  #endif
   //#endif
-  
+
   //
   // Live Adjustment Babystepping Z Offset
   //

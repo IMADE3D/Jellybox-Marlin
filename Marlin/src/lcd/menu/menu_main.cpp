@@ -113,6 +113,10 @@
   #include "../../lcd/menu/menu_mmu2.h"
 #endif
 
+// #if ENABLED(TBD)
+  #include "../../lcd/menu/menu_preflight_check_imade3d.h"
+// #endif
+
 void menu_tune();
 void menu_motion();
 void menu_temperature();
@@ -221,6 +225,10 @@ void menu_main() {
   //   #else
   //    MENU_ITEM(submenu, MSG_FILAMENTCHANGE, menu_change_filament);
   //   #endif
+  // #endif
+
+  // #if ENABLED(TBD)
+    MENU_ITEM(submenu, MSG_PREFLIGHT_MENU, menu_preflight_check);
   // #endif
 
   #if ENABLED(LCD_INFO_MENU)

@@ -314,6 +314,22 @@ void menu_item_enable_heatbed(){
 
 #endif
 
+const bool busy = printer_busy();
+
+//
+// Helper menu for factory reset
+//
+void lcd_factory_settings_inception () {
+      START_MENU();
+      MENU_BACK(MSG_BACK);
+      if (!busy)
+        MENU_ITEM(function, MSG_RESTORE_FAILSAFE, lcd_factory_settings);
+      STATIC_ITEM("Careful. This will    ");
+      STATIC_ITEM("reset all you         ");
+      STATIC_ITEM("settings!             ");
+      END_MENU();
+    }
+
 void menu_configuration() {
   START_MENU();
   MENU_BACK(MSG_MAIN);
@@ -331,7 +347,7 @@ void menu_configuration() {
     MENU_ITEM(submenu, MSG_DISABLE_HEATBED_MENU, menu_disable_heatbed);
   #endif
 
-  const bool busy = printer_busy();
+  // const bool busy = printer_busy();
   if (!busy) {
     //
     // Delta Calibration
@@ -397,8 +413,7 @@ void menu_configuration() {
       MENU_ITEM(function, MSG_LOAD_EEPROM, lcd_load_settings);
   #endif
 
-  if (!busy)
-    MENU_ITEM(function, MSG_RESTORE_FAILSAFE, lcd_factory_settings);
+  MENU_ITEM(submenu, MSG_RESTORE_FAILSAFE, lcd_factory_settings_inception);
 
   END_MENU();
 }
