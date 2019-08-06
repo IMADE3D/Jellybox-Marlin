@@ -20,6 +20,13 @@
  *
  */
 
+
+//
+// Preflight check
+//
+#include "../menu/menu_advanced.h"
+#include "menu_preflight_check_imade3d.h"
+
 //
 // Motion Menu
 //
@@ -32,9 +39,6 @@
 
 #include "menu.h"
 #include "../../module/motion.h"
-
-#include "../menu/menu_advanced.h"
-#include "menu_preflight_check_imade3d.h"
 
 #if ENABLED(DELTA)
   #include "../../module/delta.h"
@@ -79,6 +83,7 @@ inline void manual_move_to_current(AxisEnum axis
 
 static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
   if (ui.use_click()) {
+    // START update the x and y origins = home offsets
     if (changing_x_offset) {
             changing_x_offset = false;
             lcd_set_x_origin();
@@ -87,6 +92,7 @@ static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
             changing_y_offset = false;
             lcd_set_y_origin();
       }
+    // END update the x and y origins = home offsets
   return ui.goto_previous_screen_no_defer();
   }
   ui.encoder_direction_normal();

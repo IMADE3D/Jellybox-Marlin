@@ -21,7 +21,6 @@
  */
 
 #include "menu_preflight_check_imade3d.h"
-// #include "../../lcd/menu/menu_preflight_check_imade3d.h"
 
 #if HAS_LCD_MENU
 

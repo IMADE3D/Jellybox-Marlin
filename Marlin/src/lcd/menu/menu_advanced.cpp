@@ -21,6 +21,11 @@
  */
 
 //
+// Preflight check
+//
+#include "menu_preflight_check_imade3d.h"
+
+//
 // Advanced Settings Menus
 //
 
@@ -107,6 +112,8 @@ void menu_backlash();
   //
   // Set the X and Y offset based on the current_position, imade3d version
   //
+
+  // START update the x and y origins = home offsets
   void lcd_set_x_origin() {
     set_home_offset(X_AXIS, -current_position[X_AXIS]);
     lcd_store_settings();
@@ -122,6 +129,7 @@ void menu_backlash();
     enqueue_and_echo_commands_P(PSTR("M117 " MSG_Y_ORIGIN_SAVED));
     ui.return_to_status();
   }
+  // END update the x and y origins = home offsets
 
 #endif
 
@@ -647,7 +655,7 @@ void menu_advanced_settings() {
 
     #if HAS_M206_COMMAND
       //
-      // Set Home Offsets
+      // Set Home Offsets = origin
       //
       MENU_ITEM(function, MSG_SET_X_ORIGIN, lcd_set_x_origin);
       MENU_ITEM(function, MSG_SET_Y_ORIGIN, lcd_set_y_origin);
