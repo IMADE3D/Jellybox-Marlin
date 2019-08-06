@@ -245,7 +245,7 @@ bool changing_y_offset = false;
       // Home XYZ
       //
       MENU_ITEM(function, MSG_CHANGE_X_HOME_OFFSET, change_x_home_offset);
-      MENU_ITEM(function, MSG_CHANGE_Y_HOME_OFFSET, change_y_home_offset);
+      // MENU_ITEM(function, MSG_CHANGE_Y_HOME_OFFSET, change_y_home_offset);
 
       //
       // Message
