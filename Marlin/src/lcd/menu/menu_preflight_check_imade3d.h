@@ -32,6 +32,6 @@
 #include "../../feature/bedlevel/bedlevel.h"
 
 extern bool changing_x_offset;
-// extern bool changing_y_offset;
+extern bool changing_y_offset;
 
 void menu_preflight_check();

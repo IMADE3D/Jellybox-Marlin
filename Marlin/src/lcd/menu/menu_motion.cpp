@@ -83,6 +83,10 @@ static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
             lcd_set_x_origin();
             changing_x_offset = false;
       }
+    if (changing_y_offset) {
+            lcd_set_y_origin();
+            changing_y_offset = false;
+      }
   return ui.goto_previous_screen_no_defer();
   }
   ui.encoder_direction_normal();
