@@ -39,8 +39,16 @@ bool changing_y_offset = false;
     }
 
     //
-    // Helper functions for testing the motors (modified Move Axis menu)
+    // Helper functions for testing the motors and setting origins (modified Move Axis menu)
     //
+    void lcd_move_x_01mm() {
+      move_menu_scale = 0.1;
+      lcd_move_x();
+    }
+    void lcd_move_y_01mm() {
+      move_menu_scale = 0.1;
+      lcd_move_y();
+    }
     void lcd_move_x_1mm() {
       move_menu_scale = 1.0;
       lcd_move_x();
@@ -202,7 +210,7 @@ bool changing_y_offset = false;
         STATIC_ITEM("the build plate.      ");
         STATIC_ITEM(" - Click to continue -");
         if(ui.use_click()) {
-          ui.goto_screen(lcd_move_x_1mm);
+          ui.goto_screen(lcd_move_x_01mm);
         }
         END_MENU();
     }
@@ -215,7 +223,7 @@ bool changing_y_offset = false;
         STATIC_ITEM("the build AREA.      ");
         STATIC_ITEM(" - Click to continue -");
         if(ui.use_click()) {
-          ui.goto_screen(lcd_move_y_1mm);
+          ui.goto_screen(lcd_move_y_01mm);
         }
         END_MENU();
     }
