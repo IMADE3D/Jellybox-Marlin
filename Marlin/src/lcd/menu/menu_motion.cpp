@@ -80,12 +80,12 @@ inline void manual_move_to_current(AxisEnum axis
 static void _lcd_move_xyz(PGM_P name, AxisEnum axis) {
   if (ui.use_click()) {
     if (changing_x_offset) {
-            lcd_set_x_origin();
             changing_x_offset = false;
+            lcd_set_x_origin();
       }
     if (changing_y_offset) {
-            lcd_set_y_origin();
             changing_y_offset = false;
+            lcd_set_y_origin();
       }
   return ui.goto_previous_screen_no_defer();
   }
