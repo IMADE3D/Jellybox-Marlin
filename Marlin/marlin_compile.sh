@@ -1,7 +1,7 @@
-#This scripts compiles all the JellyBOX versions with Arduino-cli. Yay. 
+#This scripts compiles all the JellyBOX versions with Arduino-cli. Yay.
 
 ### DEFINE MARLIN VERSION
-marlin_version="jbm-3.0-dev6"
+marlin_version="jbm-3.0-beta1"
 
 ### WHICH JellyBOX VERSIONS TO COMPILE?
 
@@ -193,3 +193,6 @@ then
     rm ../Marlin.arduino.avr.mega.elf
     echo $l \\n${jb_version}' HEX exported, yo!'\\n$l\\n\\n\\n
 fi
+
+# prevent terminal from closing automatically
+read
