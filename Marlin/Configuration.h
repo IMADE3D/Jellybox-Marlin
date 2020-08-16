@@ -1,5 +1,5 @@
-#define JELLYBOX_VARIANT_LINE1 "draw"
-#define JELLYBOX_VARIANT_LINE2 "hot bed, yellow probe"
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2 Lite"
+#define JELLYBOX_VARIANT_LINE2 "heated bed"
 
 #define DISABLE_HEATBED // M820 | M821
 #define IMADE3D_CALIBRATE_1ST_LAYER // M822-M825 under development
@@ -8,12 +8,15 @@
 #define TEMP_SENSOR_BED 1
 
 //Specify a Probe position as { X, Y, Z }
-#define NOZZLE_TO_PROBE_OFFSET { 22, 2, 0 }
+#define X_PROBE_OFFSET_FROM_EXTRUDER 27  // X offset: -left  +right  [of the nozzle]
+#define Y_PROBE_OFFSET_FROM_EXTRUDER 0  // Y offset: -front +behind [the nozzle]
+#define Z_PROBE_OFFSET_FROM_EXTRUDER 0   // Z offset: -below +above  [the nozzle]
+#define NOZZLE_TO_PROBE_OFFSET { X_PROBE_OFFSET_FROM_EXTRUDER, Y_PROBE_OFFSET_FROM_EXTRUDER, Z_PROBE_OFFSET_FROM_EXTRUDER}
 
-#define X_BED_SIZE 150
-#define Y_BED_SIZE 140
+#define X_BED_SIZE 177
+#define Y_BED_SIZE 162
 
-#define X_MIN_POS -18
+#define X_MIN_POS -10
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
@@ -22,27 +25,34 @@
 
 #define HEATER_0_MINTEMP   0
 #define BED_MINTEMP        0
-#define HEATER_0_MAXTEMP 280
+#define HEATER_0_MAXTEMP 260
 #define BED_MAXTEMP 90
 
-#define AUTO_BED_LEVELING_UBL
-#define MESH_INSET 5              // Set Mesh bounds as an inset region of the bed
-#define GRID_MAX_POINTS_X 6      // Don't use more than 15 points per axis, implementation limited.
+/*
+BED LEVELING UBL BELOW
+ */
+// #define AUTO_BED_LEVELING_UBL
+// #define MESH_INSET 5              // Set Mesh bounds as an inset region of the bed
+// #define GRID_MAX_POINTS_X 5      // Don't use more than 15 points per axis, implementation limited.
+// #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
+
+/*
+BED LEVELING BILINEAR BELOW
+ */
+#define AUTO_BED_LEVELING_BILINEAR
+#define MULTIPLE_PROBING 3
+#define EXTRA_PROBING    1
+#define GRID_MAX_POINTS_X 5
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-//#define AUTO_BED_LEVELING_BILINEAR
-//#define MULTIPLE_PROBING 4
-//#define EXTRA_PROBING    1
-//#define GRID_MAX_POINTS_X 12
-//#define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-//#define ABL_BILINEAR_SUBDIVISION
+#define ABL_BILINEAR_SUBDIVISION
 
 #define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
 
 #define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT  5 // X point for Z homing
-  #define Z_SAFE_HOMING_Y_POINT  5 // Y point for Z homing
+  #define Z_SAFE_HOMING_X_POINT  (X_MIN_POS + X_PROBE_OFFSET_FROM_EXTRUDER) // X point for Z homing
+  #define Z_SAFE_HOMING_Y_POINT  (Y_MIN_POS + Y_PROBE_OFFSET_FROM_EXTRUDER) // Y point for Z homing
 #endif
 
 /**
