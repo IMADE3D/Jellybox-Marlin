@@ -1,13 +1,18 @@
 #define JELLYBOX_VARIANT_LINE1 "JellyBOX 2 Lite"
 #define JELLYBOX_VARIANT_LINE2 "heated bed"
 
-#define DISABLE_HEATBED // M820 | M821
-#define IMADE3D_CALIBRATE_1ST_LAYER // M822-M825 under development
+//=============================================================================
+//===========================  JellyBOX Settings     ==========================
+//=============================================================================
+
+// Don't forget to view Configuration_adv.h as well!
+
+// #define DISABLE_HEATBED // M820 | M821 // not implemented in vanilla marlin
+// #define IMADE3D_CALIBRATE_1ST_LAYER // M822-M825 not implemented in vanilla marlin
 
 #define TEMP_SENSOR_0 1
 #define TEMP_SENSOR_BED 1
 
-//Specify a Probe position as { X, Y, Z }
 #define X_NOZZLE_TO_PROBE_OFFSET 27  // X offset: -left  +right  [of the nozzle]
 #define Y_NOZZLE_TO_PROBE_OFFSET 0  // Y offset: -front +behind [the nozzle]
 #define Z_NOZZLE_TO_PROBE_OFFSET 0   // Z offset: -below +above  [the nozzle]
@@ -28,29 +33,31 @@
 #define HEATER_0_MAXTEMP 260
 #define BED_MAXTEMP 90
 
-/*
-BED LEVELING UBL BELOW
- */
+#define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
+
+#define Z_SAFE_HOMING
+#define Z_SAFE_HOMING_X_POINT  (X_MIN_POS + X_NOZZLE_TO_PROBE_OFFSET) // X point for Z homing
+#define Z_SAFE_HOMING_Y_POINT  (Y_MIN_POS + Y_NOZZLE_TO_PROBE_OFFSET) // Y point for Z homing
+
+//============
+// BED LEVELING UBL BELOW
+//============
+
 // #define AUTO_BED_LEVELING_UBL
 // #define MESH_INSET 5              // Set Mesh bounds as an inset region of the bed
 // #define GRID_MAX_POINTS_X 5      // Don't use more than 15 points per axis, implementation limited.
 // #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
-/*
-BED LEVELING BILINEAR BELOW
- */
+//============
+// BED LEVELING BILINEAR BELOW
+//============
+
 #define AUTO_BED_LEVELING_BILINEAR
 #define MULTIPLE_PROBING 3
 #define EXTRA_PROBING    1
 #define GRID_MAX_POINTS_X 5
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 #define ABL_BILINEAR_SUBDIVISION
-
-#define Z_PROBE_END_SCRIPT "G0 Z10\nG0 X-8 Y20 F6500"
-
-#define Z_SAFE_HOMING
-#define Z_SAFE_HOMING_X_POINT  (X_MIN_POS + X_NOZZLE_TO_PROBE_OFFSET) // X point for Z homing
-#define Z_SAFE_HOMING_Y_POINT  (Y_MIN_POS + Y_NOZZLE_TO_PROBE_OFFSET) // Y point for Z homing
 
 /**
  * Marlin 3D Printer Firmware
