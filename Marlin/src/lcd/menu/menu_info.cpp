@@ -237,12 +237,15 @@ void menu_info_board() {
   void menu_info_printer() {
     if (ui.use_click()) return ui.go_back();
     START_SCREEN();
-    STATIC_ITEM(MSG_MARLIN, SS_CENTER|SS_INVERT);               // Marlin
+    // imade3d filip modify to be more informative
+    // STATIC_ITEM(MSG_MARLIN, SS_CENTER|SS_INVERT);               // Marlin
+    STATIC_ITEM_P(PSTR(JELLYBOX_VARIANT_LINE1));                          // My3DPrinter
+    STATIC_ITEM_P(PSTR(JELLYBOX_VARIANT_LINE2));                          // My3DPrinter
     STATIC_ITEM_P(PSTR(SHORT_BUILD_VERSION));                   // x.x.x-Branch
     STATIC_ITEM_P(PSTR(STRING_DISTRIBUTION_DATE));              // YYYY-MM-DD HH:MM
-    STATIC_ITEM_P(PSTR(MACHINE_NAME));                          // My3DPrinter
+    // STATIC_ITEM_P(PSTR(MACHINE_NAME));                          // My3DPrinter
     STATIC_ITEM_P(PSTR(WEBSITE_URL));                           // www.my3dprinter.com
-    VALUE_ITEM_P(MSG_INFO_EXTRUDERS, STRINGIFY(EXTRUDERS), SS_CENTER); // Extruders: 2
+    // VALUE_ITEM_P(MSG_INFO_EXTRUDERS, STRINGIFY(EXTRUDERS), SS_CENTER); // Extruders: 2
     #if HAS_LEVELING
       STATIC_ITEM(
         TERN_(AUTO_BED_LEVELING_3POINT, MSG_3POINT_LEVELING)      // 3-Point Leveling
