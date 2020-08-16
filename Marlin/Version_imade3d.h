@@ -1,6 +1,6 @@
 #pragma once
 #define STRING_DISTRIBUTION_DATE "2020-08-16"
 #define MACHINE_NAME "IMADE3D JellyBOX"
-#define SHORT_BUILD_VERSION "jb-alpha1-m2.0.6"
+#define SHORT_BUILD_VERSION "jb-3.1-m2.0.6"
 #define DETAILED_BUILD_VERSION SHORT_BUILD_VERSION
 #define WEBSITE_URL "https://imade3d.com"
