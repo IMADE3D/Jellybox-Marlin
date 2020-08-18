@@ -2002,6 +2002,10 @@
 // https://reprap.org/wiki/RepRapDiscount_Full_Graphic_Smart_Controller
 //
 #define REPRAP_DISCOUNT_FULL_GRAPHIC_SMART_CONTROLLER
+// imade3d fixing issues with characters jumbled below
+#define ST7920_DELAY_1 DELAY_NS(0)
+#define ST7920_DELAY_2 DELAY_NS(250)
+#define ST7920_DELAY_3 DELAY_NS(250)
 
 //
 // ReprapWorld Graphical LCD
