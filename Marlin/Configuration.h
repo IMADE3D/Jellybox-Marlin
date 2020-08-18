@@ -1,5 +1,5 @@
 #define JELLYBOX_VARIANT_LINE1 "JellyBOX 2 Elementary"
-#define JELLYBOX_VARIANT_LINE2 "heated bed"
+#define JELLYBOX_VARIANT_LINE2 "cold bed"
 
 //=============================================================================
 //===========================  JellyBOX Settings     ==========================
@@ -11,7 +11,7 @@
 // #define IMADE3D_CALIBRATE_1ST_LAYER // M822-M825 not implemented in vanilla marlin
 
 #define TEMP_SENSOR_0 1
-#define TEMP_SENSOR_BED 1
+#define TEMP_SENSOR_BED 0
 
 #define X_NOZZLE_TO_PROBE_OFFSET 27  // X offset: -left  +right  [of the nozzle]
 #define Y_NOZZLE_TO_PROBE_OFFSET 0  // Y offset: -front +behind [the nozzle]
