@@ -17,6 +17,7 @@
 #define Y_NOZZLE_TO_PROBE_OFFSET 0  // Y offset: -front +behind [the nozzle]
 #define Z_NOZZLE_TO_PROBE_OFFSET 0   // Z offset: -below +above  [the nozzle]
 #define NOZZLE_TO_PROBE_OFFSET { X_NOZZLE_TO_PROBE_OFFSET, Y_NOZZLE_TO_PROBE_OFFSET, Z_NOZZLE_TO_PROBE_OFFSET}
+#define PROBING_MARGIN 10
 
 #define X_BED_SIZE 177
 #define Y_BED_SIZE 162
