@@ -1,4 +1,4 @@
-#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2 Lite"
+#define JELLYBOX_VARIANT_LINE1 "JellyBOX 2 Elementary"
 #define JELLYBOX_VARIANT_LINE2 "heated bed"
 
 //=============================================================================
