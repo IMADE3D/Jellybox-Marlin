@@ -17,7 +17,6 @@
 #define Y_NOZZLE_TO_PROBE_OFFSET 0  // Y offset: -front +behind [the nozzle]
 #define Z_NOZZLE_TO_PROBE_OFFSET 0   // Z offset: -below +above  [the nozzle]
 #define NOZZLE_TO_PROBE_OFFSET { X_NOZZLE_TO_PROBE_OFFSET, Y_NOZZLE_TO_PROBE_OFFSET, Z_NOZZLE_TO_PROBE_OFFSET}
-#define PROBING_MARGIN 10
 
 #define X_BED_SIZE 177
 #define Y_BED_SIZE 162
@@ -45,8 +44,8 @@
 //============
 
 // #define AUTO_BED_LEVELING_UBL
-// #define MESH_INSET 5              // Set Mesh bounds as an inset region of the bed
-// #define GRID_MAX_POINTS_X 5      // Don't use more than 15 points per axis, implementation limited.
+// #define MESH_INSET -15              // Set Mesh bounds as an inset region of the bed
+// #define GRID_MAX_POINTS_X 4      // Don't use more than 15 points per axis, implementation limited.
 // #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
 //============
@@ -54,11 +53,13 @@
 //============
 
 #define AUTO_BED_LEVELING_BILINEAR
+#define PROBING_MARGIN 10
 #define MULTIPLE_PROBING 2
 #define EXTRA_PROBING    1
 #define GRID_MAX_POINTS_X 4
 #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 #define ABL_BILINEAR_SUBDIVISION
+
 /**
  * Marlin 3D Printer Firmware
  * Copyright (c) 2020 MarlinFirmware [https://github.com/MarlinFirmware/Marlin]
