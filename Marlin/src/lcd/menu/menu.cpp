@@ -301,8 +301,13 @@ void scroll_screen(const uint8_t limit, const bool is_menu) {
 
   #include "../../feature/babystep.h"
 
+  void save_eeprom_goto_previous_screen_no_defer() {
+      settings.save(); //normally, we'd use lcd_store_settings(); but it's not declared yet
+      ui.goto_previous_screen_no_defer();
+    }
+
   void lcd_babystep_zoffset() {
-    if (ui.use_click()) return ui.goto_previous_screen_no_defer();
+    if (ui.use_click()) return save_eeprom_goto_previous_screen_no_defer();
     ui.defer_status_screen();
     const bool do_probe = DISABLED(BABYSTEP_HOTEND_Z_OFFSET) || active_extruder == 0;
     if (ui.encoderPosition) {
